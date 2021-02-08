@@ -1,0 +1,32 @@
+{
+  "name": "wsdl-to-postman",
+  "version": "1.0.0",
+  "description": "Convert a given WSDL specification (1.1) to Postman Collection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/postmanlabs/wsdl-to-postman.git"
+  },
+  "keywords": [
+    "wsdl",
+    "postman",
+    "api"
+  ],
+  "author": "Postman Labs <help@getpostman.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/postmanlabs/wsdl-to-postman/issues"
+  },
+  "homepage": "https://github.com/postmanlabs/wsdl-to-postman#readme",
+  "devDependencies": {
+    "chai": "4.3.0",
+    "eslint": "7.19.0",
+    "eslint-plugin-jsdoc": "31.6.1",
+    "eslint-plugin-mocha": "8.0.0",
+    "eslint-plugin-security": "1.4.0",
+    "mocha": "8.2.0"
+  }
+}
