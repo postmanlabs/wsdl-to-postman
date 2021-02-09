@@ -4,7 +4,8 @@
   "description": "Convert a given WSDL specification (1.1) to Postman Collection",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha",
+    "lint": "eslint ./lib/** ./test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,5 @@
     "eslint-plugin-mocha": "8.0.0",
     "eslint-plugin-security": "1.4.0",
     "mocha": "8.2.0"
-  }
+  } 
 }
