@@ -23,11 +23,15 @@
   },
   "homepage": "https://github.com/postmanlabs/wsdl-to-postman#readme",
   "devDependencies": {
+    "@babel/core": "7.12.13",
+    "@babel/eslint-parser": "7.12.13",
+    "@babel/plugin-proposal-class-properties": "7.12.13",
+    "@babel/preset-env": "7.12.13",
     "chai": "4.3.0",
     "eslint": "7.19.0",
     "eslint-plugin-jsdoc": "31.6.1",
     "eslint-plugin-mocha": "8.0.0",
     "eslint-plugin-security": "1.4.0",
     "mocha": "8.2.0"
-  } 
+  }
 }
