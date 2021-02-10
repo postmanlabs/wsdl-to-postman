@@ -309,6 +309,26 @@ describe('Parser Factory getParser', function() {
     }
   });
 
+  it('should throw an error when input is empty', function() {
+    const factory = new ParserFactory();
+    try {
+      factory.getParser();
+    }
+    catch (error) {
+      expect(error.message).to.equal('Empty input was proportionated');
+    }
+  });
+
+  it('should throw an error when input is empty', function() {
+    const factory = new ParserFactory();
+    try {
+      factory.getParser(null);
+    }
+    catch (error) {
+      expect(error.message).to.equal('Empty input was proportionated');
+    }
+  });
+
   it('should throw an error when input is undefined', function() {
     const factory = new ParserFactory();
     try {
