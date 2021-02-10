@@ -1,4 +1,5 @@
 const expect = require('chai').expect,
+  assert = require('chai').assert,
   {
     ParserFactory,
     V11,
@@ -319,10 +320,11 @@ describe('Parser Factory getParser', function() {
     }
   });
 
-  it('should throw an error when input is empty', function() {
+  it('should throw an error when input is null', function() {
     const factory = new ParserFactory();
     try {
       factory.getParser(null);
+      assert.fail('we expected an error');
     }
     catch (error) {
       expect(error.message).to.equal('Empty input was proportionated');
@@ -333,6 +335,7 @@ describe('Parser Factory getParser', function() {
     const factory = new ParserFactory();
     try {
       factory.getParser(undefined);
+      assert.fail('we expected an error');
     }
     catch (error) {
       expect(error.message).to.equal('Empty input was proportionated');
@@ -348,6 +351,7 @@ describe('Parser Factory getParser', function() {
       <profession>Software Developer</profession>
       <location>Shanghai / China</location>
   </user>`);
+      assert.fail('we expected an error');
     }
     catch (error) {
       expect(error.message).to.equal('Not WSDL Specification found in your document');
