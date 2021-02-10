@@ -444,6 +444,33 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
     }
   });
 
+  it('should return null and not error when namespace not found', function() {
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http"
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+    `,
+      parser = new Wsdl11Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      wsdlnamespace = parser.getNamespaceByURL(
+        parsed,
+        WSDL_NS_URL
+      );
+    expect(wsdlnamespace).to.equal(null);
+  });
+
+
 });
 
 describe('WSDL 1.1 parser  getPrincipalPrefix', function() {
@@ -715,13 +742,12 @@ describe('WSDL 1.1 parser getAllNamespaces', function() {
   it('should throw an error when parsed is undefined', function() {
     const parser = new Wsdl11Parser();
     try {
-      let xmlns = {},
-        wsdlnamespace = parser.getAllNamespaces(
-          undefined
-        );
+      let wsdlnamespace = parser.getAllNamespaces(
+        undefined
+      );
       expect(wsdlnamespace).to.be.an('array');
       expect(wsdlnamespace.length).to.equal(6);
-      xmlns = wsdlnamespace.find((namespace) => {
+      wsdlnamespace.find((namespace) => {
         return namespace.url === WSDL_NS_URL;
       });
     }
@@ -733,13 +759,12 @@ describe('WSDL 1.1 parser getAllNamespaces', function() {
   it('should throw an error when parsed is null', function() {
     const parser = new Wsdl11Parser();
     try {
-      let xmlns = {},
-        wsdlnamespace = parser.getAllNamespaces(
-          null
-        );
+      let wsdlnamespace = parser.getAllNamespaces(
+        null
+      );
       expect(wsdlnamespace).to.be.an('array');
       expect(wsdlnamespace.length).to.equal(6);
-      xmlns = wsdlnamespace.find((namespace) => {
+      wsdlnamespace.find((namespace) => {
         return namespace.url === WSDL_NS_URL;
       });
     }
@@ -748,14 +773,13 @@ describe('WSDL 1.1 parser getAllNamespaces', function() {
     }
   });
 
-  it('should throw an error when parsed is null', function() {
+  it('should throw an error when parsed is empty object', function() {
     const parser = new Wsdl11Parser();
     try {
-      let xmlns = {},
-        wsdlnamespace = parser.getAllNamespaces({});
+      let wsdlnamespace = parser.getAllNamespaces({});
       expect(wsdlnamespace).to.be.an('array');
       expect(wsdlnamespace.length).to.equal(6);
-      xmlns = wsdlnamespace.find((namespace) => {
+      wsdlnamespace.find((namespace) => {
         return namespace.url === WSDL_NS_URL;
       });
     }
@@ -785,6 +809,143 @@ describe('WSDL 1.1 parser getAllNamespaces', function() {
       return namespace.url === WSDL_NS_URL;
     });
     expect(xmlns.isDefault).to.equal(true);
+  });
+
+});
+
+describe('WSDL 1.1 parser getWsdlObject', function() {
+
+  it('should get an object in memory representing wsdlObject validate namespaces all found',
+    function() {
+      const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+   <service name="NumberConversion">
+     <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
+      provides functions that convert numbers into words or dollar amounts.</documentation>
+     <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+       <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+     </port>
+   </service>
+ </definitions>
+  `,
+        parser = new Wsdl11Parser();
+      let parsed = parser.getWsdlObject(simpleInput);
+      expect(parsed).to.be.an('object');
+      expect(parsed).to.have.own.property('targetNamespace');
+      expect(parsed).to.have.own.property('wsdlNamespace');
+      expect(parsed).to.have.own.property('SOAPNamespace');
+      expect(parsed).to.have.own.property('SOAP12Namespace');
+      expect(parsed).to.have.own.property('schemaNamespace');
+      expect(parsed).to.have.own.property('tnsNamespace');
+      expect(parsed).to.have.own.property('allNameSpaces');
+
+      expect(parsed.allNameSpaces).to.be.an('array');
+      expect(parsed.allNameSpaces.length).to.equal(6);
+      xmlns = parsed.allNameSpaces.find((namespace) => {
+        return namespace.url === WSDL_NS_URL;
+      });
+      expect(xmlns.isDefault).to.equal(true);
+      expect(parsed.targetNamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
+      expect(parsed.tnsNamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
+      expect(parsed.wsdlNamespace.key).to.equal('xmlns');
+      expect(parsed.SOAPNamespace.key).to.equal('soap');
+      expect(parsed.SOAP12Namespace.key).to.equal('soap12');
+      expect(parsed.schemaNamespace.key).to.equal('xs');
+    });
+
+  it('should get an object in memory representing wsdlObject validate namespaces', function() {
+    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"  
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+   <types>
+     <xs:schema elementFormDefault="qualified" 
+     targetNamespace="http://www.dataaccess.com/webservicesserver/">
+       <xs:element name="NumberToDollars">
+         <xs:complexType>
+           <xs:sequence>
+             <xs:element name="dNum" type="xs:decimal"/>
+           </xs:sequence>
+         </xs:complexType>
+       </xs:element>
+       <xs:element name="NumberToDollarsResponse">
+         <xs:complexType>
+           <xs:sequence>
+             <xs:element name="NumberToDollarsResult" type="xs:string"/>
+           </xs:sequence>
+         </xs:complexType>
+       </xs:element>
+     </xs:schema>
+   </types>
+   <message name="NumberToDollarsSoapRequest">
+     <part name="parameters" element="tns:NumberToDollars"/>
+   </message>
+   <message name="NumberToDollarsSoapResponse">
+     <part name="parameters" element="tns:NumberToDollarsResponse"/>
+   </message>
+   <portType name="NumberConversionSoapType">
+     <operation name="NumberToDollars">
+       <documentation>Returns the non-zero dollar amount of the passed number.</documentation>
+       <input message="tns:NumberToDollarsSoapRequest"/>
+       <output message="tns:NumberToDollarsSoapResponse"/>
+     </operation>
+   </portType>
+   <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
+     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+     <operation name="NumberToDollars">
+       <soap:operation soapAction="" style="document"/>
+       <input>
+         <soap:body use="literal"/>
+       </input>
+       <output>
+         <soap:body use="literal"/>
+       </output>
+     </operation>
+   </binding>
+   <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
+     <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+     <operation name="NumberToDollars">
+       <soap12:operation soapAction="" style="document"/>
+       <input>
+         <soap12:body use="literal"/>
+       </input>
+       <output>
+         <soap12:body use="literal"/>
+       </output>
+     </operation>
+   </binding>
+   <service name="NumberConversion">
+     <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
+      provides functions that convert numbers into words or dollar amounts.</documentation>
+     <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+       <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+     </port>
+   </service>
+ </definitions>
+  `,
+      parser = new Wsdl11Parser();
+    let parsed = parser.getWsdlObject(simpleInput);
+    expect(parsed).to.be.an('object');
+    expect(parsed).to.have.own.property('targetNamespace');
+    expect(parsed).to.have.own.property('wsdlNamespace');
+    expect(parsed).to.have.own.property('SOAPNamespace');
+    expect(parsed).to.have.own.property('SOAP12Namespace');
+    expect(parsed).to.have.own.property('schemaNamespace');
+    expect(parsed).to.have.own.property('tnsNamespace');
+    expect(parsed).to.have.own.property('allNameSpaces');
+
+    expect(parsed.allNameSpaces).to.be.an('array');
+    expect(parsed.allNameSpaces.length).to.equal(5);
+    xmlns = parsed.allNameSpaces.find((namespace) => {
+      return namespace.url === WSDL_NS_URL;
+    });
+    expect(xmlns.isDefault).to.equal(true);
+
   });
 
 });
