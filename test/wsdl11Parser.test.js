@@ -1,5 +1,6 @@
 const expect = require('chai').expect,
   assert = require('chai').assert,
+  WsdlObject = require('../lib/WsdlObject').WsdlObject,
   {
     Wsdl11Parser,
     WSDL_NS_URL,
@@ -945,6 +946,44 @@ describe('WSDL 1.1 parser getWsdlObject', function() {
       return namespace.url === WSDL_NS_URL;
     });
     expect(xmlns.isDefault).to.equal(true);
+
+  });
+});
+
+describe('WSDL 1.1 parser assignNamespaces', function() {
+
+  it('should assign namespaces to wsdl object', function() {
+    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+   <service name="NumberConversion">
+     <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
+      provides functions that convert numbers into words or dollar amounts.</documentation>
+     <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+       <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+     </port>
+   </service>
+ </definitions>`,
+      parser = new Wsdl11Parser();
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(simpleInput);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    expect(wsdlObject).to.have.own.property('targetNamespace');
+    expect(wsdlObject).to.have.own.property('wsdlNamespace');
+    expect(wsdlObject).to.have.own.property('SOAPNamespace');
+    expect(wsdlObject).to.have.own.property('SOAP12Namespace');
+    expect(wsdlObject).to.have.own.property('schemaNamespace');
+    expect(wsdlObject).to.have.own.property('tnsNamespace');
+    expect(wsdlObject).to.have.own.property('allNameSpaces');
+    expect(wsdlObject.targetNamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
+    expect(wsdlObject.tnsNamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
+    expect(wsdlObject.wsdlNamespace.key).to.equal('xmlns');
+    expect(wsdlObject.SOAPNamespace.key).to.equal('soap');
+    expect(wsdlObject.SOAP12Namespace.key).to.equal('soap12');
+    expect(wsdlObject.schemaNamespace.key).to.equal('xs');
 
   });
 
