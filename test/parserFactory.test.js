@@ -309,7 +309,7 @@ describe('Parser Factory getParser', function() {
     }
   });
 
-  it('should throw an error when input is empty', function() {
+  it('should throw an error when input is an empty string', function() {
     const factory = new ParserFactory();
     try {
       factory.getParser();
