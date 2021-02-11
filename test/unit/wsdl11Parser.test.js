@@ -11,7 +11,8 @@ const expect = require('chai').expect,
     TNS_NS_KEY,
     SOAP_PROTOCOL,
     POST_METHOD,
-    SOAP12_PROTOCOL
+    SOAP12_PROTOCOL,
+    HTTP_PROTOCOL
   } = require('../../lib/Wsdl11Parser');
 
 describe('WSDL 1.1 parser constructor', function() {
@@ -1837,11 +1838,872 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function() {
     expect(bindingInfo.verb).to.equal(POST_METHOD);
 
   });
+
+  it('should get info from binding for soap when binding is http', function() {
+
+    const simpleInput = `<wsdl:definitions 
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+      xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+      xmlns:tns="https://www.w3schools.com/xml/" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+      xmlns:s="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+      xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+      xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+      targetNamespace="https://www.w3schools.com/xml/">
+    <wsdl:binding name="TempConvertHttpPost" type="tns:TempConvertHttpPost">
+        <http:binding verb="POST" />
+        <wsdl:operation name="FahrenheitToCelsius">
+            <http:operation location="/FahrenheitToCelsius" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <http:operation location="/CelsiusToFahrenheit" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TempConvert">
+        <wsdl:port name="TempConvertSoap" binding="tns:TempConvertSoap">
+            <soap:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+        <wsdl:port name="TempConvertSoap12" binding="tns:TempConvertSoap12">
+            <soap12:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+        <wsdl:port name="TempConvertHttpPost" binding="tns:TempConvertHttpPost">
+            <http:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      httpNamespace = {
+        key: 'http',
+        url: 'http://schemas.xmlsoap.org/wsdl/http/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+    expect(bindingInfo.protocol).to.equal(HTTP_PROTOCOL);
+    expect(bindingInfo.verb).to.equal(POST_METHOD);
+
+  });
+
+  it('should throw an error when call getBindingInfoFromBindinTag with binding null', function() {
+    const parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    try {
+      parser.getBindingInfoFromBindinTag(
+        null,
+        soapNamespace, soap12Namespace
+      );
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get binding info from undefined or null object');
+    }
+  });
+
+  it('should throw an error when call getBindingInfoFromBindinTag with binding undefined', function() {
+    const parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    try {
+      parser.getBindingInfoFromBindinTag(
+        undefined,
+        soapNamespace, soap12Namespace
+      );
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get binding info from undefined or null object');
+    }
+  });
+
+  it('should throw an error when call getBindingInfoFromBindinTag with binding empty object', function() {
+    const parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    try {
+      parser.getBindingInfoFromBindinTag({},
+        soapNamespace, soap12Namespace
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get binding from object');
+    }
+  });
+
+  it('should throw an error when can not get protocol', function() {
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser();
+    try {
+      let parsed = parser.parseFromXmlToObject(simpleInput),
+        binding = parser.getBindings(
+          parsed
+        )[0];
+      parser.getBindingInfoFromBindinTag(binding, undefined, undefined);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not find protocol in those namespaces');
+    }
+  });
+
+  it('should get info from binding for soap when binding is soap and soap12 is not send', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, null);
+    expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
+    expect(bindingInfo.verb).to.equal(POST_METHOD);
+
+  });
+
+});
+
+describe('WSDL 1.1 parser getStyleFromOperation', function() {
+  it('should get style from binding operation when binding is soap', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace);
+
+    let operation = {};
+    operation['soap:operation'] = {
+      '@_style': 'document'
+    }
+    const style = parser.getStyleFromBindingOperation(operation, bindingInfo)
+    expect(style).to.equal('document');
+
+  });
+
+  it('should get style from binding operation when binding is soap 12', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap12:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap12:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace);
+
+    let operation = {};
+    operation['soap12:operation'] = {
+      '@_style': 'document'
+    }
+    const style = parser.getStyleFromBindingOperation(operation, bindingInfo)
+    expect(style).to.equal('document');
+
+  });
+
+  it('should get style from binding operation when binding is http', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:tns="https://www.w3schools.com/xml/" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    targetNamespace="https://www.w3schools.com/xml/">
+    <wsdl:portType name="TempConvertSoap">
+        <wsdl:operation name="FahrenheitToCelsius">
+            <wsdl:input message="tns:FahrenheitToCelsiusSoapIn" />
+            <wsdl:output message="tns:FahrenheitToCelsiusSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <wsdl:input message="tns:CelsiusToFahrenheitSoapIn" />
+            <wsdl:output message="tns:CelsiusToFahrenheitSoapOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="TempConvertHttpPost">
+        <wsdl:operation name="FahrenheitToCelsius">
+            <wsdl:input message="tns:FahrenheitToCelsiusHttpPostIn" />
+            <wsdl:output message="tns:FahrenheitToCelsiusHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <wsdl:input message="tns:CelsiusToFahrenheitHttpPostIn" />
+            <wsdl:output message="tns:CelsiusToFahrenheitHttpPostOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TempConvertHttpPost" type="tns:TempConvertHttpPost">
+        <http:binding verb="POST" />
+        <wsdl:operation name="FahrenheitToCelsius">
+            <http:operation location="/FahrenheitToCelsius" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <http:operation location="/CelsiusToFahrenheit" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TempConvert">
+        <wsdl:port name="TempConvertSoap" binding="tns:TempConvertSoap">
+            <soap:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+        <wsdl:port name="TempConvertSoap12" binding="tns:TempConvertSoap12">
+            <soap12:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+        <wsdl:port name="TempConvertHttpPost" binding="tns:TempConvertHttpPost">
+            <http:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      httpNamespace = {
+        key: 'http',
+        url: 'http://schemas.xmlsoap.org/wsdl/http/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+
+    let operation = {};
+    operation['http:operation'] = {
+      '@_location': '/FahrenheitToCelsius'
+    }
+    const style = parser.getStyleFromBindingOperation(operation, bindingInfo)
+    expect(style).to.equal('');
+
+  });
+
+  it('should throw an error when called with operation null', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:tns="https://www.w3schools.com/xml/" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    targetNamespace="https://www.w3schools.com/xml/">
+    <wsdl:portType name="TempConvertSoap">
+        <wsdl:operation name="FahrenheitToCelsius">
+            <wsdl:input message="tns:FahrenheitToCelsiusSoapIn" />
+            <wsdl:output message="tns:FahrenheitToCelsiusSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <wsdl:input message="tns:CelsiusToFahrenheitSoapIn" />
+            <wsdl:output message="tns:CelsiusToFahrenheitSoapOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="TempConvertHttpPost">
+        <wsdl:operation name="FahrenheitToCelsius">
+            <wsdl:input message="tns:FahrenheitToCelsiusHttpPostIn" />
+            <wsdl:output message="tns:FahrenheitToCelsiusHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <wsdl:input message="tns:CelsiusToFahrenheitHttpPostIn" />
+            <wsdl:output message="tns:CelsiusToFahrenheitHttpPostOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TempConvertHttpPost" type="tns:TempConvertHttpPost">
+        <http:binding verb="POST" />
+        <wsdl:operation name="FahrenheitToCelsius">
+            <http:operation location="/FahrenheitToCelsius" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <http:operation location="/CelsiusToFahrenheit" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TempConvert">
+        <wsdl:port name="TempConvertSoap" binding="tns:TempConvertSoap">
+            <soap:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+        <wsdl:port name="TempConvertSoap12" binding="tns:TempConvertSoap12">
+            <soap12:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+        <wsdl:port name="TempConvertHttpPost" binding="tns:TempConvertHttpPost">
+            <http:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      httpNamespace = {
+        key: 'http',
+        url: 'http://schemas.xmlsoap.org/wsdl/http/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+
+    let operation = {};
+    operation['http:operation'] = {
+      '@_location': '/FahrenheitToCelsius'
+    }
+    try {
+      parser.getStyleFromBindingOperation(null, bindingInfo)
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get style info from operation undefined or null object');
+    }
+  });
+
+  it('should throw an error when called with operation undefined', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:tns="https://www.w3schools.com/xml/" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    targetNamespace="https://www.w3schools.com/xml/">
+    <wsdl:portType name="TempConvertSoap">
+        <wsdl:operation name="FahrenheitToCelsius">
+            <wsdl:input message="tns:FahrenheitToCelsiusSoapIn" />
+            <wsdl:output message="tns:FahrenheitToCelsiusSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <wsdl:input message="tns:CelsiusToFahrenheitSoapIn" />
+            <wsdl:output message="tns:CelsiusToFahrenheitSoapOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="TempConvertHttpPost">
+        <wsdl:operation name="FahrenheitToCelsius">
+            <wsdl:input message="tns:FahrenheitToCelsiusHttpPostIn" />
+            <wsdl:output message="tns:FahrenheitToCelsiusHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <wsdl:input message="tns:CelsiusToFahrenheitHttpPostIn" />
+            <wsdl:output message="tns:CelsiusToFahrenheitHttpPostOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TempConvertHttpPost" type="tns:TempConvertHttpPost">
+        <http:binding verb="POST" />
+        <wsdl:operation name="FahrenheitToCelsius">
+            <http:operation location="/FahrenheitToCelsius" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CelsiusToFahrenheit">
+            <http:operation location="/CelsiusToFahrenheit" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TempConvert">
+        <wsdl:port name="TempConvertSoap" binding="tns:TempConvertSoap">
+            <soap:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+        <wsdl:port name="TempConvertSoap12" binding="tns:TempConvertSoap12">
+            <soap12:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+        <wsdl:port name="TempConvertHttpPost" binding="tns:TempConvertHttpPost">
+            <http:address location="http://www.w3schools.com/xml/tempconvert.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      httpNamespace = {
+        key: 'http',
+        url: 'http://schemas.xmlsoap.org/wsdl/http/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+
+    let operation = {};
+    operation['http:operation'] = {
+      '@_location': '/FahrenheitToCelsius'
+    }
+    try {
+      parser.getStyleFromBindingOperation(undefined, bindingInfo)
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get style info from operation undefined or null object');
+    }
+  });
+
+  it('should throw an error when called with operation as empty object', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap12:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap12:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      httpNamespace = {
+        key: 'http',
+        url: 'http://schemas.xmlsoap.org/wsdl/http/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+    try {
+      parser.getStyleFromBindingOperation({}, bindingInfo)
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get style info from operation');
+    }
+  });
+
+
 });
 
 describe('WSDL 1.1 parser assignOperations', function() {
-
-  it('should assign namespaces to wsdl object', function() {
+  it('should assign operations to wsdl object', function() {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -1923,6 +2785,31 @@ describe('WSDL 1.1 parser assignOperations', function() {
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(4);
+
+    expect(wsdlObject.operationsArray[0].name).to.equal('NumberToWords');
+    expect(wsdlObject.operationsArray[0].method).to.equal(POST_METHOD);
+    expect(wsdlObject.operationsArray[0].protocol).to.equal(SOAP_PROTOCOL);
+    expect(wsdlObject.operationsArray[0].style).to.equal("document");
+
+    expect(wsdlObject.operationsArray[1].name).to.equal('NumberToDollars');
+    expect(wsdlObject.operationsArray[1].method).to.equal(POST_METHOD);
+    expect(wsdlObject.operationsArray[1].protocol).to.equal(SOAP_PROTOCOL);
+    expect(wsdlObject.operationsArray[1].style).to.equal("document");
+
+
+    expect(wsdlObject.operationsArray[2].name).to.equal('NumberToWords');
+    expect(wsdlObject.operationsArray[2].method).to.equal(POST_METHOD);
+    expect(wsdlObject.operationsArray[2].protocol).to.equal(SOAP12_PROTOCOL);
+    expect(wsdlObject.operationsArray[2].style).to.equal("document");
+
+
+    expect(wsdlObject.operationsArray[3].name).to.equal('NumberToDollars');
+    expect(wsdlObject.operationsArray[3].method).to.equal(POST_METHOD);
+    expect(wsdlObject.operationsArray[3].protocol).to.equal(SOAP12_PROTOCOL);
+    expect(wsdlObject.operationsArray[3].style).to.equal("document");
+
+
+
   });
 
 });
