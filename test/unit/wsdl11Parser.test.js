@@ -427,7 +427,7 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefind or null object');
+      expect(error.message).to.equal('Can not get namespace from undefined or null object');
     }
   });
 
@@ -441,7 +441,7 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefind or null object');
+      expect(error.message).to.equal('Can not get namespace from undefined or null object');
     }
   });
 
@@ -1000,4 +1000,671 @@ describe('WSDL 1.1 parser assignNamespaces', function() {
 
   });
 
+});
+
+describe('WSDL 1.1 parser getPortypeOperations', function() {
+
+  it('should get an array object representing port operations using default namespace', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <types>
+        <xs:schema elementFormDefault="qualified" 
+        targetNamespace="http://www.dataaccess.com/webservicesserver/">
+          <xs:element name="NumberToWords">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ubiNum" type="xs:unsignedLong"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NumberToWordsResponse">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="NumberToWordsResult" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NumberToDollars">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="dNum" type="xs:decimal"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NumberToDollarsResponse">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="NumberToDollarsResult" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:schema>
+      </types>
+      <message name="NumberToWordsSoapRequest">
+        <part name="parameters" element="tns:NumberToWords"/>
+      </message>
+      <message name="NumberToWordsSoapResponse">
+        <part name="parameters" element="tns:NumberToWordsResponse"/>
+      </message>
+      <message name="NumberToDollarsSoapRequest">
+        <part name="parameters" element="tns:NumberToDollars"/>
+      </message>
+      <message name="NumberToDollarsSoapResponse">
+        <part name="parameters" element="tns:NumberToDollarsResponse"/>
+      </message>
+      <portType name="NumberConversionSoapType">
+        <operation name="NumberToWords">
+          <documentation>Returns the word corresponding to the 
+          positive number passed as parameter. Limited to quadrillions.</documentation>
+          <input message="tns:NumberToWordsSoapRequest"/>
+          <output message="tns:NumberToWordsSoapResponse"/>
+        </operation>
+        <operation name="NumberToDollars">
+          <documentation>Returns the non-zero dollar amount of the passed number.</documentation>
+          <input message="tns:NumberToDollarsSoapRequest"/>
+          <output message="tns:NumberToDollarsSoapResponse"/>
+        </operation>
+      </portType>
+      <service name="NumberConversion">
+        <documentation>The Number Conversion Web Service, 
+        implemented with Visual DataFlex, provides 
+        functions that convert numbers into words or dollar amounts.</documentation>
+        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
+          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+      </service>
+    </definitions>`,
+      parser = new Wsdl11Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      portTypeOperations = parser.getPortypeOperations(
+        parsed
+      );
+    expect(portTypeOperations).to.be.an('array');
+    expect(portTypeOperations.length).to.equal(2);
+  });
+
+  it('should get array object representing port operations using default namespace and portypes has operations',
+    function() {
+      const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/"
+     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+    <portType name="DiscoveryServicePort">
+      <operation name="query">
+       <input message="cmisw:queryRequest" />
+       <output message="cmisw:queryResponse" />
+       <fault message="cmisw:cmisException" name="cmisException" />
+     </operation>
+     <operation name="getContentChanges">
+       <input message="cmisw:getContentChangesRequest" />
+       <output message="cmisw:getContentChangesResponse" />
+       <fault message="cmisw:cmisException" name="cmisException" />
+     </operation>
+   </portType>
+   <portType name="MultiFilingServicePort">
+     <operation name="addObjectToFolder">
+       <input message="cmisw:addObjectToFolderRequest" />
+       <output message="cmisw:addObjectToFolderResponse" />
+       <fault message="cmisw:cmisException" name="cmisException" />
+     </operation>
+     <operation name="removeObjectFromFolder">
+       <input message="cmisw:removeObjectFromFolderRequest" />
+       <output message="cmisw:removeObjectFromFolderResponse" />
+       <fault message="cmisw:cmisException" name="cmisException" />
+     </operation>
+   </portType>
+      <service name="NumberConversion">
+        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
+         provides functions that convert numbers into words or dollar amounts.</documentation>
+        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
+          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+      </service>
+    </definitions>`,
+        parser = new Wsdl11Parser();
+      let parsed = parser.parseFromXmlToObject(simpleInput),
+        portTypeOperations = parser.getPortypeOperations(
+          parsed
+        );
+      expect(portTypeOperations).to.be.an('array');
+      expect(portTypeOperations.length).to.equal(4);
+    });
+
+  it('should get array object representing port operations using default ns when portypes many and one operations',
+    function() {
+      const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/"
+     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+    <portType name="DiscoveryServicePort">
+      <operation name="query">
+       <input message="cmisw:queryRequest" />
+       <output message="cmisw:queryResponse" />
+       <fault message="cmisw:cmisException" name="cmisException" />
+     </operation>
+     <operation name="getContentChanges">
+       <input message="cmisw:getContentChangesRequest" />
+       <output message="cmisw:getContentChangesResponse" />
+       <fault message="cmisw:cmisException" name="cmisException" />
+     </operation>
+   </portType>
+   <portType name="MultiFilingServicePort">
+     <operation name="addObjectToFolder">
+       <input message="cmisw:addObjectToFolderRequest" />
+       <output message="cmisw:addObjectToFolderResponse" />
+       <fault message="cmisw:cmisException" name="cmisException" />
+     </operation>
+   </portType>
+      <service name="NumberConversion">
+        <documentation>The Number Conversion Web Service, 
+        implemented with Visual DataFlex, provides functions
+         that convert numbers into words or dollar amounts.</documentation>
+        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
+          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+      </service>
+    </definitions>`,
+        parser = new Wsdl11Parser();
+      let parsed = parser.parseFromXmlToObject(simpleInput),
+        portTypeOperations = parser.getPortypeOperations(
+          parsed
+        );
+      expect(portTypeOperations).to.be.an('array');
+      expect(portTypeOperations.length).to.equal(3);
+    });
+
+  it('should get an array object representing port operations using named namespace <wsdl:definitions>', function() {
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+     xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+     xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:message name="ISampleService_Test_InputMessage">
+        <wsdl:part name="parameters" element="tns:Test" />
+    </wsdl:message>
+    <wsdl:message name="ISampleService_Test_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TestResponse" />
+    </wsdl:message>
+    <wsdl:message name="ISampleService_XmlMethod_InputMessage">
+        <wsdl:part name="parameters" element="tns:XmlMethod" />
+    </wsdl:message>
+    <wsdl:message name="ISampleService_XmlMethod_OutputMessage">
+        <wsdl:part name="parameters" element="tns:XmlMethodResponse" />
+    </wsdl:message>
+    <wsdl:message name="ISampleService_TestCustomModel_InputMessage">
+        <wsdl:part name="parameters" element="tns:TestCustomModel" />
+    </wsdl:message>
+    <wsdl:message name="ISampleService_TestCustomModel_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TestCustomModelResponse" />
+    </wsdl:message>
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      portTypeOperations = parser.getPortypeOperations(
+        parsed
+      );
+    expect(portTypeOperations).to.be.an('array');
+    expect(portTypeOperations.length).to.equal(3);
+  });
+
+  it('should throw an error when call with null', function() {
+    try {
+      parser.getPortypeOperations(
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get portypes from undefined or null object');
+    }
+  });
+
+
+  it('should throw an error when call with undefined', function() {
+    try {
+      parser.getPortypeOperations(
+        undefined
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get portypes from undefined or null object');
+    }
+  });
+
+  it('should throw an error when call with empty object', function() {
+    try {
+      parser.getPortypeOperations({});
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get portypes from object');
+    }
+  });
+});
+
+describe('WSDL 1.1 parser getBindings', function() {
+  it('should get an array object representing bindings using default namespace', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NumberToWords">
+          <soap:operation soapAction="" style="document"/>
+          <input>
+            <soap:body use="literal"/>
+          </input>
+          <output>
+            <soap:body use="literal"/>
+          </output>
+        </operation>
+        <operation name="NumberToDollars">
+          <soap:operation soapAction="" style="document"/>
+          <input>
+            <soap:body use="literal"/>
+          </input>
+          <output>
+            <soap:body use="literal"/>
+          </output>
+        </operation>
+      </binding>
+      <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
+        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NumberToWords">
+          <soap12:operation soapAction="" style="document"/>
+          <input>
+            <soap12:body use="literal"/>
+          </input>
+          <output>
+            <soap12:body use="literal"/>
+          </output>
+        </operation>
+        <operation name="NumberToDollars">
+          <soap12:operation soapAction="" style="document"/>
+          <input>
+            <soap12:body use="literal"/>
+          </input>
+          <output>
+            <soap12:body use="literal"/>
+          </output>
+        </operation>
+      </binding>
+      <service name="NumberConversion">
+        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex, 
+        provides functions that convert numbers into words or dollar amounts.</documentation>
+        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
+          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+      </service>
+    </definitions>`,
+      parser = new Wsdl11Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      bindings = parser.getBindings(
+        parsed
+      );
+    expect(bindings).to.be.an('array');
+    expect(bindings.length).to.equal(2);
+  });
+
+  it('should get an array object representing bindings using named namespace <wsdl:definitions>', function() {
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      bindings = parser.getBindings(
+        parsed
+      );
+    expect(bindings).to.be.an('array');
+    expect(bindings.length).to.equal(1);
+  });
+
+  it('should throw an error when call with null', function() {
+    try {
+      parser.getBindings(
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get bindings from undefined or null object');
+    }
+  });
+
+
+  it('should throw an error when call with undefined', function() {
+    try {
+      parser.getBindings(
+        undefined
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get bindings from undefined or null object');
+    }
+  });
+
+  it('should throw an error when call with empty object', function() {
+    try {
+      parser.getBindings({});
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get bindings from object');
+    }
+  });
+});
+
+describe('WSDL 1.1 parser getServices', function() {
+  it('should get an array object representing bindings using default namespace', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NumberToWords">
+          <soap:operation soapAction="" style="document"/>
+          <input>
+            <soap:body use="literal"/>
+          </input>
+          <output>
+            <soap:body use="literal"/>
+          </output>
+        </operation>
+        <operation name="NumberToDollars">
+          <soap:operation soapAction="" style="document"/>
+          <input>
+            <soap:body use="literal"/>
+          </input>
+          <output>
+            <soap:body use="literal"/>
+          </output>
+        </operation>
+      </binding>
+      <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
+        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NumberToWords">
+          <soap12:operation soapAction="" style="document"/>
+          <input>
+            <soap12:body use="literal"/>
+          </input>
+          <output>
+            <soap12:body use="literal"/>
+          </output>
+        </operation>
+        <operation name="NumberToDollars">
+          <soap12:operation soapAction="" style="document"/>
+          <input>
+            <soap12:body use="literal"/>
+          </input>
+          <output>
+            <soap12:body use="literal"/>
+          </output>
+        </operation>
+      </binding>
+      <service name="NumberConversion">
+        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex, 
+        provides functions that convert numbers into words or dollar amounts.</documentation>
+        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
+          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+      </service>
+    </definitions>`,
+      parser = new Wsdl11Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      services = parser.getServices(
+        parsed
+      );
+    expect(services).to.be.an('array');
+    expect(services.length).to.equal(1);
+  });
+
+  it('should get an array object representing bindings using named namespace <wsdl:definitions>', function() {
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:service name="ISampleService2">
+    <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+        <soap:address location="https://localhost:5001/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      services = parser.getServices(
+        parsed
+      );
+    expect(services).to.be.an('array');
+    expect(services.length).to.equal(2);
+  });
+
+  it('should throw an error when call with null', function() {
+    try {
+      parser.getServices(
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get services from undefined or null object');
+    }
+  });
+
+
+  it('should throw an error when call with undefined', function() {
+    try {
+      parser.getServices(
+        undefined
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get services from undefined or null object');
+    }
+  });
+
+  it('should throw an error when call with empty object', function() {
+    try {
+      parser.getServices({});
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get services from object');
+    }
+  });
 });
