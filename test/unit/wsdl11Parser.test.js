@@ -1,6 +1,6 @@
 const expect = require('chai').expect,
   assert = require('chai').assert,
-  WsdlObject = require('../lib/WsdlObject').WsdlObject,
+  WsdlObject = require('../../lib/WsdlObject').WsdlObject,
   {
     Wsdl11Parser,
     WSDL_NS_URL,
@@ -9,7 +9,7 @@ const expect = require('chai').expect,
     SCHEMA_NS_URL,
     TARGETNAMESPACE_KEY,
     TNS_NS_KEY
-  } = require('../lib/Wsdl11Parser');
+  } = require('../../lib/Wsdl11Parser');
 
 describe('WSDL 1.1 parser constructor', function() {
   it('should get an object wsdl 1.1 parser', function() {
@@ -36,7 +36,6 @@ describe('WSDL 1.1 parser  parseFromXmlToObject', function() {
     expect(parsed.user['@_is']).to.equal('great');
 
   });
-
   it('should throw an error when input is empty string', function() {
     parser = new Wsdl11Parser();
     try {
@@ -335,7 +334,7 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
     expect(wsdlnamespace.isDefault).to.equal(false);
   });
 
-  it('should throw an error when url input is string empty', function() {
+  it('should throw an error when url input is empty string', function() {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -401,6 +400,20 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
     }
     catch (error) {
       expect(error.message).to.equal('URL must not be empty');
+    }
+  });
+
+  it('should throw an error when parsed is empty string', function() {
+    const parser = new Wsdl11Parser();
+    try {
+      parser.getNamespaceByURL(
+        '',
+        WSDL_NS_URL
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get namespace from undefined or null object');
     }
   });
 
@@ -521,7 +534,7 @@ describe('WSDL 1.1 parser  getPrincipalPrefix', function() {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get prefix from undefind or null object');
+      expect(error.message).to.equal('Can not get prefix from undefined or null object');
     }
   });
 
@@ -535,11 +548,11 @@ describe('WSDL 1.1 parser  getPrincipalPrefix', function() {
 
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get prefix from undefind or null object');
+      expect(error.message).to.equal('Can not get prefix from undefined or null object');
     }
   });
 
-  it('should throw error when called with object no expected properties', function() {
+  it('should throw an error when called with object no expected properties', function() {
     const parser = new Wsdl11Parser();
     try {
       parser.getPrincipalPrefix({});
@@ -618,7 +631,7 @@ describe('WSDL 1.1 parser  getNamespaceBykey', function() {
     expect(wsdlnamespace.isDefault).to.equal(false);
   });
 
-  it('should throw an error when key input is string empty', function() {
+  it('should throw an error when key input is an empty string', function() {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -697,7 +710,7 @@ describe('WSDL 1.1 parser  getNamespaceBykey', function() {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefind or null object');
+      expect(error.message).to.equal('Can not get namespace from undefined or null object');
     }
   });
 
@@ -753,7 +766,7 @@ describe('WSDL 1.1 parser getAllNamespaces', function() {
       });
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespaces from undefind or null object');
+      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
     }
   });
 
@@ -770,11 +783,11 @@ describe('WSDL 1.1 parser getAllNamespaces', function() {
       });
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespaces from undefind or null object');
+      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
     }
   });
 
-  it('should throw an error when parsed is empty object', function() {
+  it('should throw an error when parsed is an empty object', function() {
     const parser = new Wsdl11Parser();
     try {
       let wsdlnamespace = parser.getAllNamespaces({});
@@ -816,7 +829,7 @@ describe('WSDL 1.1 parser getAllNamespaces', function() {
 
 describe('WSDL 1.1 parser getWsdlObject', function() {
 
-  it('should get an object in memory representing wsdlObject validate namespaces all found',
+  it('should get an object in memory representing wsdlObject validate all namespaces found',
     function() {
       const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"

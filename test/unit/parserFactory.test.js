@@ -4,13 +4,13 @@ const expect = require('chai').expect,
     ParserFactory,
     V11,
     V20
-  } = require('./../lib/ParserFactory'),
+  } = require('../../lib/ParserFactory'),
   {
     Wsdl11Parser
-  } = require('./../lib/Wsdl11Parser'),
+  } = require('../../lib/Wsdl11Parser'),
   {
     Wsdl20Parser
-  } = require('./../lib/Wsdl20Parser');
+  } = require('../../lib/Wsdl20Parser');
 
 describe('Parser Factory constructor', function() {
   it('should get an object for the factory with empty input', function() {
