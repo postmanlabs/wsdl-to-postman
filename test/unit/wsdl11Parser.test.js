@@ -427,7 +427,7 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefind or null object');
+      expect(error.message).to.equal('Can not get namespace from undefined or null object');
     }
   });
 
@@ -441,7 +441,7 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefind or null object');
+      expect(error.message).to.equal('Can not get namespace from undefined or null object');
     }
   });
 
