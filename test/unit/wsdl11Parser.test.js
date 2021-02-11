@@ -2211,15 +2211,12 @@ describe('WSDL 1.1 parser getStyleFromOperation', function() {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace);
-
-    let operation = {};
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace),
+      operation = {};
     operation['soap:operation'] = {
       '@_style': 'document'
-    }
-    const style = parser.getStyleFromBindingOperation(operation, bindingInfo)
-    expect(style).to.equal('document');
-
+    };
+    expect(parser.getStyleFromBindingOperation(operation, bindingInfo)).to.equal('document');
   });
 
   it('should get style from binding operation when binding is soap 12', function() {
@@ -2298,14 +2295,12 @@ describe('WSDL 1.1 parser getStyleFromOperation', function() {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace);
-
-    let operation = {};
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace),
+      operation = {};
     operation['soap12:operation'] = {
       '@_style': 'document'
-    }
-    const style = parser.getStyleFromBindingOperation(operation, bindingInfo)
-    expect(style).to.equal('document');
+    };
+    expect(parser.getStyleFromBindingOperation(operation, bindingInfo)).to.equal('document');
 
   });
 
@@ -2395,14 +2390,12 @@ describe('WSDL 1.1 parser getStyleFromOperation', function() {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
-
-    let operation = {};
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace),
+      operation = {};
     operation['http:operation'] = {
       '@_location': '/FahrenheitToCelsius'
-    }
-    const style = parser.getStyleFromBindingOperation(operation, bindingInfo)
-    expect(style).to.equal('');
+    };
+    expect(parser.getStyleFromBindingOperation(operation, bindingInfo)).to.equal('');
 
   });
 
@@ -2492,14 +2485,14 @@ describe('WSDL 1.1 parser getStyleFromOperation', function() {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace),
 
-    let operation = {};
+      operation = {};
     operation['http:operation'] = {
       '@_location': '/FahrenheitToCelsius'
-    }
+    };
     try {
-      parser.getStyleFromBindingOperation(null, bindingInfo)
+      parser.getStyleFromBindingOperation(null, bindingInfo);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -2593,14 +2586,14 @@ describe('WSDL 1.1 parser getStyleFromOperation', function() {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace),
 
-    let operation = {};
+      operation = {};
     operation['http:operation'] = {
       '@_location': '/FahrenheitToCelsius'
-    }
+    };
     try {
-      parser.getStyleFromBindingOperation(undefined, bindingInfo)
+      parser.getStyleFromBindingOperation(undefined, bindingInfo);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -2691,7 +2684,7 @@ describe('WSDL 1.1 parser getStyleFromOperation', function() {
       )[0],
       bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
     try {
-      parser.getStyleFromBindingOperation({}, bindingInfo)
+      parser.getStyleFromBindingOperation({}, bindingInfo);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -2789,26 +2782,24 @@ describe('WSDL 1.1 parser assignOperations', function() {
     expect(wsdlObject.operationsArray[0].name).to.equal('NumberToWords');
     expect(wsdlObject.operationsArray[0].method).to.equal(POST_METHOD);
     expect(wsdlObject.operationsArray[0].protocol).to.equal(SOAP_PROTOCOL);
-    expect(wsdlObject.operationsArray[0].style).to.equal("document");
+    expect(wsdlObject.operationsArray[0].style).to.equal('document');
 
     expect(wsdlObject.operationsArray[1].name).to.equal('NumberToDollars');
     expect(wsdlObject.operationsArray[1].method).to.equal(POST_METHOD);
     expect(wsdlObject.operationsArray[1].protocol).to.equal(SOAP_PROTOCOL);
-    expect(wsdlObject.operationsArray[1].style).to.equal("document");
+    expect(wsdlObject.operationsArray[1].style).to.equal('document');
 
 
     expect(wsdlObject.operationsArray[2].name).to.equal('NumberToWords');
     expect(wsdlObject.operationsArray[2].method).to.equal(POST_METHOD);
     expect(wsdlObject.operationsArray[2].protocol).to.equal(SOAP12_PROTOCOL);
-    expect(wsdlObject.operationsArray[2].style).to.equal("document");
+    expect(wsdlObject.operationsArray[2].style).to.equal('document');
 
 
     expect(wsdlObject.operationsArray[3].name).to.equal('NumberToDollars');
     expect(wsdlObject.operationsArray[3].method).to.equal(POST_METHOD);
     expect(wsdlObject.operationsArray[3].protocol).to.equal(SOAP12_PROTOCOL);
-    expect(wsdlObject.operationsArray[3].style).to.equal("document");
-
-
+    expect(wsdlObject.operationsArray[3].style).to.equal('document');
 
   });
 
