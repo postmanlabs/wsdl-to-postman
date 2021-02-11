@@ -8,7 +8,10 @@ const expect = require('chai').expect,
     SOAP_12_NS_URL,
     SCHEMA_NS_URL,
     TARGETNAMESPACE_KEY,
-    TNS_NS_KEY
+    TNS_NS_KEY,
+    SOAP_PROTOCOL,
+    POST_METHOD,
+    SOAP12_PROTOCOL
   } = require('../../lib/Wsdl11Parser');
 
 describe('WSDL 1.1 parser constructor', function() {
@@ -1667,4 +1670,259 @@ describe('WSDL 1.1 parser getServices', function() {
       expect(error.message).to.equal('Can not get services from object');
     }
   });
+});
+
+
+describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function() {
+  it('should get info from binding for soap when binding is soap', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace);
+    expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
+    expect(bindingInfo.verb).to.equal(POST_METHOD);
+
+  });
+
+  it('should get info from binding for soap when binding is soap12', function() {
+
+    const simpleInput = `<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap12/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      binding = parser.getBindings(
+        parsed
+      )[0],
+      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace);
+    expect(bindingInfo.protocol).to.equal(SOAP12_PROTOCOL);
+    expect(bindingInfo.verb).to.equal(POST_METHOD);
+
+  });
+});
+
+describe('WSDL 1.1 parser assignOperations', function() {
+
+  it('should assign namespaces to wsdl object', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" 
+    targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <portType name="NumberConversionSoapType">
+        <operation name="NumberToWords">
+          <documentation>Returns the word corresponding to the positive number
+           passed as parameter. Limited to quadrillions.</documentation>
+          <input message="tns:NumberToWordsSoapRequest"/>
+          <output message="tns:NumberToWordsSoapResponse"/>
+        </operation>
+        <operation name="NumberToDollars">
+          <documentation>Returns the non-zero dollar amount of the passed number.</documentation>
+          <input message="tns:NumberToDollarsSoapRequest"/>
+          <output message="tns:NumberToDollarsSoapResponse"/>
+        </operation>
+      </portType>
+      <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NumberToWords">
+          <soap:operation soapAction="" style="document"/>
+          <input>
+            <soap:body use="literal"/>
+          </input>
+          <output>
+            <soap:body use="literal"/>
+          </output>
+        </operation>
+        <operation name="NumberToDollars">
+          <soap:operation soapAction="" style="document"/>
+          <input>
+            <soap:body use="literal"/>
+          </input>
+          <output>
+            <soap:body use="literal"/>
+          </output>
+        </operation>
+      </binding>
+      <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
+        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NumberToWords">
+          <soap12:operation soapAction="" style="document"/>
+          <input>
+            <soap12:body use="literal"/>
+          </input>
+          <output>
+            <soap12:body use="literal"/>
+          </output>
+        </operation>
+        <operation name="NumberToDollars">
+          <soap12:operation soapAction="" style="document"/>
+          <input>
+            <soap12:body use="literal"/>
+          </input>
+          <output>
+            <soap12:body use="literal"/>
+          </output>
+        </operation>
+      </binding>
+      <service name="NumberConversion">
+        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
+         provides functions that convert numbers into words or dollar amounts.</documentation>
+        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
+          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+      </service>
+    </definitions>`,
+      parser = new Wsdl11Parser();
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(simpleInput);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(4);
+  });
+
 });
