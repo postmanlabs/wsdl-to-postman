@@ -12,14 +12,22 @@ describe('Validator result', function() {
 });
 
 describe('Validator inputNotProvided', function() {
-  it('Should return true if input is null, undefined or empty', function() {
+  it('Should return true if input is null', function() {
     const nullInput = null,
-      undefinedInput = undefined,
-      emptyInput = '',
       validator = new Validator();
 
     expect(validator.inputNotProvided(nullInput)).to.be.true;
+  });
+
+  it('Should return true if input is undefined', function () {
+    const undefinedInput = undefined,
+      validator = new Validator();
     expect(validator.inputNotProvided(undefinedInput)).to.be.true;
+  });
+
+  it('Should return true if input is empty', function () {
+    const emptyInput = '',
+      validator = new Validator();
     expect(validator.inputNotProvided(emptyInput)).to.be.true;
   });
 
@@ -54,21 +62,29 @@ describe('Validator validate', function() {
     };
   };
 
-  it('Should return a failed validationResult when input.data is null, undefined or empty', function() {
+  it('Should return a failed validationResult when input.data is null', function() {
     const nullInput = mockInput(null),
-      undefinedInput = mockInput(undefined),
-      emptyInput = mockInput(''),
       validator = new Validator();
     expect(validator.validate(nullInput)).to.be.an('object')
       .and.to.include({
         result: false,
         reason: 'Input not provided'
       });
+  });
+
+  it('Should return a failed validationResult when input.data is undefined', function() {
+    const undefinedInput = mockInput(undefined),
+      validator = new Validator();
     expect(validator.validate(undefinedInput)).to.be.an('object')
       .and.to.include({
         result: false,
         reason: 'Input not provided'
       });
+  });
+
+  it('Should return a failed validationResult when input.data is empty', function() {
+    const emptyInput = mockInput(''),
+      validator = new Validator();
     expect(validator.validate(emptyInput)).to.be.an('object')
       .and.to.include({
         result: false,
@@ -76,18 +92,16 @@ describe('Validator validate', function() {
       });
   });
 
-  it(
-    `Should return a failed validationResult when input.data does not contains "definitions>" or "description>"
-    string`,
-    function() {
-      const input = mockInput('Does not contains WSDL validation', 'string'),
-        validator = new Validator();
-      expect(validator.validate(input)).to.be.an('object')
-        .and.to.include({
-          result: false,
-          reason: 'Not WSDL Specification found in your document'
-        });
-    });
+  it(`Should return a failed validationResult when input.data does not contains "definitions>" or "description>"
+string`, function() {
+    const input = mockInput('Does not contains WSDL validation', 'string'),
+      validator = new Validator();
+    expect(validator.validate(input)).to.be.an('object')
+      .and.to.include({
+        result: false,
+        reason: 'Not WSDL Specification found in your document'
+      });
+  });
 
   it('Should return a failed validationResult if input type is not supported', function() {
     const input = mockInput('Any type data', 'NotSupportedType'),
@@ -99,18 +113,21 @@ describe('Validator validate', function() {
       });
   });
 
-  it(
-    `Should return a successful validationResult if input.data is a "string" and contains wsdl "definitions>"
-    or "description>" tags`,
+  it('Should return a successful validationResult if input.data is a "string" and contains wsdl "definitions>" tag',
     function() {
       const definitionsInput = mockInput('<definitions ...> ... </ definitions>', 'string'),
-        descriptionInput = mockInput('<description ...> ... </ description>', 'string'),
         validator = new Validator();
       expect(validator.validate(definitionsInput)).to.be.an('object')
         .and.to.include({
           result: true,
           reason: 'Success'
         });
+    });
+
+  it('Should return a successful validationResult if input.data is a "string" and contains wsdl "description>" tag',
+    function() {
+      const descriptionInput = mockInput('<description ...> ... </ description>', 'string'),
+        validator = new Validator();
       expect(validator.validate(descriptionInput)).to.be.an('object')
         .and.to.include({
           result: true,
