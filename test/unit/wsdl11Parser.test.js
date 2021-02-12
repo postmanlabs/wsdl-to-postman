@@ -12,7 +12,8 @@ const expect = require('chai').expect,
     SOAP_PROTOCOL,
     POST_METHOD,
     SOAP12_PROTOCOL,
-    HTTP_PROTOCOL
+    HTTP_PROTOCOL,
+    PARSER_ATRIBUTE_NAME_PLACE_HOLDER
   } = require('../../lib/Wsdl11Parser');
 
 describe('WSDL 1.1 parser constructor', function() {
@@ -37,7 +38,7 @@ describe('WSDL 1.1 parser  parseFromXmlToObject', function() {
     expect(parsed).to.be.an('object');
     expect(parsed).to.have.own.property('user');
     expect(parsed.user).to.have.own.property('name');
-    expect(parsed.user['@_is']).to.equal('great');
+    expect(parsed.user[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'is']).to.equal('great');
 
   });
   it('should throw an error when input is empty string', function() {
@@ -1673,7 +1674,6 @@ describe('WSDL 1.1 parser getServices', function() {
   });
 });
 
-
 describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function() {
   it('should get info from binding for soap when binding is soap', function() {
 
@@ -2783,24 +2783,118 @@ describe('WSDL 1.1 parser assignOperations', function() {
     expect(wsdlObject.operationsArray[0].method).to.equal(POST_METHOD);
     expect(wsdlObject.operationsArray[0].protocol).to.equal(SOAP_PROTOCOL);
     expect(wsdlObject.operationsArray[0].style).to.equal('document');
+    expect(wsdlObject.operationsArray[1].url)
+      .to.equal('https://www.dataaccess.com/webservicesserver/NumberConversion.wso');
 
     expect(wsdlObject.operationsArray[1].name).to.equal('NumberToDollars');
     expect(wsdlObject.operationsArray[1].method).to.equal(POST_METHOD);
     expect(wsdlObject.operationsArray[1].protocol).to.equal(SOAP_PROTOCOL);
     expect(wsdlObject.operationsArray[1].style).to.equal('document');
+    expect(wsdlObject.operationsArray[1].url)
+      .to.equal('https://www.dataaccess.com/webservicesserver/NumberConversion.wso');
 
 
     expect(wsdlObject.operationsArray[2].name).to.equal('NumberToWords');
     expect(wsdlObject.operationsArray[2].method).to.equal(POST_METHOD);
     expect(wsdlObject.operationsArray[2].protocol).to.equal(SOAP12_PROTOCOL);
     expect(wsdlObject.operationsArray[2].style).to.equal('document');
+    expect(wsdlObject.operationsArray[2].url)
+      .to.equal('https://www.dataaccess.com/webservicesserver/NumberConversion.wso');
 
 
     expect(wsdlObject.operationsArray[3].name).to.equal('NumberToDollars');
     expect(wsdlObject.operationsArray[3].method).to.equal(POST_METHOD);
     expect(wsdlObject.operationsArray[3].protocol).to.equal(SOAP12_PROTOCOL);
     expect(wsdlObject.operationsArray[3].style).to.equal('document');
+    expect(wsdlObject.operationsArray[3].url)
+      .to.equal('https://www.dataaccess.com/webservicesserver/NumberConversion.wso');
 
+  });
+
+});
+
+describe('WSDL 1.1 parser getServicePortByBindingName', function() {
+  it('should get service port from service', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" 
+    targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <portType name="NumberConversionSoapType">
+        <operation name="NumberToWords">
+          <documentation>Returns the word corresponding to the positive number
+           passed as parameter. Limited to quadrillions.</documentation>
+          <input message="tns:NumberToWordsSoapRequest"/>
+          <output message="tns:NumberToWordsSoapResponse"/>
+        </operation>
+        <operation name="NumberToDollars">
+          <documentation>Returns the non-zero dollar amount of the passed number.</documentation>
+          <input message="tns:NumberToDollarsSoapRequest"/>
+          <output message="tns:NumberToDollarsSoapResponse"/>
+        </operation>
+      </portType>
+      <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NumberToWords">
+          <soap:operation soapAction="" style="document"/>
+          <input>
+            <soap:body use="literal"/>
+          </input>
+          <output>
+            <soap:body use="literal"/>
+          </output>
+        </operation>
+        <operation name="NumberToDollars">
+          <soap:operation soapAction="" style="document"/>
+          <input>
+            <soap:body use="literal"/>
+          </input>
+          <output>
+            <soap:body use="literal"/>
+          </output>
+        </operation>
+      </binding>
+      <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
+        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NumberToWords">
+          <soap12:operation soapAction="" style="document"/>
+          <input>
+            <soap12:body use="literal"/>
+          </input>
+          <output>
+            <soap12:body use="literal"/>
+          </output>
+        </operation>
+        <operation name="NumberToDollars">
+          <soap12:operation soapAction="" style="document"/>
+          <input>
+            <soap12:body use="literal"/>
+          </input>
+          <output>
+            <soap12:body use="literal"/>
+          </output>
+        </operation>
+      </binding>
+      <service name="NumberConversion">
+        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
+         provides functions that convert numbers into words or dollar amounts.</documentation>
+        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
+          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+        </port>
+      </service>
+    </definitions>`,
+      parser = new Wsdl11Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput);
+    services = parser.getServices(parsed);
+    servicePort = parser.getServicePortByBindingName('NumberConversionSoapBinding', services, '');
+    expect(servicePort).to.be.an('object');
+    expect(servicePort[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberConversionSoap');
   });
 
 });
