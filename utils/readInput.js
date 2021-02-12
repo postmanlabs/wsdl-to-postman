@@ -4,7 +4,7 @@ const InputError = require('../lib/inputError'),
 function readInput(input) {
   let xml;
   if (!input.data) {
-    throw new InputError('input.data not provided');
+    throw new InputError('Input.data not provided');
   }
   else if (input.type === 'file') {
     try {

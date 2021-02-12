@@ -6,29 +6,32 @@ const {
 
 module.exports = {
   convert: function(input, options, cb) {
-    const converter = new SchemaPack(input, options);
-    let validationResults = converter.validate();
+    const schema = new SchemaPack(input, options);
+    let validationResults = schema.validate();
     if (validationResults.result) {
-      return converter.convert(cb);
+      return schema.convert(cb);
     }
     return cb(null, validationResult);
   },
 
   validate: function(input) {
-    const converter = new Converter(input);
-    return converter.validate();
+    const schema = new SchemaPack(input);
+    return schema.validate();
   },
 
   getMetaData: function(input, cb) {
-    const converter = new Converter(input);
-    converter.getMetaData(cb);
+    const schema = new SchemaPack(input);
+    schema.getMetaData(cb);
   },
 
   mergeAndValidate: function(input, cb) {
-    const converter = new Converter(input);
-    converter.mergeAndValidate(cb);
+    const schema = new SchemaPack(input);
+    schema.mergeAndValidate(cb);
   },
-
-
-  Converter
+  
+  getOptions: function(mode, criteria) {
+    return {}
+  },
+  
+  SchemaPack
 };

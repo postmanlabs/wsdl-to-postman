@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
-    "lint": "eslint ./lib/** ./test/**/*.js"
+    "lint": "eslint ./lib/** ./test/**/*.js",
+    "coverage": "nyc --reporter=text npm test"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "eslint-plugin-jsdoc": "31.6.1",
     "eslint-plugin-mocha": "8.0.0",
     "eslint-plugin-security": "1.4.0",
-    "mocha": "8.2.0"
+    "mocha": "8.2.0",
+    "nyc": "^15.1.0"
   }
 }

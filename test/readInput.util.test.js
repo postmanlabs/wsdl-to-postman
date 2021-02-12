@@ -11,7 +11,35 @@ describe('readInput utility', function() {
       data
     };
   };
+
   describe('When input.type is "string"', function() {
+    it('Should throw an error when input.data is null, undefined or empty', function() {
+      const nullInput = mockInput(null, 'string'),
+        undefinedInput = mockInput(undefined, 'string'),
+        emptyInput = mockInput('', 'string'),
+        errorExpectedMessage = 'Input.data not provided';
+      try {
+        readInput(nullInput);
+      }
+      catch (inputError) {
+        expect(inputError.message).to.equal(errorExpectedMessage);
+      }
+
+      try {
+        readInput(undefinedInput);
+      }
+      catch (inputError) {
+        expect(inputError.message).to.equal(errorExpectedMessage);
+      }
+
+      try {
+        readInput(emptyInput);
+      }
+      catch (inputError) {
+        expect(inputError.message).to.equal(errorExpectedMessage);
+      }
+    });
+
     it('Should return a string if input.data is a string', function() {
       const input = mockInput('<definitions ...> ... </definitions>', 'string');
       expect(readInput(input)).to.be.a('string');
@@ -37,7 +65,7 @@ describe('readInput utility', function() {
       });
     });
 
-    it('Should return a string if input.data is a file path', function() {
+    it('Should return a string if input.data is a valid file path', function() {
       const input = mockInput(mockFilePath, 'file'),
         result = readInput(input);
       expect(result).to.be.a('string').and.to.equal(mockFileContent);
@@ -50,6 +78,33 @@ describe('readInput utility', function() {
       }
       catch (error) {
         expect(error.message).to.equal(`File ${input.data.split('/').reverse()[0]} not found`);
+      }
+    });
+
+    it('Should throw an error when input.data is null, undefined or empty', function() {
+      const nullInput = mockInput(null, 'string'),
+        undefinedInput = mockInput(undefined, 'string'),
+        emptyInput = mockInput('', 'string'),
+        errorExpectedMessage = 'Input.data not provided';
+      try {
+        readInput(nullInput);
+      }
+      catch (inputError) {
+        expect(inputError.message).to.equal(errorExpectedMessage);
+      }
+
+      try {
+        readInput(undefinedInput);
+      }
+      catch (inputError) {
+        expect(inputError.message).to.equal(errorExpectedMessage);
+      }
+
+      try {
+        readInput(emptyInput);
+      }
+      catch (inputError) {
+        expect(inputError.message).to.equal(errorExpectedMessage);
       }
     });
   });
