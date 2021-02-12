@@ -873,7 +873,7 @@ describe('WSDL 1.1 parser assignNamespaces', function() {
 
 });
 
-describe('WSDL 1.1 parser getPortypeOperations', function() {
+describe('WSDL 1.1 parser getPortTypeOperations', function() {
 
   it('should get an array object representing port operations using default namespace', function() {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
@@ -955,7 +955,7 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
     </definitions>`,
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput),
-      portTypeOperations = parser.getPortypeOperations(
+      portTypeOperations = parser.getPortTypeOperations(
         parsed
       );
     expect(portTypeOperations).to.be.an('array');
@@ -1008,7 +1008,7 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
     </definitions>`,
         parser = new Wsdl11Parser();
       let parsed = parser.parseFromXmlToObject(simpleInput),
-        portTypeOperations = parser.getPortypeOperations(
+        portTypeOperations = parser.getPortTypeOperations(
           parsed
         );
       expect(portTypeOperations).to.be.an('array');
@@ -1057,7 +1057,7 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
     </definitions>`,
         parser = new Wsdl11Parser();
       let parsed = parser.parseFromXmlToObject(simpleInput),
-        portTypeOperations = parser.getPortypeOperations(
+        portTypeOperations = parser.getPortTypeOperations(
           parsed
         );
       expect(portTypeOperations).to.be.an('array');
@@ -1144,7 +1144,7 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
 `,
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput),
-      portTypeOperations = parser.getPortypeOperations(
+      portTypeOperations = parser.getPortTypeOperations(
         parsed
       );
     expect(portTypeOperations).to.be.an('array');
@@ -1153,7 +1153,7 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
 
   it('should throw an error when call with null', function() {
     try {
-      parser.getPortypeOperations(
+      parser.getPortTypeOperations(
         null
       );
       assert.fail('we expected an error');
@@ -1166,7 +1166,7 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
 
   it('should throw an error when call with undefined', function() {
     try {
-      parser.getPortypeOperations(
+      parser.getPortTypeOperations(
         undefined
       );
       assert.fail('we expected an error');
@@ -1178,7 +1178,7 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
 
   it('should throw an error when call with empty object', function() {
     try {
-      parser.getPortypeOperations({});
+      parser.getPortTypeOperations({});
       assert.fail('we expected an error');
     }
     catch (error) {
