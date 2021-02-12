@@ -26,7 +26,7 @@ describe('WSDL 1.1 parser constructor', function() {
 
 });
 
-describe('WSDL 1.1 parser  parseFromXmlToObject', function() {
+describe('WSDL 1.1 parser parseFromXmlToObject', function() {
 
   it('should get an object in memory representing xml object with valid input', function() {
     const simpleInput = `<user is='great'>
@@ -43,7 +43,7 @@ describe('WSDL 1.1 parser  parseFromXmlToObject', function() {
     expect(parsed.user[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'is']).to.equal('great');
 
   });
-  it('should throw an error when input is empty string', function() {
+  it('should throw an error when input is an empty string', function() {
     parser = new Wsdl11Parser();
     try {
       parser.parseFromXmlToObject('');
@@ -95,7 +95,7 @@ describe('WSDL 1.1 parser  parseFromXmlToObject', function() {
   });
 });
 
-describe('WSDL 1.1 parser  getNamespaceByURL', function() {
+describe('WSDL 1.1 parser getNamespaceByURL', function() {
 
   it('should get an object of wsdl namespace when is using wsdl as default <definitions>', function() {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -341,7 +341,7 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
     expect(wsdlnamespace.isDefault).to.equal(false);
   });
 
-  it('should throw an error when url input is empty string', function() {
+  it('should throw an error when url input is an empty string', function() {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -410,7 +410,7 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
     }
   });
 
-  it('should throw an error when parsed is empty string', function() {
+  it('should throw an error when parsed is an empty string', function() {
     const parser = new Wsdl11Parser();
     try {
       parser.getNamespaceByURL(
@@ -494,7 +494,7 @@ describe('WSDL 1.1 parser  getNamespaceByURL', function() {
 
 });
 
-describe('WSDL 1.1 parser  getPrincipalPrefix', function() {
+describe('WSDL 1.1 parser getPrincipalPrefix', function() {
 
   it('should get empty string when called with <definitions>', function() {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -573,7 +573,7 @@ describe('WSDL 1.1 parser  getPrincipalPrefix', function() {
 
 });
 
-describe('WSDL 1.1 parser  getNamespaceBykey', function() {
+describe('WSDL 1.1 parser getNamespaceBykey', function() {
 
   it('should get an object of targetNamespace namespace when is using wsdl as default <definitions>', function() {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -1163,7 +1163,6 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
     }
   });
 
-
   it('should throw an error when call with undefined', function() {
     try {
       parser.getPortypeOperations(
@@ -1176,7 +1175,7 @@ describe('WSDL 1.1 parser getPortypeOperations', function() {
     }
   });
 
-  it('should throw an error when call with empty object', function() {
+  it('should throw an error when call with an empty object', function() {
     try {
       parser.getPortypeOperations({});
       assert.fail('we expected an error');
@@ -1337,7 +1336,6 @@ describe('WSDL 1.1 parser getBindings', function() {
     }
   });
 
-
   it('should throw an error when call with undefined', function() {
     try {
       parser.getBindings(
@@ -1350,7 +1348,7 @@ describe('WSDL 1.1 parser getBindings', function() {
     }
   });
 
-  it('should throw an error when call with empty object', function() {
+  it('should throw an error when call with an empty object', function() {
     try {
       parser.getBindings({});
       assert.fail('we expected an error');
@@ -1516,7 +1514,6 @@ describe('WSDL 1.1 parser getServices', function() {
     }
   });
 
-
   it('should throw an error when call with undefined', function() {
     try {
       parser.getServices(
@@ -1529,7 +1526,7 @@ describe('WSDL 1.1 parser getServices', function() {
     }
   });
 
-  it('should throw an error when call with empty object', function() {
+  it('should throw an error when call with an empty object', function() {
     try {
       parser.getServices({});
       assert.fail('we expected an error');
@@ -1824,7 +1821,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function() {
     }
   });
 
-  it('should throw an error when call getBindingInfoFromBindinTag with binding empty object', function() {
+  it('should throw an error when call getBindingInfoFromBindinTag with binding an empty object', function() {
     const parser = new Wsdl11Parser(),
       soap12Namespace = {
         key: 'soap12',
@@ -2000,7 +1997,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function() {
 
 });
 
-describe('WSDL 1.1 parser getStyleFromOperation', function() {
+describe('WSDL 1.1 parser getStyleFromBindingOperation', function() {
   it('should get style from binding operation when binding is soap', function() {
 
     const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -2780,7 +2777,7 @@ describe('WSDL 1.1 parser getServicePortByBindingName', function() {
     expect(servicePort[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberConversionSoap');
   });
 
-  it('should throw an error when binding name is undefined', function() {
+  it('should throw an error when binding name is null', function() {
     try {
       parser.getServicePortByBindingName(null, {}, '');
       assert.fail('we expected an error');
@@ -2789,7 +2786,7 @@ describe('WSDL 1.1 parser getServicePortByBindingName', function() {
       expect(error.message).to.equal('BindingName must have a value');
     }
   });
-  it('should throw an error when binding name is null', function() {
+  it('should throw an error when binding name is undefined', function() {
     try {
       parser.getServicePortByBindingName(undefined, {}, '');
       assert.fail('we expected an error');
@@ -2798,7 +2795,7 @@ describe('WSDL 1.1 parser getServicePortByBindingName', function() {
       expect(error.message).to.equal('BindingName must have a value');
     }
   });
-  it('should throw an error when binding name is string empty', function() {
+  it('should throw an error when binding name is an empty string', function() {
     try {
       parser.getServicePortByBindingName('', {}, '');
       assert.fail('we expected an error');
@@ -2846,7 +2843,7 @@ describe('WSDL 1.1 parser getServicePortByBindingName', function() {
       expect(error.message).to.equal('Can not get service port from undefined or null object');
     }
   });
-  it('should throw an error when services is empty object', function() {
+  it('should throw an error when services is an empty object', function() {
     try {
       parser.getServicePortByBindingName('somename', {}, 'principal prefix');
       assert.fail('we expected an error');
@@ -2942,7 +2939,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
   });
 
 
-  it('should throw an error when binding name is undefined', function() {
+  it('should throw an error when binding name is null', function() {
     try {
       parser.getServiceByBindingName(null, {}, '');
       assert.fail('we expected an error');
@@ -2951,7 +2948,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
       expect(error.message).to.equal('BindingName must have a value');
     }
   });
-  it('should throw an error when binding name is null', function() {
+  it('should throw an error when binding name is undefined', function() {
     try {
       parser.getServiceByBindingName(undefined, {}, '');
       assert.fail('we expected an error');
@@ -2960,7 +2957,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
       expect(error.message).to.equal('BindingName must have a value');
     }
   });
-  it('should throw an error when binding name is string empty', function() {
+  it('should throw an error when binding name is an empty string', function() {
     try {
       parser.getServiceByBindingName('', {}, '');
       assert.fail('we expected an error');
@@ -3008,7 +3005,8 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
       expect(error.message).to.equal('Can not get service port from undefined or null object');
     }
   });
-  it('should throw an error when services is empty object', function() {
+
+  it('should throw an error when services is an empty object', function() {
     try {
       parser.getServiceByBindingName('somename', {}, 'principal prefix');
       assert.fail('we expected an error');
@@ -3129,7 +3127,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
     }
   });
 
-  it('should throw an error when parsedxml is empty object', function() {
+  it('should throw an error when parsedxml is an empty object', function() {
     try {
       const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
@@ -3166,7 +3164,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
     }
   });
 
-  it('should throw an error when portTypeName is string empty', function() {
+  it('should throw an error when portTypeName is an empty string', function() {
     try {
       const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('',
@@ -3202,7 +3200,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
     }
   });
 
-  it('should throw an error when operationName is string empty', function() {
+  it('should throw an error when operationName is an empty string', function() {
     try {
       const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('ddd',
