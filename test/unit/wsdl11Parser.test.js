@@ -2,6 +2,9 @@ const expect = require('chai').expect,
   assert = require('chai').assert,
   WsdlObject = require('../../lib/WsdlObject').WsdlObject,
   {
+    POST_METHOD
+  } = require('../../lib/utils/httpUtils'),
+  {
     Wsdl11Parser,
     WSDL_NS_URL,
     SOAP_NS_URL,
@@ -10,7 +13,6 @@ const expect = require('chai').expect,
     TARGETNAMESPACE_KEY,
     TNS_NS_KEY,
     SOAP_PROTOCOL,
-    POST_METHOD,
     SOAP12_PROTOCOL,
     HTTP_PROTOCOL,
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
@@ -3105,7 +3107,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when parsedxml is null', function() {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
         'NumberToWords', null, '');
       assert.fail('we expected an error');
@@ -3117,7 +3119,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when parsedxml is undefined', function() {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
         'NumberToWords', undefined, '');
       assert.fail('we expected an error');
@@ -3129,7 +3131,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when parsedxml is empty object', function() {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
@@ -3154,7 +3156,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when portTypeName is undefined', function() {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName(undefined,
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
@@ -3166,7 +3168,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when portTypeName is string empty', function() {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('',
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
@@ -3178,7 +3180,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when operationName is null', function() {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('some string',
         null, {}, '');
       assert.fail('we expected an error');
@@ -3190,7 +3192,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when operationName is undefined', function() {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('some string',
         undefined, {}, '');
       assert.fail('we expected an error');
@@ -3202,7 +3204,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when operationName is string empty', function() {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName('ddd',
         '', {}, '');
       assert.fail('we expected an error');
@@ -3211,7 +3213,6 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       expect(error.message).to.equal('Can not get port type with no filter operationName');
     }
   });
-
 
 });
 
@@ -3410,5 +3411,16 @@ name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesse
         });
 
     });
+
+  it('should throw an error when parsedxml is null', function() {
+    try {
+      const parser = new Wsdl11Parser();
+      parser.getWsdlObject(null);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('xmlDocumentContent must have a value');
+    }
+  });
 
 });
