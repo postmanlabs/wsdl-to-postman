@@ -1,7 +1,7 @@
 const expect = require('chai').expect,
   {
     Validator
-  } = require('./../lib/Validator');
+  } = require('./../../lib/Validator');
 
 describe('Validator result', function() {
   it('Should return a validatorResult format', function() {
