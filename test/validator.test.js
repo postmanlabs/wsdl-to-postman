@@ -77,8 +77,8 @@ describe('Validator validate', function() {
   });
 
   it(
-    'Should return a failed validationResult when input.data does not contains "definitions>" or "description>" \
-      string"',
+    `Should return a failed validationResult when input.data does not contains "definitions>" or "description>"
+    string`,
     function() {
       const input = mockInput('Does not contains WSDL validation', 'string'),
         validator = new Validator();
@@ -95,14 +95,16 @@ describe('Validator validate', function() {
     expect(validator.validate(input)).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: `Invalid input type (${input.type}). Type must be file/json/string.`
+        reason: `Invalid input type (${input.type}). Type must be file/string.`
       });
   });
 
-  it('Should return a successful validationResult if input.data is a "string" and contains wsdl "definitions>" \
-    or "description>" tags', function() {
+  it(
+    `Should return a successful validationResult if input.data is a "string" and contains wsdl "definitions>"
+    or "description>" tags`,
+    function() {
       const definitionsInput = mockInput('<definitions ...> ... </ definitions>', 'string'),
-      descriptionInput = mockInput('<description ...> ... </ description>', 'string'),
+        descriptionInput = mockInput('<description ...> ... </ description>', 'string'),
         validator = new Validator();
       expect(validator.validate(definitionsInput)).to.be.an('object')
         .and.to.include({
@@ -114,5 +116,5 @@ describe('Validator validate', function() {
           result: true,
           reason: 'Success'
         });
-    })
+    });
 });
