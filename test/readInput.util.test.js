@@ -13,27 +13,36 @@ describe('readInput utility', function() {
   };
 
   describe('When input.type is "string"', function() {
-    it('Should throw an error when input.data is null, undefined or empty', function() {
+    it('Should throw an error when input.data is null', function() {
       const nullInput = mockInput(null, 'string'),
-        undefinedInput = mockInput(undefined, 'string'),
-        emptyInput = mockInput('', 'string'),
         errorExpectedMessage = 'Input.data not provided';
       try {
         readInput(nullInput);
+        assert.fail('we expected an error');
       }
       catch (inputError) {
         expect(inputError.message).to.equal(errorExpectedMessage);
       }
+    });
 
+    it('Should throw an error when input.data is undefined', function() {
+      const undefinedInput = mockInput(undefined, 'string'),
+        errorExpectedMessage = 'Input.data not provided';
       try {
         readInput(undefinedInput);
+        assert.fail('we expected an error');
       }
       catch (inputError) {
         expect(inputError.message).to.equal(errorExpectedMessage);
       }
+    });
 
+    it('Should throw an error when input.data is empty', function() {
+      const emptyInput = mockInput('', 'string'),
+        errorExpectedMessage = 'Input.data not provided';
       try {
         readInput(emptyInput);
+        assert.fail('we expected an error');
       }
       catch (inputError) {
         expect(inputError.message).to.equal(errorExpectedMessage);
@@ -75,33 +84,43 @@ describe('readInput utility', function() {
       const input = mockInput('this/path/does/not/exists.txt', 'file');
       try {
         readInput(input);
+        assert.fail('we expected an error');
       }
       catch (error) {
         expect(error.message).to.equal(`File ${input.data.split('/').reverse()[0]} not found`);
       }
     });
 
-    it('Should throw an error when input.data is null, undefined or empty', function() {
+    it('Should throw an error when input.data is null', function() {
       const nullInput = mockInput(null, 'string'),
-        undefinedInput = mockInput(undefined, 'string'),
-        emptyInput = mockInput('', 'string'),
         errorExpectedMessage = 'Input.data not provided';
       try {
         readInput(nullInput);
+        assert.fail('we expected an error');
       }
       catch (inputError) {
         expect(inputError.message).to.equal(errorExpectedMessage);
       }
+    });
 
+    it('Should throw an error when input.data is undefined', function() {
+      const undefinedInput = mockInput(undefined, 'string'),
+        errorExpectedMessage = 'Input.data not provided';
       try {
         readInput(undefinedInput);
+        assert.fail('we expected an error');
       }
       catch (inputError) {
         expect(inputError.message).to.equal(errorExpectedMessage);
       }
+    });
 
+    it('Should throw an error when input.data is empty', function() {
+      const emptyInput = mockInput('', 'string'),
+        errorExpectedMessage = 'Input.data not provided';
       try {
         readInput(emptyInput);
+        assert.fail('we expected an error');
       }
       catch (inputError) {
         expect(inputError.message).to.equal(errorExpectedMessage);

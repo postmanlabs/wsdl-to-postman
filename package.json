@@ -34,6 +34,6 @@
     "eslint-plugin-mocha": "8.0.0",
     "eslint-plugin-security": "1.4.0",
     "mocha": "8.2.0",
-    "nyc": "^15.1.0"
+    "nyc": "15.1.0"
   }
 }
