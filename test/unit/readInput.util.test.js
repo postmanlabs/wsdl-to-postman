@@ -2,7 +2,7 @@ const expect = require('chai').expect,
   fs = require('fs'),
   {
     readInput
-  } = require('./../../utils/readInput');
+  } = require('../../lib/utils/readInput');
 
 describe('readInput utility', function() {
   const mockInput = function(data = '', type = 'string') {
