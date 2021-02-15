@@ -25,6 +25,4 @@ describe('Http Utils getHttpVerb', function() {
     const method = getHttpVerb('pOsT');
     expect(method).to.equal(POST_METHOD);
   });
-
-
 });

@@ -3,7 +3,7 @@ const expect = require('chai').expect,
     BFSSoapParametersHelper
   } = require('../../lib/utils/BFSSoapParametersHelper');
 
-describe('BFSSoapParametersHelper', function() {
+describe('BFSSoapParametersHelper traverse', function() {
   it('Should get a json object when NumberToWords->ubinum is sent', function() {
     const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
       child = {
@@ -19,7 +19,7 @@ describe('BFSSoapParametersHelper', function() {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.Traverse(node, 'soap');
+      jsonObjectMessage = bFSSoapParametersHelper.traverse(node, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.have.own.property('soap:Envelope');
     expect(jsonObjectMessage['soap:Envelope']).to.have.own.property('soap:Body');
@@ -63,7 +63,7 @@ describe('BFSSoapParametersHelper', function() {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.Traverse(node, 'soap');
+      jsonObjectMessage = bFSSoapParametersHelper.traverse(node, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.have.own.property('soap:Envelope');
     expect(jsonObjectMessage['soap:Envelope']).to.have.own.property('soap:Body');
@@ -83,5 +83,59 @@ describe('BFSSoapParametersHelper', function() {
       .to.equal('this is a string');
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel.email)
       .to.equal('this is a string');
+  });
+
+  it('Should get an empty json object when null is sent', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      jsonObjectMessage = bFSSoapParametersHelper.traverse(null, 'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+    expect(jsonObjectMessage).to.be.empty;
+  });
+
+  it('Should get an empty json object when undefined is sent', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      jsonObjectMessage = bFSSoapParametersHelper.traverse(undefined, 'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+    expect(jsonObjectMessage).to.be.empty;
+  });
+
+});
+
+describe('BFSSoapParametersHelper getValueExample', function() {
+  it('should get a number when called with "unsignedLong"', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      example = bFSSoapParametersHelper.getValueExample('unsignedLong');
+    expect(example).to.be.a('number');
+  });
+
+  it('should get a number when called with "int"', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      example = bFSSoapParametersHelper.getValueExample('int');
+    expect(example).to.be.a('number');
+  });
+
+  it('should get a string when called with "string"', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      example = bFSSoapParametersHelper.getValueExample('string');
+    expect(example).to.be.a('string');
+  });
+
+  it('should get a string when called with "dfdfsdfsdf"', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      example = bFSSoapParametersHelper.getValueExample('dfdfsdfsdf');
+    expect(example).to.be.a('string');
+  });
+
+});
+
+describe('BFSSoapParametersHelper assignPropertyValue', function() {
+  it('should get modify the object assign the new property "property" with "value"', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper();
+    let obj = {
+      parent: {}
+    };
+    bFSSoapParametersHelper.assignPropertyValue(obj, 'parent', 'property', 'value');
+    expect(obj).to.be.a('object');
+    expect(obj.parent.property).to.equal('value');
   });
 });
