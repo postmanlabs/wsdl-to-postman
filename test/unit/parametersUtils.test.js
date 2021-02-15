@@ -2,10 +2,6 @@ const expect = require('chai').expect,
   {
     SOAPParametersUtils
   } = require('../../lib/utils/SOAPParametersUtils'),
-  {
-    BFSSoapParametersHelper
-  } = require('../../lib/utils/BFSSoapParametersHelper'),
-  Parser = require('fast-xml-parser').j2xParser,
   fs = require('fs'),
   json = {
     'soap:Envelope': {
@@ -27,15 +23,27 @@ describe('ParamtersUtils  constructor', function() {
 });
 
 describe('ParamtersUtils buildObjectParameters', function() {
-  it('should get an string representing the xml', function() {
+  it('should get an object correctly created', function() {
     const parametersUtils = new SOAPParametersUtils(),
-      objectParameters = parametersUtils.buildObjectParameters('soap');
-    expect(objectParameters).to.be.an('object');
-    expect(objectParameters['soap:Envelope']).to.equal('envelopKey');
-    expect(objectParameters['soap:Body']).to.equal('bodyKey');
-
+      child = {
+        children: [],
+        name: 'ubiNum',
+        isComplex: false,
+        type: 'unsignedLong'
+      },
+      node = {
+        children: [child],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      jsonObjectMessage = parametersUtils.buildObjectParameters(node, 'soap');
+    expect(jsonObjectMessage).to.be.an('object');
   });
+
 });
+
 describe('ParamtersUtils parseObjectToXML', function() {
   it('should get an string representing the xml', function() {
     const parametersUtils = new SOAPParametersUtils(),
