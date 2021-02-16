@@ -93,8 +93,8 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       '<ubiNum>500</ubiNum>' +
       '</NumberToWords>' +
       '</soap:Body>' +
-      '</soap:Envelope>'
-    child = {
+      '</soap:Envelope>',
+      child = {
         children: [],
         name: 'ubiNum',
         isComplex: false,
@@ -109,7 +109,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       },
       xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
-    expect(xmlParameters.replace(/[\r\n\s]+/g, "")).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ""));
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
     fs.writeFileSync('temp3.xml', xmlParameters);
   });
 
@@ -161,7 +161,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       },
       xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
-    expect(xmlParameters.replace(/[\r\n\s]+/g, "")).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ""));
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
     fs.writeFileSync('temp3.xml', xmlParameters);
   });
 });
