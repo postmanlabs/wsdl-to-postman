@@ -120,16 +120,21 @@ describe('BFSSoapParametersHelper getValueExample', function() {
     expect(example).to.be.a('string');
   });
 
-  it('should get a string when called with "dfdfsdfsdf"', function() {
+  it('should get a string when called with an empty string', function() {
     const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      example = bFSSoapParametersHelper.getValueExample('dfdfsdfsdf');
+      example = bFSSoapParametersHelper.getValueExample('');
     expect(example).to.be.a('string');
   });
 
+  it('should get default value when called with null', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      example = bFSSoapParametersHelper.getValueExample(null);
+    expect(example).to.equal('default value');
+  });
 });
 
 describe('BFSSoapParametersHelper assignPropertyValue', function() {
-  it('should get modify the object assign the new property "property" with "value"', function() {
+  it('should assign the property "property" with "value" to object', function() {
     const bFSSoapParametersHelper = new BFSSoapParametersHelper();
     let obj = {
       parent: {}
@@ -155,12 +160,18 @@ describe('BFSSoapParametersHelper BFSSoapParametersHelper', function() {
     expect(url).to.equal('http://www.w3.org/2003/05/soap-envelope');
   });
 
-  it('should get http://schemas.xmlsoap.org/soap/envelope/ when asdasd is the protocol', function() {
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when dummy is the protocol', function() {
     const parametersUtils = new BFSSoapParametersHelper(),
-      url = parametersUtils.getSOAPNamespaceFromProtocol('soaasdasd');
+      url = parametersUtils.getSOAPNamespaceFromProtocol('dummy');
     expect(url).to.be.an('string');
     expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
 
   });
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when null is the protocol', function() {
+    const parametersUtils = new BFSSoapParametersHelper(),
+      url = parametersUtils.getSOAPNamespaceFromProtocol(null);
+    expect(url).to.be.an('string');
+    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
 
+  });
 });

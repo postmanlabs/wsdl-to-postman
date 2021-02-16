@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "fast-xml-parser": "3.18.0",
-    "traverse": "^0.6.6"
+    "traverse": "0.6.6"
   }
 }
