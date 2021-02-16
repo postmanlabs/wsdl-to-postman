@@ -18,9 +18,16 @@ describe('SchemaBuilder getTypes', function() {
 
   it('should get an array of types', function() {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
-    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://www.dataaccess.com/webservicesserver/" name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+       xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+        xmlns:tns="http://www.dataaccess.com/webservicesserver/"
+         name="NumberConversion" 
+         targetNamespace="http://www.dataaccess.com/webservicesserver/">
       <types>
-        <xs:schema elementFormDefault="qualified" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+        <xs:schema elementFormDefault="qualified"
+         targetNamespace="http://www.dataaccess.com/webservicesserver/">
           <xs:element name="NumberToWords">
             <xs:complexType>
               <xs:sequence>
@@ -51,9 +58,8 @@ describe('SchemaBuilder getTypes', function() {
           </xs:element>
         </xs:schema>
       </types>
-    </definitions>`
-
-    parser = new Wsdl11Parser(),
+    </definitions>`,
+      parser = new Wsdl11Parser(),
       builder = new SchemaBuilder();
     let parsed = parser.parseFromXmlToObject(simpleInput),
       types = builder.getTypes(
@@ -101,9 +107,15 @@ describe('SchemaBuilder getElements', function() {
 
   it('should get an array of types', function() {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
-    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://www.dataaccess.com/webservicesserver/" name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
       <types>
-        <xs:schema elementFormDefault="qualified" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+        <xs:schema elementFormDefault="qualified"
+         targetNamespace="http://www.dataaccess.com/webservicesserver/">
           <xs:element name="NumberToWords">
             <xs:complexType>
               <xs:sequence>
@@ -113,9 +125,8 @@ describe('SchemaBuilder getElements', function() {
           </xs:element>
         </xs:schema>
       </types>
-    </definitions>`
-
-    parser = new Wsdl11Parser(),
+    </definitions>`,
+      parser = new Wsdl11Parser(),
       builder = new SchemaBuilder();
     let parsed = parser.parseFromXmlToObject(simpleInput),
       types = builder.getElements(
