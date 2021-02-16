@@ -2,7 +2,7 @@ const expect = require('chai').expect,
   {
     SOAPParametersUtils
   } = require('../../lib/utils/SOAPParametersUtils'),
-  // fs = require('fs'),
+  fs = require('fs'),
   json = {
     'soap:Envelope': {
       '@_xmlns:soap': 'http://schemas.xmlsoap.org/soap/envelope/',
@@ -15,14 +15,14 @@ const expect = require('chai').expect,
     }
   };
 
-describe('ParamtersUtils  constructor', function() {
+describe('ParametersUtils  constructor', function() {
   it('should get an object for the factory with empty input', function() {
     const parametersUtils = new SOAPParametersUtils();
     expect(parametersUtils).to.be.an('object');
   });
 });
 
-describe('ParamtersUtils buildObjectParameters', function() {
+describe('ParametersUtils buildObjectParameters', function() {
   it('should get an object correctly created', function() {
     const parametersUtils = new SOAPParametersUtils(),
       child = {
@@ -44,7 +44,7 @@ describe('ParamtersUtils buildObjectParameters', function() {
 
 });
 
-describe('ParamtersUtils parseObjectToXML', function() {
+describe('ParametersUtils parseObjectToXML', function() {
   it('should get an string representing the xml', function() {
     const parametersUtils = new SOAPParametersUtils(),
       xmlParameters = parametersUtils.parseObjectToXML(json);
@@ -80,5 +80,88 @@ describe('ParamtersUtils parseObjectToXML', function() {
     catch (error) {
       expect(error.message).to.equal('Cannot convert undefined or null to object');
     }
+  });
+});
+
+describe('ParametersUtils converObjectParametersToXML', function() {
+  it('should get an string representing the xml of the corresponding nodes ex1', function() {
+    const parametersUtils = new SOAPParametersUtils(),
+      xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">' +
+      '<ubiNum>500</ubiNum>' +
+      '</NumberToWords>' +
+      '</soap:Body>' +
+      '</soap:Envelope>'
+    child = {
+        children: [],
+        name: 'ubiNum',
+        isComplex: false,
+        type: 'unsignedLong'
+      },
+      node = {
+        children: [child],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, "")).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ""));
+    fs.writeFileSync('temp3.xml', xmlParameters);
+  });
+
+  it('should get an string representing the xml of the corresponding nodes ex2', function() {
+    const parametersUtils = new SOAPParametersUtils(),
+      xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+      '<soap:Envelope' +
+      'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<TestCustomModel xmlns="http://tempuri.org/">' +
+      '<inputModel>' +
+      '<Id>1</Id>' +
+      '<Name> this is a string </Name>' +
+      '<Email> this is a string</Email>' +
+      '</inputModel>' +
+      '</TestCustomModel>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
+      grandChild1 = {
+        children: [],
+        name: 'Id',
+        isComplex: false,
+        type: 'int'
+      },
+      grandChild2 = {
+        children: [],
+        name: 'Name',
+        isComplex: false,
+        type: 'string'
+      },
+      grandChild3 = {
+        children: [],
+        name: 'Email',
+        isComplex: false,
+        type: 'string'
+      },
+      child = {
+        children: [grandChild1, grandChild2, grandChild3],
+        name: 'inputModel',
+        isComplex: true,
+        type: 'MyCustomModel'
+      },
+      node = {
+        children: [child],
+        name: 'TestCustomModel',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://tempuri.org/'
+      },
+      xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, "")).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ""));
+    fs.writeFileSync('temp3.xml', xmlParameters);
   });
 });

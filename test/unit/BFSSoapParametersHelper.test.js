@@ -139,3 +139,41 @@ describe('BFSSoapParametersHelper assignPropertyValue', function() {
     expect(obj.parent.property).to.equal('value');
   });
 });
+
+
+describe('BFSSoapParametersHelper assignPropertyValue', function() {
+  it('should get modify the object assign the new property "property" with "value"', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper();
+    let obj = {
+      parent: {}
+    };
+    bFSSoapParametersHelper.assignPropertyValue(obj, 'parent', 'property', 'value');
+    expect(obj).to.be.a('object');
+    expect(obj.parent.property).to.equal('value');
+  });
+});
+
+describe('BFSSoapParametersHelper BFSSoapParametersHelper', function() {
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap is the protocol', function() {
+    const parametersUtils = new BFSSoapParametersHelper(),
+      url = parametersUtils.getSOAPNamespaceFromProtocol('soap');
+    expect(url).to.be.an('string');
+    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
+  });
+
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap12 is the protocol', function() {
+    const parametersUtils = new BFSSoapParametersHelper(),
+      url = parametersUtils.getSOAPNamespaceFromProtocol('soap12');
+    expect(url).to.be.an('string');
+    expect(url).to.equal('http://www.w3.org/2003/05/soap-envelope');
+  });
+
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when asdasd is the protocol', function() {
+    const parametersUtils = new BFSSoapParametersHelper(),
+      url = parametersUtils.getSOAPNamespaceFromProtocol('soaasdasd');
+    expect(url).to.be.an('string');
+    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
+
+  });
+
+});
