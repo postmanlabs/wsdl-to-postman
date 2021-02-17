@@ -134,12 +134,12 @@ describe('WsdlToPostmanCollectionMapper constructor', function() {
   it('Should throw an error if wsdlObject is undefined', function() {
     const undefinedWsdl = undefined,
       expectedMessage = 'Wsdl Object must be provided and must not be empty';
-    let mapper;
     try {
-      mapper = new WsdlToPostmanCollectionMapper(undefinedWsdl);
+      let mapper = new WsdlToPostmanCollectionMapper(undefinedWsdl);
       assert.fail('We expect an error');
-    } 
-    catch(error) {
+      return mapper;
+    }
+    catch (error) {
       expect(error.message).to.equal(expectedMessage);
     }
   });
@@ -147,12 +147,12 @@ describe('WsdlToPostmanCollectionMapper constructor', function() {
   it('Should throw an error if wsdlObject is null', function() {
     const nullWsdl = null,
       expectedMessage = 'Wsdl Object must be provided and must not be empty';
-      let mapper;
     try {
-      mapper = new WsdlToPostmanCollectionMapper(nullWsdl);
+      let mapper = new WsdlToPostmanCollectionMapper(nullWsdl);
       assert.fail('We expect an error');
-    } 
-    catch(error) {
+      return mapper;
+    }
+    catch (error) {
       expect(error.message).to.equal(expectedMessage);
     }
   });
