@@ -1,3 +1,4 @@
+const { assert } = require('chai');
 const {
   Collection
 } = require('postman-collection');
@@ -128,6 +129,32 @@ describe('WsdlToPostmanCollectionMapper constructor', function() {
   it('Should return a WsdlToPostmanCollectionMapper object', function() {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
     expect(mapper instanceof WsdlToPostmanCollectionMapper).to.be.true;
+  });
+
+  it('Should throw an error if wsdlObject is undefined', function() {
+    const undefinedWsdl = undefined,
+      expectedMessage = 'Wsdl Object must be provided and must not be empty';
+    let mapper;
+    try {
+      mapper = new WsdlToPostmanCollectionMapper(undefinedWsdl);
+      assert.fail('We expect an error');
+    } 
+    catch(error) {
+      expect(error.message).to.equal(expectedMessage);
+    }
+  });
+
+  it('Should throw an error if wsdlObject is null', function() {
+    const nullWsdl = null,
+      expectedMessage = 'Wsdl Object must be provided and must not be empty';
+      let mapper;
+    try {
+      mapper = new WsdlToPostmanCollectionMapper(nullWsdl);
+      assert.fail('We expect an error');
+    } 
+    catch(error) {
+      expect(error.message).to.equal(expectedMessage);
+    }
   });
 });
 
