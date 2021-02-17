@@ -583,16 +583,16 @@ describe('SchemaBuilder getElements', function() {
     expect(types[0].name).to.equal('NumberToWords');
     expect(types[0].isComplex).to.equal(true);
     expect(types[0].type).to.equal('complex');
-    expect(types[0].minOccurs).to.equal(1);
-    expect(types[0].maxOccurs).to.equal(1);
+    expect(types[0].minOccurs).to.equal('1');
+    expect(types[0].maxOccurs).to.equal('1');
     expect(types[0].namespace).to.equal('http://www.dataaccess.com/webservicesserver/');
     expect(types[0].children).to.be.an('array');
 
     expect(types[0].children[0].name).to.equal('ubiNum');
     expect(types[0].children[0].isComplex).to.equal(false);
     expect(types[0].children[0].type).to.equal('unsignedLong');
-    expect(types[0].children[0].minOccurs).to.equal(1);
-    expect(types[0].children[0].maxOccurs).to.equal(1);
+    expect(types[0].children[0].minOccurs).to.equal('1');
+    expect(types[0].children[0].maxOccurs).to.equal('1');
     expect(types[0].children[0].children).to.be.an('array');
     expect(types[0].children[0].children).to.be.empty;
   });
@@ -652,64 +652,64 @@ describe('SchemaBuilder getElements', function() {
     expect(types[0].name).to.equal('NumberToWords');
     expect(types[0].isComplex).to.equal(true);
     expect(types[0].type).to.equal('complex');
-    expect(types[0].minOccurs).to.equal(1);
-    expect(types[0].maxOccurs).to.equal(1);
+    expect(types[0].minOccurs).to.equal('1');
+    expect(types[0].maxOccurs).to.equal('1');
     expect(types[0].namespace).to.equal('http://www.dataaccess.com/webservicesserver/');
     expect(types[0].children).to.be.an('array');
 
     expect(types[0].children[0].name).to.equal('ubiNum');
     expect(types[0].children[0].isComplex).to.equal(false);
     expect(types[0].children[0].type).to.equal('unsignedLong');
-    expect(types[0].children[0].minOccurs).to.equal(1);
-    expect(types[0].children[0].maxOccurs).to.equal(1);
+    expect(types[0].children[0].minOccurs).to.equal('1');
+    expect(types[0].children[0].maxOccurs).to.equal('1');
     expect(types[0].children[0].children).to.be.an('array');
     expect(types[0].children[0].children).to.be.empty;
 
     expect(types[1].name).to.equal('NumberToWordsResponse');
     expect(types[1].isComplex).to.equal(true);
     expect(types[1].type).to.equal('complex');
-    expect(types[1].minOccurs).to.equal(1);
-    expect(types[1].maxOccurs).to.equal(1);
+    expect(types[1].minOccurs).to.equal('1');
+    expect(types[1].maxOccurs).to.equal('1');
     expect(types[1].namespace).to.equal('http://www.dataaccess.com/webservicesserver/');
     expect(types[1].children).to.be.an('array');
 
     expect(types[1].children[0].name).to.equal('NumberToWordsResult');
     expect(types[1].children[0].isComplex).to.equal(false);
     expect(types[1].children[0].type).to.equal('string');
-    expect(types[1].children[0].minOccurs).to.equal(1);
-    expect(types[1].children[0].maxOccurs).to.equal(1);
+    expect(types[1].children[0].minOccurs).to.equal('1');
+    expect(types[1].children[0].maxOccurs).to.equal('1');
     expect(types[1].children[0].children).to.be.an('array');
     expect(types[1].children[0].children).to.be.empty;
 
     expect(types[2].name).to.equal('NumberToDollars');
     expect(types[2].isComplex).to.equal(true);
     expect(types[2].type).to.equal('complex');
-    expect(types[2].minOccurs).to.equal(1);
-    expect(types[2].maxOccurs).to.equal(1);
+    expect(types[2].minOccurs).to.equal('1');
+    expect(types[2].maxOccurs).to.equal('1');
     expect(types[2].namespace).to.equal('http://www.dataaccess.com/webservicesserver/');
     expect(types[2].children).to.be.an('array');
 
     expect(types[2].children[0].name).to.equal('dNum');
     expect(types[2].children[0].isComplex).to.equal(false);
     expect(types[2].children[0].type).to.equal('decimal');
-    expect(types[2].children[0].minOccurs).to.equal(1);
-    expect(types[2].children[0].maxOccurs).to.equal(1);
+    expect(types[2].children[0].minOccurs).to.equal('1');
+    expect(types[2].children[0].maxOccurs).to.equal('1');
     expect(types[2].children[0].children).to.be.an('array');
     expect(types[2].children[0].children).to.be.empty;
 
     expect(types[3].name).to.equal('NumberToDollarsResponse');
     expect(types[3].isComplex).to.equal(true);
     expect(types[3].type).to.equal('complex');
-    expect(types[3].minOccurs).to.equal(1);
-    expect(types[3].maxOccurs).to.equal(1);
+    expect(types[3].minOccurs).to.equal('1');
+    expect(types[3].maxOccurs).to.equal('1');
     expect(types[3].namespace).to.equal('http://www.dataaccess.com/webservicesserver/');
     expect(types[3].children).to.be.an('array');
 
     expect(types[3].children[0].name).to.equal('NumberToDollarsResult');
     expect(types[3].children[0].isComplex).to.equal(false);
     expect(types[3].children[0].type).to.equal('string');
-    expect(types[3].children[0].minOccurs).to.equal(1);
-    expect(types[3].children[0].maxOccurs).to.equal(1);
+    expect(types[3].children[0].minOccurs).to.equal('1');
+    expect(types[3].children[0].maxOccurs).to.equal('1');
     expect(types[3].children[0].children).to.be.an('array');
     expect(types[3].children[0].children).to.be.empty;
   });
@@ -770,42 +770,42 @@ describe('SchemaBuilder getElements', function() {
     expect(types[0].name).to.equal('TestCustomModel');
     expect(types[0].isComplex).to.equal(true);
     expect(types[0].type).to.equal('complex');
-    expect(types[0].minOccurs).to.equal(1);
-    expect(types[0].maxOccurs).to.equal(1);
+    expect(types[0].minOccurs).to.equal('1');
+    expect(types[0].maxOccurs).to.equal('1');
     expect(types[0].namespace).to.equal('http://tempuri.org/');
     expect(types[0].children).to.be.an('array');
 
     expect(types[0].children[0].name).to.equal('inputModel');
     expect(types[0].children[0].isComplex).to.equal(true);
-    expect(types[0].children[0].type).to.equal('MyCustomModel');
-    expect(types[0].children[0].minOccurs).to.equal(1);
-    expect(types[0].children[0].maxOccurs).to.equal(1);
+    expect(types[0].children[0].type).to.equal('tns:MyCustomModel'); // revisar
+    expect(types[0].children[0].minOccurs).to.equal('0');
+    expect(types[0].children[0].maxOccurs).to.equal('1');
     expect(types[0].children[0].children).to.be.an('array');
-    expect(types[0].children[0].children).to.be.empty;
+    expect(types[0].children[0].children.length).to.equal(3);
 
-    expect(types[0].children[0].name).to.equal('Id');
-    expect(types[0].children[0].isComplex).to.equal(false);
-    expect(types[0].children[0].type).to.equal('int');
-    expect(types[0].children[0].minOccurs).to.equal(1);
-    expect(types[0].children[0].maxOccurs).to.equal(1);
-    expect(types[0].children[0].children).to.be.an('array');
-    expect(types[0].children[0].children).to.be.empty;
+    expect(types[0].children[0].children[0].name).to.equal('Id');
+    expect(types[0].children[0].children[0].isComplex).to.equal(false);
+    expect(types[0].children[0].children[0].type).to.equal('int');
+    expect(types[0].children[0].children[0].minOccurs).to.equal('1');
+    expect(types[0].children[0].children[0].maxOccurs).to.equal('1');
+    expect(types[0].children[0].children[0].children).to.be.an('array');
+    expect(types[0].children[0].children[0].children).to.be.empty;
 
-    expect(types[0].children[0].name).to.equal('Name');
-    expect(types[0].children[0].isComplex).to.equal(false);
-    expect(types[0].children[0].type).to.equal('string');
-    expect(types[0].children[0].minOccurs).to.equal(0);
-    expect(types[0].children[0].maxOccurs).to.equal(1);
-    expect(types[0].children[0].children).to.be.an('array');
-    expect(types[0].children[0].children).to.be.empty;
+    expect(types[0].children[0].children[1].name).to.equal('Name');
+    expect(types[0].children[0].children[1].isComplex).to.equal(false);
+    expect(types[0].children[0].children[1].type).to.equal('string');
+    expect(types[0].children[0].children[1].minOccurs).to.equal('0');
+    expect(types[0].children[0].children[1].maxOccurs).to.equal('1');
+    expect(types[0].children[0].children[1].children).to.be.an('array');
+    expect(types[0].children[0].children[1].children).to.be.empty;
 
-    expect(types[0].children[0].name).to.equal('Email');
-    expect(types[0].children[0].isComplex).to.equal(false);
-    expect(types[0].children[0].type).to.equal('string');
-    expect(types[0].children[0].minOccurs).to.equal(0);
-    expect(types[0].children[0].maxOccurs).to.equal(1);
-    expect(types[0].children[0].children).to.be.an('array');
-    expect(types[0].children[0].children).to.be.empty;
+    expect(types[0].children[0].children[2].name).to.equal('Email');
+    expect(types[0].children[0].children[2].isComplex).to.equal(false);
+    expect(types[0].children[0].children[2].type).to.equal('string');
+    expect(types[0].children[0].children[2].minOccurs).to.equal('0');
+    expect(types[0].children[0].children[2].maxOccurs).to.equal('1');
+    expect(types[0].children[0].children[2].children).to.be.an('array');
+    expect(types[0].children[0].children[2].children).to.be.empty;
   });
 
 
