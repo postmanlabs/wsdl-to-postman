@@ -777,7 +777,7 @@ describe('SchemaBuilder getElements', function() {
 
     expect(types[0].children[0].name).to.equal('inputModel');
     expect(types[0].children[0].isComplex).to.equal(true);
-    expect(types[0].children[0].type).to.equal('tns:MyCustomModel'); // revisar
+    expect(types[0].children[0].type).to.equal('MyCustomModel');
     expect(types[0].children[0].minOccurs).to.equal('0');
     expect(types[0].children[0].maxOccurs).to.equal('1');
     expect(types[0].children[0].children).to.be.an('array');
@@ -808,5 +808,74 @@ describe('SchemaBuilder getElements', function() {
     expect(types[0].children[0].children[2].children).to.be.empty;
   });
 
+  it('should get an array of types with 1 root and 1 complex type Scenario 2', function() {
+    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.oorsprong.org/websamples.countryinfo" 
+    name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
+    <types>
+       <xs:schema elementFormDefault="qualified" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
+           <xs:complexType name="tCurrency">
+               <xs:sequence>
+                   <xs:element name="sISOCode" type="xs:string" />
+                   <xs:element name="sName" type="xs:string" />
+               </xs:sequence>
+           </xs:complexType>
+           <xs:complexType name="ArrayOftCurrency">
+               <xs:sequence>
+                   <xs:element name="tCurrency" 
+                   type="tns:tCurrency" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+               </xs:sequence>
+           </xs:complexType>
+           <xs:element name="ListOfCurrenciesByCodeResponse">
+               <xs:complexType>
+                   <xs:sequence>
+                       <xs:element name="ListOfCurrenciesByCodeResult" type="tns:ArrayOftCurrency" />
+                   </xs:sequence>
+               </xs:complexType>
+           </xs:element>
+       </xs:schema>
+   </types>
+</definitions>`,
+      parser = new Wsdl11Parser(),
+      builder = new SchemaBuilder();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      types = builder.getElements(
+        parsed,
+        '',
+        'definitions',
+        'xs:'
+      );
+    expect(types).to.be.an('array');
+
+    expect(types[0].name).to.equal('ListOfCurrenciesByCodeResponse');
+    expect(types[0].isComplex).to.equal(true);
+    expect(types[0].type).to.equal('complex');
+    expect(types[0].minOccurs).to.equal('1');
+    expect(types[0].maxOccurs).to.equal('1');
+    expect(types[0].namespace).to.equal('http://www.oorsprong.org/websamples.countryinfo');
+    expect(types[0].children).to.be.an('array');
+
+    expect(types[0].children[0].name).to.equal('ListOfCurrenciesByCodeResult');
+    expect(types[0].children[0].isComplex).to.equal(true);
+
+    expect(types[0].children[0].children[0].name).to.equal('tCurrency');
+    expect(types[0].children[0].children[0].isComplex).to.equal(true);
+
+    expect(types[0].children[0].children[0].children[0].name).to.equal('sISOCode');
+    expect(types[0].children[0].children[0].children[0].isComplex).to.equal(false);
+    expect(types[0].children[0].children[0].children[0].type).to.equal('string');
+
+
+    // expect(types[0].children[0].children[2].name).to.equal('Email');
+    // expect(types[0].children[0].children[2].isComplex).to.equal(false);
+    // expect(types[0].children[0].children[2].type).to.equal('string');
+    // expect(types[0].children[0].children[2].minOccurs).to.equal('0');
+    // expect(types[0].children[0].children[2].maxOccurs).to.equal('1');
+    // expect(types[0].children[0].children[2].children).to.be.an('array');
+    // expect(types[0].children[0].children[2].children).to.be.empty;
+  });
 
 });
