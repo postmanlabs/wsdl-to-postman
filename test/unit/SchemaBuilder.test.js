@@ -100,8 +100,125 @@ describe('SchemaBuilder getTypes', function() {
     }
   });
 
-});
+  it('should throw an error when parsed is null', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+       xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+        xmlns:tns="http://www.dataaccess.com/webservicesserver/"
+         name="NumberConversion" 
+         targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <types>
+        <xs:schema elementFormDefault="qualified"
+         targetNamespace="http://www.dataaccess.com/webservicesserver/">
+          <xs:element name="NumberToWords">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ubiNum" type="xs:unsignedLong"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NumberToWordsResponse">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="NumberToWordsResult" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NumberToDollars">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="dNum" type="xs:decimal"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NumberToDollarsResponse">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="NumberToDollarsResult" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:schema>
+      </types>
+    </definitions>`,
+      parser = new Wsdl11Parser(),
+      builder = new SchemaBuilder();
+    let parsed = parser.parseFromXmlToObject(simpleInput);
+    try {
+      builder.getTypes(
+        parsed,
+        '',
+        'definitionsnotfound'
+      );
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get types from object');
+    }
+  });
 
+  it('should get an array of types when 2 types are in the file', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+       xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+        xmlns:tns="http://www.dataaccess.com/webservicesserver/"
+         name="NumberConversion" 
+         targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <types>
+        <xs:schema elementFormDefault="qualified"
+         targetNamespace="http://www.dataaccess.com/webservicesserver/">
+          <xs:element name="NumberToWords">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ubiNum" type="xs:unsignedLong"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NumberToWordsResponse">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="NumberToWordsResult" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:schema>
+      </types>
+      <types>
+      <xs:schema elementFormDefault="qualified"
+       targetNamespace="http://www.dataaccess.com/webservicesserver/">
+        <xs:element name="NumberToWords">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ubiNum" type="xs:unsignedLong"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="NumberToWordsResponse">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NumberToWordsResult" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:schema>
+    </types>
+    </definitions>`,
+      parser = new Wsdl11Parser(),
+      builder = new SchemaBuilder();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      types = builder.getTypes(
+        parsed,
+        '',
+        'definitions'
+      );
+    expect(types).to.be.an('array');
+    expect(types.length).to.equal(2);
+  });
+
+});
 
 describe('SchemaBuilder getComplexTypeByName', function() {
 
@@ -544,9 +661,84 @@ describe('SchemaBuilder getComplexTypeByName', function() {
         );
       expect(complexType).to.be.an('object');
     });
+
+  it('should get undefined when the type was not found',
+    function() {
+      const simpleInput = `<wsdl:definitions
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" 
+    name="ISampleService">
+    <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+        <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+        <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+        <xsd:element name="TestCustomModel">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="TestCustomModelResponse">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+        <xsd:complexType name="MyCustomModel">
+            <xsd:sequence>
+                <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
+                <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
+                <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:schema>
+</wsdl:types>
+</wsdl:definitions>
+`,
+        parser = new Wsdl11Parser(),
+        builder = new SchemaBuilder();
+      let parsed = parser.parseFromXmlToObject(simpleInput),
+        complexType = builder.getComplexTypeByName(
+          parsed,
+          'wsdl:',
+          'definitions',
+          'xsd:',
+          'MyCustomModelNotExists'
+        );
+      expect(complexType).to.equal(undefined);
+    });
 });
 
 describe('SchemaBuilder getElements', function() {
+
+  it('should get an empty array when the input has no elements', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <types>
+        <xs:schema elementFormDefault="qualified"
+         targetNamespace="http://www.dataaccess.com/webservicesserver/">
+        </xs:schema>
+      </types>
+    </definitions>`,
+      parser = new Wsdl11Parser(),
+      builder = new SchemaBuilder();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      types = builder.getElements(
+        parsed,
+        '',
+        'definitions',
+        'xs:'
+      );
+    expect(types).to.be.an('array');
+    expect(types).to.be.empty;
+  });
 
   it('should get an array of types with 1 root and 1 child', function() {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
@@ -876,6 +1068,36 @@ describe('SchemaBuilder getElements', function() {
     // expect(types[0].children[0].children[2].maxOccurs).to.equal('1');
     // expect(types[0].children[0].children[2].children).to.be.an('array');
     // expect(types[0].children[0].children[2].children).to.be.empty;
+  });
+
+  it('should throw an error when parsed is undefined', function() {
+    const builder = new SchemaBuilder();
+    try {
+      builder.getElements(
+        undefined,
+        '',
+        'definitions'
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get elements from undefined or null object');
+    }
+  });
+
+  it('should throw an error when parsed is null', function() {
+    const builder = new SchemaBuilder();
+    try {
+      builder.getElements(
+        null,
+        '',
+        'definitions'
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get elements from undefined or null object');
+    }
   });
 
 });
