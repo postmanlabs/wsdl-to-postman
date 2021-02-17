@@ -100,7 +100,7 @@ describe('SchemaBuilder getTypes', function() {
     }
   });
 
-  it('should throw an error when parsed is null', function() {
+  it('should throw an error when cant find the definition by name', function() {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
      xmlns:xs="http://www.w3.org/2001/XMLSchema"
