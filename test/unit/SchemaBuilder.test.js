@@ -105,8 +105,7 @@ describe('SchemaBuilder getTypes', function() {
 
 describe('SchemaBuilder getComplexTypeByName', function() {
 
-  it('should get a complex Type from the root of schema' +
-    'containing the definition for MyCustomModel',
+  it('should get a complex Type from the root of schema containing the definition for MyCustomModel',
     function() {
       const simpleInput = `<wsdl:definitions
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -162,8 +161,7 @@ describe('SchemaBuilder getComplexTypeByName', function() {
       expect(complexType).to.be.an('object');
     });
 
-  it('should get a complex Types from the root of schema' +
-    'containing the definition for ArrayOftContinent',
+  it('should get a complex Types from the root of schema containing the definition for ArrayOftContinent',
     function() {
       const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
        xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -547,63 +545,6 @@ describe('SchemaBuilder getComplexTypeByName', function() {
       expect(complexType).to.be.an('object');
     });
 });
-/**
-describe('SchemaBuilder preProcessNodesAssignComplexTypes', function() {
-  it('should get an array of types with 1 root and 1 complex type', function() {
-    const simpleInput = `<wsdl:definitions
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:tns="http://tempuri.org/" 
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-     xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
-     xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
-     xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
-     xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
-     xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
-     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-     targetNamespace="http://tempuri.org/" 
-     name="ISampleService">
-     <wsdl:types>
-     <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-         <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-         <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-         <xsd:element name="TestCustomModel">
-             <xsd:complexType>
-                 <xsd:sequence>
-                     <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
-                 </xsd:sequence>
-             </xsd:complexType>
-         </xsd:element>
-         <xsd:element name="TestCustomModelResponse">
-             <xsd:complexType>
-                 <xsd:sequence>
-                     <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
-                 </xsd:sequence>
-             </xsd:complexType>
-         </xsd:element>
-         <xsd:complexType name="MyCustomModel">
-             <xsd:sequence>
-                 <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
-                 <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
-                 <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
-             </xsd:sequence>
-         </xsd:complexType>
-     </xsd:schema>
- </wsdl:types>
-</wsdl:definitions>
-`,
-      parser = new Wsdl11Parser(),
-      builder = new SchemaBuilder();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      preprocessed = builder.preProcessNodesAssignComplexTypes(
-        parsed,
-        'wsdl:',
-        'definitions',
-        'xsd:'
-      );
-    expect(preprocessed).to.be.an('array');
-  });
-})
-*/
 
 describe('SchemaBuilder getElements', function() {
 
