@@ -1,24 +1,23 @@
 const expect = require('chai').expect,
   {
     validate
-  } = require('../../index'),
-  result = null;
+  } = require('../../index');
 
-describe('Validate WSDL Input File', function() {
+describe('Test validate function in SchemaPack', function() {
   it('Should get an error msg when input is null', function() {
-    result = validate(null);
+    let result = validate(null);
     expect(result).to.eql('Input not provided');
   });
 
   it('Should get an error msg when there is no WSDL spec', function () {
-    let emptyFile = 'test/data/empty.wsdl';
-    result = validate(emptyFile);
+    let emptyFile = 'test/data/empty.wsdl',
+      result = validate(emptyFile);
     expect(result).to.eql('Not WSDL Specification found in your document');
   });
 
   it('Should be successful when input contains "definitions>"', function() {
-    let inputFile = 'test/data/Simple.wsdl';
-    result = validate(inputFile);
+    let inputFile = 'test/data/Simple.wsdl',
+      result = validate(inputFile);
     expect(result).to.be.an('object')
       .and.to.include({
         result: true,
