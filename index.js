@@ -11,7 +11,7 @@ module.exports = {
     if (validationResults.result) {
       return schema.convert(cb);
     }
-    return cb(null, validationResult);
+    return cb(null, validationResults);
   },
 
   validate: function(input) {
