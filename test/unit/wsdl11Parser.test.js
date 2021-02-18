@@ -976,7 +976,7 @@ describe('WSDL 1.1 parser assignNamespaces', function() {
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
 
     expect(wsdlObject).to.have.all.keys('targetNamespace',
-      'wsdlNamespace', 'SOAPNamespace',
+      'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
       'SOAP12Namespace', 'schemaNamespace',
       'tnsNamespace', 'allNameSpaces', 'fileName',
       'operationsArray');
@@ -3265,7 +3265,7 @@ describe('WSDL 1.1 parser getWsdlObject', function() {
       let wsdlObject = parser.getWsdlObject(NUMBERCONVERSION_INPUT);
       expect(wsdlObject).to.be.an('object');
       expect(wsdlObject).to.have.all.keys('targetNamespace',
-        'wsdlNamespace', 'SOAPNamespace',
+        'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
         'SOAP12Namespace', 'schemaNamespace',
         'tnsNamespace', 'allNameSpaces', 'fileName',
         'operationsArray');
