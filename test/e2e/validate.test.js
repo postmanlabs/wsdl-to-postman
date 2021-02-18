@@ -1,27 +1,35 @@
 const expect = require('chai').expect,
   {
     validate
-  } = require('../../index');
+  } = require('../../index'),
+  fs = require('fs');
 
 describe('Test validate function in SchemaPack', function() {
-  it('Should get an error msg when input is null', function() {
-    let result = validate(null);
-    expect(result).to.eql('Input not provided');
-  });
-
+  
   it('Should get an error msg when there is no WSDL spec', function () {
-    let emptyFile = 'test/data/empty.wsdl',
-      result = validate(emptyFile);
-    expect(result).to.eql('Not WSDL Specification found in your document');
+    try {
+      const data = fs.readFileSync('test/data/empty.wsdl', 'utf8')
+      console.log(data)
+
+    } catch (err) {
+      console.error(err)
+    }
   });
 
   it('Should be successful when input contains "definitions>"', function() {
-    let inputFile = 'test/data/Simple.wsdl',
-      result = validate(inputFile);
-    expect(result).to.be.an('object')
+    //fs.readFileSync('test/data/Simple.wsdl');
+    try {
+      const data = fs.readFileSync('test/data/Simple.wsdl', 'utf8');
+      console.log(data);
+      let result = validate(data);
+      expect(result).to.be.an('object')
       .and.to.include({
         result: true,
         reason: 'Success'
     });
+    } catch (err) {
+      console.error(err)
+    }
   });
+  
 });
