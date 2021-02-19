@@ -236,7 +236,9 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
   describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function() {
     it('Should return postmanCollection items definition from wsdlObject.operationsArray', function() {
       const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
-      let items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray),
+      let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray),
+        urlVariables = mapper.getVariablesFromUrlList(urls),
+        items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray, urlVariables),
         requests;
       expect(items).to.be.an('array');
       requests = items.map((item) => {
@@ -247,6 +249,34 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
         expect(request).to.be.an('object')
           .to.include.all.keys('url', 'method', 'header', 'body');
       });
+    });
+  });
+
+  describe('WsdlToPostmanCollectionMapper getUrlFromOperations', function() {
+    it('Should an array of urls', function() {
+      const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
+      let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray);
+      expect(urls).to.be.an('array');
+    });
+  });
+
+  describe('WsdlToPostmanCollectionMapper getVariablesFromUrlList', function() {
+    it('Should return an array of objects with format {key, value}', function() {
+      const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
+        urls = [
+          'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+          'https://app.flowkey.com/browse/category/rock',
+          'https://heasarc.gsfc.nasa.gov/lheasoft/download.html'
+        ];
+      let variables = mapper.getVariablesFromUrlList(urls);
+      expect(variables).to.be.an('array');
+      variables.forEach((variable) => {
+        expect(variable).to.be.an('object')
+          .to.include.all.keys('key', 'value');
+      });
+      expect(variables[0].value).to.equal('https://www.dataaccess.com/');
+      expect(variables[1].value).to.equal('https://app.flowkey.com/');
+      expect(variables[2].value).to.equal('https://heasarc.gsfc.nasa.gov/');
     });
   });
 });
