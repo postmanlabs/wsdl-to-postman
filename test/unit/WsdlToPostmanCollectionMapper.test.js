@@ -274,6 +274,9 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
         expect(variable).to.be.an('object')
           .to.include.all.keys('key', 'value');
       });
+      expect(variables[0].value).to.equal('https://www.dataaccess.com/');
+      expect(variables[1].value).to.equal('https://app.flowkey.com/');
+      expect(variables[2].value).to.equal('https://heasarc.gsfc.nasa.gov/');
     });
   });
 });
