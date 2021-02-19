@@ -2854,8 +2854,8 @@ provides functions that convert numbers into words or dollar amounts.</documenta
 </port>
 </service>
 </definitions>
-`;
-    const parser = new Wsdl11Parser();
+`,
+      parser = new Wsdl11Parser();
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(inputFile);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
