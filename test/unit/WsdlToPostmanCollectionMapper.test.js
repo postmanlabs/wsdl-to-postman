@@ -1,4 +1,6 @@
-const { assert } = require('chai');
+const {
+  assert
+} = require('chai');
 const {
   Collection
 } = require('postman-collection');
@@ -13,9 +15,42 @@ const {
       description: 'Returns the word corresponding to the positive number passed as parameter.',
       style: 'document',
       url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-      input: undefined,
-      output: undefined,
-      fault: undefined,
+      input: {
+        children: [{
+          children: [],
+          name: 'ubiNum',
+          isComplex: false,
+          type: 'unsignedLong'
+        }],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      output: {
+        children: [{
+          children: [],
+          name: 'NumberToWordsResult',
+          isComplex: false,
+          type: 'string'
+        }],
+        name: 'NumberToWordsResponse',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      fault: {
+        children: [{
+          children: [],
+          name: 'faultcode',
+          isComplex: false,
+          type: 'string'
+        }],
+        name: 'fault',
+        isComplex: true,
+        type: 'complex',
+        namespace: ''
+      },
       portName: 'NumberConversionSoap',
       serviceName: 'NumberConversion',
       method: 'POST',
@@ -26,7 +61,18 @@ const {
       description: 'Returns the non-zero dollar amount of the passed number.',
       style: 'document',
       url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-      input: undefined,
+      input: {
+        children: [{
+          children: [],
+          name: 'dNum',
+          isComplex: false,
+          type: 'decimal'
+        }],
+        name: 'NumberToDollars',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
       output: undefined,
       fault: undefined,
       portName: 'NumberConversionSoap',
@@ -39,7 +85,18 @@ const {
       description: 'Returns the word corresponding to the positive number passed as parameter.',
       style: 'document',
       url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-      input: undefined,
+      input: {
+        children: [{
+          children: [],
+          name: 'ubiNum',
+          isComplex: false,
+          type: 'unsignedLong'
+        }],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
       output: undefined,
       fault: undefined,
       portName: 'NumberConversionSoap12',
@@ -52,7 +109,18 @@ const {
       description: 'Returns the non-zero dollar amount of the passed number.',
       style: 'document',
       url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-      input: undefined,
+      input: {
+        children: [child = {
+          children: [],
+          name: 'dNum',
+          isComplex: false,
+          type: 'decimal'
+        }],
+        name: 'NumberToDollars',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
       output: undefined,
       fault: undefined,
       portName: 'NumberConversionSoap12',

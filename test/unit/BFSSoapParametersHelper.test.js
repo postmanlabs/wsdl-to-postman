@@ -101,38 +101,6 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
 
 });
 
-describe('BFSSoapParametersHelper getValueExample', function() {
-  it('should get a number when called with "unsignedLong"', function() {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      example = bFSSoapParametersHelper.getValueExample('unsignedLong');
-    expect(example).to.be.a('number');
-  });
-
-  it('should get a number when called with "int"', function() {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      example = bFSSoapParametersHelper.getValueExample('int');
-    expect(example).to.be.a('number');
-  });
-
-  it('should get a string when called with "string"', function() {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      example = bFSSoapParametersHelper.getValueExample('string');
-    expect(example).to.be.a('string');
-  });
-
-  it('should get a string when called with an empty string', function() {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      example = bFSSoapParametersHelper.getValueExample('');
-    expect(example).to.be.a('string');
-  });
-
-  it('should get default value when called with null', function() {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      example = bFSSoapParametersHelper.getValueExample(null);
-    expect(example).to.equal('default value');
-  });
-});
-
 describe('BFSSoapParametersHelper assignPropertyValue', function() {
   it('should assign the property "property" with "value" to object', function() {
     const bFSSoapParametersHelper = new BFSSoapParametersHelper();
