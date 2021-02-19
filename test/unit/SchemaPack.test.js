@@ -461,10 +461,17 @@ const expect = require('chai').expect,
   </wsdl:service>
 </wsdl:definitions>
 `,
-  inputFileCountryInfo = `This XML file does not appear to have any style information associated with it. The document tree is shown below.
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://www.oorsprong.org/websamples.countryinfo" name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
+  inputFileCountryInfo = `This XML file does not appear to have any style information associated with it.
+   The document tree is shown below.
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+xmlns:tns="http://www.oorsprong.org/websamples.countryinfo" 
+name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
     <types>
-        <xs:schema elementFormDefault="qualified" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
+        <xs:schema elementFormDefault="qualified" 
+        targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
             <xs:complexType name="tContinent">
                 <xs:sequence>
                     <xs:element name="sCode" type="xs:string" />
@@ -509,32 +516,39 @@ const expect = require('chai').expect,
             </xs:complexType>
             <xs:complexType name="ArrayOftCountryCodeAndName">
                 <xs:sequence>
-                    <xs:element name="tCountryCodeAndName" type="tns:tCountryCodeAndName" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tCountryCodeAndName" 
+                    type="tns:tCountryCodeAndName" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftLanguage">
                 <xs:sequence>
-                    <xs:element name="tLanguage" type="tns:tLanguage" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tLanguage" 
+                    type="tns:tLanguage" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftContinent">
                 <xs:sequence>
-                    <xs:element name="tContinent" type="tns:tContinent" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tContinent" 
+                    type="tns:tContinent" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftCurrency">
                 <xs:sequence>
-                    <xs:element name="tCurrency" type="tns:tCurrency" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tCurrency" 
+                    type="tns:tCurrency" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftCountryCodeAndNameGroupedByContinent">
                 <xs:sequence>
-                    <xs:element name="tCountryCodeAndNameGroupedByContinent" type="tns:tCountryCodeAndNameGroupedByContinent" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tCountryCodeAndNameGroupedByContinent" 
+                    type="tns:tCountryCodeAndNameGroupedByContinent" 
+                    minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftCountryInfo">
                 <xs:sequence>
-                    <xs:element name="tCountryInfo" type="tns:tCountryInfo" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tCountryInfo" type="tns:tCountryInfo" 
+                    minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:element name="ListOfContinentsByName">
@@ -631,7 +645,8 @@ const expect = require('chai').expect,
             <xs:element name="ListOfCountryNamesGroupedByContinentResponse">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="ListOfCountryNamesGroupedByContinentResult" type="tns:ArrayOftCountryCodeAndNameGroupedByContinent" />
+                        <xs:element name="ListOfCountryNamesGroupedByContinentResult" 
+                        type="tns:ArrayOftCountryCodeAndNameGroupedByContinent" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -1011,17 +1026,20 @@ const expect = require('chai').expect,
             <output message="tns:CountryIntPhoneCodeSoapResponse" />
         </operation>
         <operation name="FullCountryInfo">
-            <documentation>Returns a struct with all the stored country information. Pass the ISO country code</documentation>
+            <documentation>Returns a struct with all the stored country information. 
+            Pass the ISO country code</documentation>
             <input message="tns:FullCountryInfoSoapRequest" />
             <output message="tns:FullCountryInfoSoapResponse" />
         </operation>
         <operation name="FullCountryInfoAllCountries">
-            <documentation>Returns an array with all countries and all the language information stored</documentation>
+            <documentation>Returns an array with all 
+            countries and all the language information stored</documentation>
             <input message="tns:FullCountryInfoAllCountriesSoapRequest" />
             <output message="tns:FullCountryInfoAllCountriesSoapResponse" />
         </operation>
         <operation name="CountriesUsingCurrency">
-            <documentation>Returns a list of all countries that use the same currency code. Pass a ISO currency code</documentation>
+            <documentation>Returns a list of all countries that use the same currency code. 
+            Pass a ISO currency code</documentation>
             <input message="tns:CountriesUsingCurrencySoapRequest" />
             <output message="tns:CountriesUsingCurrencySoapResponse" />
         </operation>
@@ -1431,7 +1449,9 @@ const expect = require('chai').expect,
         </operation>
     </binding>
     <service name="CountryInfoService">
-        <documentation>This DataFlex Web Service opens up country information. 2 letter ISO codes are used for Country code. There are functions to retrieve the used Currency, Language, Capital City, Continent and Telephone code.</documentation>
+        <documentation>This DataFlex Web Service opens up country information. 2 
+        letter ISO codes are used for Country code. There are functions to retrieve the used Currency,
+         Language, Capital City, Continent and Telephone code.</documentation>
         <port name="CountryInfoServiceSoap" binding="tns:CountryInfoServiceSoapBinding">
             <soap:address location="http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso" />
         </port>
