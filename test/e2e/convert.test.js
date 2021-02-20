@@ -21,7 +21,6 @@ describe('Test convert function in SchemaPack', function() {
         expect(conversionResult.output[0].type).to.equal('collection');
         expect(conversionResult.output[0].data).to.have.property('info');
         expect(conversionResult.output[0].data).to.have.property('item');
-        expect(conversionResult.output[0].data).to.have.property('request');
       }
     });
 /*
