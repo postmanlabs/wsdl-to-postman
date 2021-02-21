@@ -1,4 +1,6 @@
-const { assert } = require('chai');
+const {
+  assert
+} = require('chai');
 const {
   Collection
 } = require('postman-collection');
@@ -13,9 +15,42 @@ const {
       description: 'Returns the word corresponding to the positive number passed as parameter.',
       style: 'document',
       url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-      input: undefined,
-      output: undefined,
-      fault: undefined,
+      input: {
+        children: [{
+          children: [],
+          name: 'ubiNum',
+          isComplex: false,
+          type: 'unsignedLong'
+        }],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      output: {
+        children: [{
+          children: [],
+          name: 'NumberToWordsResult',
+          isComplex: false,
+          type: 'string'
+        }],
+        name: 'NumberToWordsResponse',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      fault: {
+        children: [{
+          children: [],
+          name: 'faultcode',
+          isComplex: false,
+          type: 'string'
+        }],
+        name: 'fault',
+        isComplex: true,
+        type: 'complex',
+        namespace: ''
+      },
       portName: 'NumberConversionSoap',
       serviceName: 'NumberConversion',
       method: 'POST',
@@ -26,7 +61,18 @@ const {
       description: 'Returns the non-zero dollar amount of the passed number.',
       style: 'document',
       url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-      input: undefined,
+      input: {
+        children: [{
+          children: [],
+          name: 'dNum',
+          isComplex: false,
+          type: 'decimal'
+        }],
+        name: 'NumberToDollars',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
       output: undefined,
       fault: undefined,
       portName: 'NumberConversionSoap',
@@ -39,7 +85,18 @@ const {
       description: 'Returns the word corresponding to the positive number passed as parameter.',
       style: 'document',
       url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-      input: undefined,
+      input: {
+        children: [{
+          children: [],
+          name: 'ubiNum',
+          isComplex: false,
+          type: 'unsignedLong'
+        }],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
       output: undefined,
       fault: undefined,
       portName: 'NumberConversionSoap12',
@@ -52,7 +109,18 @@ const {
       description: 'Returns the non-zero dollar amount of the passed number.',
       style: 'document',
       url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-      input: undefined,
+      input: {
+        children: [child = {
+          children: [],
+          name: 'dNum',
+          isComplex: false,
+          type: 'decimal'
+        }],
+        name: 'NumberToDollars',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
       output: undefined,
       fault: undefined,
       portName: 'NumberConversionSoap12',
@@ -168,7 +236,9 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
   describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function() {
     it('Should return postmanCollection items definition from wsdlObject.operationsArray', function() {
       const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
-      let items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray),
+      let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray),
+        urlVariables = mapper.getVariablesFromUrlList(urls),
+        items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray, urlVariables),
         requests;
       expect(items).to.be.an('array');
       requests = items.map((item) => {
@@ -179,6 +249,34 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
         expect(request).to.be.an('object')
           .to.include.all.keys('url', 'method', 'header', 'body');
       });
+    });
+  });
+
+  describe('WsdlToPostmanCollectionMapper getUrlFromOperations', function() {
+    it('Should an array of urls', function() {
+      const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
+      let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray);
+      expect(urls).to.be.an('array');
+    });
+  });
+
+  describe('WsdlToPostmanCollectionMapper getVariablesFromUrlList', function() {
+    it('Should return an array of objects with format {key, value}', function() {
+      const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
+        urls = [
+          'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+          'https://app.flowkey.com/browse/category/rock',
+          'https://heasarc.gsfc.nasa.gov/lheasoft/download.html'
+        ];
+      let variables = mapper.getVariablesFromUrlList(urls);
+      expect(variables).to.be.an('array');
+      variables.forEach((variable) => {
+        expect(variable).to.be.an('object')
+          .to.include.all.keys('key', 'value');
+      });
+      expect(variables[0].value).to.equal('https://www.dataaccess.com/');
+      expect(variables[1].value).to.equal('https://app.flowkey.com/');
+      expect(variables[2].value).to.equal('https://heasarc.gsfc.nasa.gov/');
     });
   });
 });

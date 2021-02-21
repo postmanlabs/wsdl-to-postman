@@ -1,5 +1,5 @@
 This XML file does not appear to have any style information associated with it. The document tree is shown below.
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
     <wsdl:types>
         <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
             <s:element name="Add">
@@ -146,9 +146,51 @@ This XML file does not appear to have any style information associated with it. 
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
+    <wsdl:binding name="CalculatorSoap12" type="tns:CalculatorSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Add">
+            <soap12:operation soapAction="http://tempuri.org/Add" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Subtract">
+            <soap12:operation soapAction="http://tempuri.org/Subtract" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Multiply">
+            <soap12:operation soapAction="http://tempuri.org/Multiply" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Divide">
+            <soap12:operation soapAction="http://tempuri.org/Divide" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
     <wsdl:service name="Calculator">
         <wsdl:port name="CalculatorSoap" binding="tns:CalculatorSoap">
             <soap:address location="http://www.dneonline.com/calculator.asmx" />
+        </wsdl:port>
+        <wsdl:port name="CalculatorSoap12" binding="tns:CalculatorSoap12">
+            <soap12:address location="http://www.dneonline.com/calculator.asmx" />
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
