@@ -692,7 +692,7 @@ describe('WSDL 1.1 parser getPrincipalPrefix', function() {
 
 });
 
-describe('WSDL 1.1 parser getNamespaceBykey', function() {
+describe('WSDL 1.1 parser getNamespaceByKey', function() {
 
   it('should get an object of targetNamespace namespace when is using wsdl as default <definitions>', function() {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -705,7 +705,7 @@ describe('WSDL 1.1 parser getNamespaceBykey', function() {
     `,
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceBykey(
+      wsdlnamespace = parser.getNamespaceByKey(
         parsed,
         TARGETNAMESPACE_KEY
       );
@@ -726,7 +726,7 @@ describe('WSDL 1.1 parser getNamespaceBykey', function() {
     `,
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceBykey(
+      wsdlnamespace = parser.getNamespaceByKey(
         parsed,
         TNS_NS_KEY
       );
@@ -747,7 +747,7 @@ describe('WSDL 1.1 parser getNamespaceBykey', function() {
     `,
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceBykey(
+      wsdlnamespace = parser.getNamespaceByKey(
         parsed,
         TARGETNAMESPACE_KEY
       );
@@ -769,7 +769,7 @@ describe('WSDL 1.1 parser getNamespaceBykey', function() {
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput);
     try {
-      parser.getNamespaceBykey(
+      parser.getNamespaceByKey(
         parsed,
         ''
       );
@@ -792,7 +792,7 @@ describe('WSDL 1.1 parser getNamespaceBykey', function() {
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput);
     try {
-      parser.getNamespaceBykey(
+      parser.getNamespaceByKey(
         parsed,
         null
       );
@@ -815,7 +815,7 @@ describe('WSDL 1.1 parser getNamespaceBykey', function() {
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput);
     try {
-      parser.getNamespaceBykey(
+      parser.getNamespaceByKey(
         parsed,
         undefined
       );
@@ -829,7 +829,7 @@ describe('WSDL 1.1 parser getNamespaceBykey', function() {
   it('should throw an error when parsed is undefined', function() {
     const parser = new Wsdl11Parser();
     try {
-      parser.getNamespaceBykey(
+      parser.getNamespaceByKey(
         undefined,
         TARGETNAMESPACE_KEY
       );
@@ -843,7 +843,7 @@ describe('WSDL 1.1 parser getNamespaceBykey', function() {
   it('should throw an error when parsed is null', function() {
     const parser = new Wsdl11Parser();
     try {
-      parser.getNamespaceBykey({},
+      parser.getNamespaceByKey({},
         TARGETNAMESPACE_KEY
       );
       assert.fail('we expected an error');
