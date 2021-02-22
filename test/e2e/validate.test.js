@@ -92,11 +92,11 @@ describe('Test convert function in SchemaPack', function() {
       Index.convert({ type: 'string', data: fileContent }, {}, (err, conversionResult) => {
         expect(err).to.be.null;
         expect(conversionResult.result).to.equal(true);
-        if (conversionResult.result){
+        if (conversionResult.result) {
           expect(conversionResult.output[0].type).to.equal('collection');
           expect(conversionResult.output[0].data).to.have.property('info');
           expect(conversionResult.output[0].data).to.have.property('item');
-        } 
+        }
         else {
           return cb(null);
         }
