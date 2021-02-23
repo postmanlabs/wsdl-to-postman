@@ -94,6 +94,28 @@ describe('WSDL 2.0 parser parseFromXmlToObject', function() {
       expect(error.message).to.equal('Empty input was proportionated');
     }
   });
+
+  it('should throw an error when input is null', function() {
+    parser = new Wsdl20Parser();
+    try {
+      parser.parseFromXmlToObject(null);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Empty input was proportionated');
+    }
+  });
+
+  it('should throw an error when input is undefined', function() {
+    parser = new Wsdl20Parser();
+    try {
+      parser.parseFromXmlToObject(undefined);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Empty input was proportionated');
+    }
+  });
 });
 
 describe('WSDL 2.0 get principalPrefix', function() {
@@ -240,6 +262,46 @@ describe('WSDL 2.0 parser getAllNamespaces', function() {
       );
     expect(wsdlnamespace).to.be.an('array');
     expect(wsdlnamespace.length).to.equal(11);
+  });
+
+  it('should throw an error when parsed is null', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      let wsdlnamespace = parser.getAllNamespaces(
+        null
+      );
+      expect(wsdlnamespace).to.be.an('array');
+      expect(wsdlnamespace.length).to.equal(11);
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
+    }
+  });
+
+  it('should throw an error when parsed is undefined', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      let wsdlnamespace = parser.getAllNamespaces(
+        undefined
+      );
+      expect(wsdlnamespace).to.be.an('array');
+      expect(wsdlnamespace.length).to.equal(11);
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
+    }
+  });
+
+  it('should throw an error when parsed is empty', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      let wsdlnamespace = parser.getAllNamespaces({});
+      expect(wsdlnamespace).to.be.an('array');
+      expect(wsdlnamespace.length).to.equal(11);
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get namespaces from object');
+    }
   });
 });
 
