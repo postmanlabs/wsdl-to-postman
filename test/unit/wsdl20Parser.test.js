@@ -56,7 +56,75 @@ const expect = require('chai').expect,
           <endpoint name="reservationEndpoint" binding="tns:reservationSOAPBinding" 
           address="http://greath.example.com/2004/reservation" />
       </service>
-  </description>`;
+  </description>`,
+  WSDL_SAMPLE_AXIS = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl" 
+  xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" 
+  xmlns:whttp="http://www.w3.org/ns/wsdl/http" xmlns:ns="http://axis2.org" 
+  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" 
+  xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions" xmlns:tns="http://axis2.org" 
+  xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+<wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
+<wsdl2:types>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" 
+    targetNamespace="http://axis2.org">
+        <xs:element name="hi">
+            <xs:complexType>
+                <xs:sequence />
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="hiResponse">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+    </xs:schema>
+</wsdl2:types>
+<wsdl2:interface name="ServiceInterface">
+    <wsdl2:operation name="hi" 
+    style="http://www.w3.org/ns/wsdl/style/rpc http://www.w3.org/ns/wsdl/style/iri 
+    http://www.w3.org/ns/wsdl/style/multipart"
+     wrpc:signature="return #return " pattern="http://www.w3.org/ns/wsdl/in-out">
+        <wsdl2:input element="ns:hi" wsaw:Action="urn:hi" />
+        <wsdl2:output element="ns:hiResponse" wsaw:Action="urn:hiResponse" />
+    </wsdl2:operation>
+</wsdl2:interface>
+<wsdl2:binding name="SayHelloSoap11Binding" interface="tns:ServiceInterface" 
+type="http://www.w3.org/ns/wsdl/soap" wsoap:version="1.1">
+    <wsdl2:operation ref="tns:hi" wsoap:action="urn:hi">
+        <wsdl2:input />
+        <wsdl2:output />
+    </wsdl2:operation>
+</wsdl2:binding>
+<wsdl2:binding name="SayHelloSoap12Binding" interface="tns:ServiceInterface" 
+type="http://www.w3.org/ns/wsdl/soap" wsoap:version="1.2">
+    <wsdl2:operation ref="tns:hi" wsoap:action="urn:hi">
+        <wsdl2:input />
+        <wsdl2:output />
+    </wsdl2:operation>
+</wsdl2:binding>
+<wsdl2:binding name="SayHelloHttpBinding" interface="tns:ServiceInterface" 
+whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
+    <wsdl2:operation ref="tns:hi" whttp:location="hi">
+        <wsdl2:input />
+        <wsdl2:output />
+    </wsdl2:operation>
+</wsdl2:binding>
+<wsdl2:service name="SayHello" interface="tns:ServiceInterface">
+    <wsdl2:endpoint name="SayHelloHttpEndpoint" 
+    binding="tns:SayHelloHttpBinding" 
+    address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpEndpoint/" />
+    <wsdl2:endpoint name="SayHelloHttpSoap11Endpoint" 
+    binding="tns:SayHelloSoap11Binding" 
+    address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap11Endpoint/" />
+    <wsdl2:endpoint name="SayHelloHttpSoap12Endpoint" 
+    binding="tns:SayHelloSoap12Binding" 
+    address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap12Endpoint/" />
+</wsdl2:service>
+</wsdl2:description>`;
 
 describe('WSDL 2.0 parser constructor', function() {
   it('should get an object wsdl 2.0 parser', function() {
@@ -64,7 +132,6 @@ describe('WSDL 2.0 parser constructor', function() {
     expect(parser).to.be.an('object');
   });
 });
-
 
 describe('WSDL 2.0 parser parseFromXmlToObject', function() {
 
@@ -330,6 +397,16 @@ describe('WSDL 2.0 parser getServices', function() {
     expect(services.length).to.equal(1);
   });
 
+  it('should get an array object representing services using default WSDL_SAMPLE_AXIS', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+      services = parser.getServices(
+        parsed
+      );
+    expect(services).to.be.an('array');
+    expect(services.length).to.equal(1);
+  });
+
   it('should throw an error when call with null', function() {
     try {
       const parser = new Wsdl20Parser();
@@ -356,6 +433,16 @@ describe('WSDL 2.0 parser getBindings', function() {
     expect(bindings.length).to.equal(1);
   });
 
+  it('should get an array object representing bindings using default WSDL_SAMPLE_AXIS', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+      bindings = parser.getBindings(
+        parsed
+      );
+    expect(bindings).to.be.an('array');
+    expect(bindings.length).to.equal(3);
+  });
+
   it('should throw an error when call with null', function() {
     try {
       const parser = new Wsdl20Parser();
@@ -372,7 +459,7 @@ describe('WSDL 2.0 parser getBindings', function() {
 });
 
 describe('WSDL 2.0 parser getElementsFromWSDL', function() {
-  it('should get an array object representing bindings using default namespace', function() {
+  it('should get an array object representing elements using default namespace', function() {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
       elements = parser.getElementsFromWSDL(
@@ -383,7 +470,20 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(3);
   });
+
+  it('should get an array object representing elements using default WSDL_SAMPLE_AXIS', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+      elements = parser.getElementsFromWSDL(
+        parsed,
+        'wsdl2:',
+        'xs:'
+      );
+    expect(elements).to.be.an('array');
+    expect(elements.length).to.equal(2);
+  });
 });
+
 
 describe('WSDL 2.0 parser assignOperations', function() {
 
@@ -397,6 +497,19 @@ describe('WSDL 2.0 parser assignOperations', function() {
     expect(wsdlObject).to.be.an('object');
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(1);
+
+  });
+
+  it('should assign operations to wsdl object when called with WSDL_SAMPLE_AXIS', function() {
+    const parser = new Wsdl20Parser();
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+
+    expect(wsdlObject).to.be.an('object');
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(3);
 
   });
 });
@@ -415,6 +528,21 @@ describe('WSDL 2.0 parser getServiceEndpointByBindingName', function() {
       );
     expect(serviceEndpoint).to.be.an('object');
     expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('reservationEndpoint');
+  });
+
+  it('should get the service endpoint when exists and called with WSDL_SAMPLE_AXIS', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+      services = parser.getServices(
+        parsed
+      ),
+      serviceEndpoint = parser.getServiceEndpointByBindingName(
+        'SayHelloSoap11Binding',
+        services,
+        'wsdl2:'
+      );
+    expect(serviceEndpoint).to.be.an('object');
+    expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('SayHelloHttpSoap11Endpoint');
   });
 
   it('should throw an error when binding name is null', function() {
@@ -438,5 +566,15 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
       'opCheckAvailability', parsed, '');
     expect(operation).to.be.an('object');
     expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('opCheckAvailability');
+  });
+
+  it('should get interface by name in WSDL_SAMPLE_AXIS', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
+    services = parser.getServices(parsed);
+    operation = parser.getInterfaceOperationByInterfaceNameAndOperationName('ServiceInterface',
+      'hi', parsed, 'wsdl2:');
+    expect(operation).to.be.an('object');
+    expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('hi');
   });
 });
