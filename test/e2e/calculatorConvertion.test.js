@@ -193,7 +193,6 @@ describe('Sanity tests', function() {
       expect(conversionResult.output[0].data).to.have.property('item');
 
       expect(conversionResult.output[0].data.info.name).to.be.eql(collName);
-      // checar con el equipo de donde se obtiene el elemento variable y evaluar value?
 
       for (i = 0; i < conversionResult.output[0].data.item.length; i++) {
         expect(conversionResult.output[0].data.item[i]).to.include
