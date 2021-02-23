@@ -2,7 +2,7 @@ const expect = require('chai').expect,
   fs = require('fs'),
   Index = require('../../index.js'),
   async = require('async'),
-  validWSDLs = 'test/data/validWSDLs';
+  validWSDLs = 'test/data/validWSDLs11';
 
 describe('Test WSDL convertion into Postman Collection', function() {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
@@ -21,6 +21,7 @@ describe('Test WSDL convertion into Postman Collection', function() {
             expect(item.request).to.include.all.keys('url', 'header', 'method', 'body');
             expect(item.response[0]).to.include.all.keys('name', 'originalRequest', 'status', 'code', 'header', 'body');
           });
+          // fs.writeFileSync('collection.json', JSON.stringify(conversionResult.output[0].data));
         }
         else {
           return cb(null);

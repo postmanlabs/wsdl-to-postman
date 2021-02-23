@@ -4,10 +4,10 @@ const expect = require('chai').expect,
   fs = require('fs'),
   empty_Path = 'test/data/validation/empty.wsdl',
   dummy_Path = 'test/data/validation/dummy.wsdl',
-  v11_Path = 'test/data/validWSDLs/numberConvertion.wsdl',
+  v11_Path = 'test/data/validWSDLs11/numberConvertion.wsdl',
   v20_Path = 'test/data/validation/simple12.wsdl',
   wrong_Path = 'path/does/not/exist.wsdl',
-  validWSDLs = 'test/data/validWSDLs';
+  validWSDLs = 'test/data/validWSDLs11';
 
 describe('Test validate function in SchemaPack', function() {
 
