@@ -276,9 +276,7 @@ describe('WSDL 2.0 parser assignNamespaces', function() {
     expect(wsdlObject.wsdlNamespace.key).to.equal('wsdl2');
     expect(wsdlObject.SOAPNamespace.key).to.equal('wsoap');
     expect(wsdlObject.schemaNamespace.key).to.equal('xs');
-
   });
-
 });
 
 describe('WSDL 2.0 parser getWsdlObject', function() {
@@ -384,5 +382,61 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
       );
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(3);
+  });
+});
+
+describe('WSDL 2.0 parser assignOperations', function() {
+
+  it('should assign operations to wsdl object', function() {
+    const parser = new Wsdl20Parser();
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+
+    expect(wsdlObject).to.be.an('object');
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(1);
+
+  });
+});
+
+describe('WSDL 2.0 parser getServiceEndpointByBindingName', function() {
+  it('should get the service endpoint when exists', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+      services = parser.getServices(
+        parsed
+      ),
+      serviceEndpoint = parser.getServiceEndpointByBindingName(
+        'reservationSOAPBinding',
+        services,
+        ''
+      );
+    expect(serviceEndpoint).to.be.an('object');
+    expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('reservationEndpoint');
+  });
+
+  it('should throw an error when binding name is null', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServiceEndpointByBindingName(null, {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('BindingName must have a value');
+    }
+  });
+});
+
+describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName', function() {
+  it('should get interface by name', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
+    services = parser.getServices(parsed);
+    operation = parser.getInterfaceOperationByInterfaceNameAndOperationName('reservationInterface',
+      'opCheckAvailability', parsed, '');
+    expect(operation).to.be.an('object');
+    expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('opCheckAvailability');
   });
 });
