@@ -281,7 +281,6 @@ describe('WSDL 2.0 parser assignNamespaces', function() {
 
 });
 
-
 describe('WSDL 2.0 parser getWsdlObject', function() {
 
   it('should get an object in memory representing wsdlObject 2.0',
@@ -320,4 +319,70 @@ describe('WSDL 2.0 parser getWsdlObject', function() {
     }
   });
 
+});
+
+describe('WSDL 2.0 parser getServices', function() {
+  it('should get an array object representing services using default namespace', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+      services = parser.getServices(
+        parsed
+      );
+    expect(services).to.be.an('array');
+    expect(services.length).to.equal(1);
+  });
+
+  it('should throw an error when call with null', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServices(
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get services from undefined or null object');
+    }
+  });
+
+});
+
+describe('WSDL 2.0 parser getBindings', function() {
+  it('should get an array object representing bindings using default namespace', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+      bindings = parser.getBindings(
+        parsed
+      );
+    expect(bindings).to.be.an('array');
+    expect(bindings.length).to.equal(1);
+  });
+
+  it('should throw an error when call with null', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServices(
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get services from undefined or null object');
+    }
+  });
+
+});
+
+describe('WSDL 2.0 parser getElementsFromWSDL', function() {
+  it('should get an array object representing bindings using default namespace', function() {
+    const parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+      elements = parser.getElementsFromWSDL(
+        parsed,
+        '',
+        'xs:'
+      );
+    expect(elements).to.be.an('array');
+    expect(elements.length).to.equal(3);
+  });
 });

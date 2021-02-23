@@ -1479,7 +1479,7 @@ describe('WSDL 1.1 parser getBindings', function() {
 });
 
 describe('WSDL 1.1 parser getServices', function() {
-  it('should get an array object representing bindings using default namespace', function() {
+  it('should get an array object representing services using default namespace', function() {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
@@ -1547,7 +1547,7 @@ describe('WSDL 1.1 parser getServices', function() {
     expect(services.length).to.equal(1);
   });
 
-  it('should get an array object representing bindings using named namespace <wsdl:definitions>', function() {
+  it('should get an array object representing services using named namespace <wsdl:definitions>', function() {
     const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
     xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
     xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
