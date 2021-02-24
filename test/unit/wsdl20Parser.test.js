@@ -555,10 +555,53 @@ describe('WSDL 2.0 parser getServiceEndpointByBindingName', function() {
       expect(error.message).to.equal('BindingName must have a value');
     }
   });
+
+  it('should throw an error when principal prefix is null', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServiceEndpointByBindingName('bindingName', {}, null);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('PrincipalPrefix must have a value');
+    }
+  });
+
+  it('should throw an error when services is null', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServiceEndpointByBindingName('bindingName', null, 'principal prefix');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get service endpoint from undefined or null object');
+    }
+  });
+
+  it('should throw an error when service enpdoint is not found', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServiceEndpointByBindingName('bindingName', [], 'principal prefix');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get service endpoint from object');
+    }
+  });
+  it('should throw an error when service enpdoint is array of null not found', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServiceEndpointByBindingName('bindingName', [null], 'principal prefix');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get service endpoint from object');
+    }
+  });
 });
 
 describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName', function() {
-  it('should get interface by name', function() {
+  it('should get interface operation by name', function() {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
     services = parser.getServices(parsed);
@@ -568,7 +611,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('opCheckAvailability');
   });
 
-  it('should get interface by name in WSDL_SAMPLE_AXIS', function() {
+  it('should get interface operation by name in WSDL_SAMPLE_AXIS', function() {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
     services = parser.getServices(parsed);
@@ -576,5 +619,294 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
       'hi', parsed, 'wsdl2:');
     expect(operation).to.be.an('object');
     expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('hi');
+  });
+
+  it('should throw an error when parsedxml is null', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
+        'NumberToWords', null, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get porttype from undefined or null object');
+    }
+  });
+
+  it('should throw an error when parsedxml is undefined', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
+        'NumberToWords', undefined, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get porttype from undefined or null object');
+    }
+  });
+
+  it('should throw an error when parsedxml is an empty object', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
+        'NumberToWords', {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get port type from object');
+    }
+  });
+
+
+  it('should throw an error when portTypeName is null', function() {
+    try {
+      const parser = new Wsdl20Parser();
+
+      parser.getInterfaceOperationByInterfaceNameAndOperationName(null,
+        'NumberToWords', {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get port type with no filter name');
+    }
+  });
+
+  it('should throw an error when portTypeName is undefined', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getInterfaceOperationByInterfaceNameAndOperationName(undefined,
+        'NumberToWords', {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get port type with no filter name');
+    }
+  });
+
+  it('should throw an error when portTypeName is an empty string', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getInterfaceOperationByInterfaceNameAndOperationName('',
+        'NumberToWords', {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get port type with no filter name');
+    }
+  });
+
+  it('should throw an error when operationName is null', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getInterfaceOperationByInterfaceNameAndOperationName('some string',
+        null, {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get port type with no filter operationName');
+    }
+  });
+
+  it('should throw an error when operationName is undefined', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getInterfaceOperationByInterfaceNameAndOperationName('some string',
+        undefined, {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get port type with no filter operationName');
+    }
+  });
+
+  it('should throw an error when operationName is an empty string', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getInterfaceOperationByInterfaceNameAndOperationName('ddd',
+        '', {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get port type with no filter operationName');
+    }
+  });
+});
+
+describe('WSDL 2.0 parser getDocumentationString', function() {
+  it('should get the same when is called with string', function() {
+    const parser = new Wsdl20Parser(),
+      documentation = parser.getDocumentationString('documentation');
+    expect(documentation).to.eq('documentation');
+  });
+
+  it('should get the property value when is called with a node', function() {
+    const parser = new Wsdl20Parser(),
+      documentationNode = {};
+    documentationNode['#text'] = 'documentation';
+    documentation = parser.getDocumentationString(documentationNode);
+    expect(documentation).to.eq('documentation');
+  });
+});
+
+describe('WSDL 2.0 parser  getBindingInfoFromBindinTag', function() {
+  it('should throw an error when can not get protocol', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+        binding = parser.getBindings(
+          parsed
+        )[0];
+      parser.getBindingInfoFromBindinTag(binding, undefined, undefined);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not find protocol in those namespaces');
+    }
+  });
+});
+
+describe('WSDL 2.0 parser  getServiceByBindingName', function() {
+  it('should throw an error when can not get protocol', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      parser.getServiceByBindingName(null, {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('BindingName must have a value');
+    }
+  });
+  it('should throw an error when binding name is undefined', function() {
+    const parser = new Wsdl20Parser();
+
+    try {
+      parser.getServiceByBindingName(undefined, {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('BindingName must have a value');
+    }
+  });
+  it('should throw an error when binding name is an empty string', function() {
+    const parser = new Wsdl20Parser();
+
+    try {
+      parser.getServiceByBindingName('', {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('BindingName must have a value');
+    }
+  });
+
+  it('should throw an error when PrincipalPrefix is undefined', function() {
+    const parser = new Wsdl20Parser();
+
+    try {
+      parser.getServiceByBindingName('somename', {}, undefined);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('PrincipalPrefix must have a value');
+    }
+  });
+  it('should throw an error when PrincipalPrefix is null', function() {
+    const parser = new Wsdl20Parser();
+
+    try {
+      parser.getServiceByBindingName('somename', {}, null);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('PrincipalPrefix must have a value');
+    }
+  });
+
+  it('should throw an error when services is null', function() {
+    const parser = new Wsdl20Parser();
+
+    try {
+      parser.getServiceByBindingName('somename', null, 'principal prefix');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get service port from undefined or null object');
+    }
+  });
+
+  it('should throw an error when services is undefined', function() {
+    const parser = new Wsdl20Parser();
+
+    try {
+      parser.getServiceByBindingName('somename', undefined, 'principal prefix');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get service port from undefined or null object');
+    }
+  });
+
+  it('should throw an error when services is an empty object', function() {
+    const parser = new Wsdl20Parser();
+
+    try {
+      parser.getServiceByBindingName('somename', {}, 'principal prefix');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get service port from object');
+    }
+  });
+});
+
+
+describe('WSDL 2.0 parser getInterfaceByInterfaceName', function() {
+  it('should get an error when called with null parsed xml', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      parser.getInterfaceByInterfaceName('intefacename', null, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not interface from undefined or null object');
+    }
+  });
+  it('should get an error when called with empty name', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      parser.getInterfaceByInterfaceName('', {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get interface with no filter name');
+    }
+  });
+  it('should get an error when called not found property', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      parser.getInterfaceByInterfaceName('s', {}, '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get interface from object');
+    }
+  });
+});
+
+describe('WSDL 2.0 parser getElementFromInterfaceOperationInOut', function() {
+  it('should get null when not found element', function() {
+    const parser = new Wsdl20Parser(),
+      element = parser.getElementFromInterfaceOperationInOut({}, null, 'notfound', '');
+    expect(element).to.eq(null);
+  });
+});
+
+describe('WSDL 2.0 parser getElementFromInterfaceOperationFault', function() {
+  it('should get null when found element but not found ref', function() {
+    const parser = new Wsdl20Parser(),
+      element = parser.getElementFromInterfaceOperationFault({}, {
+        outfault: {}
+      }, null, '', 'outfault');
+    expect(element).to.eq(null);
   });
 });
