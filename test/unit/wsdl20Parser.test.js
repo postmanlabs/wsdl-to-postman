@@ -161,6 +161,28 @@ describe('WSDL 2.0 parser parseFromXmlToObject', function() {
       expect(error.message).to.equal('Empty input was proportionated');
     }
   });
+
+  it('should throw an error when input is null', function() {
+    parser = new Wsdl20Parser();
+    try {
+      parser.parseFromXmlToObject(null);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Empty input was proportionated');
+    }
+  });
+
+  it('should throw an error when input is undefined', function() {
+    parser = new Wsdl20Parser();
+    try {
+      parser.parseFromXmlToObject(undefined);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Empty input was proportionated');
+    }
+  });
 });
 
 describe('WSDL 2.0 get principalPrefix', function() {
@@ -198,6 +220,32 @@ describe('WSDL 2.0 get principalPrefix', function() {
         parsed
       );
     expect(principalPrefix).to.equal('wsdl2:');
+  });
+
+  it('should throw an error when called with null', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      parser.getPrincipalPrefix(
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get prefix from undefined or null object');
+    }
+  });
+
+  it('should throw an error when called with undefined', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      parser.getPrincipalPrefix(
+        undefined
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get prefix from undefined or null object');
+    }
   });
 });
 
@@ -250,9 +298,85 @@ describe('WSDL 2.0 parser getNamespaceByURL', function() {
     expect(wsdlnamespace.key).to.equal('xmlns');
     expect(wsdlnamespace.url).to.equal('http://www.w3.org/ns/wsdl');
     expect(wsdlnamespace.isDefault).to.equal(true);
-
   });
 
+  it('should throw an error when url input is empty', function() {
+    const simpleInput = `<description xmlns="http://www.w3.org/ns/wsdl"
+      xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+      xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+      xmlns:ns="http://axis2.org"
+      xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+      xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+      xmlns:tns="http://axis2.org" xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+    <documentation> Please Type your service description here </documentation>
+    </description>`,
+      parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput);
+    try {
+      parser.getNamespaceByURL(
+        parsed,
+        ''
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('URL must not be empty');
+    }
+  });
+
+  it('should throw an error when url input is null', function() {
+    const simpleInput = `<description xmlns="http://www.w3.org/ns/wsdl"
+      xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+      xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+      xmlns:ns="http://axis2.org"
+      xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+      xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+      xmlns:tns="http://axis2.org" xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+    <documentation> Please Type your service description here </documentation>
+    </description>`,
+      parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput);
+    try {
+      parser.getNamespaceByURL(
+        parsed,
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('URL must not be empty');
+    }
+  });
+
+  it('should throw an error when url input is undefined', function() {
+    const simpleInput = `<description xmlns="http://www.w3.org/ns/wsdl"
+      xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+      xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+      xmlns:ns="http://axis2.org"
+      xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+      xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+      xmlns:tns="http://axis2.org" xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+    <documentation> Please Type your service description here </documentation>
+    </description>`,
+      parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput);
+    try {
+      parser.getNamespaceByURL(
+        parsed,
+        undefined
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('URL must not be empty');
+    }
+  });
 });
 
 describe('WSDL 2.0 parser getNamespaceBykey', function() {
@@ -279,7 +403,84 @@ describe('WSDL 2.0 parser getNamespaceBykey', function() {
     expect(wsdlnamespace.key).to.equal('xmlns:tns');
     expect(wsdlnamespace.url).to.equal('http://axis2.org');
     expect(wsdlnamespace.isDefault).to.equal(false);
+  });
 
+  it('should throw an error when key input is empty', function() {
+    const simpleInput = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl"
+      xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+      xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+      xmlns:ns="http://axis2.org"
+      xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+      xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+      xmlns:tns="http://axis2.org" xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+    <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
+</wsdl2:description>`,
+      parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput);
+    try {
+      parser.getNamespaceByKey(
+        parsed,
+        ''
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('key must not be empty');
+    }
+  });
+
+  it('should throw an error when key input is null', function() {
+    const simpleInput = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl"
+      xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+      xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+      xmlns:ns="http://axis2.org"
+      xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+      xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+      xmlns:tns="http://axis2.org" xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+    <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
+</wsdl2:description>`,
+      parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput);
+    try {
+      parser.getNamespaceByKey(
+        parsed,
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('key must not be empty');
+    }
+  });
+
+  it('should throw an error when key input is undefined', function() {
+    const simpleInput = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl"
+      xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+      xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+      xmlns:ns="http://axis2.org"
+      xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+      xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+      xmlns:tns="http://axis2.org" xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+    <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
+</wsdl2:description>`,
+      parser = new Wsdl20Parser();
+    let parsed = parser.parseFromXmlToObject(simpleInput);
+    try {
+      parser.getNamespaceByKey(
+        parsed,
+        undefined
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('key must not be empty');
+    }
   });
 });
 
@@ -307,6 +508,51 @@ describe('WSDL 2.0 parser getAllNamespaces', function() {
       );
     expect(wsdlnamespace).to.be.an('array');
     expect(wsdlnamespace.length).to.equal(11);
+  });
+
+  it('should throw an error when parsed is empty', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      let wsdlnamespace = parser.getAllNamespaces({});
+      expect(wsdlnamespace).to.be.an('array');
+      expect(wsdlnamespace.length).to.equal(11);
+      wsdlnamespace.find((namespace) => {
+        return namespace.url === WSDL_NS_URL;
+      });
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get namespaces from object');
+    }
+  });
+
+  it('should throw an error when parsed is null', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      let wsdlnamespace = parser.getAllNamespaces(null);
+      expect(wsdlnamespace).to.be.an('array');
+      expect(wsdlnamespace.length).to.equal(11);
+      wsdlnamespace.find((namespace) => {
+        return namespace.url === WSDL_NS_URL;
+      });
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
+    }
+  });
+
+  it('should throw an error when parsed is undefined', function() {
+    const parser = new Wsdl20Parser();
+    try {
+      let wsdlnamespace = parser.getAllNamespaces(undefined);
+      expect(wsdlnamespace).to.be.an('array');
+      expect(wsdlnamespace.length).to.equal(11);
+      wsdlnamespace.find((namespace) => {
+        return namespace.url === WSDL_NS_URL;
+      });
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
+    }
   });
 });
 
@@ -384,6 +630,16 @@ describe('WSDL 2.0 parser getWsdlObject', function() {
     }
   });
 
+  it('should throw an error when parsedxml is empty', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getWsdlObject('');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('xmlDocumentContent must have a value');
+    }
+  });
 });
 
 describe('WSDL 2.0 parser getServices', function() {
@@ -420,6 +676,18 @@ describe('WSDL 2.0 parser getServices', function() {
     }
   });
 
+  it('should throw an error when call with empty', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServices(
+        ''
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get services from undefined or null object');
+    }
+  });
 });
 
 describe('WSDL 2.0 parser getBindings', function() {
@@ -456,6 +724,18 @@ describe('WSDL 2.0 parser getBindings', function() {
     }
   });
 
+  it('should throw an error when call with empty', function() {
+    try {
+      const parser = new Wsdl20Parser();
+      parser.getServices(
+        ''
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get services from undefined or null object');
+    }
+  });
 });
 
 describe('WSDL 2.0 parser getElementsFromWSDL', function() {
