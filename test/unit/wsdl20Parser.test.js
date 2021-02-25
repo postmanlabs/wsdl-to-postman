@@ -465,7 +465,8 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
       elements = parser.getElementsFromWSDL(
         parsed,
         '',
-        'xs:'
+        'xs:',
+        'http://www.w3.org/2001/XMLSchema'
       );
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(3);
@@ -477,8 +478,10 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
       elements = parser.getElementsFromWSDL(
         parsed,
         'wsdl2:',
-        'xs:'
+        'xs:',
+        'http://www.w3.org/2001/XMLSchema'
       );
+
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(2);
   });
@@ -492,7 +495,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:', 'http://www.w3.org/2001/XMLSchema');
 
     expect(wsdlObject).to.be.an('object');
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -505,7 +508,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:', 'http: //www.w3.org/2001/XMLSchema');
 
     expect(wsdlObject).to.be.an('object');
     expect(wsdlObject.operationsArray).to.be.an('array');

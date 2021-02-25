@@ -2681,7 +2681,7 @@ describe('WSDL 1.1 parser assignOperations', function() {
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(NUMBERCONVERSION_INPUT);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:', 'http://www.w3.org/2001/XMLSchema');
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(4);
 
@@ -2859,7 +2859,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(inputFile);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:', 'http://www.w3.org/2001/XMLSchema');
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(4);
 

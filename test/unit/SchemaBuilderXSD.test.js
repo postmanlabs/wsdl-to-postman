@@ -60,6 +60,31 @@ const expect = require('chai').expect,
     </xsd:sequence>
 </xsd:complexType>
 </xsd:schema>`,
+  CORE_SCHEMA_2 = `<xsd:schema elementFormDefault="qualified" xmlns:tns="http://tempuri.org/"  targetNamespace="http://tempuri.org/">
+<xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+<xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+<xsd:element name="TestCustomModel">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:element>
+<xsd:element name="TestCustomModelResponse">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:element>
+<xsd:complexType name="MyCustomModel">
+    <xsd:sequence>
+        <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
+    </xsd:sequence>
+</xsd:complexType>
+</xsd:schema>`,
   CORE_FILE_INPUT = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
 <wsdl:types>
     <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
@@ -210,9 +235,47 @@ describe('SchemaBuilderXSD getElements', function() {
     const builder = new SchemaBuilderXSD(),
       parser = new Wsdl11Parser(),
       parsedXml = parser.parseFromXmlToObject(CORE_FILE_INPUT),
-      elements = builder.getElements(parsedXml, CORE_SCHEMA, 'wsdl:', 'definitions', 'xsd:');
+      elements = builder.getElements(parsedXml, CORE_SCHEMA_2, 'wsdl:', 'definitions', 'xsd:', 'http://www.w3.org/2001/XMLSchema');
     expect(elements).to.be.a('array');
-    expect(elements.length).to.eq(6);
+    expect(elements.length).to.eq(2);
+
+    expect(elements[0].name).to.equal('TestCustomModel');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].minOccurs).to.equal('1');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('http://tempuri.org/');
+    expect(elements[0].children).to.be.an('array');
+
+    expect(elements[0].children[0].name).to.equal('inputModel');
+    expect(elements[0].children[0].isComplex).to.equal(true);
+    expect(elements[0].children[0].type).to.equal('MyCustomModel');
+    expect(elements[0].children[0].children).to.be.an('array');
+    expect(elements[0].children[0].children.length).to.equal(3);
+
+    expect(elements[0].children[0].children[0].name).to.equal('Id');
+    expect(elements[0].children[0].children[0].isComplex).to.equal(false);
+    expect(elements[0].children[0].children[0].type).to.equal('integer');
+    expect(elements[0].children[0].children[0].maximum).to.equal(2147483647);
+    expect(elements[0].children[0].children[0].minimum).to.equal(-2147483648);
+    expect(elements[0].children[0].children[0].children).to.be.an('array');
+    expect(elements[0].children[0].children[0].children).to.be.empty;
+
+    expect(elements[0].children[0].children[1].name).to.equal('Name');
+    expect(elements[0].children[0].children[1].isComplex).to.equal(false);
+    expect(elements[0].children[0].children[1].type).to.equal('string');
+    expect(elements[0].children[0].children[1].minOccurs).to.equal('0');
+    expect(elements[0].children[0].children[1].maxOccurs).to.equal('1');
+    expect(elements[0].children[0].children[1].children).to.be.an('array');
+    expect(elements[0].children[0].children[1].children).to.be.empty;
+
+    expect(elements[0].children[0].children[2].name).to.equal('Email');
+    expect(elements[0].children[0].children[2].isComplex).to.equal(false);
+    expect(elements[0].children[0].children[2].type).to.equal('string');
+    expect(elements[0].children[0].children[2].minOccurs).to.equal('0');
+    expect(elements[0].children[0].children[2].maxOccurs).to.equal('1');
+    expect(elements[0].children[0].children[2].children).to.be.an('array');
+    expect(elements[0].children[0].children[2].children).to.be.empty;
   });
 
   // it('should get an empty array when the input has no elements', function() {
@@ -601,5 +664,18 @@ describe('SchemaBuilderXSD getElements', function() {
   //       expect(error.message).to.equal('Can not get elements from undefined or null object');
   //     }
   //   });
+
+});
+
+
+describe('SchemaBuilderXSD getSchemaFromType', function() {
+  it('should get  getSchemaFromType', function() {
+    const builder = new SchemaBuilderXSD(),
+      parser = new Wsdl11Parser(),
+      parsedXml = parser.parseFromXmlToObject(CORE_FILE_INPUT),
+      elements = builder.getElements(parsedXml, {}, 'wsdl:', 'definitions', 'xsd:', 'http://www.w3.org/2001/XMLSchema');
+
+    expect(elements).to.be.a('object');
+  });
 
 });
