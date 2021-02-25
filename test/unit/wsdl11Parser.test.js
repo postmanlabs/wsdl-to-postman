@@ -987,6 +987,7 @@ describe('WSDL 1.1 parser assignNamespaces', function() {
     expect(wsdlObject.SOAPNamespace.key).to.equal('soap');
     expect(wsdlObject.SOAP12Namespace.key).to.equal('soap12');
     expect(wsdlObject.schemaNamespace.key).to.equal('xs');
+    expect(wsdlObject.schemaNamespace.prefixFilter).to.equal('xs:');
 
   });
 
