@@ -464,11 +464,13 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
       schemaNameSpace = {
         key: 'xs',
+        prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
       thisNameSpace = {
         key: 'tns',
+        prefixFilter: 'tns:',
         url: 'http://greath.example.com/2004/wsdl/resSvc',
         isDefault: false
       },
@@ -487,11 +489,13 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
       schemaNameSpace = {
         key: 'xs',
+        prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
       thisNameSpace = {
         key: 'tns',
+        prefixFilter: 'tns:',
         url: 'http://axis2.org',
         isDefault: false
       },

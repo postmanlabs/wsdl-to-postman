@@ -219,11 +219,13 @@ describe('SchemaBuilderXSD getElements', function() {
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xsd',
+        prefixFilter: 'xsd:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
       thisNameSpace = {
         key: 'tns',
+        prefixFilter: 'tns:',
         url: 'http://tempuri.org/',
         isDefault: false
       },
@@ -288,11 +290,13 @@ describe('SchemaBuilderXSD getElements', function() {
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xs',
+        prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
       thisNameSpace = {
         key: 'tns',
+        prefixFilter: 'tns:',
         url: 'http://tempuri.org/',
         isDefault: false
       },
@@ -327,11 +331,13 @@ describe('SchemaBuilderXSD getElements', function() {
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xs',
+        prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
       thisNameSpace = {
         key: 'tns',
+        prefixFilter: 'tns:',
         url: 'http://www.dataaccess.com/webservicesserver/',
         isDefault: false
       },
@@ -420,11 +426,13 @@ describe('SchemaBuilderXSD getElements', function() {
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xs',
+        prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
       thisNameSpace = {
         key: 'tns',
+        prefixFilter: 'tns:',
         url: 'http://www.dataaccess.com/webservicesserver/',
         isDefault: false
       },
@@ -544,11 +552,13 @@ describe('SchemaBuilderXSD getElements', function() {
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xsd',
+        prefixFilter: 'xsd:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
       thisNameSpace = {
         key: 'tns',
+        prefixFilter: 'tns:',
         url: 'http://tempuri.org/',
         isDefault: false
       },
@@ -632,11 +642,13 @@ describe('SchemaBuilderXSD getElements', function() {
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xs',
+        prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
       thisNameSpace = {
         key: 'tns',
+        prefixFilter: 'tns:',
         url: 'http://www.oorsprong.org/websamples.countryinfo',
         isDefault: false
       },
@@ -663,44 +675,51 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[0].children[0].children[0].children[0].isComplex).to.equal(false);
     expect(elements[0].children[0].children[0].children[0].type).to.equal('string');
 
-
-    // expect(types[0].children[0].children[2].name).to.equal('Email');
-    // expect(types[0].children[0].children[2].isComplex).to.equal(false);
-    // expect(types[0].children[0].children[2].type).to.equal('string');
-    // expect(types[0].children[0].children[2].minOccurs).to.equal('0');
-    // expect(types[0].children[0].children[2].maxOccurs).to.equal('1');
-    // expect(types[0].children[0].children[2].children).to.be.an('array');
-    // expect(types[0].children[0].children[2].children).to.be.empty;
   });
 
-  //   it('should throw an error when parsed is undefined', function() {
-  //     const builder = new SchemaBuilder();
-  //     try {
-  //       builder.getElements(
-  //         undefined,
-  //         '',
-  //         'definitions'
-  //       );
-  //       assert.fail('we expected an error');
-  //     }
-  //     catch (error) {
-  //       expect(error.message).to.equal('Can not get elements from undefined or null object');
-  //     }
-  //   });
+  it('should throw an error when parsed is undefined', function() {
+    const schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://www.oorsprong.org/websamples.countryinfo',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    try {
+      builder.getElements(undefined, '', 'definitions', schemaNameSpace, thisNameSpace);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get elements from undefined or null object');
+    }
+  });
 
-  //   it('should throw an error when parsed is null', function() {
-  //     const builder = new SchemaBuilder();
-  //     try {
-  //       builder.getElements(
-  //         null,
-  //         '',
-  //         'definitions'
-  //       );
-  //       assert.fail('we expected an error');
-  //     }
-  //     catch (error) {
-  //       expect(error.message).to.equal('Can not get elements from undefined or null object');
-  //     }
-  //   });
-
+  it('should throw an error when parsed is null', function() {
+    const schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://www.oorsprong.org/websamples.countryinfo',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    try {
+      builder.getElements(null, '', 'definitions', schemaNameSpace, thisNameSpace);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get elements from undefined or null object');
+    }
+  });
 });
