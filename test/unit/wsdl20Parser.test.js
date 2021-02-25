@@ -462,11 +462,21 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
   it('should get an array object representing elements using default namespace', function() {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+      schemaNameSpace = {
+        key: 'xs',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        url: 'http://greath.example.com/2004/wsdl/resSvc',
+        isDefault: false
+      },
       elements = parser.getElementsFromWSDL(
         parsed,
         '',
-        'xs:',
-        'http://www.w3.org/2001/XMLSchema'
+        schemaNameSpace,
+        thisNameSpace
       );
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(3);
@@ -475,11 +485,21 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
   it('should get an array object representing elements using default WSDL_SAMPLE_AXIS', function() {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+      schemaNameSpace = {
+        key: 'xs',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        url: 'http://axis2.org',
+        isDefault: false
+      },
       elements = parser.getElementsFromWSDL(
         parsed,
         'wsdl2:',
-        'xs:',
-        'http://www.w3.org/2001/XMLSchema'
+        schemaNameSpace,
+        thisNameSpace
       );
 
     expect(elements).to.be.an('array');
