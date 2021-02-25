@@ -276,7 +276,7 @@ describe('WSDL 2.0 parser getNamespaceBykey', function() {
         'xmlns:tns'
       );
     expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('xmlns:tns');
+    expect(wsdlnamespace.key).to.equal('tns');
     expect(wsdlnamespace.url).to.equal('http://axis2.org');
     expect(wsdlnamespace.isDefault).to.equal(false);
 
@@ -495,7 +495,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:', 'http://www.w3.org/2001/XMLSchema');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
 
     expect(wsdlObject).to.be.an('object');
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -508,7 +508,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:', 'http: //www.w3.org/2001/XMLSchema');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
 
     expect(wsdlObject).to.be.an('object');
     expect(wsdlObject.operationsArray).to.be.an('array');
