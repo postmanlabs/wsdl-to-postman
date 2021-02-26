@@ -4,9 +4,10 @@
   "description": "Convert a given WSDL specification (1.1) to Postman Collection",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/unit/**.test.js",
+    "unit-tests": "./node_modules/mocha/bin/mocha test/unit/**.test.js",
+    "e2e-tests": "./node_modules/mocha/bin/mocha test/e2e/**.test.js",
     "lint": "eslint ./lib/** ./test/**/*.js",
-    "coverage": "nyc --reporter=text npm test"
+    "coverage": "nyc --reporter=text npm run unit-tests"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "@babel/eslint-parser": "7.12.13",
     "@babel/plugin-proposal-class-properties": "7.12.13",
     "@babel/preset-env": "7.12.13",
+    "async": "3.2.0",
     "chai": "4.3.0",
     "eslint": "7.19.0",
     "eslint-plugin-jsdoc": "31.6.1",
