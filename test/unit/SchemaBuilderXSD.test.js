@@ -723,3 +723,64 @@ describe('SchemaBuilderXSD getElements', function() {
     }
   });
 });
+
+
+describe('SchemaBuilderXSD parseObjectToXML', function() {
+  it('should get an error when the object sent is undefined', function() {
+    const builder = new SchemaBuilderXSD();
+    try {
+      builder.parseObjectToXML(undefined);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Cannot convert undefined or null to xml');
+    }
+  });
+  it('should get an error when the object sent is null', function() {
+    const builder = new SchemaBuilderXSD();
+    try {
+      builder.parseObjectToXML(null);
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Cannot convert undefined or null to xml');
+    }
+  });
+});
+
+describe('SchemaBuilderXSD getElementsFromType', function() {
+  it('should get an error when the object sent is undefined', function() {
+    const builder = new SchemaBuilderXSD();
+    try {
+      builder.getElementsFromType('', null, '', '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get elements from undefined or null object');
+    }
+  });
+});
+
+describe('SchemaBuilderXSD getTypes', function() {
+  it('should get an error when the object sent is undefined', function() {
+    const builder = new SchemaBuilderXSD();
+    try {
+      builder.getTypes(null, '', '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get types from undefined or null object');
+    }
+  });
+
+  it('should get an error when the object sent is empty object', function() {
+    const builder = new SchemaBuilderXSD();
+    try {
+      builder.getTypes({}, '', '');
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get types from object');
+    }
+  });
+});
