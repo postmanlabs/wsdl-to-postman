@@ -68,6 +68,41 @@ describe('knownTypes getValueExample', function() {
     expect(example).to.be.a('string');
   });
 
+  it('should get a string of length of 5 when called with "string" with minimum 5 and maximum 10', function() {
+    const element = new Element();
+    element.type = 'string';
+    element.minLength = 5;
+    element.maxLength = 10;
+    let example = getValueExample(element);
+    expect(example).to.be.a('string');
+    expect(example.length).to.equal(5);
+  });
+
+  it('should get a string of length of 10 when called with "string" with no minimum and maximum 10', function() {
+    const element = new Element();
+    element.type = 'string';
+    element.maxLength = 10;
+    let example = getValueExample(element);
+    expect(example).to.be.a('string');
+    expect(example.length).to.equal(10);
+  });
+
+  it('should get a string matching the regexp', function() {
+    const element = new Element();
+    element.type = 'string';
+    element.pattern = '"-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]' +
+      '|3[01])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?"';
+    let validationRegex,
+      example = getValueExample(element);
+    expect(example).to.be.a('string');
+
+    validationRegex = new RegExp(
+      '"-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]' +
+      '|3[01])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?"'
+    );
+    expect(validationRegex.test(example)).to.be.equal(true);
+  });
+
   it('should get a string when called with an empty string', function() {
     const element = new Element();
     element.type = '';
