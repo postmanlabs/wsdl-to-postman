@@ -400,7 +400,7 @@ describe('WSDL 2.0 parser getNamespaceBykey', function() {
         'xmlns:tns'
       );
     expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('xmlns:tns');
+    expect(wsdlnamespace.key).to.equal('tns');
     expect(wsdlnamespace.url).to.equal('http://axis2.org');
     expect(wsdlnamespace.isDefault).to.equal(false);
   });
@@ -742,10 +742,23 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
   it('should get an array object representing elements using default namespace', function() {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+      schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://greath.example.com/2004/wsdl/resSvc',
+        isDefault: false
+      },
       elements = parser.getElementsFromWSDL(
         parsed,
         '',
-        'xs:'
+        schemaNameSpace,
+        thisNameSpace
       );
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(3);
@@ -754,11 +767,25 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
   it('should get an array object representing elements using default WSDL_SAMPLE_AXIS', function() {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+      schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://axis2.org',
+        isDefault: false
+      },
       elements = parser.getElementsFromWSDL(
         parsed,
         'wsdl2:',
-        'xs:'
+        schemaNameSpace,
+        thisNameSpace
       );
+
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(2);
   });
@@ -772,7 +799,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
 
     expect(wsdlObject).to.be.an('object');
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -785,7 +812,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
 
     expect(wsdlObject).to.be.an('object');
     expect(wsdlObject.operationsArray).to.be.an('array');
