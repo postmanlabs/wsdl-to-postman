@@ -1,10 +1,11 @@
 const expect = require('chai').expect,
   fs = require('fs'),
-  async = require('async'), {
-      SchemaPack
-    } = require('../../lib/SchemaPack'),
-    validWSDLs = 'test/data/validWSDLs11',
-    validWSDLs20 = 'test/data/validWSDLs20';
+  async = require('async'),
+  {
+    SchemaPack
+  } = require('../../lib/SchemaPack'),
+  validWSDLs = 'test/data/validWSDLs11',
+  validWSDLs20 = 'test/data/validWSDLs20';
 //   inputFileTemperatureHasHttp = `<wsdl:definitions
 //   xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/
 //   xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"

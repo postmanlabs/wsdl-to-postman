@@ -21,7 +21,7 @@ const expect = require('chai').expect,
       '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
       '  <soap:Body>\n' +
       '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-      '      <ubiNum>500</ubiNum>\n' +
+      '      <ubiNum>1</ubiNum>\n' +
       '    </NumberToWords>\n' +
       '  </soap:Body>\n' +
       '</soap:Envelope>\n',
@@ -45,7 +45,7 @@ const expect = require('chai').expect,
       '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
       '  <soap12:Body>\n' +
       '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-      '      <ubiNum>500</ubiNum>\n' +
+      '      <ubiNum>1</ubiNum>\n' +
       '    </NumberToWords>\n' +
       '  </soap12:Body>\n' +
       '</soap12:Envelope>\n',
