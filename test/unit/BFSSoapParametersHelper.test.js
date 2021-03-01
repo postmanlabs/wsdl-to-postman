@@ -10,7 +10,9 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
         children: [],
         name: 'ubiNum',
         isComplex: false,
-        type: 'unsignedLong'
+        type: 'integer',
+        maximum: 18446744073709552000,
+        minimum: 0
       },
       node = {
         children: [child],
@@ -27,7 +29,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords)
       .to.have.own.property('ubiNum');
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords.ubiNum)
-      .to.equal(500);
+      .to.equal(18446744073709552000);
   });
 
   it('Should get a json object when TestCustomModel->inputmodel->id,name,email is sent', function() {
@@ -36,7 +38,9 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
         children: [],
         name: 'id',
         isComplex: false,
-        type: 'int'
+        type: 'integer',
+        maximum: 2147483647,
+        minimum: -2147483648
       },
       grandChild2 = {
         children: [],
@@ -78,7 +82,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
       .to.have.own.property('email');
 
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel.id)
-      .to.equal(1);
+      .to.equal(-2147483648);
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel.name)
       .to.equal('this is a string');
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel.email)

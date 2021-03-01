@@ -29,7 +29,9 @@ describe('ParametersUtils buildObjectParameters', function() {
         children: [],
         name: 'ubiNum',
         isComplex: false,
-        type: 'unsignedLong'
+        type: 'integer',
+        maximum: 18446744073709552000,
+        minimum: 0
       },
       node = {
         children: [child],
@@ -90,7 +92,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
       '<soap:Body>' +
       '<NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">' +
-      '<ubiNum>500</ubiNum>' +
+      '<ubiNum>18446744073709552000</ubiNum>' +
       '</NumberToWords>' +
       '</soap:Body>' +
       '</soap:Envelope>',
@@ -98,7 +100,9 @@ describe('ParametersUtils converObjectParametersToXML', function() {
         children: [],
         name: 'ubiNum',
         isComplex: false,
-        type: 'unsignedLong'
+        type: 'integer',
+        maximum: 18446744073709552000,
+        minimum: 0
       },
       node = {
         children: [child],
@@ -121,7 +125,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       '<soap:Body>' +
       '<TestCustomModel xmlns="http://tempuri.org/">' +
       '<inputModel>' +
-      '<Id>1</Id>' +
+      '<Id>-2147483648</Id>' +
       '<Name> this is a string </Name>' +
       '<Email> this is a string</Email>' +
       '</inputModel>' +
@@ -132,7 +136,9 @@ describe('ParametersUtils converObjectParametersToXML', function() {
         children: [],
         name: 'Id',
         isComplex: false,
-        type: 'int'
+        type: 'integer',
+        maximum: 2147483647,
+        minimum: -2147483648
       },
       grandChild2 = {
         children: [],
