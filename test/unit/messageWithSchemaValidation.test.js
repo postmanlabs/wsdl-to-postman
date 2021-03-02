@@ -8,7 +8,7 @@ const expect = require('chai').expect,
   } = require('./../../lib/utils/messageWithSchemaValidation');
 
 describe('Tools from messageWithSchemaValidation', function() {
-  describe('validateMessageWithSchema', function() {
+  describe('Test validateMessageWithSchema function', function() {
     const schemaMock = `
       <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
         <xs:element name="NumberToWords">
@@ -51,18 +51,18 @@ describe('Tools from messageWithSchemaValidation', function() {
         <ubiNum></ubiNum>
       </NumberToWords>
     `;
-    it('validateMessageWithSchema should return an empty array when message matches with schema', function() {
+    it('should return an empty array when message matches with schema', function() {
       const validResult = validateMessageWithSchema(validBody, schemaMock);
       expect(validResult).to.be.an('array').with.length(0);
     });
 
-    it('validateMessageWithSchema should return true when message matches with schema', function() {
+    it('should return an array when message does not match with schema', function() {
       const invalidResult = validateMessageWithSchema(invalidBody, schemaMock);
       expect(invalidResult).to.be.an('array').with.length.greaterThan(0);
     });
   });
 
-  describe('getBodyMessage', function() {
+  describe('Test getBodyMessage function', function() {
     const nodeElementMock = {
         children: [{
           children: [],
@@ -94,7 +94,7 @@ describe('Tools from messageWithSchemaValidation', function() {
     });
   });
 
-  describe('unwrapAndCleanBody', function() {
+  describe('Test unwrapAndCleanBody function', function() {
     const dirtyMessage = `<?xml version="1.0" encoding="utf-8"?>
       <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
         <soap:Body>
@@ -117,7 +117,7 @@ describe('Tools from messageWithSchemaValidation', function() {
     });
   });
 
-  describe('getCleanSchema', function() {
+  describe('Test getCleanSchema function', function() {
     const xmlParsedMock = {
         definitions: {
           '@_xmlns': 'http://schemas.xmlsoap.org/wsdl/',
@@ -221,7 +221,7 @@ describe('Tools from messageWithSchemaValidation', function() {
       `;
 
     it(
-      'Should return a schema with base namespace, removed tns and no complexType tags empty',
+      'Should return a schema with base namespace, removed tns and no complexType, tags empty',
       function() {
         const generatedCleanSchema = getCleanSchema(xmlParsedMock, schemaNamespaceMock, wsdl_version),
           generatedCleanSchemaToCompare = generatedCleanSchema.replace(/\s/g, ''),
@@ -229,7 +229,7 @@ describe('Tools from messageWithSchemaValidation', function() {
         expect(generatedCleanSchemaToCompare).to.be.equal(expectedSchemaToCompare);
       });
 
-    it('Should throw an error id parsedXml is not provided', function() {
+    it('Should throw an error if parsedXml is not provided', function() {
       try {
         getCleanSchema(null, schemaNamespaceMock, wsdl_version);
         assert.fail('We expect an error');
@@ -240,7 +240,7 @@ describe('Tools from messageWithSchemaValidation', function() {
     });
   });
 
-  describe('validateOperationsMessagesWithSchema', function() {
+  describe('Test validateOperationsMessagesWithSchema function', function() {
     const wsdlObjectMock = {
         'operationsArray': [{
           'name': 'NumberToWords',
