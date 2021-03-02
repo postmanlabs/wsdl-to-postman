@@ -225,7 +225,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
           '1011',
           '1032'
         ]
-      }
+      };
     xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
