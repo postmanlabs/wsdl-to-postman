@@ -1,7 +1,3 @@
-const {
-  fail
-} = require('assert');
-
 const expect = require('chai').expect,
   fs = require('fs'),
   async = require('async'), {
