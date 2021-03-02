@@ -69,7 +69,7 @@ describe('Tools from messageWithSchemaValidation', function() {
           minOccurs: '1',
           maxOccurs: '1',
           name: 'ubiNum',
-          type: 'unsignedLong',
+          type: 'integer',
           isComplex: false,
           namespace: undefined
         }],
@@ -82,7 +82,7 @@ describe('Tools from messageWithSchemaValidation', function() {
       },
       cleanBodyMessage = `
         <NumberToWords >
-          <ubiNum>500</ubiNum>
+          <ubiNum>1</ubiNum>
         </NumberToWords>
       `;
 
@@ -131,14 +131,13 @@ describe('Tools from messageWithSchemaValidation', function() {
             'xs:schema': {
               '@_elementFormDefault': 'qualified',
               '@_targetNamespace': 'http://www.dataaccess.com/webservicesserver/',
-              'xs:element': [
-                {
+              'xs:element': [{
                   '@_name': 'NumberToWords',
                   'xs:complexType': {
                     'xs:sequence': {
                       'xs:element': {
                         '@_name': 'ubiNum',
-                        '@_type': 'xs:unsignedLong'
+                        '@_type': 'xs:integer'
                       }
                     }
                   }
@@ -160,7 +159,7 @@ describe('Tools from messageWithSchemaValidation', function() {
                     'xs:sequence': {
                       'xs:element': {
                         '@_name': 'dNum',
-                        '@_type': 'xs:decimal'
+                        '@_type': 'xs:number'
                       }
                     }
                   }
@@ -192,7 +191,7 @@ describe('Tools from messageWithSchemaValidation', function() {
           <xs:element name="NumberToWords">
             <xs:complexType>
               <xs:sequence>
-                <xs:element name="ubiNum" type="xs:unsignedLong"></xs:element>
+                <xs:element name="ubiNum" type="xs:integer"></xs:element>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -206,7 +205,7 @@ describe('Tools from messageWithSchemaValidation', function() {
           <xs:element name="NumberToDollars">
             <xs:complexType>
               <xs:sequence>
-                <xs:element name="dNum" type="xs:decimal"></xs:element>
+                <xs:element name="dNum" type="xs:number"></xs:element>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -254,7 +253,7 @@ describe('Tools from messageWithSchemaValidation', function() {
               'minOccurs': '1',
               'maxOccurs': '1',
               'name': 'ubiNum',
-              'type': 'unsignedLong',
+              'type': 'integer',
               'isComplex': false
             }],
             'minOccurs': '1',
@@ -296,7 +295,7 @@ describe('Tools from messageWithSchemaValidation', function() {
               'minOccurs': '1',
               'maxOccurs': '1',
               'name': 'dNum',
-              'type': 'decimal',
+              'type': 'number',
               'isComplex': false
             }],
             'minOccurs': '1',
@@ -339,7 +338,7 @@ describe('Tools from messageWithSchemaValidation', function() {
               'minOccurs': '1',
               'maxOccurs': '1',
               'name': 'ubiNum',
-              'type': 'unsignedLong',
+              'type': 'integer',
               'isComplex': false
             }],
             'minOccurs': '1',
@@ -381,7 +380,7 @@ describe('Tools from messageWithSchemaValidation', function() {
               'minOccurs': '1',
               'maxOccurs': '1',
               'name': 'dNum',
-              'type': 'decimal',
+              'type': 'number',
               'isComplex': false
             }],
             'minOccurs': '1',
