@@ -17,8 +17,8 @@ const expect = require('chai').expect,
     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
     '  <soap:Body>\n' +
     '    <Add xmlns="http://tempuri.org/">\n' +
-    '      <intA>1</intA>\n' +
-    '      <intB>1</intB>\n' +
+    '      <intA>-2147483648</intA>\n' +
+    '      <intB>-2147483648</intB>\n' +
     '    </Add>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
@@ -29,8 +29,8 @@ const expect = require('chai').expect,
     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
     '  <soap:Body>\n' +
     '    <Subtract xmlns="http://tempuri.org/">\n' +
-    '      <intA>1</intA>\n' +
-    '      <intB>1</intB>\n' +
+    '      <intA>-2147483648</intA>\n' +
+    '      <intB>-2147483648</intB>\n' +
     '    </Subtract>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
@@ -41,8 +41,8 @@ const expect = require('chai').expect,
     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
     '  <soap:Body>\n' +
     '    <Multiply xmlns="http://tempuri.org/">\n' +
-    '      <intA>1</intA>\n' +
-    '      <intB>1</intB>\n' +
+    '      <intA>-2147483648</intA>\n' +
+    '      <intB>-2147483648</intB>\n' +
     '    </Multiply>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
@@ -53,8 +53,8 @@ const expect = require('chai').expect,
     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
     '  <soap:Body>\n' +
     '    <Divide xmlns="http://tempuri.org/">\n' +
-    '      <intA>1</intA>\n' +
-    '      <intB>1</intB>\n' +
+    '      <intA>-2147483648</intA>\n' +
+    '      <intB>-2147483648</intB>\n' +
     '    </Divide>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
@@ -65,8 +65,8 @@ const expect = require('chai').expect,
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <Add xmlns="http://tempuri.org/">\n' +
-    '      <intA>1</intA>\n' +
-    '      <intB>1</intB>\n' +
+    '      <intA>-2147483648</intA>\n' +
+    '      <intB>-2147483648</intB>\n' +
     '    </Add>\n' +
     '  </soap12:Body>\n' +
     '</soap12:Envelope>\n',
@@ -77,8 +77,8 @@ const expect = require('chai').expect,
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <Subtract xmlns="http://tempuri.org/">\n' +
-    '      <intA>1</intA>\n' +
-    '      <intB>1</intB>\n' +
+    '      <intA>-2147483648</intA>\n' +
+    '      <intB>-2147483648</intB>\n' +
     '    </Subtract>\n' +
     '  </soap12:Body>\n' +
     '</soap12:Envelope>\n',
@@ -89,8 +89,8 @@ const expect = require('chai').expect,
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <Multiply xmlns="http://tempuri.org/">\n' +
-    '      <intA>1</intA>\n' +
-    '      <intB>1</intB>\n' +
+    '      <intA>-2147483648</intA>\n' +
+    '      <intB>-2147483648</intB>\n' +
     '    </Multiply>\n' +
     '  </soap12:Body>\n' +
     '</soap12:Envelope>\n',
@@ -101,8 +101,8 @@ const expect = require('chai').expect,
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <Divide xmlns="http://tempuri.org/">\n' +
-    '      <intA>1</intA>\n' +
-    '      <intB>1</intB>\n' +
+    '      <intA>-2147483648</intA>\n' +
+    '      <intB>-2147483648</intB>\n' +
     '    </Divide>\n' +
     '  </soap12:Body>\n' +
     '</soap12:Envelope>\n',
@@ -114,7 +114,7 @@ const expect = require('chai').expect,
   '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
   '  <soap:Body>\n' +
   '    <AddResponse xmlns="http://tempuri.org/">\n' +
-  '      <AddResult>1</AddResult>\n' +
+  '      <AddResult>-2147483648</AddResult>\n' +
   '    </AddResponse>\n' +
   '  </soap:Body>\n' +
   '</soap:Envelope>\n',
@@ -122,7 +122,7 @@ const expect = require('chai').expect,
   '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
   '  <soap:Body>\n' +
   '    <SubtractResponse xmlns="http://tempuri.org/">\n' +
-  '      <SubtractResult>1</SubtractResult>\n' +
+  '      <SubtractResult>-2147483648</SubtractResult>\n' +
   '    </SubtractResponse>\n' +
   '  </soap:Body>\n' +
   '</soap:Envelope>\n',
@@ -130,7 +130,7 @@ const expect = require('chai').expect,
   '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
   '  <soap:Body>\n' +
   '    <MultiplyResponse xmlns="http://tempuri.org/">\n' +
-  '      <MultiplyResult>1</MultiplyResult>\n' +
+  '      <MultiplyResult>-2147483648</MultiplyResult>\n' +
   '    </MultiplyResponse>\n' +
   '  </soap:Body>\n' +
   '</soap:Envelope>\n',
@@ -138,7 +138,7 @@ const expect = require('chai').expect,
   '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
   '  <soap:Body>\n' +
   '    <DivideResponse xmlns="http://tempuri.org/">\n' +
-  '      <DivideResult>1</DivideResult>\n' +
+  '      <DivideResult>-2147483648</DivideResult>\n' +
   '    </DivideResponse>\n' +
   '  </soap:Body>\n' +
   '</soap:Envelope>\n',
@@ -146,7 +146,7 @@ const expect = require('chai').expect,
   '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
   '  <soap12:Body>\n' +
   '    <AddResponse xmlns="http://tempuri.org/">\n' +
-  '      <AddResult>1</AddResult>\n' +
+  '      <AddResult>-2147483648</AddResult>\n' +
   '    </AddResponse>\n' +
   '  </soap12:Body>\n' +
   '</soap12:Envelope>\n',
@@ -154,7 +154,7 @@ const expect = require('chai').expect,
   '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
   '  <soap12:Body>\n' +
   '    <SubtractResponse xmlns="http://tempuri.org/">\n' +
-  '      <SubtractResult>1</SubtractResult>\n' +
+  '      <SubtractResult>-2147483648</SubtractResult>\n' +
   '    </SubtractResponse>\n' +
   '  </soap12:Body>\n' +
   '</soap12:Envelope>\n',
@@ -162,7 +162,7 @@ const expect = require('chai').expect,
   '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
   '  <soap12:Body>\n' +
   '    <MultiplyResponse xmlns="http://tempuri.org/">\n' +
-  '      <MultiplyResult>1</MultiplyResult>\n' +
+  '      <MultiplyResult>-2147483648</MultiplyResult>\n' +
   '    </MultiplyResponse>\n' +
   '  </soap12:Body>\n' +
   '</soap12:Envelope>\n',
@@ -170,7 +170,7 @@ const expect = require('chai').expect,
   '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
   '  <soap12:Body>\n' +
   '    <DivideResponse xmlns="http://tempuri.org/">\n' +
-  '      <DivideResult>1</DivideResult>\n' +
+  '      <DivideResult>-2147483648</DivideResult>\n' +
   '    </DivideResponse>\n' +
   '  </soap12:Body>\n' +
   '</soap12:Envelope>\n'],

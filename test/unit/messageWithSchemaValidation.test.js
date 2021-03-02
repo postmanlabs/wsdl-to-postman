@@ -132,49 +132,49 @@ describe('Tools from messageWithSchemaValidation', function() {
               '@_elementFormDefault': 'qualified',
               '@_targetNamespace': 'http://www.dataaccess.com/webservicesserver/',
               'xs:element': [{
-                  '@_name': 'NumberToWords',
-                  'xs:complexType': {
-                    'xs:sequence': {
-                      'xs:element': {
-                        '@_name': 'ubiNum',
-                        '@_type': 'xs:integer'
-                      }
-                    }
-                  }
-                },
-                {
-                  '@_name': 'NumberToWordsResponse',
-                  'xs:complexType': {
-                    'xs:sequence': {
-                      'xs:element': {
-                        '@_name': 'NumberToWordsResult',
-                        '@_type': 'xs:string'
-                      }
-                    }
-                  }
-                },
-                {
-                  '@_name': 'NumberToDollars',
-                  'xs:complexType': {
-                    'xs:sequence': {
-                      'xs:element': {
-                        '@_name': 'dNum',
-                        '@_type': 'xs:number'
-                      }
-                    }
-                  }
-                },
-                {
-                  '@_name': 'NumberToDollarsResponse',
-                  'xs:complexType': {
-                    'xs:sequence': {
-                      'xs:element': {
-                        '@_name': 'NumberToDollarsResult',
-                        '@_type': 'xs:string'
-                      }
+                '@_name': 'NumberToWords',
+                'xs:complexType': {
+                  'xs:sequence': {
+                    'xs:element': {
+                      '@_name': 'ubiNum',
+                      '@_type': 'xs:integer'
                     }
                   }
                 }
+              },
+              {
+                '@_name': 'NumberToWordsResponse',
+                'xs:complexType': {
+                  'xs:sequence': {
+                    'xs:element': {
+                      '@_name': 'NumberToWordsResult',
+                      '@_type': 'xs:string'
+                    }
+                  }
+                }
+              },
+              {
+                '@_name': 'NumberToDollars',
+                'xs:complexType': {
+                  'xs:sequence': {
+                    'xs:element': {
+                      '@_name': 'dNum',
+                      '@_type': 'xs:number'
+                    }
+                  }
+                }
+              },
+              {
+                '@_name': 'NumberToDollarsResponse',
+                'xs:complexType': {
+                  'xs:sequence': {
+                    'xs:element': {
+                      '@_name': 'NumberToDollarsResult',
+                      '@_type': 'xs:string'
+                    }
+                  }
+                }
+              }
               ]
             }
           }
