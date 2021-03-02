@@ -36,11 +36,13 @@
     "eslint-plugin-mocha": "8.0.0",
     "eslint-plugin-security": "1.4.0",
     "mocha": "8.2.0",
-    "nyc": "15.1.0"
+    "nyc": "15.1.0",
+    "xsd2jsonschema": "0.3.7"
   },
   "dependencies": {
     "fast-xml-parser": "3.18.0",
-    "traverse": "0.6.6",
-    "postman-collection": "3.6.9"
+    "libxmljs": "0.19.7",
+    "postman-collection": "3.6.9",
+    "traverse": "0.6.6"
   }
 }

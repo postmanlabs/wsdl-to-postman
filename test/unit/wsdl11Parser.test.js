@@ -731,7 +731,7 @@ describe('WSDL 1.1 parser getNamespaceByKey', function() {
         TNS_NS_KEY
       );
     expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal(TNS_NS_KEY);
+    expect(wsdlnamespace.key).to.equal('tns');
     expect(wsdlnamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
     expect(wsdlnamespace.isDefault).to.equal(false);
   });
@@ -987,6 +987,7 @@ describe('WSDL 1.1 parser assignNamespaces', function() {
     expect(wsdlObject.SOAPNamespace.key).to.equal('soap');
     expect(wsdlObject.SOAP12Namespace.key).to.equal('soap12');
     expect(wsdlObject.schemaNamespace.key).to.equal('xs');
+    expect(wsdlObject.schemaNamespace.prefixFilter).to.equal('xs:');
 
   });
 
@@ -2681,7 +2682,7 @@ describe('WSDL 1.1 parser assignOperations', function() {
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(NUMBERCONVERSION_INPUT);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(4);
 
@@ -2859,7 +2860,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(inputFile);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
-    wsdlObject = parser.assignOperations(wsdlObject, parsed, 'xs:');
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(4);
 

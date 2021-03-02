@@ -39,6 +39,6 @@ describe('knownTypes isKnownType', function() {
 
   it('should get false when called with "unsignedLong"', function() {
     const exists = isKnownType('unsignedLong');
-    expect(exists).to.equal(false);
+    expect(exists).to.equal(true);
   });
 });
