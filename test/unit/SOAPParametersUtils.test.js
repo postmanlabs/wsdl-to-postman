@@ -51,7 +51,6 @@ describe('ParametersUtils parseObjectToXML', function() {
     const parametersUtils = new SOAPParametersUtils(),
       xmlParameters = parametersUtils.parseObjectToXML(json);
     expect(xmlParameters).to.be.an('string');
-    // fs.writeFileSync('temp3.xml', xmlParameters);
   });
 
   it('should get an emtpy string when object is empty', function() {
@@ -59,7 +58,6 @@ describe('ParametersUtils parseObjectToXML', function() {
       xmlParameters = parametersUtils.parseObjectToXML({});
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters).to.equal('');
-    // fs.writeFileSync('temp3.xml', xmlParameters);
   });
 
   it('should throw an error when object is null', function() {
@@ -164,6 +162,42 @@ describe('ParametersUtils converObjectParametersToXML', function() {
         isComplex: true,
         type: 'complex',
         namespace: 'http://tempuri.org/'
+      },
+      xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
+    fs.writeFileSync('temp3.xml', xmlParameters);
+  });
+
+  it('should get an string representing the xml of the corresponding nodes ex2', function() {
+    const parametersUtils = new SOAPParametersUtils(),
+      xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+      '<soap:Envelope' +
+      'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<GeocodeAddressParsed xmlns="https://geoservices.tamu.edu/">' +
+      '<censusYear>Unknown</censusYear>' +
+      '</GeocodeAddressParsed>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
+      child = {
+        children: [],
+        name: 'censusYear',
+        isComplex: false,
+        type: 'string',
+        enumValues: ["Unknown",
+          "NineteenNinety",
+          "TwoThousand",
+          "TwoThousandTen",
+          "AllAvailable"
+        ]
+      },
+      node = {
+        children: [child],
+        name: 'GeocodeAddressParsed',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'https://geoservices.tamu.edu/'
       },
       xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
