@@ -1,11 +1,14 @@
+const {
+  fail
+} = require('assert');
+
 const expect = require('chai').expect,
   fs = require('fs'),
-  async = require('async'),
-  {
-    SchemaPack
-  } = require('../../lib/SchemaPack'),
-  validWSDLs = 'test/data/validWSDLs11',
-  validWSDLs20 = 'test/data/validWSDLs20';
+  async = require('async'), {
+      SchemaPack
+    } = require('../../lib/SchemaPack'),
+    validWSDLs = 'test/data/validWSDLs11',
+    validWSDLs20 = 'test/data/validWSDLs20';
 //   inputFileTemperatureHasHttp = `<wsdl:definitions
 //   xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/
 //   xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
@@ -173,6 +176,25 @@ const expect = require('chai').expect,
 
 describe('SchemaPack convert unit test WSDL 1.1', function() {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
+
+  it('Should get an object representing PM Collection from ', function() {
+    let fileContent = fs.readFileSync('test/data/validWSDLs11/fail.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+    });
+  });
+
+
   async.each(validWSDLsFolder, function(file) {
     it('Should get an object representing PM Collection from ' + file, function() {
       let fileContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8');

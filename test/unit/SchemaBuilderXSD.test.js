@@ -5,6 +5,10 @@ const expect = require('chai').expect,
   {
     Wsdl11Parser
   } = require('../../lib/Wsdl11Parser'),
+  {
+    PARSER_ATRIBUTE_NAME_PLACE_HOLDER,
+    XML_NAMESPACE_DECLARATION
+  } = require('../../lib/WsdlParserCommon'),
   CORE_SCHEMA = `<xsd:schema elementFormDefault="qualified" xmlns:tns="http://tempuri.org/"
     targetNamespace="http://tempuri.org/">
 <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
@@ -230,7 +234,7 @@ describe('SchemaBuilderXSD getElements', function() {
         isDefault: false
       },
       parsedXml = parser.parseFromXmlToObject(CORE_FILE_INPUT),
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.a('array');
     expect(elements.length).to.eq(6);
 
@@ -302,7 +306,7 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
     expect(elements).to.be.empty;
   });
@@ -344,7 +348,7 @@ describe('SchemaBuilderXSD getElements', function() {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -438,7 +442,7 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -564,7 +568,7 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
     expect(elements[0].name).to.equal('TestCustomModel');
@@ -654,7 +658,7 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     let parsed = parser.parseFromXmlToObject(simpleInput),
-      elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
     expect(elements[0].name).to.equal('ListOfCurrenciesByCodeResponse');
@@ -692,7 +696,7 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     try {
-      builder.getElements(undefined, '', 'definitions', schemaNameSpace, thisNameSpace);
+      builder.getElements(undefined, '', 'definitions', schemaNameSpace, thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -715,7 +719,7 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     try {
-      builder.getElements(null, '', 'definitions', schemaNameSpace, thisNameSpace);
+      builder.getElements(null, '', 'definitions', schemaNameSpace, thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -752,7 +756,7 @@ describe('SchemaBuilderXSD getElementsFromType', function() {
   it('should get an error when the object sent is undefined', function() {
     const builder = new SchemaBuilderXSD();
     try {
-      builder.getElementsFromType('', null, '', '');
+      builder.getElementsFromType('', null, '', '', PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
       assert.fail('we expected an error');
     }
     catch (error) {
