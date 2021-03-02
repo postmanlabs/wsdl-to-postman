@@ -2,7 +2,6 @@ const expect = require('chai').expect,
   {
     SOAPParametersUtils
   } = require('../../lib/utils/SOAPParametersUtils'),
-  fs = require('fs'),
   json = {
     'soap:Envelope': {
       '@_xmlns:soap': 'http://schemas.xmlsoap.org/soap/envelope/',
@@ -112,7 +111,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
-    fs.writeFileSync('temp3.xml', xmlParameters);
+
   });
 
   it('should get an string representing the xml of the corresponding nodes ex2', function() {
@@ -166,10 +165,10 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
-    fs.writeFileSync('temp3.xml', xmlParameters);
+
   });
 
-  it('should get an string representing the xml of the corresponding nodes ex2', function() {
+  it('should get an string representing the xml of the corresponding nodes using enum', function() {
     const parametersUtils = new SOAPParametersUtils(),
       xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
       '<soap:Envelope' +
@@ -185,11 +184,11 @@ describe('ParametersUtils converObjectParametersToXML', function() {
         name: 'censusYear',
         isComplex: false,
         type: 'string',
-        enumValues: ["Unknown",
-          "NineteenNinety",
-          "TwoThousand",
-          "TwoThousandTen",
-          "AllAvailable"
+        enumValues: ['Unknown',
+          'NineteenNinety',
+          'TwoThousand',
+          'TwoThousandTen',
+          'AllAvailable'
         ]
       },
       node = {
@@ -202,6 +201,6 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
-    fs.writeFileSync('temp3.xml', xmlParameters);
+
   });
 });

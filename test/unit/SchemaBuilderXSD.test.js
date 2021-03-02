@@ -888,7 +888,8 @@ describe('SchemaBuilderXSD getElements', function() {
       xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
       name="NumberConversion" targetNamespace="https://geoservices.tamu.edu/">
         <types>
-        <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/" xmlns:s="http://www.w3.org/2001/XMLSchema"
+        <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/" 
+        xmlns:s="http://www.w3.org/2001/XMLSchema"
         xmlns:tns="https://geoservices.tamu.edu/">
         <s:element name="GeocodeAddressParsed">
         <s:complexType>
@@ -944,11 +945,11 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[0].children[0].enumValues.length).to.equal(5);
     expect(elements[0].children[0].children).to.be.an('array');
     expect(elements[0].children[0].children).to.be.empty;
-    expect(elements[0].children[0].enumValues).to.have.members(["Unknown",
-      "NineteenNinety",
-      "TwoThousand",
-      "TwoThousandTen",
-      "AllAvailable"
+    expect(elements[0].children[0].enumValues).to.have.members(['Unknown',
+      'NineteenNinety',
+      'TwoThousand',
+      'TwoThousandTen',
+      'AllAvailable'
     ]);
   });
 
