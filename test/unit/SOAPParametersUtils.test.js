@@ -203,4 +203,32 @@ describe('ParametersUtils converObjectParametersToXML', function() {
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
   });
+
+  it('should get an string representing the xml of the corresponding nodes using enum integer', function() {
+    const parametersUtils = new SOAPParametersUtils(),
+      xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+      '<soap:Envelope' +
+      'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<foobar>' +
+      '1' +
+      '</foobar>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
+      node = {
+        children: [],
+        name: 'foobar',
+        isComplex: false,
+        type: 'integer',
+        namespace: 'https://geoservices.tamu.edu/',
+        enumValues: ['1',
+          '1011',
+          '1032'
+        ]
+      }
+    xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
+
+  });
 });

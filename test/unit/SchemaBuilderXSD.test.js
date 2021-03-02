@@ -953,6 +953,63 @@ describe('SchemaBuilderXSD getElements', function() {
     ]);
   });
 
+  it('should get an array of types with 1 root and 1 child with simple types with enum of integers', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+      <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+      xmlns:s="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+      name="NumberConversion" targetNamespace="https://geoservices.tamu.edu/">
+        <types>
+        <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/" 
+        xmlns:s="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="https://geoservices.tamu.edu/">
+        <s:element name="foobar" type="enumType"/>
+        <s:simpleType name="enumType">
+        <s:restriction base="s:integer">
+          <s:enumeration value="1"/>
+          <s:enumeration value="1011"/>
+          <s:enumeration value="1032"/>
+        </s:restriction>
+        </s:simpleType>
+       </s:schema>
+        </types> 
+        </definitions > `,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'https://geoservices.tamu.edu/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+
+    expect(elements[0].name).to.equal('foobar');
+    expect(elements[0].isComplex).to.equal(false);
+    expect(elements[0].type).to.equal('integer');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
+    expect(elements[0].children).to.be.an('array');
+    expect(elements[0].children).to.be.empty;
+    expect(elements[0].enumValues).to.have.members(['1',
+      '1011',
+      '1032'
+    ]);
+  });
+
 });
 
 
