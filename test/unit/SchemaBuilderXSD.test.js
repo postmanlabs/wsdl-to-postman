@@ -805,6 +805,81 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[0].children[0].children).to.be.empty;
   });
 
+  it('should get an array of types with 1 root and 1 child with simple types three levels', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+      <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+        <types>
+        <xs:schema targetNamespace="http://www.dataaccess.com/webservicesserver/"  
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:simpleType name="C">
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType name="Char_20">
+        <xs:restriction base="C">
+          <xs:minLength value="1"/>
+          <xs:maxLength value="20"/>
+        </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType name="Char_20_10">
+        <xs:restriction base="Char_20">
+	      <xs:minLength value="10"/>
+        </xs:restriction>
+        </xs:simpleType>
+        <xs:element name="Test">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="inputString" type="Char_20_10" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        </xs:schema>
+        </types>
+      </definitions>`,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://www.dataaccess.com/webservicesserver/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+
+    expect(elements[0].name).to.equal('Test');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].minOccurs).to.equal('1');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('http://www.dataaccess.com/webservicesserver/');
+    expect(elements[0].children).to.be.an('array');
+
+    expect(elements[0].children[0].name).to.equal('inputString');
+    expect(elements[0].children[0].isComplex).to.equal(false);
+    expect(elements[0].children[0].type).to.equal('string');
+    expect(elements[0].children[0].minLength).to.equal(10);
+    expect(elements[0].children[0].maxLength).to.equal(20);
+    expect(elements[0].children[0].children).to.be.an('array');
+    expect(elements[0].children[0].children).to.be.empty;
+  });
+
+
 });
 
 
