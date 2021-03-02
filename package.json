@@ -40,7 +40,8 @@
   },
   "dependencies": {
     "fast-xml-parser": "3.18.0",
-    "traverse": "0.6.6",
-    "postman-collection": "3.6.9"
+    "libxmljs": "0.19.7",
+    "postman-collection": "3.6.9",
+    "traverse": "0.6.6"
   }
 }
