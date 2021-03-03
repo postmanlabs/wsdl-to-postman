@@ -1097,7 +1097,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[1].isComplex).to.equal(true);
     expect(elements[1].type).to.equal('anonimous');
     expect(elements[1].children).to.be.an('array');
-    expect(elements[1].children.length).to.equal(22)
+    expect(elements[1].children.length).to.equal(22);
   });
 
 });
