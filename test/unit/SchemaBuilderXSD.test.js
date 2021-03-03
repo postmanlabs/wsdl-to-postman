@@ -1100,6 +1100,73 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[1].children.length).to.equal(22);
   });
 
+  it('should get an array of elements defined in the message when have 2 elements', function() {
+    const simpleInput = `<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:tns="http://tempuri.org/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    targetNamespace="http://tempuri.org/">
+    <types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+            <xsd:element name="TestElement">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="TestElementOther">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="inputStringOther" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <message name="PO">
+        <part name="po" element="tns:TestElement" />
+        <part name="invoice" element="tns:TestElementOther" />
+    </message>
+</definitions>
+`,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xsd',
+        prefixFilter: 'xsd:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://tempuri.org/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+    expect(elements[0].name).to.equal('TestElement');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[1].name).to.equal('TestElementOther');
+    expect(elements[1].isComplex).to.equal(true);
+    expect(elements[2].name).to.equal('PO');
+    expect(elements[2].isComplex).to.equal(true);
+    expect(elements[2].type).to.equal('anonimous');
+    expect(elements[2].children).to.be.an('array');
+    expect(elements[2].children.length).to.equal(2);
+
+  });
+
 });
 
 
