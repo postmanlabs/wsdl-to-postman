@@ -1167,7 +1167,7 @@ describe('SchemaBuilderXSD getElements', function() {
 
   });
 
-  it('should get an array of elements defined in the message when have 2 elements', function() {
+  it('should get an array of elements defined in the message when have 2 types', function() {
     const simpleInput = `<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
     xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
@@ -1222,15 +1222,11 @@ describe('SchemaBuilderXSD getElements', function() {
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
-    expect(elements[0].name).to.equal('TestElement');
+    expect(elements[0].name).to.equal('PO');
     expect(elements[0].isComplex).to.equal(true);
-    expect(elements[1].name).to.equal('TestElementOther');
-    expect(elements[1].isComplex).to.equal(true);
-    expect(elements[2].name).to.equal('PO');
-    expect(elements[2].isComplex).to.equal(true);
-    expect(elements[2].type).to.equal('anonimous');
-    expect(elements[2].children).to.be.an('array');
-    expect(elements[2].children.length).to.equal(2);
+    expect(elements[0].type).to.equal('anonimous');
+    expect(elements[0].children[0].name).to.equal('enumType');
+    expect(elements[0].children[1].name).to.equal('MyCustomModel');
 
   });
 
