@@ -14,10 +14,12 @@ const expect = require('chai').expect,
     TNS_NS_KEY,
     SOAP_PROTOCOL,
     SOAP12_PROTOCOL,
-    HTTP_PROTOCOL,
-    PARSER_ATRIBUTE_NAME_PLACE_HOLDER
+    HTTP_PROTOCOL
   } = require('../../lib/Wsdl11Parser'),
-  NUMBERCONVERSION_INPUT = `
+  {
+    PARSER_ATRIBUTE_NAME_PLACE_HOLDER
+  } = require('../../lib/WsdlParserCommon');
+NUMBERCONVERSION_INPUT = `
   <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
 xmlns:xs="http://www.w3.org/2001/XMLSchema" 

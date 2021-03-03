@@ -20,7 +20,9 @@ const {
           children: [],
           name: 'ubiNum',
           isComplex: false,
-          type: 'unsignedLong'
+          type: 'integer',
+          maximum: 2147483647,
+          minimum: -2147483648
         }],
         name: 'NumberToWords',
         isComplex: true,
@@ -66,7 +68,7 @@ const {
           children: [],
           name: 'dNum',
           isComplex: false,
-          type: 'decimal'
+          type: 'number'
         }],
         name: 'NumberToDollars',
         isComplex: true,
@@ -90,7 +92,9 @@ const {
           children: [],
           name: 'ubiNum',
           isComplex: false,
-          type: 'unsignedLong'
+          type: 'integer',
+          maximum: 2147483647,
+          minimum: -2147483648
         }],
         name: 'NumberToWords',
         isComplex: true,
@@ -114,7 +118,7 @@ const {
           children: [],
           name: 'dNum',
           isComplex: false,
-          type: 'decimal'
+          type: 'number'
         }],
         name: 'NumberToDollars',
         isComplex: true,
