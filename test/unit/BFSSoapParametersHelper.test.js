@@ -11,7 +11,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
         name: 'ubiNum',
         isComplex: false,
         type: 'integer',
-        maximum: 18446744073709552000,
+        maximum: 18446744073709,
         minimum: 0
       },
       node = {
@@ -29,7 +29,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords)
       .to.have.own.property('ubiNum');
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords.ubiNum)
-      .to.equal(18446744073709552000);
+      .to.equal(18446744073709);
   });
 
   it('Should get a json object when TestCustomModel->inputmodel->id,name,email is sent', function() {

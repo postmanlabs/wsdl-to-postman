@@ -29,7 +29,7 @@ describe('ParametersUtils buildObjectParameters', function() {
         name: 'ubiNum',
         isComplex: false,
         type: 'integer',
-        maximum: 18446744073709552000,
+        maximum: 18446744073709,
         minimum: 0
       },
       node = {
@@ -89,7 +89,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
       '<soap:Body>' +
       '<NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">' +
-      '<ubiNum>18446744073709552000</ubiNum>' +
+      '<ubiNum>18446744073709</ubiNum>' +
       '</NumberToWords>' +
       '</soap:Body>' +
       '</soap:Envelope>',
@@ -98,7 +98,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
         name: 'ubiNum',
         isComplex: false,
         type: 'integer',
-        maximum: 18446744073709552000,
+        maximum: 18446744073709,
         minimum: 0
       },
       node = {
