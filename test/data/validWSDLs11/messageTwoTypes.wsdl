@@ -9,30 +9,31 @@
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
     <types>
         <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-            <xsd:element name="TestElement">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="TestElementOther">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element minOccurs="0" maxOccurs="1" name="inputStringOther" type="xsd:string" />
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
+            <xsd:simpleType name="enumType">
+                <xsd:restriction base="xsd:integer">
+                    <xsd:enumeration value="1"/>
+                    <xsd:enumeration value="1011"/>
+                    <xsd:enumeration value="1032"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="MyCustomModel">
+                <xsd:sequence>
+                    <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
+                    <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
+                    <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
         </xsd:schema>
     </types>
     <message name="PO">
-        <part name="po" element="tns:TestElement" />
-        <part name="invoice" element="tns:TestElementOther" />
+        <part name="po" type="tns:enumType" />
+        <part name="invoice" type="tns:MyCustomModel" />
     </message>
     <message name="POOut">
-        <part name="po" element="tns:TestElement" />
-        <part name="invoice" element="tns:TestElementOther" />
+        <part name="po" type="tns:enumType" />
+        <part name="invoice" type="tns:MyCustomModel" />
     </message>
+
     <portType name="ISampleService">
         <operation name="Test">
             <input message="tns:PO" />
