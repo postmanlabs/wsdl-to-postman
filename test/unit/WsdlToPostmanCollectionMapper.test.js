@@ -233,54 +233,85 @@ describe('WsdlToPostmanCollectionMapper constructor', function() {
 describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
   it('Should return a PostmanCollection object', function() {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
-    let postmanCollection = mapper.getPostmanCollection();
+    let postmanCollection = mapper.getPostmanCollection('collection name');
     expect(postmanCollection instanceof Collection).to.be.true;
   });
 
-  describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function() {
-    it('Should return postmanCollection items definition from wsdlObject.operationsArray', function() {
-      const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
-      let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray),
-        urlVariables = mapper.getVariablesFromUrlList(urls),
-        items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray, urlVariables),
-        requests;
-      expect(items).to.be.an('array');
-      requests = items.map((item) => {
-        expect(item).to.include.all.keys('name', 'description', 'request');
-        return item.request;
-      });
-      requests.forEach((request) => {
-        expect(request).to.be.an('object')
-          .to.include.all.keys('url', 'method', 'header', 'body');
-      });
+  it(
+    'Should return a postman collection with name equals to providedName when it is different than empty string',
+    function() {
+      const providedName = 'provided name',
+        mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
+        postmanCollection = mapper.getPostmanCollection(providedName);
+      expect(postmanCollection.name).to.be.equal(providedName);
+    }
+  );
+
+  it(
+    `Should return a postman collection with name equals to provided wsdlObject targetNamespace url
+    when provided name is equal to empty string`,
+    function() {
+      const providedEmptyStringName = '',
+        expectedName = wsdlMockObject.targetNamespace.url,
+        mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
+        postmanCollection = mapper.getPostmanCollection(providedEmptyStringName);
+      expect(postmanCollection.name).to.be.equal(expectedName);
+    }
+  );
+});
+
+describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function() {
+  it('Should return postmanCollection items definition from wsdlObject.operationsArray', function() {
+    const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
+    let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray),
+      urlVariables = mapper.getVariablesFromUrlList(urls),
+      items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray, urlVariables),
+      requests;
+    expect(items).to.be.an('array');
+    requests = items.map((item) => {
+      expect(item).to.include.all.keys('name', 'description', 'request');
+      return item.request;
+    });
+    requests.forEach((request) => {
+      expect(request).to.be.an('object')
+        .to.include.all.keys('url', 'method', 'header', 'body');
     });
   });
+});
 
-  describe('WsdlToPostmanCollectionMapper getUrlFromOperations', function() {
-    it('Should an array of urls', function() {
-      const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
-      let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray);
-      expect(urls).to.be.an('array');
-    });
+describe('WsdlToPostmanCollectionMapper getUrlFromOperations', function() {
+  it('Should an array of urls', function() {
+    const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
+    let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray);
+    expect(urls).to.be.an('array');
   });
+});
 
-  describe('WsdlToPostmanCollectionMapper getVariablesFromUrlList', function() {
-    it('Should return an array of objects with format {key, value}', function() {
-      const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
-        urls = [
-          'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'https://app.flowkey.com/browse/category/rock',
-          'https://heasarc.gsfc.nasa.gov/lheasoft/download.html'
-        ];
-      let variables = mapper.getVariablesFromUrlList(urls);
-      expect(variables).to.be.an('array');
-      variables.forEach((variable) => {
-        expect(variable).to.be.an('object')
-          .to.include.all.keys('key', 'value');
-      });
-      expect(variables[0].value).to.equal('https://www.dataaccess.com/');
-      expect(variables[1].value).to.equal('https://app.flowkey.com/');
-      expect(variables[2].value).to.equal('https://heasarc.gsfc.nasa.gov/');
+describe('WsdlToPostmanCollectionMapper getVariablesFromUrlList', function() {
+  it('Should return an array of objects with format {key, value}', function() {
+    const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
+      urls = [
+        'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+        'https://app.flowkey.com/browse/category/rock',
+        'https://heasarc.gsfc.nasa.gov/lheasoft/download.html'
+      ];
+    let variables = mapper.getVariablesFromUrlList(urls);
+    expect(variables).to.be.an('array');
+    variables.forEach((variable) => {
+      expect(variable).to.be.an('object')
+        .to.include.all.keys('key', 'value');
     });
+    expect(variables[0].value).to.equal('https://www.dataaccess.com/');
+    expect(variables[1].value).to.equal('https://app.flowkey.com/');
+    expect(variables[2].value).to.equal('https://heasarc.gsfc.nasa.gov/');
+  });
+});
+
+describe('generateMappingObject method', function() {
+  it('Should return a mappingObject with provided name', function() {
+    const expectedName = 'providedName',
+      mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
+      mappingObject = mapper.generateMappingObject(wsdlMockObject, expectedName);
+    expect(mappingObject.info.name).to.be.equal(expectedName);
   });
 });
