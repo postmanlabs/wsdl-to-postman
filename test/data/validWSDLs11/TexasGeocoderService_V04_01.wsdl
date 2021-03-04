@@ -645,6 +645,30 @@
             <s:element name="WebServiceGeocodeQueryResultSet" nillable="true" type="tns:WebServiceGeocodeQueryResultSet" />
         </s:schema>
     </wsdl:types>
+    <wsdl:message name="GeocodeAddressParsedSoapIn">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressParsed" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedSoapOut">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressParsedResponse" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedSoapIn">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressParsedAdvanced" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedSoapOut">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressParsedAdvancedResponse" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedSoapIn">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressNonParsed" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedSoapOut">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressNonParsedResponse" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedSoapIn">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressNonParsedAdvanced" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedSoapOut">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressNonParsedAdvancedResponse" />
+    </wsdl:message>
     <wsdl:message name="GeocodeAddressParsedHttpGetIn">
         <wsdl:part name="number" type="s:string" />
         <wsdl:part name="numberFractional" type="s:string" />
@@ -672,12 +696,309 @@
     <wsdl:message name="GeocodeAddressParsedHttpGetOut">
         <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
     </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedHttpGetIn">
+        <wsdl:part name="number" type="s:string" />
+        <wsdl:part name="numberFractional" type="s:string" />
+        <wsdl:part name="preDirectional" type="s:string" />
+        <wsdl:part name="preQualifier" type="s:string" />
+        <wsdl:part name="preType" type="s:string" />
+        <wsdl:part name="preArticle" type="s:string" />
+        <wsdl:part name="name" type="s:string" />
+        <wsdl:part name="suffix" type="s:string" />
+        <wsdl:part name="postArticle" type="s:string" />
+        <wsdl:part name="postQualifier" type="s:string" />
+        <wsdl:part name="postDirectional" type="s:string" />
+        <wsdl:part name="suiteType" type="s:string" />
+        <wsdl:part name="suiteNumber" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="shouldUseRelaxation" type="s:string" />
+        <wsdl:part name="shouldUseSubstring" type="s:string" />
+        <wsdl:part name="shouldUseSoundex" type="s:string" />
+        <wsdl:part name="shouldUseUncertaintyHierarchy" type="s:string" />
+        <wsdl:part name="relaxableAttributes" type="s:string" />
+        <wsdl:part name="soundexAttributes" type="s:string" />
+        <wsdl:part name="referenceSources" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedHttpGetIn">
+        <wsdl:part name="streetAddress" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedHttpGetIn">
+        <wsdl:part name="streetAddress" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="country" type="s:string" />
+        <wsdl:part name="shouldUseRelaxation" type="s:string" />
+        <wsdl:part name="shouldUseSubstring" type="s:string" />
+        <wsdl:part name="shouldUseSoundex" type="s:string" />
+        <wsdl:part name="shouldUseUncertaintyHierarchy" type="s:string" />
+        <wsdl:part name="relaxableAttributes" type="s:string" />
+        <wsdl:part name="soundexAttributes" type="s:string" />
+        <wsdl:part name="referenceSources" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedHttpPostIn">
+        <wsdl:part name="number" type="s:string" />
+        <wsdl:part name="numberFractional" type="s:string" />
+        <wsdl:part name="preDirectional" type="s:string" />
+        <wsdl:part name="preQualifier" type="s:string" />
+        <wsdl:part name="preType" type="s:string" />
+        <wsdl:part name="preArticle" type="s:string" />
+        <wsdl:part name="name" type="s:string" />
+        <wsdl:part name="suffix" type="s:string" />
+        <wsdl:part name="postArticle" type="s:string" />
+        <wsdl:part name="postQualifier" type="s:string" />
+        <wsdl:part name="postDirectional" type="s:string" />
+        <wsdl:part name="suiteType" type="s:string" />
+        <wsdl:part name="suiteNumber" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedHttpPostOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedHttpPostIn">
+        <wsdl:part name="number" type="s:string" />
+        <wsdl:part name="numberFractional" type="s:string" />
+        <wsdl:part name="preDirectional" type="s:string" />
+        <wsdl:part name="preQualifier" type="s:string" />
+        <wsdl:part name="preType" type="s:string" />
+        <wsdl:part name="preArticle" type="s:string" />
+        <wsdl:part name="name" type="s:string" />
+        <wsdl:part name="suffix" type="s:string" />
+        <wsdl:part name="postArticle" type="s:string" />
+        <wsdl:part name="postQualifier" type="s:string" />
+        <wsdl:part name="postDirectional" type="s:string" />
+        <wsdl:part name="suiteType" type="s:string" />
+        <wsdl:part name="suiteNumber" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="shouldUseRelaxation" type="s:string" />
+        <wsdl:part name="shouldUseSubstring" type="s:string" />
+        <wsdl:part name="shouldUseSoundex" type="s:string" />
+        <wsdl:part name="shouldUseUncertaintyHierarchy" type="s:string" />
+        <wsdl:part name="relaxableAttributes" type="s:string" />
+        <wsdl:part name="soundexAttributes" type="s:string" />
+        <wsdl:part name="referenceSources" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedHttpPostOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedHttpPostIn">
+        <wsdl:part name="streetAddress" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedHttpPostOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedHttpPostIn">
+        <wsdl:part name="streetAddress" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="country" type="s:string" />
+        <wsdl:part name="shouldUseRelaxation" type="s:string" />
+        <wsdl:part name="shouldUseSubstring" type="s:string" />
+        <wsdl:part name="shouldUseSoundex" type="s:string" />
+        <wsdl:part name="shouldUseUncertaintyHierarchy" type="s:string" />
+        <wsdl:part name="relaxableAttributes" type="s:string" />
+        <wsdl:part name="soundexAttributes" type="s:string" />
+        <wsdl:part name="referenceSources" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedHttpPostOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:portType name="GeocoderService_V04_01Soap">
+        <wsdl:operation name="GeocodeAddressParsed">
+            <wsdl:input message="tns:GeocodeAddressParsedSoapIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressParsedAdvancedSoapIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedAdvancedSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <wsdl:input message="tns:GeocodeAddressNonParsedSoapIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressNonParsedAdvancedSoapIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedAdvancedSoapOut" />
+        </wsdl:operation>
+    </wsdl:portType>
     <wsdl:portType name="GeocoderService_V04_01HttpGet">
         <wsdl:operation name="GeocodeAddressParsed">
             <wsdl:input message="tns:GeocodeAddressParsedHttpGetIn" />
             <wsdl:output message="tns:GeocodeAddressParsedHttpGetOut" />
         </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressParsedAdvancedHttpGetIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedAdvancedHttpGetOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <wsdl:input message="tns:GeocodeAddressNonParsedHttpGetIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedHttpGetOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressNonParsedAdvancedHttpGetIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedAdvancedHttpGetOut" />
+        </wsdl:operation>
     </wsdl:portType>
+    <wsdl:portType name="GeocoderService_V04_01HttpPost">
+        <wsdl:operation name="GeocodeAddressParsed">
+            <wsdl:input message="tns:GeocodeAddressParsedHttpPostIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressParsedAdvancedHttpPostIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedAdvancedHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <wsdl:input message="tns:GeocodeAddressNonParsedHttpPostIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressNonParsedAdvancedHttpPostIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedAdvancedHttpPostOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="GeocoderService_V04_01Soap" type="tns:GeocoderService_V04_01Soap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GeocodeAddressParsed">
+            <soap:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressParsed" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <soap:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressParsedAdvanced" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <soap:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressNonParsed" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <soap:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressNonParsedAdvanced" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="GeocoderService_V04_01Soap12" type="tns:GeocoderService_V04_01Soap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GeocodeAddressParsed">
+            <soap12:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressParsed" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <soap12:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressParsedAdvanced" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <soap12:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressNonParsed" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <soap12:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressNonParsedAdvanced" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
     <wsdl:binding name="GeocoderService_V04_01HttpGet" type="tns:GeocoderService_V04_01HttpGet">
         <http:binding verb="GET" />
         <wsdl:operation name="GeocodeAddressParsed">
@@ -689,9 +1010,84 @@
                 <mime:mimeXml part="Body" />
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <http:operation location="/GeocodeAddressParsedAdvanced" />
+            <wsdl:input>
+                <http:urlEncoded />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <http:operation location="/GeocodeAddressNonParsed" />
+            <wsdl:input>
+                <http:urlEncoded />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <http:operation location="/GeocodeAddressNonParsedAdvanced" />
+            <wsdl:input>
+                <http:urlEncoded />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="GeocoderService_V04_01HttpPost" type="tns:GeocoderService_V04_01HttpPost">
+        <http:binding verb="POST" />
+        <wsdl:operation name="GeocodeAddressParsed">
+            <http:operation location="/GeocodeAddressParsed" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <http:operation location="/GeocodeAddressParsedAdvanced" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <http:operation location="/GeocodeAddressNonParsed" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <http:operation location="/GeocodeAddressNonParsedAdvanced" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="GeocoderService_V04_01">
+        <wsdl:port name="GeocoderService_V04_01Soap" binding="tns:GeocoderService_V04_01Soap">
+            <soap:address location="https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderService_V04_01.asmx" />
+        </wsdl:port>
+        <wsdl:port name="GeocoderService_V04_01Soap12" binding="tns:GeocoderService_V04_01Soap12">
+            <soap12:address location="https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderService_V04_01.asmx" />
+        </wsdl:port>
         <wsdl:port name="GeocoderService_V04_01HttpGet" binding="tns:GeocoderService_V04_01HttpGet">
+            <http:address location="https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderService_V04_01.asmx" />
+        </wsdl:port>
+        <wsdl:port name="GeocoderService_V04_01HttpPost" binding="tns:GeocoderService_V04_01HttpPost">
             <http:address location="https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderService_V04_01.asmx" />
         </wsdl:port>
     </wsdl:service>
