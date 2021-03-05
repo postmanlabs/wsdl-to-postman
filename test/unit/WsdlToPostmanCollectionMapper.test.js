@@ -242,7 +242,7 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
     function() {
       const providedName = 'provided name',
         mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
-        postmanCollection = mapper.getPostmanCollection(providedName);
+        postmanCollection = mapper.getPostmanCollection({}, providedName);
       expect(postmanCollection.name).to.be.equal(providedName);
     }
   );
@@ -311,7 +311,7 @@ describe('generateMappingObject method', function() {
   it('Should return a mappingObject with provided name', function() {
     const expectedName = 'providedName',
       mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
-      mappingObject = mapper.generateMappingObject(wsdlMockObject, expectedName);
+      mappingObject = mapper.generateMappingObject(wsdlMockObject, {}, expectedName);
     expect(mappingObject.info.name).to.be.equal(expectedName);
   });
 });
