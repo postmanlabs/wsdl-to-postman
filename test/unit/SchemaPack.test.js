@@ -32,7 +32,7 @@ describe('SchemaPack convert unit test WSDL 1.1', function() {
 describe('SchemaPack convert unit test WSDL 1.1 with options', function() {
 
   it('Should get an object representing PM Collection with two folders', function() {
-    let fileContent = fs.readFileSync(validWSDLs + '/' + 'calculator-soap11and12.wsdl', 'utf8');
+    let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
     const options = {
         folderStrategy: 'Port/Endpoint'
       },
@@ -52,12 +52,12 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function() {
       expect(result.output[0].data.item.length).to.equal(2);
       expect(result.output[0].data.item[0].name).to.equal('CalculatorSoap');
       expect(result.output[0].data.item[1].name).to.equal('CalculatorSoap12');
-      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data))
+
     });
   });
 
   it('Should get an object representing PM Collection with one folder', function() {
-    let fileContent = fs.readFileSync(validWSDLs + '/' + 'calculator-soap11and12.wsdl', 'utf8');
+    let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
     const options = {
         folderStrategy: 'Service'
       },
@@ -81,7 +81,7 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function() {
   });
 
   it('Should get an object representing PM Collection without folder', function() {
-    let fileContent = fs.readFileSync(validWSDLs + '/' + 'calculator-soap11and12.wsdl', 'utf8');
+    let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
     const options = {
         folderStrategy: 'No folders'
       },
@@ -164,7 +164,7 @@ describe('SchemaPack getOptions', function() {
     expect(options.length).to.eq(0);
   });
 
-  it('Should return external options when called with mode = use', function() {
+  it('Should return external options when called with mode use and usage conversion', function() {
     const options = SchemaPack.getOptions('use', {
       usage: ['CONVERSION']
     });
@@ -173,7 +173,7 @@ describe('SchemaPack getOptions', function() {
     expect(options.folderStrategy).to.eq('No folders');
   });
 
-  it('Should return external options when called with mode = use', function() {
+  it('Should return external options when called with mode document and usage conversion', function() {
     const options = SchemaPack.getOptions('document', {
       usage: ['CONVERSION']
     });
@@ -181,7 +181,7 @@ describe('SchemaPack getOptions', function() {
     expect(options.length).to.eq(1);
   });
 
-  it('Should return external options when called with mode = use', function() {
+  it('Should return external options when called with mode document and usage not an object', function() {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
     expect(options.length).to.eq(1);
