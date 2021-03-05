@@ -1,0 +1,1094 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+    xmlns:tns="https://geoservices.tamu.edu/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="https://geoservices.tamu.edu/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/">
+            <s:element name="GeocodeAddressParsed">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="number" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="numberFractional" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="preDirectional" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="preQualifier" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="preType" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="preArticle" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="suffix" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="postArticle" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="postQualifier" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="postDirectional" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="suiteType" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="suiteNumber" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="zip" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+                        <s:element minOccurs="1" maxOccurs="1" name="version" type="s:double" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldCalculateCensus" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="censusYear" type="tns:CensusYear" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldReturnReferenceGeometry" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldNotStoreTransactionDetails" type="s:boolean" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:simpleType name="CensusYear">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="NineteenNinety" />
+                    <s:enumeration value="TwoThousand" />
+                    <s:enumeration value="TwoThousandTen" />
+                    <s:enumeration value="AllAvailable" />
+                </s:restriction>
+            </s:simpleType>
+            <s:element name="GeocodeAddressParsedResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GeocodeAddressParsedResult" type="tns:WebServiceGeocodeQueryResultSet" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="WebServiceGeocodeQueryResultSet">
+                <s:sequence>
+                    <s:element minOccurs="1" maxOccurs="1" name="parcelMatches" type="s:int" />
+                    <s:element minOccurs="1" maxOccurs="1" name="streetMatches" type="s:int" />
+                    <s:element minOccurs="1" maxOccurs="1" name="Version" type="s:double" />
+                    <s:element minOccurs="0" maxOccurs="1" name="TransactionId" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MicroMatchStatus" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PenaltyCodeResult" type="tns:PenaltyCodeResult" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PenaltyCode" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PenaltyCodeSummary" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="QueryStatusCodes" type="tns:QueryStatusCodes" />
+                    <s:element minOccurs="0" maxOccurs="1" name="WebServiceGeocodeQueryResults" type="tns:ArrayOfWebServiceGeocodeQueryResult" />
+                    <s:element minOccurs="0" maxOccurs="1" name="QueryStatusCodeName" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="QueryStatusCodeValue" type="s:int" />
+                    <s:element minOccurs="0" maxOccurs="1" name="TimeTaken" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="ExceptionOccurred" type="s:boolean" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="IIsPreParsed" type="s:boolean" />
+                    <s:element minOccurs="0" maxOccurs="1" name="INonParsedStreetAddress" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="INumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="INumberFractional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPreDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPreType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPreQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPreArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IName" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ISuffix" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ISuiteType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ISuiteNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ICity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IConsolidatedCity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IMinorCivilDivision" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ICountySubRegion" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ICounty" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IState" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZip" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus1" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus2" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus3" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus4" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus5" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostOfficeBoxType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostOfficeBoxNumber" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="FeatureMatchingResultType" type="tns:FeatureMatchingResultType" />
+                    <s:element minOccurs="1" maxOccurs="1" name="FeatureMatchingResultCount" type="s:int" />
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="PenaltyCodeResult">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="matchScore" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="inputType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="streetType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="streetName" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="cityRefs" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="zipPenalty" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="directionals" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="qualifiers" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="distance" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="outlierDistance" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="censusBlocks" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="censusTracts" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="county" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="recordCount" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="matchScoreSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="inputTypeSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="streetTypeSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="streetNameSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="citySummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="cityRefsSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="zipPenaltySummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="directionalsSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="qualifiersSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="distanceSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="outlierDistanceSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="censusBlocksSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="censusTractsSummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="countySummary" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="recordCountSummary" type="s:string" />
+                </s:sequence>
+            </s:complexType>
+            <s:simpleType name="QueryStatusCodes">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="Success" />
+                    <s:enumeration value="Failure" />
+                    <s:enumeration value="InternalError" />
+                    <s:enumeration value="APIKeyError" />
+                    <s:enumeration value="APIKeyMissing" />
+                    <s:enumeration value="APIKeyInvalid" />
+                    <s:enumeration value="APIKeyNotActivated" />
+                    <s:enumeration value="NonProfitError" />
+                    <s:enumeration value="NonProfitNotConfirmed" />
+                    <s:enumeration value="QueryError" />
+                    <s:enumeration value="QueryParameterMissing" />
+                    <s:enumeration value="QueryRestrictedCoverage" />
+                    <s:enumeration value="QuotaExceededError" />
+                    <s:enumeration value="QuotaExceededAnonymous" />
+                    <s:enumeration value="QuotaExceededPaid" />
+                    <s:enumeration value="VersionInvalid" />
+                    <s:enumeration value="VersionMissing" />
+                    <s:enumeration value="VersionOutdated" />
+                </s:restriction>
+            </s:simpleType>
+            <s:complexType name="ArrayOfWebServiceGeocodeQueryResult">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="WebServiceGeocodeQueryResult" nillable="true" type="tns:WebServiceGeocodeQueryResult" />
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="WebServiceGeocodeQueryResult">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="TransactionId" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="Latitude" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="Longitude" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="Version" type="s:double" />
+                    <s:element minOccurs="0" maxOccurs="1" name="Quality" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MatchedLocationType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MatchType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FeatureMatchingResultCount" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FeatureMatchingResultTypeNotes" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FeatureMatchingResultTypeTieBreakingNotes" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="TieHandlingStrategyType" type="tns:TieHandlingStrategyType" />
+                    <s:element minOccurs="1" maxOccurs="1" name="FeatureMatchingSelectionMethod" type="tns:FeatureMatchingSelectionMethod" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FeatureMatchingSelectionMethodNotes" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="QueryStatusCodes" type="tns:QueryStatusCodes" />
+                    <s:element minOccurs="1" maxOccurs="1" name="GeocodeQualityType" type="tns:GeocodeQualityType" />
+                    <s:element minOccurs="0" maxOccurs="1" name="NAACCRGISCoordinateQualityCode" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="NAACCRGISCoordinateQualityName" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="NAACCRGISCoordinateQualityType" type="tns:NAACCRGISCoordinateQualityType" />
+                    <s:element minOccurs="0" maxOccurs="1" name="NAACCRCensusTractCertaintyCode" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="NAACCRCensusTractCertaintyName" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="NAACCRCensusTractCertaintyType" type="tns:NAACCRCensusTractCertaintyType" />
+                    <s:element minOccurs="1" maxOccurs="1" name="FeatureMatchingGeographyType" type="tns:FeatureMatchingGeographyType" />
+                    <s:element minOccurs="1" maxOccurs="1" name="FeatureMatchingResultType" type="tns:FeatureMatchingResultType" />
+                    <s:element minOccurs="1" maxOccurs="1" name="MatchScore" type="s:double" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MicroMatchStatus" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PenaltyCodeResult" type="tns:PenaltyCodeResult" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PenaltyCode" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PenaltyCodeSummary" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="InterpolationType" type="tns:InterpolationType" />
+                    <s:element minOccurs="1" maxOccurs="1" name="InterpolationSubType" type="tns:InterpolationSubType" />
+                    <s:element minOccurs="0" maxOccurs="1" name="RegionSize" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="RegionSizeUnits" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="QueryStatusCodeName" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="QueryStatusCodeValue" type="s:int" />
+                    <s:element minOccurs="1" maxOccurs="1" name="ExceptionOccurred" type="s:boolean" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="TimeTaken" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusRecords" type="tns:ArrayOfCensusOutputRecord" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusYear" type="tns:CensusYear" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusTimeTaken" type="s:double" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusStateFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusCountyFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusTract" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusBlockGroup" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusBlock" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusPlaceFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusMcdFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusMsaFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusMetDivFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusCbsaFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusCbsaMicro" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="IIsPreParsed" type="s:boolean" />
+                    <s:element minOccurs="0" maxOccurs="1" name="INonParsedStreetAddress" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="INumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="INumberFractional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPreDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPreType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPreQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPreArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IName" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ISuffix" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ISuiteType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ISuiteNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ICity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IConsolidatedCity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IMinorCivilDivision" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ICountySubRegion" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ICounty" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IState" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZip" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus1" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus2" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus3" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus4" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IZipPlus5" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostOfficeBoxType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="IPostOfficeBoxNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MNumberFractional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPreDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPreType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPreQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPreArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MName" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MSuffix" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPostArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPostQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPostDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MSuiteType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MSuiteNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MCity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MConsolidatedCity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MMinorCivilDivision" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MCountySubRegion" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MCounty" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MState" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MZip" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MZipPlus1" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MZipPlus2" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MZipPlus3" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MZipPlus4" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MZipPlus5" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPostOfficeBoxType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="MPostOfficeBoxNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PNumberFractional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPreDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPreType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPreQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPreArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PName" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PSuffix" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPostArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPostQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPostDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PSuiteType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PSuiteNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PCity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PConsolidatedCity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PMinorCivilDivision" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PCountySubRegion" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PCounty" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PState" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PZip" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PZipPlus1" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PZipPlus2" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PZipPlus3" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PZipPlus4" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PZipPlus5" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPostOfficeBoxType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="PPostOfficeBoxNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FNumberFractional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPreDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPreType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPreQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPreArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FName" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FSuffix" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPostArticle" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPostQualifier" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPostDirectional" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FSuiteType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FSuiteNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FCity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FConsolidatedCity" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FMinorCivilDivision" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FCountySubRegion" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FCounty" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FState" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FZip" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FZipPlus1" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FZipPlus2" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FZipPlus3" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FZipPlus4" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FZipPlus5" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPostOfficeBoxType" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPostOfficeBoxNumber" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FArea" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FAreaType" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="FGeometrySRID" type="s:int" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FGeometry" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FSource" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FVintage" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPrimaryIdField" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FPrimaryIdValue" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FSecondaryIdField" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="FSecondaryIdValue" type="s:string" />
+                </s:sequence>
+            </s:complexType>
+            <s:simpleType name="TieHandlingStrategyType">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="RevertToHierarchy" />
+                    <s:enumeration value="FlipACoin" />
+                    <s:enumeration value="DynamicFeatureComposition" />
+                    <s:enumeration value="RegionalCharacteristics" />
+                    <s:enumeration value="ReturnAll" />
+                </s:restriction>
+            </s:simpleType>
+            <s:simpleType name="FeatureMatchingSelectionMethod">
+                <s:restriction base="s:string">
+                    <s:enumeration value="FeatureClassBased" />
+                    <s:enumeration value="UncertaintySingleFeatureArea" />
+                    <s:enumeration value="UncertaintyMultiFeatureGraviational" />
+                    <s:enumeration value="UncertaintyMultiFeatureTopological" />
+                </s:restriction>
+            </s:simpleType>
+            <s:simpleType name="GeocodeQualityType">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unmatchable" />
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="AddressPoint" />
+                    <s:enumeration value="GPS" />
+                    <s:enumeration value="CountyParcel" />
+                    <s:enumeration value="RoofTop" />
+                    <s:enumeration value="ParcelCentroid" />
+                    <s:enumeration value="PrimaryStructureEntrance" />
+                    <s:enumeration value="DrivewayEntrance" />
+                    <s:enumeration value="BuildingFrontDoor" />
+                    <s:enumeration value="BuildingCentroid" />
+                    <s:enumeration value="ExactParcelCentroidPoint" />
+                    <s:enumeration value="ExactParcelCentroid" />
+                    <s:enumeration value="NearestParcelCentroidPoint" />
+                    <s:enumeration value="NearestParcelCentroid" />
+                    <s:enumeration value="ActualLotInterpolation" />
+                    <s:enumeration value="UniformLotInterpolation" />
+                    <s:enumeration value="AddressRangeInterpolation" />
+                    <s:enumeration value="StreetIntersection" />
+                    <s:enumeration value="StreetCentroid" />
+                    <s:enumeration value="ZCTAPlus5Centroid" />
+                    <s:enumeration value="ZCTAPlus4Centroid" />
+                    <s:enumeration value="ZCTAPlus3Centroid" />
+                    <s:enumeration value="ZCTAPlus2Centroid" />
+                    <s:enumeration value="ZCTAPlus1Centroid" />
+                    <s:enumeration value="ZCTACentroid" />
+                    <s:enumeration value="USPSZipPlus5LineCentroid" />
+                    <s:enumeration value="USPSZipPlus4LineCentroid" />
+                    <s:enumeration value="USPSZipPlus5AreaCentroid" />
+                    <s:enumeration value="USPSZipPlus4AreaCentroid" />
+                    <s:enumeration value="USPSZipPlus3AreaCentroid" />
+                    <s:enumeration value="USPSZipPlus2AreaCentroid" />
+                    <s:enumeration value="USPSZipPlus1AreaCentroid" />
+                    <s:enumeration value="USPSZipAreaCentroid" />
+                    <s:enumeration value="CityCentroid" />
+                    <s:enumeration value="ConsolidatedCityCentroid" />
+                    <s:enumeration value="CountySubdivisionCentroid" />
+                    <s:enumeration value="CountyCentroid" />
+                    <s:enumeration value="StateCentroid" />
+                    <s:enumeration value="CountryCentroid" />
+                    <s:enumeration value="DynamicFeatureCompositionCentroid" />
+                </s:restriction>
+            </s:simpleType>
+            <s:simpleType name="NAACCRGISCoordinateQualityType">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="AddressPoint" />
+                    <s:enumeration value="GPS" />
+                    <s:enumeration value="Parcel" />
+                    <s:enumeration value="StreetSegmentInterpolation" />
+                    <s:enumeration value="StreetIntersection" />
+                    <s:enumeration value="StreetCentroid" />
+                    <s:enumeration value="AddressZIPPlus4Centroid" />
+                    <s:enumeration value="AddressZIPPlus2Centroid" />
+                    <s:enumeration value="ManualLookup" />
+                    <s:enumeration value="AddressZIPCentroid" />
+                    <s:enumeration value="POBoxZIPCentroid" />
+                    <s:enumeration value="CityCentroid" />
+                    <s:enumeration value="CountyCentroid" />
+                    <s:enumeration value="Unmatchable" />
+                    <s:enumeration value="Missing" />
+                </s:restriction>
+            </s:simpleType>
+            <s:simpleType name="NAACCRCensusTractCertaintyType">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="ResidenceStreetAddress" />
+                    <s:enumeration value="ResidenceZIPPlus4" />
+                    <s:enumeration value="ResidenceZIPPlus2" />
+                    <s:enumeration value="ResidenceZIP" />
+                    <s:enumeration value="POBoxZIP" />
+                    <s:enumeration value="ResidenceCityOrZIPWithOneCensusTract" />
+                    <s:enumeration value="Missing" />
+                    <s:enumeration value="Unmatchable" />
+                    <s:enumeration value="NotAttempted" />
+                </s:restriction>
+            </s:simpleType>
+            <s:simpleType name="FeatureMatchingGeographyType">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="GPS" />
+                    <s:enumeration value="BuildingCentroid" />
+                    <s:enumeration value="BuildingDoor" />
+                    <s:enumeration value="Parcel" />
+                    <s:enumeration value="StreetSegment" />
+                    <s:enumeration value="StreetIntersection" />
+                    <s:enumeration value="StreetCentroid" />
+                    <s:enumeration value="USPSZipPlus5" />
+                    <s:enumeration value="USPSZipPlus4" />
+                    <s:enumeration value="USPSZipPlus3" />
+                    <s:enumeration value="USPSZipPlus2" />
+                    <s:enumeration value="USPSZipPlus1" />
+                    <s:enumeration value="USPSZip" />
+                    <s:enumeration value="ZCTAPlus5" />
+                    <s:enumeration value="ZCTAPlus4" />
+                    <s:enumeration value="ZCTAPlus3" />
+                    <s:enumeration value="ZCTAPlus2" />
+                    <s:enumeration value="ZCTAPlus1" />
+                    <s:enumeration value="ZCTA" />
+                    <s:enumeration value="City" />
+                    <s:enumeration value="ConsolidatedCity" />
+                    <s:enumeration value="MinorCivilDivision" />
+                    <s:enumeration value="CountySubRegion" />
+                    <s:enumeration value="County" />
+                    <s:enumeration value="State" />
+                    <s:enumeration value="Country" />
+                    <s:enumeration value="Unmatchable" />
+                </s:restriction>
+            </s:simpleType>
+            <s:simpleType name="FeatureMatchingResultType">
+                <s:list>
+                    <s:simpleType>
+                        <s:restriction base="s:string">
+                            <s:enumeration value="Unknown" />
+                            <s:enumeration value="Success" />
+                            <s:enumeration value="Ambiguous" />
+                            <s:enumeration value="BrokenTie" />
+                            <s:enumeration value="Composite" />
+                            <s:enumeration value="Nearby" />
+                            <s:enumeration value="LessThanMinimumScore" />
+                            <s:enumeration value="InvalidFeature" />
+                            <s:enumeration value="NullFeature" />
+                            <s:enumeration value="Unmatchable" />
+                            <s:enumeration value="ExceptionOccurred" />
+                        </s:restriction>
+                    </s:simpleType>
+                </s:list>
+            </s:simpleType>
+            <s:simpleType name="InterpolationType">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="LinearInterpolation" />
+                    <s:enumeration value="ArealInterpolation" />
+                    <s:enumeration value="None" />
+                    <s:enumeration value="NotAttempted" />
+                </s:restriction>
+            </s:simpleType>
+            <s:simpleType name="InterpolationSubType">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Unknown" />
+                    <s:enumeration value="LinearInterpolationAddressRange" />
+                    <s:enumeration value="LinearInterpolationUniformLot" />
+                    <s:enumeration value="LinearInterpolationActualLot" />
+                    <s:enumeration value="LinearInterpolationMidPoint" />
+                    <s:enumeration value="ArealInterpolationBoundingBoxCentroid" />
+                    <s:enumeration value="ArealInterpolationConvexHullCentroid" />
+                    <s:enumeration value="ArealInterpolationGeometricCentroid" />
+                    <s:enumeration value="None" />
+                    <s:enumeration value="NotAttempted" />
+                </s:restriction>
+            </s:simpleType>
+            <s:complexType name="ArrayOfCensusOutputRecord">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="CensusOutputRecord" nillable="true" type="tns:CensusOutputRecord" />
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="CensusOutputRecord">
+                <s:sequence>
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusYear" type="tns:CensusYear" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusTimeTaken" type="s:double" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusStateFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusCountyFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusTract" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusBlockGroup" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusBlock" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusPlaceFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusMcdFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusMsaFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusMetDivFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusCbsaFips" type="s:string" />
+                    <s:element minOccurs="0" maxOccurs="1" name="CensusCbsaMicro" type="s:string" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusStateFipsTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusCountyFipsTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusTractTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusBlockGroupTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusBlockTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusPlaceFipsTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusMcdFipsTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusMsaFipsTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusMetDivFipsTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusCbsaFipsTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="CensusCbsaMicroTimeTaken" type="s:double" />
+                    <s:element minOccurs="1" maxOccurs="1" name="ExceptionOccurred" type="s:boolean" />
+                    <s:element minOccurs="0" maxOccurs="1" name="ExceptionMessage" type="s:string" />
+                </s:sequence>
+            </s:complexType>
+            <s:element name="GeocodeAddressParsedAdvanced">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="number" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="numberFractional" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="preDirectional" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="preQualifier" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="preType" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="preArticle" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="suffix" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="postArticle" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="postQualifier" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="postDirectional" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="suiteType" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="suiteNumber" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="zip" type="s:string" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldUseRelaxation" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldUseSubstring" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldUseSoundex" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldUseUncertaintyHierarchy" type="s:boolean" />
+                        <s:element minOccurs="0" maxOccurs="1" name="relaxableAttributes" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="soundexAttributes" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="referenceSources" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+                        <s:element minOccurs="1" maxOccurs="1" name="version" type="s:double" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldCalculateCensus" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="censusYear" type="tns:CensusYear" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldReturnReferenceGeometry" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldNotStoreTransactionDetails" type="s:boolean" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GeocodeAddressParsedAdvancedResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GeocodeAddressParsedAdvancedResult" type="tns:WebServiceGeocodeQueryResultSet" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GeocodeAddressNonParsed">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="streetAddress" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="zip" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+                        <s:element minOccurs="1" maxOccurs="1" name="version" type="s:double" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldCalculateCensus" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="censusYear" type="tns:CensusYear" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldReturnReferenceGeometry" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldNotStoreTransactionDetails" type="s:boolean" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GeocodeAddressNonParsedResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GeocodeAddressNonParsedResult" type="tns:WebServiceGeocodeQueryResultSet" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GeocodeAddressNonParsedAdvanced">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="streetAddress" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="zip" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="country" type="s:string" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldUseRelaxation" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldUseSubstring" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldUseSoundex" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldUseUncertaintyHierarchy" type="s:boolean" />
+                        <s:element minOccurs="0" maxOccurs="1" name="relaxableAttributes" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="soundexAttributes" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="referenceSources" type="s:string" />
+                        <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+                        <s:element minOccurs="1" maxOccurs="1" name="version" type="s:double" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldCalculateCensus" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="censusYear" type="tns:CensusYear" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldReturnReferenceGeometry" type="s:boolean" />
+                        <s:element minOccurs="1" maxOccurs="1" name="shouldNotStoreTransactionDetails" type="s:boolean" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GeocodeAddressNonParsedAdvancedResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GeocodeAddressNonParsedAdvancedResult" type="tns:WebServiceGeocodeQueryResultSet" />
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="WebServiceGeocodeQueryResultSet" nillable="true" type="tns:WebServiceGeocodeQueryResultSet" />
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="GeocodeAddressParsedSoapIn">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressParsed" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedSoapOut">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressParsedResponse" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedSoapIn">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressParsedAdvanced" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedSoapOut">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressParsedAdvancedResponse" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedSoapIn">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressNonParsed" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedSoapOut">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressNonParsedResponse" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedSoapIn">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressNonParsedAdvanced" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedSoapOut">
+        <wsdl:part name="parameters" element="tns:GeocodeAddressNonParsedAdvancedResponse" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedHttpGetIn">
+        <wsdl:part name="number" type="s:string" />
+        <wsdl:part name="numberFractional" type="s:string" />
+        <wsdl:part name="preDirectional" type="s:string" />
+        <wsdl:part name="preQualifier" type="s:string" />
+        <wsdl:part name="preType" type="s:string" />
+        <wsdl:part name="preArticle" type="s:string" />
+        <wsdl:part name="name" type="s:string" />
+        <wsdl:part name="suffix" type="s:string" />
+        <wsdl:part name="postArticle" type="s:string" />
+        <wsdl:part name="postQualifier" type="s:string" />
+        <wsdl:part name="postDirectional" type="s:string" />
+        <wsdl:part name="suiteType" type="s:string" />
+        <wsdl:part name="suiteNumber" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedHttpGetIn">
+        <wsdl:part name="number" type="s:string" />
+        <wsdl:part name="numberFractional" type="s:string" />
+        <wsdl:part name="preDirectional" type="s:string" />
+        <wsdl:part name="preQualifier" type="s:string" />
+        <wsdl:part name="preType" type="s:string" />
+        <wsdl:part name="preArticle" type="s:string" />
+        <wsdl:part name="name" type="s:string" />
+        <wsdl:part name="suffix" type="s:string" />
+        <wsdl:part name="postArticle" type="s:string" />
+        <wsdl:part name="postQualifier" type="s:string" />
+        <wsdl:part name="postDirectional" type="s:string" />
+        <wsdl:part name="suiteType" type="s:string" />
+        <wsdl:part name="suiteNumber" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="shouldUseRelaxation" type="s:string" />
+        <wsdl:part name="shouldUseSubstring" type="s:string" />
+        <wsdl:part name="shouldUseSoundex" type="s:string" />
+        <wsdl:part name="shouldUseUncertaintyHierarchy" type="s:string" />
+        <wsdl:part name="relaxableAttributes" type="s:string" />
+        <wsdl:part name="soundexAttributes" type="s:string" />
+        <wsdl:part name="referenceSources" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedHttpGetIn">
+        <wsdl:part name="streetAddress" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedHttpGetIn">
+        <wsdl:part name="streetAddress" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="country" type="s:string" />
+        <wsdl:part name="shouldUseRelaxation" type="s:string" />
+        <wsdl:part name="shouldUseSubstring" type="s:string" />
+        <wsdl:part name="shouldUseSoundex" type="s:string" />
+        <wsdl:part name="shouldUseUncertaintyHierarchy" type="s:string" />
+        <wsdl:part name="relaxableAttributes" type="s:string" />
+        <wsdl:part name="soundexAttributes" type="s:string" />
+        <wsdl:part name="referenceSources" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedHttpPostIn">
+        <wsdl:part name="number" type="s:string" />
+        <wsdl:part name="numberFractional" type="s:string" />
+        <wsdl:part name="preDirectional" type="s:string" />
+        <wsdl:part name="preQualifier" type="s:string" />
+        <wsdl:part name="preType" type="s:string" />
+        <wsdl:part name="preArticle" type="s:string" />
+        <wsdl:part name="name" type="s:string" />
+        <wsdl:part name="suffix" type="s:string" />
+        <wsdl:part name="postArticle" type="s:string" />
+        <wsdl:part name="postQualifier" type="s:string" />
+        <wsdl:part name="postDirectional" type="s:string" />
+        <wsdl:part name="suiteType" type="s:string" />
+        <wsdl:part name="suiteNumber" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedHttpPostOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedHttpPostIn">
+        <wsdl:part name="number" type="s:string" />
+        <wsdl:part name="numberFractional" type="s:string" />
+        <wsdl:part name="preDirectional" type="s:string" />
+        <wsdl:part name="preQualifier" type="s:string" />
+        <wsdl:part name="preType" type="s:string" />
+        <wsdl:part name="preArticle" type="s:string" />
+        <wsdl:part name="name" type="s:string" />
+        <wsdl:part name="suffix" type="s:string" />
+        <wsdl:part name="postArticle" type="s:string" />
+        <wsdl:part name="postQualifier" type="s:string" />
+        <wsdl:part name="postDirectional" type="s:string" />
+        <wsdl:part name="suiteType" type="s:string" />
+        <wsdl:part name="suiteNumber" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="shouldUseRelaxation" type="s:string" />
+        <wsdl:part name="shouldUseSubstring" type="s:string" />
+        <wsdl:part name="shouldUseSoundex" type="s:string" />
+        <wsdl:part name="shouldUseUncertaintyHierarchy" type="s:string" />
+        <wsdl:part name="relaxableAttributes" type="s:string" />
+        <wsdl:part name="soundexAttributes" type="s:string" />
+        <wsdl:part name="referenceSources" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedAdvancedHttpPostOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedHttpPostIn">
+        <wsdl:part name="streetAddress" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedHttpPostOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedHttpPostIn">
+        <wsdl:part name="streetAddress" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="country" type="s:string" />
+        <wsdl:part name="shouldUseRelaxation" type="s:string" />
+        <wsdl:part name="shouldUseSubstring" type="s:string" />
+        <wsdl:part name="shouldUseSoundex" type="s:string" />
+        <wsdl:part name="shouldUseUncertaintyHierarchy" type="s:string" />
+        <wsdl:part name="relaxableAttributes" type="s:string" />
+        <wsdl:part name="soundexAttributes" type="s:string" />
+        <wsdl:part name="referenceSources" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressNonParsedAdvancedHttpPostOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+    <wsdl:portType name="GeocoderService_V04_01Soap">
+        <wsdl:operation name="GeocodeAddressParsed">
+            <wsdl:input message="tns:GeocodeAddressParsedSoapIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressParsedAdvancedSoapIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedAdvancedSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <wsdl:input message="tns:GeocodeAddressNonParsedSoapIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedSoapOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressNonParsedAdvancedSoapIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedAdvancedSoapOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="GeocoderService_V04_01HttpGet">
+        <wsdl:operation name="GeocodeAddressParsed">
+            <wsdl:input message="tns:GeocodeAddressParsedHttpGetIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedHttpGetOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressParsedAdvancedHttpGetIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedAdvancedHttpGetOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <wsdl:input message="tns:GeocodeAddressNonParsedHttpGetIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedHttpGetOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressNonParsedAdvancedHttpGetIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedAdvancedHttpGetOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="GeocoderService_V04_01HttpPost">
+        <wsdl:operation name="GeocodeAddressParsed">
+            <wsdl:input message="tns:GeocodeAddressParsedHttpPostIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressParsedAdvancedHttpPostIn" />
+            <wsdl:output message="tns:GeocodeAddressParsedAdvancedHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <wsdl:input message="tns:GeocodeAddressNonParsedHttpPostIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedHttpPostOut" />
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <wsdl:input message="tns:GeocodeAddressNonParsedAdvancedHttpPostIn" />
+            <wsdl:output message="tns:GeocodeAddressNonParsedAdvancedHttpPostOut" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="GeocoderService_V04_01Soap" type="tns:GeocoderService_V04_01Soap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GeocodeAddressParsed">
+            <soap:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressParsed" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <soap:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressParsedAdvanced" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <soap:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressNonParsed" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <soap:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressNonParsedAdvanced" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="GeocoderService_V04_01Soap12" type="tns:GeocoderService_V04_01Soap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GeocodeAddressParsed">
+            <soap12:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressParsed" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <soap12:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressParsedAdvanced" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <soap12:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressNonParsed" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <soap12:operation soapAction="https://geoservices.tamu.edu/GeocodeAddressNonParsedAdvanced" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="GeocoderService_V04_01HttpGet" type="tns:GeocoderService_V04_01HttpGet">
+        <http:binding verb="GET" />
+        <wsdl:operation name="GeocodeAddressParsed">
+            <http:operation location="/GeocodeAddressParsed" />
+            <wsdl:input>
+                <http:urlEncoded />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <http:operation location="/GeocodeAddressParsedAdvanced" />
+            <wsdl:input>
+                <http:urlEncoded />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <http:operation location="/GeocodeAddressNonParsed" />
+            <wsdl:input>
+                <http:urlEncoded />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <http:operation location="/GeocodeAddressNonParsedAdvanced" />
+            <wsdl:input>
+                <http:urlEncoded />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="GeocoderService_V04_01HttpPost" type="tns:GeocoderService_V04_01HttpPost">
+        <http:binding verb="POST" />
+        <wsdl:operation name="GeocodeAddressParsed">
+            <http:operation location="/GeocodeAddressParsed" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressParsedAdvanced">
+            <http:operation location="/GeocodeAddressParsedAdvanced" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsed">
+            <http:operation location="/GeocodeAddressNonParsed" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GeocodeAddressNonParsedAdvanced">
+            <http:operation location="/GeocodeAddressNonParsedAdvanced" />
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="GeocoderService_V04_01">
+        <wsdl:port name="GeocoderService_V04_01Soap" binding="tns:GeocoderService_V04_01Soap">
+            <soap:address location="https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderService_V04_01.asmx" />
+        </wsdl:port>
+        <wsdl:port name="GeocoderService_V04_01Soap12" binding="tns:GeocoderService_V04_01Soap12">
+            <soap12:address location="https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderService_V04_01.asmx" />
+        </wsdl:port>
+        <wsdl:port name="GeocoderService_V04_01HttpGet" binding="tns:GeocoderService_V04_01HttpGet">
+            <http:address location="https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderService_V04_01.asmx" />
+        </wsdl:port>
+        <wsdl:port name="GeocoderService_V04_01HttpPost" binding="tns:GeocoderService_V04_01HttpPost">
+            <http:address location="https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderService_V04_01.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

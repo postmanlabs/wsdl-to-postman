@@ -121,8 +121,74 @@ describe('knownTypes getValueExample', function() {
     const element = new Element();
     element.type = 'boolean';
     let example = getValueExample(element);
-    expect(example).to.equal(example);
+    expect(example).to.equal(true);
   });
+
+  it('should get true when called with decimal', function() {
+    const element = new Element();
+    element.type = 'decimal';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+  it('should get true when called with float', function() {
+    const element = new Element();
+    element.type = 'float';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+  it('should get true when called with double', function() {
+    const element = new Element();
+    element.type = 'double';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+  it('should get true when called with int', function() {
+    const element = new Element();
+    element.type = 'int';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+  it('should get true when called with long', function() {
+    const element = new Element();
+    element.type = 'long';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+  it('should get true when called with short', function() {
+    const element = new Element();
+    element.type = 'short';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+  it('should get true when called with unsignedInt', function() {
+    const element = new Element();
+    element.type = 'unsignedInt';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+  it('should get true when called with unsignedLong', function() {
+    const element = new Element();
+    element.type = 'unsignedLong';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+
+  it('should get true when called with unsignedShort', function() {
+    const element = new Element();
+    element.type = 'unsignedShort';
+    let example = getValueExample(element);
+    expect(example).to.equal(1);
+  });
+
+
 });
 
 describe('knownTypes isKnownType', function() {
