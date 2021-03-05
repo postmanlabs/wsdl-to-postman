@@ -50,6 +50,55 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(2);
+      expect(result.output[0].data.item[0].name).to.equal('CalculatorSoap');
+      expect(result.output[0].data.item[1].name).to.equal('CalculatorSoap12');
+      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data))
+    });
+  });
+
+  it('Should get an object representing PM Collection with one folder', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/' + 'calculator-soap11and12.wsdl', 'utf8');
+    const options = {
+        folderStrategy: 'Service'
+      },
+      schemaPack = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, options);
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].data.item).to.be.an('array');
+      expect(result.output[0].data.item.length).to.equal(1);
+      expect(result.output[0].data.item[0].name).to.equal('Calculator');
+
+    });
+  });
+
+  it('Should get an object representing PM Collection without folder', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/' + 'calculator-soap11and12.wsdl', 'utf8');
+    const options = {
+        folderStrategy: 'No folders'
+      },
+      schemaPack = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, options);
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].data.item).to.be.an('array');
+      expect(result.output[0].data.item.length).to.equal(8);
 
     });
   });
