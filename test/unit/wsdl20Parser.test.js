@@ -1095,7 +1095,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
 describe('WSDL 2.0 parser getDocumentationString', function() {
   it('should get the same when is called with string', function() {
     const parser = new Wsdl20Parser(),
-      documentation = parser.getDocumentationString('documentation');
+      documentation = parser.getDocumentationStringFromNode('documentation');
     expect(documentation).to.eq('documentation');
   });
 
@@ -1103,7 +1103,7 @@ describe('WSDL 2.0 parser getDocumentationString', function() {
     const parser = new Wsdl20Parser(),
       documentationNode = {};
     documentationNode['#text'] = 'documentation';
-    documentation = parser.getDocumentationString(documentationNode);
+    documentation = parser.getDocumentationStringFromNode(documentationNode);
     expect(documentation).to.eq('documentation');
   });
 });
