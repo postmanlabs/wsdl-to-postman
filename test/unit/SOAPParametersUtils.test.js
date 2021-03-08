@@ -2,7 +2,6 @@ const expect = require('chai').expect,
   {
     SOAPParametersUtils
   } = require('../../lib/utils/SOAPParametersUtils'),
-  fs = require('fs'),
   json = {
     'soap:Envelope': {
       '@_xmlns:soap': 'http://schemas.xmlsoap.org/soap/envelope/',
@@ -29,7 +28,9 @@ describe('ParametersUtils buildObjectParameters', function() {
         children: [],
         name: 'ubiNum',
         isComplex: false,
-        type: 'unsignedLong'
+        type: 'integer',
+        maximum: 18446744073709,
+        minimum: 0
       },
       node = {
         children: [child],
@@ -49,7 +50,6 @@ describe('ParametersUtils parseObjectToXML', function() {
     const parametersUtils = new SOAPParametersUtils(),
       xmlParameters = parametersUtils.parseObjectToXML(json);
     expect(xmlParameters).to.be.an('string');
-    // fs.writeFileSync('temp3.xml', xmlParameters);
   });
 
   it('should get an emtpy string when object is empty', function() {
@@ -57,7 +57,6 @@ describe('ParametersUtils parseObjectToXML', function() {
       xmlParameters = parametersUtils.parseObjectToXML({});
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters).to.equal('');
-    // fs.writeFileSync('temp3.xml', xmlParameters);
   });
 
   it('should throw an error when object is null', function() {
@@ -90,7 +89,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
       '<soap:Body>' +
       '<NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">' +
-      '<ubiNum>500</ubiNum>' +
+      '<ubiNum>18446744073709</ubiNum>' +
       '</NumberToWords>' +
       '</soap:Body>' +
       '</soap:Envelope>',
@@ -98,7 +97,9 @@ describe('ParametersUtils converObjectParametersToXML', function() {
         children: [],
         name: 'ubiNum',
         isComplex: false,
-        type: 'unsignedLong'
+        type: 'integer',
+        maximum: 18446744073709,
+        minimum: 0
       },
       node = {
         children: [child],
@@ -110,7 +111,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
-    fs.writeFileSync('temp3.xml', xmlParameters);
+
   });
 
   it('should get an string representing the xml of the corresponding nodes ex2', function() {
@@ -121,7 +122,7 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       '<soap:Body>' +
       '<TestCustomModel xmlns="http://tempuri.org/">' +
       '<inputModel>' +
-      '<Id>1</Id>' +
+      '<Id>-2147483648</Id>' +
       '<Name> this is a string </Name>' +
       '<Email> this is a string</Email>' +
       '</inputModel>' +
@@ -132,7 +133,9 @@ describe('ParametersUtils converObjectParametersToXML', function() {
         children: [],
         name: 'Id',
         isComplex: false,
-        type: 'int'
+        type: 'integer',
+        maximum: 2147483647,
+        minimum: -2147483648
       },
       grandChild2 = {
         children: [],
@@ -162,6 +165,70 @@ describe('ParametersUtils converObjectParametersToXML', function() {
       xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
-    fs.writeFileSync('temp3.xml', xmlParameters);
+
+  });
+
+  it('should get an string representing the xml of the corresponding nodes using enum', function() {
+    const parametersUtils = new SOAPParametersUtils(),
+      xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+      '<soap:Envelope' +
+      'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<GeocodeAddressParsed xmlns="https://geoservices.tamu.edu/">' +
+      '<censusYear>Unknown</censusYear>' +
+      '</GeocodeAddressParsed>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
+      child = {
+        children: [],
+        name: 'censusYear',
+        isComplex: false,
+        type: 'string',
+        enumValues: ['Unknown',
+          'NineteenNinety',
+          'TwoThousand',
+          'TwoThousandTen',
+          'AllAvailable'
+        ]
+      },
+      node = {
+        children: [child],
+        name: 'GeocodeAddressParsed',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'https://geoservices.tamu.edu/'
+      },
+      xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
+
+  });
+
+  it('should get an string representing the xml of the corresponding nodes using enum integer', function() {
+    const parametersUtils = new SOAPParametersUtils(),
+      xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+      '<soap:Envelope' +
+      'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<foobar>' +
+      '1' +
+      '</foobar>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
+      node = {
+        children: [],
+        name: 'foobar',
+        isComplex: false,
+        type: 'integer',
+        namespace: 'https://geoservices.tamu.edu/',
+        enumValues: ['1',
+          '1011',
+          '1032'
+        ]
+      };
+    xmlParameters = parametersUtils.converObjectParametersToXML(node, 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
+
   });
 });

@@ -1,7 +1,8 @@
 const expect = require('chai').expect,
   fs = require('fs'),
   {
-    readInput
+    readInput,
+    getCollectionNameFromFileOrEmpty
   } = require('../../lib/utils/readInput');
 
 describe('readInput utility', function() {
@@ -52,6 +53,15 @@ describe('readInput utility', function() {
     it('Should return a string if input.data is a string', function() {
       const input = mockInput('<definitions ...> ... </definitions>', 'string');
       expect(readInput(input)).to.be.a('string');
+    });
+
+    describe('getCollectionNameFromFileOrEmpty method', function() {
+      it('Should return an empty string as name', function() {
+        const input = mockInput('<definitions ...> ... </definitions>', 'string'),
+          name = getCollectionNameFromFileOrEmpty(input);
+        expect(name).to.be.a('string')
+          .to.equal('');
+      });
     });
   });
 
@@ -125,6 +135,16 @@ describe('readInput utility', function() {
       catch (inputError) {
         expect(inputError.message).to.equal(errorExpectedMessage);
       }
+    });
+
+    describe('getCollectionNameFromFileOrEmpty method', function() {
+      it('Should return the provided file name', function() {
+        const fileName = 'temporal_file_mock.txt',
+          input = mockInput(mockFilePath, 'file'),
+          name = getCollectionNameFromFileOrEmpty(input);
+        expect(name).to.be.a('string')
+          .to.equal(fileName);
+      });
     });
   });
 });

@@ -1,0 +1,51 @@
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http"
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+            <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+            <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+            <xsd:element name="DoSomething">
+                <xsd:complexType />
+            </xsd:element>
+            <xsd:element name="DoSomethingResponse">
+                <xsd:complexType />
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="ISampleService_DoSomething_InputMessage">
+        <wsdl:part name="parameters" element="tns:DoSomething" />
+    </wsdl:message>
+    <wsdl:message name="ISampleService_DoSomething_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DoSomethingResponse" />
+    </wsdl:message>
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="DoSomething">
+            <wsdl:input message="tns:ISampleService_DoSomething_InputMessage" />
+            <wsdl:output message="tns:ISampleService_DoSomething_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="DoSomething">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/DoSomething" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -8,3 +8,5 @@ node_modules
 .nyc_output
 # - Do not allow output files to be commited
 temp3.xml
+# - Do not allow package-lock.json to be uploaded
+package-lock.json

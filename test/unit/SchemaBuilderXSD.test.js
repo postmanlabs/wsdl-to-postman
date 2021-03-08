@@ -5,6 +5,9 @@ const expect = require('chai').expect,
   {
     Wsdl11Parser
   } = require('../../lib/Wsdl11Parser'),
+  {
+    PARSER_ATRIBUTE_NAME_PLACE_HOLDER
+  } = require('../../lib/WsdlParserCommon'),
   CORE_SCHEMA = `<xsd:schema elementFormDefault="qualified" xmlns:tns="http://tempuri.org/"
     targetNamespace="http://tempuri.org/">
 <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
@@ -230,7 +233,8 @@ describe('SchemaBuilderXSD getElements', function() {
         isDefault: false
       },
       parsedXml = parser.parseFromXmlToObject(CORE_FILE_INPUT),
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace,
+        thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.a('array');
     expect(elements.length).to.eq(6);
 
@@ -302,7 +306,8 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace,
+        thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
     expect(elements).to.be.empty;
   });
@@ -344,7 +349,8 @@ describe('SchemaBuilderXSD getElements', function() {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -438,7 +444,8 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -534,7 +541,8 @@ describe('SchemaBuilderXSD getElements', function() {
            <xsd:element name="TestCustomModelResponse">
                <xsd:complexType>
                    <xsd:sequence>
-                       <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
+                       <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" 
+                       type="tns:MyCustomModel" />
                    </xsd:sequence>
                </xsd:complexType>
            </xsd:element>
@@ -564,7 +572,8 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
     expect(elements[0].name).to.equal('TestCustomModel');
@@ -654,7 +663,8 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     let parsed = parser.parseFromXmlToObject(simpleInput),
-      elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace);
+      elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
     expect(elements[0].name).to.equal('ListOfCurrenciesByCodeResponse');
@@ -692,7 +702,8 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     try {
-      builder.getElements(undefined, '', 'definitions', schemaNameSpace, thisNameSpace);
+      builder.getElements(undefined, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -715,13 +726,585 @@ describe('SchemaBuilderXSD getElements', function() {
       },
       builder = new SchemaBuilderXSD();
     try {
-      builder.getElements(null, '', 'definitions', schemaNameSpace, thisNameSpace);
+      builder.getElements(null, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
       assert.fail('we expected an error');
     }
     catch (error) {
       expect(error.message).to.equal('Can not get elements from undefined or null object');
     }
   });
+
+  it('should get an array of types with 1 root and 1 child with simple types one level', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+      <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+        <types>
+        <xs:schema targetNamespace="http://www.dataaccess.com/webservicesserver/"  
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:simpleType name="C">
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1"/>
+        </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType name="Char_20">
+        <xs:restriction base="C">
+          <xs:minLength value="1"/>
+          <xs:maxLength value="20"/>
+        </xs:restriction>
+        </xs:simpleType>
+        <xs:element name="Test">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="inputString" type="C" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        </xs:schema>
+        </types>
+      </definitions>`,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://www.dataaccess.com/webservicesserver/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+
+    expect(elements[0].name).to.equal('Test');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].minOccurs).to.equal('1');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('http://www.dataaccess.com/webservicesserver/');
+    expect(elements[0].children).to.be.an('array');
+
+    expect(elements[0].children[0].name).to.equal('inputString');
+    expect(elements[0].children[0].isComplex).to.equal(false);
+    expect(elements[0].children[0].type).to.equal('string');
+    expect(elements[0].children[0].minLength).to.equal(1);
+    expect(elements[0].children[0].maxLength).to.equal(undefined);
+    expect(elements[0].children[0].children).to.be.an('array');
+    expect(elements[0].children[0].children).to.be.empty;
+  });
+
+  it('should get an array of types with 1 root and 1 child with simple types three levels', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+      <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+        <types>
+        <xs:schema targetNamespace="http://www.dataaccess.com/webservicesserver/"  
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:simpleType name="C">
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType name="Char_20">
+        <xs:restriction base="C">
+          <xs:minLength value="1"/>
+          <xs:maxLength value="20"/>
+        </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType name="Char_20_10">
+        <xs:restriction base="Char_20">
+	      <xs:minLength value="10"/>
+        </xs:restriction>
+        </xs:simpleType>
+        <xs:element name="Test">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="inputString" type="Char_20_10" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        </xs:schema>
+        </types>
+      </definitions>`,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://www.dataaccess.com/webservicesserver/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+
+    expect(elements[0].name).to.equal('Test');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].minOccurs).to.equal('1');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('http://www.dataaccess.com/webservicesserver/');
+    expect(elements[0].children).to.be.an('array');
+
+    expect(elements[0].children[0].name).to.equal('inputString');
+    expect(elements[0].children[0].isComplex).to.equal(false);
+    expect(elements[0].children[0].type).to.equal('string');
+    expect(elements[0].children[0].minLength).to.equal(10);
+    expect(elements[0].children[0].maxLength).to.equal(20);
+    expect(elements[0].children[0].children).to.be.an('array');
+    expect(elements[0].children[0].children).to.be.empty;
+  });
+
+  it('should get an array of types with 1 root and 1 child with simple types with enum', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+      <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+      xmlns:s="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+      name="NumberConversion" targetNamespace="https://geoservices.tamu.edu/">
+        <types>
+        <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/" 
+        xmlns:s="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="https://geoservices.tamu.edu/">
+        <s:element name="GeocodeAddressParsed">
+        <s:complexType>
+            <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="censusYear" type="tns:CensusYear" />
+            </s:sequence>
+        </s:complexType>
+       </s:element>
+       <s:simpleType name="CensusYear">
+        <s:restriction base="s:string">
+            <s:enumeration value="Unknown" />
+            <s:enumeration value="NineteenNinety" />
+            <s:enumeration value="TwoThousand" />
+            <s:enumeration value="TwoThousandTen" />
+            <s:enumeration value="AllAvailable" />
+        </s:restriction>
+       </s:simpleType>
+       </s:schema>
+        </types> 
+        </definitions > `,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'https://geoservices.tamu.edu/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+
+    expect(elements[0].name).to.equal('GeocodeAddressParsed');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
+    expect(elements[0].children).to.be.an('array');
+
+    expect(elements[0].children[0].name).to.equal('censusYear');
+    expect(elements[0].children[0].isComplex).to.equal(false);
+    expect(elements[0].children[0].type).to.equal('string');
+    expect(elements[0].children[0].enumValues).to.be.an('array');
+    expect(elements[0].children[0].enumValues.length).to.equal(5);
+    expect(elements[0].children[0].children).to.be.an('array');
+    expect(elements[0].children[0].children).to.be.empty;
+    expect(elements[0].children[0].enumValues).to.have.members(['Unknown',
+      'NineteenNinety',
+      'TwoThousand',
+      'TwoThousandTen',
+      'AllAvailable'
+    ]);
+  });
+
+  it('should get an array of types with 1 root and 1 child with simple types with enum of integers', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+      <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+      xmlns:s="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+      name="NumberConversion" targetNamespace="https://geoservices.tamu.edu/">
+        <types>
+        <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/" 
+        xmlns:s="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="https://geoservices.tamu.edu/">
+        <s:element name="foobar" type="enumType"/>
+        <s:simpleType name="enumType">
+        <s:restriction base="s:integer">
+          <s:enumeration value="1"/>
+          <s:enumeration value="1011"/>
+          <s:enumeration value="1032"/>
+        </s:restriction>
+        </s:simpleType>
+       </s:schema>
+        </types> 
+        </definitions > `,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'https://geoservices.tamu.edu/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+
+    expect(elements[0].name).to.equal('foobar');
+    expect(elements[0].isComplex).to.equal(false);
+    expect(elements[0].type).to.equal('integer');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
+    expect(elements[0].children).to.be.an('array');
+    expect(elements[0].children).to.be.empty;
+    expect(elements[0].enumValues).to.have.members(['1',
+      '1011',
+      '1032'
+    ]);
+  });
+
+  it('should get an array of elements defined in the message when all are knowntypes', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+      <wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+      xmlns:s="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+      name="NumberConversion" targetNamespace="https://geoservices.tamu.edu/">
+        <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/" 
+        xmlns:s="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="https://geoservices.tamu.edu/">
+        <s:element name="foobar" type="enumType"/>
+        <s:simpleType name="enumType">
+        <s:restriction base="s:integer">
+          <s:enumeration value="1"/>
+          <s:enumeration value="1011"/>
+          <s:enumeration value="1032"/>
+        </s:restriction>
+        </s:simpleType>
+       </s:schema>
+        </wsdl:types> 
+        <wsdl:message name="GeocodeAddressParsedHttpGetIn">
+        <wsdl:part name="number" type="s:string" />
+        <wsdl:part name="numberFractional" type="s:string" />
+        <wsdl:part name="preDirectional" type="s:string" />
+        <wsdl:part name="preQualifier" type="s:string" />
+        <wsdl:part name="preType" type="s:string" />
+        <wsdl:part name="preArticle" type="s:string" />
+        <wsdl:part name="name" type="s:string" />
+        <wsdl:part name="suffix" type="s:string" />
+        <wsdl:part name="postArticle" type="s:string" />
+        <wsdl:part name="postQualifier" type="s:string" />
+        <wsdl:part name="postDirectional" type="s:string" />
+        <wsdl:part name="suiteType" type="s:string" />
+        <wsdl:part name="suiteNumber" type="s:string" />
+        <wsdl:part name="city" type="s:string" />
+        <wsdl:part name="state" type="s:string" />
+        <wsdl:part name="zip" type="s:string" />
+        <wsdl:part name="apiKey" type="s:string" />
+        <wsdl:part name="version" type="s:string" />
+        <wsdl:part name="shouldCalculateCensus" type="s:string" />
+        <wsdl:part name="censusYear" type="s:string" />
+        <wsdl:part name="shouldReturnReferenceGeometry" type="s:string" />
+        <wsdl:part name="shouldNotStoreTransactionDetails" type="s:string" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+        </wsdl:definitions > `,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'https://geoservices.tamu.edu/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+
+    expect(elements[0].name).to.equal('foobar');
+    expect(elements[0].isComplex).to.equal(false);
+    expect(elements[0].type).to.equal('integer');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
+    expect(elements[0].children).to.be.an('array');
+    expect(elements[0].children).to.be.empty;
+    expect(elements[0].enumValues).to.have.members(['1',
+      '1011',
+      '1032'
+    ]);
+
+    expect(elements[1].name).to.equal('GeocodeAddressParsedHttpGetIn');
+    expect(elements[1].isComplex).to.equal(true);
+    expect(elements[1].type).to.equal('anonimous');
+    expect(elements[1].children).to.be.an('array');
+    expect(elements[1].children.length).to.equal(22);
+  });
+
+  it('should get an array of elements defined in the message when all are knowntypes from xsd', function() {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+      <wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+      xmlns:s="http://www.w3.org/2001/XMLSchema" 
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+      name="NumberConversion" targetNamespace="https://geoservices.tamu.edu/">
+        <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/" 
+        xmlns:s="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="https://geoservices.tamu.edu/">
+        <s:element name="foobar" type="enumType"/>
+        <s:simpleType name="enumType">
+        <s:restriction base="s:integer">
+          <s:enumeration value="1"/>
+          <s:enumeration value="1011"/>
+          <s:enumeration value="1032"/>
+        </s:restriction>
+        </s:simpleType>
+       </s:schema>
+        </wsdl:types> 
+        <wsdl:message name="GeocodeAddressParsedHttpGetIn">
+        <wsdl:part name="number" type="s:decimal" />
+        <wsdl:part name="numberFractional" type="s:float" />
+        <wsdl:part name="preDirectional" type="s:double" />
+        <wsdl:part name="preQualifier" type="s:int" />
+        <wsdl:part name="preType" type="s:long" />
+        <wsdl:part name="preArticle" type="s:short" />
+        <wsdl:part name="name" type="s:unsignedInt" />
+        <wsdl:part name="suffix" type="s:unsignedLong" />
+        <wsdl:part name="postArticle" type="s:unsignedShort" />
+    </wsdl:message>
+    <wsdl:message name="GeocodeAddressParsedHttpGetOut">
+        <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
+    </wsdl:message>
+        </wsdl:definitions > `,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'https://geoservices.tamu.edu/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+    expect(elements).to.be.an('array');
+
+    expect(elements[0].name).to.equal('foobar');
+    expect(elements[0].isComplex).to.equal(false);
+    expect(elements[0].type).to.equal('integer');
+    expect(elements[0].maxOccurs).to.equal('1');
+    expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
+    expect(elements[0].children).to.be.an('array');
+    expect(elements[0].children).to.be.empty;
+    expect(elements[0].enumValues).to.have.members(['1',
+      '1011',
+      '1032'
+    ]);
+
+    expect(elements[1].name).to.equal('GeocodeAddressParsedHttpGetIn');
+    expect(elements[1].isComplex).to.equal(true);
+    expect(elements[1].type).to.equal('anonimous');
+    expect(elements[1].children).to.be.an('array');
+    expect(elements[1].children.length).to.equal(9);
+  });
+  it('should get an array of elements defined in the message when have 2 elements', function() {
+    const simpleInput = `<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:tns="http://tempuri.org/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    targetNamespace="http://tempuri.org/">
+    <types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+            <xsd:element name="TestElement">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="TestElementOther">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="inputStringOther" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <message name="PO">
+        <part name="po" element="tns:TestElement" />
+        <part name="invoice" element="tns:TestElementOther" />
+    </message>
+</definitions>
+`,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xsd',
+        prefixFilter: 'xsd:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://tempuri.org/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+    expect(elements[0].name).to.equal('TestElement');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[1].name).to.equal('TestElementOther');
+    expect(elements[1].isComplex).to.equal(true);
+    expect(elements[2].name).to.equal('PO');
+    expect(elements[2].isComplex).to.equal(true);
+    expect(elements[2].type).to.equal('anonimous');
+    expect(elements[2].children).to.be.an('array');
+    expect(elements[2].children.length).to.equal(2);
+
+  });
+
+  it('should get an array of elements defined in the message when have 2 types', function() {
+    const simpleInput = `<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:tns="http://tempuri.org/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    targetNamespace="http://tempuri.org/">
+    <types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+        <xsd:simpleType name="enumType">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="1"/>
+            <xsd:enumeration value="1011"/>
+            <xsd:enumeration value="1032"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="MyCustomModel">
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="PO">
+        <part name="po" type="tns:enumType" />
+        <part name="invoice" type="tns:MyCustomModel" />
+    </message>
+</definitions>
+`,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xsd',
+        prefixFilter: 'xsd:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://tempuri.org/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+    expect(elements[0].name).to.equal('PO');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('anonimous');
+    expect(elements[0].children[0].name).to.equal('enumType');
+    expect(elements[0].children[1].name).to.equal('MyCustomModel');
+
+  });
+
 });
 
 
@@ -752,7 +1335,7 @@ describe('SchemaBuilderXSD getElementsFromType', function() {
   it('should get an error when the object sent is undefined', function() {
     const builder = new SchemaBuilderXSD();
     try {
-      builder.getElementsFromType('', null, '', '');
+      builder.getElementsFromType('', null, '', '', PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
       assert.fail('we expected an error');
     }
     catch (error) {
