@@ -3686,8 +3686,6 @@ provides functions that convert numbers into words or dollar amounts.</documenta
         serviceName: ''
       });
   });
-
-
 });
 
 describe('WSDL 1.1 parser getServicePortByBindingName', function() {
