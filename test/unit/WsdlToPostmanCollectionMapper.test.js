@@ -258,6 +258,28 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
       expect(postmanCollection.name).to.be.equal(expectedName);
     }
   );
+
+  it('Should throw an error if provided folderStrategy option is not supported', function() {
+    const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
+      options = {
+        folderStrategy: 'Not supported value'
+      },
+      FOLDER_OPTIONS = {
+        noFolders: 'No folders',
+        portEndpoint: 'Port/Endpoint',
+        service: 'Service'
+      },
+      expectedMessage = `Provided folderStrategy option is not supported. 
+        Options are ${Object.values(FOLDER_OPTIONS).join(', ')}`;
+
+    try {
+      mapper.getPostmanCollection(options);
+      assert.fail('Error expected');
+    }
+    catch (error) {
+      expect(error.message.replace(/\s/g, '')).to.be.equal(expectedMessage.replace(/\s/g, ''));
+    }
+  });
 });
 
 describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function() {
