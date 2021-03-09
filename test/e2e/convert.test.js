@@ -2,13 +2,17 @@ const expect = require('chai').expect,
   fs = require('fs'),
   Index = require('../../index.js'),
   async = require('async'),
-  validWSDLs = 'test/data/profixio';
+  //validWSDLs = 'test/data/profixio';
+  validWSDLs = 'test/data/profixio/getTournamentDetails.wsdl';
 
 describe('Test WSDL convertion into Postman Collection', function() {
-  var validWSDLsFolder = fs.readdirSync(validWSDLs);
-  async.each(validWSDLsFolder, function (file, cb) {
-    it('Should validate mandatory fields ' + file, function () {
-      let fileContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8');
+  //var validWSDLsFolder = fs.readdirSync(validWSDLs);
+  //async.each(validWSDLsFolder, function (file, cb) {
+    //it('Should validate mandatory fields ' + file, function () {
+    it('Should validate mandatory fields ', function () {
+      
+      //let fileContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8');
+      let fileContent = fs.readFileSync(validWSDLs, 'utf8');
       Index.convert({ type: 'string', data: fileContent }, {}, (err, conversionResult) => {
         expect(err).to.be.null;
         expect(conversionResult.result).to.equal(true);
@@ -28,5 +32,5 @@ describe('Test WSDL convertion into Postman Collection', function() {
         }
       });
     });
-  });
+  //});
 });
