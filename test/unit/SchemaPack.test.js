@@ -145,7 +145,7 @@ describe('SchemaPack getOptions', function() {
     const options = SchemaPack.getOptions('use');
     expect(options).to.be.an('object');
     expect(options).to.haveOwnProperty('folderStrategy');
-    expect(options.folderStrategy).to.eq('No folders');
+    expect(options.folderStrategy).to.eq('Port/Endpoint');
   });
 
   it('Should return external options when called with criteria usage conversion', function() {
@@ -170,7 +170,7 @@ describe('SchemaPack getOptions', function() {
     });
     expect(options).to.be.an('object');
     expect(options).to.haveOwnProperty('folderStrategy');
-    expect(options.folderStrategy).to.eq('No folders');
+    expect(options.folderStrategy).to.eq('Port/Endpoint');
   });
 
   it('Should return external options when called with mode document and usage conversion', function() {
