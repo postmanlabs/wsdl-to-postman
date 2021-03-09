@@ -1,15 +1,15 @@
-const {
-  HTTP_PROTOCOL,
-  SOAP12_PROTOCOL,
-  SOAP_PROTOCOL
-} = require('../../lib/Wsdl11Parser'), {
-  DOC_HAS_NO_SERVICE_MESSAGE,
-  DOC_HAS_NO_BINDIGS_MESSAGE,
-  DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,
-  DOC_HAS_NO_SERVICE_PORT_MESSAGE
-} = require('../../lib/constants/messageConstants');
-
 const expect = require('chai').expect,
+  {
+    HTTP_PROTOCOL,
+    SOAP12_PROTOCOL,
+    SOAP_PROTOCOL
+  } = require('../../lib/Wsdl11Parser'),
+  {
+    DOC_HAS_NO_SERVICE_MESSAGE,
+    DOC_HAS_NO_BINDIGS_MESSAGE,
+    DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,
+    DOC_HAS_NO_SERVICE_PORT_MESSAGE
+  } = require('../../lib/constants/messageConstants'),
   assert = require('chai').assert,
   WsdlObject = require('../../lib/WsdlObject').WsdlObject,
   {

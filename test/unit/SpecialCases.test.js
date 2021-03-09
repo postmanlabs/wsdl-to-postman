@@ -165,7 +165,7 @@ describe('SchemaPack convert special cases WSDL 2.0', function() {
     });
   });
 
-  it('Should get an object representing PM Collection from wsdl without services ', function() {
+  it('Should get an object representing PM Collection from wsdl without services ports', function() {
     let fileContent = fs.readFileSync(validWSDL2s + '/NoServiceEndpoint.wsdl', 'utf8');
     const schemaPack = new SchemaPack({
       data: fileContent,
