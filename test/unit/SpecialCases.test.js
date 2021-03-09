@@ -30,8 +30,8 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(8);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_MESSAGE)).
-      to.equal(true);
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_MESSAGE))
+        .to.equal(true);
     });
   });
 
@@ -51,13 +51,13 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(0);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_MESSAGE)).
-      to.equal(true);
-      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data))
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
+        .to.equal(true);
+      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
     });
   });
 
-  it('Should get an object representing PM Collection from wsdl without bindings ', function() {
+  it('Should get an object representing PM Collection from wsdl without bindings operations ', function() {
     let fileContent = fs.readFileSync(validWSDLs + '/NoBindingsOperations.wsdl', 'utf8');
     const schemaPack = new SchemaPack({
       data: fileContent,
@@ -73,9 +73,9 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(0);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE)).
-      to.equal(true);
-      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data))
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
+        .to.equal(true);
+      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
     });
   });
 
@@ -95,8 +95,8 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(4);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE)).
-      to.equal(true);
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
+        .to.equal(true);
     });
   });
 });

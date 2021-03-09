@@ -3612,8 +3612,8 @@ provides functions that convert numbers into words or dollar amounts.</documenta
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(0);
-    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_MESSAGE)).
-    to.equal(true);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
+      .to.equal(true);
   });
 
   it('should assign operations empty object when bindings operations are not in the file', function() {
@@ -3624,8 +3624,8 @@ provides functions that convert numbers into words or dollar amounts.</documenta
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(0);
-    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE)).
-    to.equal(true);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
+      .to.equal(true);
   });
 
   it('should assign operations to wsdl object when services ports are not in the file', function() {
@@ -3636,7 +3636,8 @@ provides functions that convert numbers into words or dollar amounts.</documenta
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(4);
-
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
+      .to.equal(true);
     expect(wsdlObject.operationsArray[0]).to.be.an('object')
       .and.to.include({
         name: 'NumberToWords',
@@ -3824,16 +3825,16 @@ describe('WSDL 1.1 parser getServicePortByBindingName', function() {
     let wsdlObject = new WsdlObject(),
       servicePort = parser.getServicePortByBindingName('somename', null, 'principal prefix', wsdlObject);
     expect(servicePort).to.be.equal(undefined);
-    expect(wsdlObject.log.errors).to.
-    contain(DOC_HAS_NO_SERVICE_MESSAGE);
+    expect(wsdlObject.log.errors).to
+      .contain(DOC_HAS_NO_SERVICE_MESSAGE);
   });
 
   it('should return undefined port type when services is undefined', function() {
     let wsdlObject = new WsdlObject(),
       servicePort = parser.getServicePortByBindingName('somename', undefined, 'principal prefix', wsdlObject);
     expect(servicePort).to.be.equal(undefined);
-    expect(wsdlObject.log.errors).to.
-    contain(DOC_HAS_NO_SERVICE_MESSAGE);
+    expect(wsdlObject.log.errors).to
+      .contain(DOC_HAS_NO_SERVICE_MESSAGE);
   });
 
   it('should throw an error when services is an empty object', function() {
