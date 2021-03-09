@@ -2,7 +2,12 @@ const {
   HTTP_PROTOCOL,
   SOAP12_PROTOCOL,
   SOAP_PROTOCOL
-} = require('../../lib/Wsdl11Parser');
+} = require('../../lib/Wsdl11Parser'), {
+  DOC_HAS_NO_SERVICE_MESSAGE,
+  DOC_HAS_NO_BINDIGS_MESSAGE,
+  DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,
+  DOC_HAS_NO_SERVICE_PORT_MESSAGE
+} = require('../../lib/constants/messageConstants');
 
 const expect = require('chai').expect,
   assert = require('chai').assert,
@@ -132,6 +137,162 @@ whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
     <wsdl2:endpoint name="SayHelloHttpSoap12Endpoint" 
     binding="tns:SayHelloSoap12Binding" 
     address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap12Endpoint/" />
+</wsdl2:service>
+</wsdl2:description>`,
+  WSDL_SAMPLE_AXIS_NO_SERVICES = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl" 
+xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" 
+xmlns:whttp="http://www.w3.org/ns/wsdl/http" xmlns:ns="http://axis2.org" 
+xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" 
+xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions" xmlns:tns="http://axis2.org" 
+xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+<wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
+<wsdl2:types>
+  <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" 
+  targetNamespace="http://axis2.org">
+      <xs:element name="hi">
+          <xs:complexType>
+              <xs:sequence />
+          </xs:complexType>
+      </xs:element>
+      <xs:element name="hiResponse">
+          <xs:complexType>
+              <xs:sequence>
+                  <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+  </xs:schema>
+</wsdl2:types>
+<wsdl2:interface name="ServiceInterface">
+  <wsdl2:operation name="hi" 
+  style="http://www.w3.org/ns/wsdl/style/rpc http://www.w3.org/ns/wsdl/style/iri 
+  http://www.w3.org/ns/wsdl/style/multipart"
+   wrpc:signature="return #return " pattern="http://www.w3.org/ns/wsdl/in-out">
+      <wsdl2:input element="ns:hi" wsaw:Action="urn:hi" />
+      <wsdl2:output element="ns:hiResponse" wsaw:Action="urn:hiResponse" />
+  </wsdl2:operation>
+</wsdl2:interface>
+<wsdl2:binding name="SayHelloSoap11Binding" interface="tns:ServiceInterface" 
+type="http://www.w3.org/ns/wsdl/soap" wsoap:version="1.1">
+  <wsdl2:operation ref="tns:hi" wsoap:action="urn:hi">
+      <wsdl2:input />
+      <wsdl2:output />
+  </wsdl2:operation>
+</wsdl2:binding>
+<wsdl2:binding name="SayHelloSoap12Binding" interface="tns:ServiceInterface" 
+type="http://www.w3.org/ns/wsdl/soap" wsoap:version="1.2">
+  <wsdl2:operation ref="tns:hi" wsoap:action="urn:hi">
+      <wsdl2:input />
+      <wsdl2:output />
+  </wsdl2:operation>
+</wsdl2:binding>
+<wsdl2:binding name="SayHelloHttpBinding" interface="tns:ServiceInterface" 
+whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
+  <wsdl2:operation ref="tns:hi" whttp:location="hi">
+      <wsdl2:input />
+      <wsdl2:output />
+  </wsdl2:operation>
+</wsdl2:binding>
+</wsdl2:description>`,
+  WSDL_SAMPLE_AXIS_NO_BINDINGS = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl" 
+xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" 
+xmlns:whttp="http://www.w3.org/ns/wsdl/http" xmlns:ns="http://axis2.org" 
+xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" 
+xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions" xmlns:tns="http://axis2.org" 
+xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+<wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
+<wsdl2:types>
+  <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" 
+  targetNamespace="http://axis2.org">
+      <xs:element name="hi">
+          <xs:complexType>
+              <xs:sequence />
+          </xs:complexType>
+      </xs:element>
+      <xs:element name="hiResponse">
+          <xs:complexType>
+              <xs:sequence>
+                  <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+  </xs:schema>
+</wsdl2:types>
+<wsdl2:interface name="ServiceInterface">
+  <wsdl2:operation name="hi" 
+  style="http://www.w3.org/ns/wsdl/style/rpc http://www.w3.org/ns/wsdl/style/iri 
+  http://www.w3.org/ns/wsdl/style/multipart"
+   wrpc:signature="return #return " pattern="http://www.w3.org/ns/wsdl/in-out">
+      <wsdl2:input element="ns:hi" wsaw:Action="urn:hi" />
+      <wsdl2:output element="ns:hiResponse" wsaw:Action="urn:hiResponse" />
+  </wsdl2:operation>
+</wsdl2:interface>
+<wsdl2:service name="SayHello" interface="tns:ServiceInterface">
+  <wsdl2:endpoint name="SayHelloHttpEndpoint" 
+  binding="tns:SayHelloHttpBinding" 
+  address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpEndpoint/" />
+  <wsdl2:endpoint name="SayHelloHttpSoap11Endpoint" 
+  binding="tns:SayHelloSoap11Binding" 
+  address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap11Endpoint/" />
+  <wsdl2:endpoint name="SayHelloHttpSoap12Endpoint" 
+  binding="tns:SayHelloSoap12Binding" 
+  address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap12Endpoint/" />
+</wsdl2:service>
+</wsdl2:description>`,
+  WSDL_SAMPLE_AXIS_NO_BINDINGS_OPERATIONS = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl" 
+xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" 
+xmlns:whttp="http://www.w3.org/ns/wsdl/http" xmlns:ns="http://axis2.org" 
+xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" 
+xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions" xmlns:tns="http://axis2.org" 
+xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+<wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
+<wsdl2:types>
+  <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" 
+  targetNamespace="http://axis2.org">
+      <xs:element name="hi">
+          <xs:complexType>
+              <xs:sequence />
+          </xs:complexType>
+      </xs:element>
+      <xs:element name="hiResponse">
+          <xs:complexType>
+              <xs:sequence>
+                  <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+  </xs:schema>
+</wsdl2:types>
+<wsdl2:interface name="ServiceInterface">
+
+</wsdl2:interface>
+<wsdl2:binding name="SayHelloSoap11Binding" interface="tns:ServiceInterface" 
+type="http://www.w3.org/ns/wsdl/soap" wsoap:version="1.1">
+ 
+</wsdl2:binding>
+<wsdl2:binding name="SayHelloSoap12Binding" interface="tns:ServiceInterface" 
+type="http://www.w3.org/ns/wsdl/soap" wsoap:version="1.2">
+  
+</wsdl2:binding>
+<wsdl2:binding name="SayHelloHttpBinding" interface="tns:ServiceInterface" 
+whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
+</wsdl2:binding>
+<wsdl2:service name="SayHello" interface="tns:ServiceInterface">
+  <wsdl2:endpoint name="SayHelloHttpEndpoint" 
+  binding="tns:SayHelloHttpBinding" 
+  address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpEndpoint/" />
+  <wsdl2:endpoint name="SayHelloHttpSoap11Endpoint" 
+  binding="tns:SayHelloSoap11Binding" 
+  address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap11Endpoint/" />
+  <wsdl2:endpoint name="SayHelloHttpSoap12Endpoint" 
+  binding="tns:SayHelloSoap12Binding" 
+  address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap12Endpoint/" />
 </wsdl2:service>
 </wsdl2:description>`;
 
@@ -872,6 +1033,53 @@ describe('WSDL 2.0 parser assignOperations', function() {
       });
 
   });
+
+  it('should assign operations to wsdl object when services is not in the file', function() {
+    const parser = new Wsdl20Parser();
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS_NO_SERVICES);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(3);
+
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_MESSAGE))
+      .to.equal(true);
+
+    expect(wsdlObject.operationsArray[0]).to.be.an('object')
+      .and.to.include({
+        name: 'hi',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+  });
+
+  it('should assign operations empty object when bindings is not in the file', function() {
+    const parser = new Wsdl20Parser();
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS_NO_BINDINGS);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(0);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
+      .to.equal(true);
+  });
+
+  it('should assign operations empty object when bindings operations are not in the file', function() {
+    const parser = new Wsdl20Parser();
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS_NO_BINDINGS_OPERATIONS);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(0);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
+      .to.equal(true);
+  });
 });
 
 describe('WSDL 2.0 parser getServiceEndpointByBindingName', function() {
@@ -928,14 +1136,11 @@ describe('WSDL 2.0 parser getServiceEndpointByBindingName', function() {
   });
 
   it('should throw an error when services is null', function() {
-    try {
-      const parser = new Wsdl20Parser();
-      parser.getServiceEndpointByBindingName('bindingName', null, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service endpoint from undefined or null object');
-    }
+
+    const parser = new Wsdl20Parser();
+    let wsdlObject = new WsdlObject(),
+      serviceEndpoint = parser.getServiceEndpointByBindingName('bindingName', null, 'principal prefix', wsdlObject);
+    expect(serviceEndpoint).to.equal(undefined);
   });
 
   it('should throw an error when service enpdoint is not found', function() {
@@ -1182,28 +1387,16 @@ describe('WSDL 2.0 parser  getServiceByBindingName', function() {
     }
   });
 
-  it('should throw an error when services is null', function() {
+  it('should return undefined when services is null', function() {
     const parser = new Wsdl20Parser();
-
-    try {
-      parser.getServiceByBindingName('somename', null, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from undefined or null object');
-    }
+    let service = parser.getServiceByBindingName('somename', null, 'principal prefix');
+    expect(service).to.be.equal(undefined);
   });
 
   it('should throw an error when services is undefined', function() {
     const parser = new Wsdl20Parser();
-
-    try {
-      parser.getServiceByBindingName('somename', undefined, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from undefined or null object');
-    }
+    let service = parser.getServiceByBindingName('somename', undefined, 'principal prefix');
+    expect(service).to.be.equal(undefined);
   });
 
   it('should throw an error when services is an empty object', function() {
