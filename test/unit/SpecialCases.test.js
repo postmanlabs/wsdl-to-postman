@@ -53,7 +53,6 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data.item.length).to.equal(0);
       expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
         .to.equal(true);
-      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
     });
   });
 
@@ -75,7 +74,6 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data.item.length).to.equal(0);
       expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
         .to.equal(true);
-      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
     });
   });
 
@@ -97,6 +95,7 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data.item.length).to.equal(4);
       expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
         .to.equal(true);
+      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
     });
   });
 });
