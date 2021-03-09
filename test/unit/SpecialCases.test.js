@@ -4,7 +4,9 @@ const expect = require('chai').expect,
   } = require('../../lib/SchemaPack'),
   validWSDLs = 'test/data/specialCases',
   fs = require('fs'),
-  DOC_HAS_NO_SERVICE_MESSAGE = require('../../lib/constants/messageConstants');
+  {
+    DOC_HAS_NO_SERVICE_MESSAGE
+  } = require('../../lib/constants/messageConstants');
 
 describe('SchemaPack convert special cases WSDL 1.1', function() {
 

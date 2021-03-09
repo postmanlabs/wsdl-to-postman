@@ -1,7 +1,9 @@
 const expect = require('chai').expect,
   assert = require('chai').assert,
   WsdlObject = require('../../lib/WsdlObject').WsdlObject,
-  DOC_HAS_NO_SERVICE_MESSAGE = require('../../lib/constants/messageConstants'),
+  {
+    DOC_HAS_NO_SERVICE_MESSAGE
+  } = require('../../lib/constants/messageConstants'),
   {
     POST_METHOD
   } = require('../../lib/utils/httpUtils'),
