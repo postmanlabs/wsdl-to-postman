@@ -85,7 +85,7 @@ describe('ParametersUtils parseObjectToXML', function() {
     }
   });
 
-  it('should get an string representing the xml', function() {
+  it('should get an string representing the xml with error', function() {
     const parametersUtils = new SOAPParametersUtils(),
       xmlParameters = parametersUtils.parseObjectToXML(jsonError);
     expect(xmlParameters).to.be.an('string');

@@ -142,7 +142,7 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
     });
   });
 
-  it('Should get an object representing PM Collection from wsdl without a element', function() {
+  it('Should get an object representing PM Collection from wsdl complex type not found', function() {
     let fileContent = fs.readFileSync(validWSDLs + '/ComplexTypeNotFound.wsdl', 'utf8');
     const schemaPack = new SchemaPack({
       data: fileContent,
@@ -151,7 +151,7 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
 
     schemaPack.convert((error, result) => {
       expect(error).to.be.null;
-      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data))
+      fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
 
       expect(result).to.be.an('object');
       expect(result.output).to.be.an('array');

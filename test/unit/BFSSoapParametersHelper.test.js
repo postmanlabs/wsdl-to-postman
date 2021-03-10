@@ -1,7 +1,10 @@
 const expect = require('chai').expect,
   {
     BFSSoapParametersHelper
-  } = require('../../lib/utils/BFSSoapParametersHelper');
+  } = require('../../lib/utils/BFSSoapParametersHelper'),
+  {
+    ERROR_ELEMENT_IDENTIFIER
+  } = require('../../lib/constants/processConstants');
 
 describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
   it('Should get a json object when NumberToWords->ubinum is sent', function() {
@@ -107,14 +110,14 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
     const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
       node = {
         children: [],
-        name: 'error',
+        name: ERROR_ELEMENT_IDENTIFIER,
         isComplex: false,
-        type: 'error',
+        type: ERROR_ELEMENT_IDENTIFIER,
         namespace: ''
       },
       jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
-    expect(jsonObjectMessage).to.have.own.property('error');
+    expect(jsonObjectMessage).to.have.own.property(ERROR_ELEMENT_IDENTIFIER);
   });
 
   it('Should get a json object indicating the error from child', function() {
@@ -122,9 +125,9 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
 
       child = {
         children: [],
-        name: 'error',
+        name: ERROR_ELEMENT_IDENTIFIER,
         isComplex: false,
-        type: 'error',
+        type: ERROR_ELEMENT_IDENTIFIER,
         namespace: ''
       },
       node = {
@@ -139,7 +142,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
     expect(jsonObjectMessage['soap:Envelope']).to.have.own.property('soap:Body');
     expect(jsonObjectMessage['soap:Envelope']['soap:Body']).to.have.own.property('NumberToWords');
     expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords)
-      .to.have.own.property('error');
+      .to.have.own.property(ERROR_ELEMENT_IDENTIFIER);
   });
 
 });
