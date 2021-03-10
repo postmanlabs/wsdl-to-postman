@@ -103,6 +103,20 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
     expect(jsonObjectMessage).to.be.empty;
   });
 
+  it('Should get a json object indicating the error', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      node = {
+        children: [],
+        name: 'error',
+        isComplex: false,
+        type: 'error',
+        namespace: ''
+      },
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+    expect(jsonObjectMessage).to.have.own.property('error');
+  });
+
 });
 
 describe('BFSSoapParametersHelper assignPropertyValue', function() {
