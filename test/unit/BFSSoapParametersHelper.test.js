@@ -117,6 +117,31 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
     expect(jsonObjectMessage).to.have.own.property('error');
   });
 
+  it('Should get a json object indicating the error from child', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+
+      child = {
+        children: [],
+        name: 'error',
+        isComplex: false,
+        type: 'error',
+        namespace: ''
+      },
+      node = {
+        children: [child],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
+    expect(jsonObjectMessage).to.have.own.property('soap:Envelope');
+    expect(jsonObjectMessage['soap:Envelope']).to.have.own.property('soap:Body');
+    expect(jsonObjectMessage['soap:Envelope']['soap:Body']).to.have.own.property('NumberToWords');
+    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords)
+      .to.have.own.property('error');
+  });
+
 });
 
 describe('BFSSoapParametersHelper assignPropertyValue', function() {

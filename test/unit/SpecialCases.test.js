@@ -118,8 +118,50 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data.item.length).to.equal(4);
       expect(result.output[0].data.item[0].request.body.raw.includes(ELEMENT_NOT_FOUND))
         .to.equal(true);
+    });
+  });
+
+  it('Should get an object representing PM Collection from wsdl without a element', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/NoElementInSchema.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].data.item).to.be.an('array');
+      expect(result.output[0].data.item.length).to.equal(4);
+      expect(result.output[0].data.item[0].request.body.raw.includes(ELEMENT_NOT_FOUND))
+        .to.equal(true);
+    });
+  });
+
+  it('Should get an object representing PM Collection from wsdl without a element', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/ComplexTypeNotFound.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
       fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data))
 
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].data.item).to.be.an('array');
+      expect(result.output[0].data.item.length).to.equal(2);
+      expect(result.output[0].data.item[1].request.body.raw.includes(ELEMENT_NOT_FOUND))
+        .to.equal(true);
     });
   });
 });
