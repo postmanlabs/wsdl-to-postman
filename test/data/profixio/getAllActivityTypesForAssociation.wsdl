@@ -18,12 +18,12 @@
                 </xsd:complexType>
             </xsd:element>
             <xsd:complexType name="ActivityTypes">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="id" type="xsd:int" nillable="true"/>
                     <xsd:element name="name" type="xsd:string" nillable="true"/>
                     <xsd:element name="description" type="xsd:string" nillable="true"/>
                     <xsd:element name="teamsport" type="xsd:int" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfActivityTypes">
                 <xsd:sequence>

@@ -23,13 +23,13 @@
                 </xsd:complexType>
             </xsd:element>
             <xsd:complexType name="calendar">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="date" type="xsd:date" nillable="true"/>
                     <xsd:element name="activityid" type="xsd:int" nillable="true"/>
                     <xsd:element name="name" type="xsd:string" nillable="true"/>
                     <xsd:element name="info" type="xsd:string" nillable="true"/>
                     <xsd:element name="singlesessions" type="xsd:string" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfCalendar">
                 <xsd:sequence>

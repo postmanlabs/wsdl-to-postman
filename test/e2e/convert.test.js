@@ -8,7 +8,7 @@ const expect = require('chai').expect,
 describe('Test WSDL convertion into Postman Collection', function() {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
   async.each(validWSDLsFolder, function (file, cb) {
-    it('Should validate mandatory fields ', function () {
+    it('Should validate mandatory fields ' + file, function () {
       let fileContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8');
       Index.convert({ type: 'string', data: fileContent }, {}, (err, conversionResult) => {
         expect(err).to.be.null;

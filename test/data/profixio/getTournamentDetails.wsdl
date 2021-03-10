@@ -9,11 +9,11 @@
     <types>
         <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getTournamentDetails.php">
             <xsd:complexType name="ClubKey">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="club_name" type="xsd:string" nillable="true"/>
                     <xsd:element name="club_licence" type="xsd:string" nillable="true"/>
                     <xsd:element name="application_key" type="xsd:string" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:element name="getTournamentDetails">
                 <xsd:complexType>
@@ -24,7 +24,7 @@
                 </xsd:complexType>
             </xsd:element>
             <xsd:complexType name="TournamentClass">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="id" type="xsd:string" nillable="true"/>
                     <xsd:element name="class_code" type="xsd:string" nillable="true"/>
                     <xsd:element name="description" type="xsd:string" nillable="true"/>
@@ -35,7 +35,7 @@
                     <xsd:element name="waiting_list" type="xsd:boolean" nillable="true"/>
                     <xsd:element name="born_date_from" type="xsd:string" nillable="true"/>
                     <xsd:element name="born_date_to" type="xsd:string" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfTournamentClass">
                 <xsd:sequence>
@@ -43,11 +43,11 @@
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="MiscellaneousElement">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="id" type="xsd:int" nillable="true"/>
                     <xsd:element name="klientid" type="xsd:string" nillable="true"/>
                     <xsd:element name="value" type="xsd:string" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfMiscellaneousElement">
                 <xsd:sequence>
@@ -55,10 +55,10 @@
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="Miscellaneous">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="Description" type="xsd:string" nillable="true"/>
                     <xsd:element name="MiscellaneousElements" type="tns:ArrayOfMiscellaneousElement" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfMiscellaneous">
                 <xsd:sequence>
@@ -66,11 +66,11 @@
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="Category">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="age_group" type="xsd:string" nillable="true"/>
                     <xsd:element name="category_id" type="xsd:string" nillable="true"/>
                     <xsd:element name="category_name" type="xsd:string" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfCategory">
                 <xsd:sequence>
@@ -78,7 +78,7 @@
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="Fee">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="id" type="xsd:string" nillable="true"/>
                     <xsd:element name="description" type="xsd:string" nillable="true"/>
                     <xsd:element name="comment" type="xsd:string" nillable="true"/>
@@ -87,7 +87,7 @@
                     <xsd:element name="end_date" type="xsd:date" nillable="true"/>
                     <xsd:element name="optional_sub_choices" type="xsd:string" nillable="true"/>
                     <xsd:element name="order_of_sequence" type="xsd:string" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfFee">
                 <xsd:sequence>
@@ -95,7 +95,7 @@
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="TournamentDetail">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="id" type="xsd:int" nillable="true"/>
                     <xsd:element name="tournament_name" type="xsd:string" nillable="true"/>
                     <xsd:element name="club" type="xsd:string" nillable="true"/>
@@ -124,7 +124,7 @@
                     <xsd:element name="Miscellaneous" type="tns:ArrayOfMiscellaneous" nillable="true"/>
                     <xsd:element name="Categories" type="tns:ArrayOfCategory" nillable="true"/>
                     <xsd:element name="Fee" type="tns:ArrayOfFee" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:element name="getTournamentDetailsResponse">
                 <xsd:complexType>

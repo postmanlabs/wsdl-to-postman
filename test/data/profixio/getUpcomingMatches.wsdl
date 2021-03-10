@@ -1,2 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.profixio.com/soap/services/getUpcomingMatches.php" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getUpcomingMatches" targetNamespace="http://www.profixio.com/soap/services/getUpcomingMatches.php"><types><xsd:schema targetNamespace="http://www.profixio.com/soap/services/getUpcomingMatches.php"><xsd:element name="getUpcomingMatches"><xsd:complexType><xsd:sequence><xsd:element name="application_key" type="xsd:string"/><xsd:element name="competitionId" type="xsd:string" nillable="true"/></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="Person"><xsd:all><xsd:element name="id" type="xsd:int" nillable="true"/><xsd:element name="last_name" type="xsd:string" nillable="true"/><xsd:element name="first_name" type="xsd:string" nillable="true"/><xsd:element name="gender" type="xsd:string" nillable="true"/><xsd:element name="birth_year" type="xsd:string" nillable="true"/><xsd:element name="birth_date" type="xsd:date" nillable="true"/><xsd:element name="phone" type="xsd:string" nillable="true"/><xsd:element name="email" type="xsd:string" nillable="true"/></xsd:all></xsd:complexType><xsd:complexType name="ArrayOfPerson"><xsd:sequence><xsd:element name="item" type="tns:Person" minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType><xsd:complexType name="LeagueRefereeAssignment"><xsd:all><xsd:element name="id" type="xsd:string" nillable="true"/><xsd:element name="PersonGlobalId" type="xsd:string" nillable="true"/><xsd:element name="RefereeNumber" type="xsd:string" nillable="true"/><xsd:element name="Person" type="tns:ArrayOfPerson" nillable="true"/></xsd:all></xsd:complexType><xsd:complexType name="ArrayOfLeagueRefereeAssignment"><xsd:sequence><xsd:element name="item" type="tns:LeagueRefereeAssignment" minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType><xsd:complexType name="Match"><xsd:all><xsd:element name="MatchId" type="xsd:int" nillable="true"/><xsd:element name="GameRound" type="xsd:int" nillable="true"/><xsd:element name="Arena" type="xsd:string" nillable="true"/><xsd:element name="Field" type="xsd:string" nillable="true"/><xsd:element name="MatchTimeDateTime" type="xsd:string" nillable="true"/><xsd:element name="Time" type="xsd:string" nillable="true"/><xsd:element name="Team1Id" type="xsd:int" nillable="true"/><xsd:element name="Team1GlobalId" type="xsd:int" nillable="true"/><xsd:element name="Team1Name" type="xsd:string" nillable="true"/><xsd:element name="Team2Id" type="xsd:int" nillable="true"/><xsd:element name="Team2GlobalId" type="xsd:int" nillable="true"/><xsd:element name="Team2Name" type="xsd:string" nillable="true"/><xsd:element name="Team1Score" type="xsd:int" nillable="true"/><xsd:element name="Team2Score" type="xsd:int" nillable="true"/><xsd:element name="GameResult" type="xsd:string" nillable="true"/><xsd:element name="GameStatus" type="xsd:int" nillable="true"/><xsd:element name="UpdateTimeStamp" type="xsd:string" nillable="true"/><xsd:element name="MatchName" type="xsd:string" nillable="true"/><xsd:element name="Team1ClubId" type="xsd:string" nillable="true"/><xsd:element name="Team1ClubGlobalId" type="xsd:string" nillable="true"/><xsd:element name="Team2ClubId" type="xsd:string" nillable="true"/><xsd:element name="Team2ClubGlobalId" type="xsd:string" nillable="true"/><xsd:element name="Winner" type="xsd:string" nillable="true"/><xsd:element name="SortOrder1" type="xsd:string" nillable="true"/><xsd:element name="SortOrder2" type="xsd:string" nillable="true"/><xsd:element name="MatchGroupId" type="xsd:int" nillable="true"/><xsd:element name="MatchClassId" type="xsd:int" nillable="true"/><xsd:element name="PersonalResultRegistration" type="xsd:int" nillable="true"/><xsd:element name="FieldId" type="xsd:string" nillable="true"/><xsd:element name="ArenaId" type="xsd:string" nillable="true"/><xsd:element name="FieldGlobalId" type="xsd:string" nillable="true"/><xsd:element name="ArenaGlobalId" type="xsd:string" nillable="true"/><xsd:element name="Sets" type="xsd:string" nillable="true"/><xsd:element name="RefereesAssignments" type="tns:ArrayOfLeagueRefereeAssignment" nillable="true"/></xsd:all></xsd:complexType><xsd:complexType name="ArrayOfMatch"><xsd:sequence><xsd:element name="item" type="tns:Match" minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType><xsd:element name="getUpcomingMatchesResponse"><xsd:complexType><xsd:sequence><xsd:element name="getUpcomingMatchesResult" type="tns:ArrayOfMatch"/></xsd:sequence></xsd:complexType></xsd:element></xsd:schema></types><portType name="getUpcomingMatchesPort"><operation name="getUpcomingMatches"><documentation>Returns the matches in a tournament/league which has no result registered.</documentation><input message="tns:getUpcomingMatchesIn"/><output message="tns:getUpcomingMatchesOut"/></operation></portType><binding name="getUpcomingMatchesBinding" type="tns:getUpcomingMatchesPort"><soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/><operation name="getUpcomingMatches"><soap:operation soapAction="http://www.profixio.com/soap/services/getUpcomingMatches.php#getUpcomingMatches"/><input><soap:body use="literal"/></input><output><soap:body use="literal"/></output></operation></binding><service name="getUpcomingMatchesService"><port name="getUpcomingMatchesPort" binding="tns:getUpcomingMatchesBinding"><soap:address location="http://www.profixio.com/soap/services/getUpcomingMatches.php"/></port></service><message name="getUpcomingMatchesIn"><part name="parameters" element="tns:getUpcomingMatches"/></message><message name="getUpcomingMatchesOut"><part name="parameters" element="tns:getUpcomingMatchesResponse"/></message></definitions>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getUpcomingMatches.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getUpcomingMatches" targetNamespace="http://www.profixio.com/soap/services/getUpcomingMatches.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getUpcomingMatches.php">
+            <xsd:element name="getUpcomingMatches">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="competitionId" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="Person">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="last_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="first_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="gender" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_year" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_date" type="xsd:date" nillable="true"/>
+                    <xsd:element name="phone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="email" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfPerson">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:Person" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="LeagueRefereeAssignment">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="PersonGlobalId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="RefereeNumber" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Person" type="tns:ArrayOfPerson" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfLeagueRefereeAssignment">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:LeagueRefereeAssignment" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Match">
+                <xsd:sequence>
+                    <xsd:element name="MatchId" type="xsd:int" nillable="true"/>
+                    <xsd:element name="GameRound" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Arena" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Field" type="xsd:string" nillable="true"/>
+                    <xsd:element name="MatchTimeDateTime" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Time" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Team1Id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Team1GlobalId" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Team1Name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Team2Id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Team2GlobalId" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Team2Name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Team1Score" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Team2Score" type="xsd:int" nillable="true"/>
+                    <xsd:element name="GameResult" type="xsd:string" nillable="true"/>
+                    <xsd:element name="GameStatus" type="xsd:int" nillable="true"/>
+                    <xsd:element name="UpdateTimeStamp" type="xsd:string" nillable="true"/>
+                    <xsd:element name="MatchName" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Team1ClubId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Team1ClubGlobalId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Team2ClubId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Team2ClubGlobalId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Winner" type="xsd:string" nillable="true"/>
+                    <xsd:element name="SortOrder1" type="xsd:string" nillable="true"/>
+                    <xsd:element name="SortOrder2" type="xsd:string" nillable="true"/>
+                    <xsd:element name="MatchGroupId" type="xsd:int" nillable="true"/>
+                    <xsd:element name="MatchClassId" type="xsd:int" nillable="true"/>
+                    <xsd:element name="PersonalResultRegistration" type="xsd:int" nillable="true"/>
+                    <xsd:element name="FieldId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="ArenaId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="FieldGlobalId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="ArenaGlobalId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Sets" type="xsd:string" nillable="true"/>
+                    <xsd:element name="RefereesAssignments" type="tns:ArrayOfLeagueRefereeAssignment" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfMatch">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:Match" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getUpcomingMatchesResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getUpcomingMatchesResult" type="tns:ArrayOfMatch"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getUpcomingMatchesPort">
+        <operation name="getUpcomingMatches">
+            <documentation>Returns the matches in a tournament/league which has no result registered.</documentation>
+            <input message="tns:getUpcomingMatchesIn"/>
+            <output message="tns:getUpcomingMatchesOut"/>
+        </operation>
+    </portType>
+    <binding name="getUpcomingMatchesBinding" type="tns:getUpcomingMatchesPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getUpcomingMatches">
+            <soap:operation soapAction="http://www.profixio.com/soap/services/getUpcomingMatches.php#getUpcomingMatches"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getUpcomingMatchesService">
+        <port name="getUpcomingMatchesPort" binding="tns:getUpcomingMatchesBinding">
+            <soap:address location="http://www.profixio.com/soap/services/getUpcomingMatches.php"/>
+        </port>
+    </service>
+    <message name="getUpcomingMatchesIn">
+        <part name="parameters" element="tns:getUpcomingMatches"/>
+    </message>
+    <message name="getUpcomingMatchesOut">
+        <part name="parameters" element="tns:getUpcomingMatchesResponse"/>
+    </message>
+</definitions>

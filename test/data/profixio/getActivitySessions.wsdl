@@ -22,14 +22,14 @@
                 </xsd:complexType>
             </xsd:element>
             <xsd:complexType name="singleSession">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="activityID" type="xsd:int" nillable="true"/>
                     <xsd:element name="date" type="xsd:date" nillable="true"/>
                     <xsd:element name="sessionPrice" type="xsd:string" nillable="true"/>
                     <xsd:element name="availablePlaces" type="xsd:int" nillable="true"/>
                     <xsd:element name="openForRegistration" type="xsd:int" nillable="true"/>
                     <xsd:element name="isRegistered" type="xsd:int" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfSingleSession">
                 <xsd:sequence>

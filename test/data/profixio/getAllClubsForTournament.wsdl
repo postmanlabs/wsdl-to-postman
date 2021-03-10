@@ -1,2 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.profixio.com/soap/services/getAllClubsForTournament.php" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllClubsForTournament" targetNamespace="http://www.profixio.com/soap/services/getAllClubsForTournament.php"><types><xsd:schema targetNamespace="http://www.profixio.com/soap/services/getAllClubsForTournament.php"><xsd:element name="getAllClubsForTournament"><xsd:complexType><xsd:sequence><xsd:element name="application_key" type="xsd:string"/><xsd:element name="tournamentID" type="xsd:int" nillable="true"/><xsd:element name="password" type="xsd:string" nillable="true"/></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="TournamentClub"><xsd:all><xsd:element name="TournamentClubRegistrationId" type="xsd:int" nillable="true"/><xsd:element name="id" type="xsd:int" nillable="true"/><xsd:element name="name" type="xsd:string" nillable="true"/><xsd:element name="CountryCode" type="xsd:string" nillable="true"/><xsd:element name="GlobalClubId" type="xsd:string" nillable="true"/></xsd:all></xsd:complexType><xsd:complexType name="ArrayOfTournamentClub"><xsd:sequence><xsd:element name="item" type="tns:TournamentClub" minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType><xsd:element name="getAllClubsForTournamentResponse"><xsd:complexType><xsd:sequence><xsd:element name="getAllClubsForTournamentResult" type="tns:ArrayOfTournamentClub"/></xsd:sequence></xsd:complexType></xsd:element></xsd:schema></types><portType name="getAllClubsForTournamentPort"><operation name="getAllClubsForTournament"><documentation>Returns the clubs that have teams playing matches in a Tournament.</documentation><input message="tns:getAllClubsForTournamentIn"/><output message="tns:getAllClubsForTournamentOut"/></operation></portType><binding name="getAllClubsForTournamentBinding" type="tns:getAllClubsForTournamentPort"><soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/><operation name="getAllClubsForTournament"><soap:operation soapAction="http://www.profixio.com/soap/services/getAllClubsForTournament.php#getAllClubsForTournament"/><input><soap:body use="literal"/></input><output><soap:body use="literal"/></output></operation></binding><service name="getAllClubsForTournamentService"><port name="getAllClubsForTournamentPort" binding="tns:getAllClubsForTournamentBinding"><soap:address location="http://www.profixio.com/soap/services/getAllClubsForTournament.php"/></port></service><message name="getAllClubsForTournamentIn"><part name="parameters" element="tns:getAllClubsForTournament"/></message><message name="getAllClubsForTournamentOut"><part name="parameters" element="tns:getAllClubsForTournamentResponse"/></message></definitions>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getAllClubsForTournament.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllClubsForTournament" targetNamespace="http://www.profixio.com/soap/services/getAllClubsForTournament.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getAllClubsForTournament.php">
+            <xsd:element name="getAllClubsForTournament">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="tournamentID" type="xsd:int" nillable="true"/>
+                        <xsd:element name="password" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="TournamentClub">
+                <xsd:sequence>
+                    <xsd:element name="TournamentClubRegistrationId" type="xsd:int" nillable="true"/>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="CountryCode" type="xsd:string" nillable="true"/>
+                    <xsd:element name="GlobalClubId" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfTournamentClub">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:TournamentClub" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getAllClubsForTournamentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getAllClubsForTournamentResult" type="tns:ArrayOfTournamentClub"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getAllClubsForTournamentPort">
+        <operation name="getAllClubsForTournament">
+            <documentation>Returns the clubs that have teams playing matches in a Tournament.</documentation>
+            <input message="tns:getAllClubsForTournamentIn"/>
+            <output message="tns:getAllClubsForTournamentOut"/>
+        </operation>
+    </portType>
+    <binding name="getAllClubsForTournamentBinding" type="tns:getAllClubsForTournamentPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getAllClubsForTournament">
+            <soap:operation soapAction="http://www.profixio.com/soap/services/getAllClubsForTournament.php#getAllClubsForTournament"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getAllClubsForTournamentService">
+        <port name="getAllClubsForTournamentPort" binding="tns:getAllClubsForTournamentBinding">
+            <soap:address location="http://www.profixio.com/soap/services/getAllClubsForTournament.php"/>
+        </port>
+    </service>
+    <message name="getAllClubsForTournamentIn">
+        <part name="parameters" element="tns:getAllClubsForTournament"/>
+    </message>
+    <message name="getAllClubsForTournamentOut">
+        <part name="parameters" element="tns:getAllClubsForTournamentResponse"/>
+    </message>
+</definitions>

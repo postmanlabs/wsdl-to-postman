@@ -18,7 +18,7 @@
                 </xsd:complexType>
             </xsd:element>
             <xsd:complexType name="Activity">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="id" type="xsd:int" nillable="true"/>
                     <xsd:element name="name" type="xsd:string" nillable="true"/>
                     <xsd:element name="subtype" type="xsd:string" nillable="true"/>
@@ -40,7 +40,7 @@
                     <xsd:element name="faciltyPnbr" type="xsd:string" nillable="true"/>
                     <xsd:element name="faciltyCity" type="xsd:string" nillable="true"/>
                     <xsd:element name="singleSession" type="xsd:string" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfActivity">
                 <xsd:sequence>

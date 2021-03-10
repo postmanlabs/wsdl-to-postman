@@ -24,13 +24,13 @@
                 </xsd:complexType>
             </xsd:element>
             <xsd:complexType name="userActivity">
-                <xsd:all>
+                <xsd:sequence>
                     <xsd:element name="activityID" type="xsd:int" nillable="true"/>
                     <xsd:element name="registrationStatus" type="xsd:int" nillable="true"/>
                     <xsd:element name="registrationStatusText" type="xsd:int" nillable="true"/>
                     <xsd:element name="singleSession" type="xsd:int" nillable="true"/>
                     <xsd:element name="singleSessionDate" type="xsd:string" nillable="true"/>
-                </xsd:all>
+                </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ArrayOfUserActivity">
                 <xsd:sequence>
