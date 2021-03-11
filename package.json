@@ -6,7 +6,7 @@
   "scripts": {
     "unit-tests": "./node_modules/mocha/bin/mocha test/unit/**.test.js",
     "e2e-tests": "./node_modules/mocha/bin/mocha test/e2e/**.test.js",
-    "lint": "eslint ./lib/** ./test/**/*.js",
+    "lint": "eslint ./lib/**",
     "coverage": "nyc --reporter=text npm run unit-tests"
   },
   "repository": {
@@ -25,11 +25,8 @@
   },
   "homepage": "https://github.com/postmanlabs/wsdl-to-postman#readme",
   "devDependencies": {
-    "@babel/core": "7.12.13",
-    "@babel/eslint-parser": "7.12.13",
-    "@babel/plugin-proposal-class-properties": "7.12.13",
-    "@babel/preset-env": "7.12.13",
     "async": "3.2.0",
+    "babel-eslint": "0.1.0",
     "chai": "4.3.0",
     "eslint": "7.19.0",
     "eslint-plugin-jsdoc": "31.6.1",

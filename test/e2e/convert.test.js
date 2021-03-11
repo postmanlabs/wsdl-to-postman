@@ -3,7 +3,7 @@ const expect = require('chai').expect,
   Index = require('../../index.js'),
   async = require('async'),
   validWSDLs = 'test/data/profixio';
-  //validWSDLs = 'test/data/profixio/getActivityByType.wsdl';
+  // validWSDLs = 'test/data/profixio/getActivityByType.wsdl';
 
 describe('Test WSDL convertion into Postman Collection', function() {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
