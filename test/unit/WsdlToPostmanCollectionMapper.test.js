@@ -194,7 +194,10 @@ const {
       isDefault: false
     }
     ],
-    fileName: undefined
+    fileName: undefined,
+    log: {
+      errors: ''
+    }
   };
 
 describe('WsdlToPostmanCollectionMapper constructor', function() {

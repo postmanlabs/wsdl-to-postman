@@ -2,6 +2,12 @@ const expect = require('chai').expect,
   assert = require('chai').assert,
   WsdlObject = require('../../lib/WsdlObject').WsdlObject,
   {
+    DOC_HAS_NO_SERVICE_MESSAGE,
+    DOC_HAS_NO_BINDIGS_MESSAGE,
+    DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,
+    DOC_HAS_NO_SERVICE_PORT_MESSAGE
+  } = require('../../lib/constants/messageConstants'),
+  {
     POST_METHOD
   } = require('../../lib/utils/httpUtils'),
   {
@@ -19,6 +25,8 @@ const expect = require('chai').expect,
   {
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
   } = require('../../lib/WsdlParserCommon'),
+  fs = require('fs'),
+  specialCasesWSDLs = 'test/data/specialCases',
   NUMBERCONVERSION_INPUT = `
   <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
@@ -1142,7 +1150,7 @@ describe('WSDL 1.1 parser assignNamespaces', function() {
     expect(wsdlObject).to.have.all.keys('targetNamespace',
       'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
       'SOAP12Namespace', 'schemaNamespace',
-      'tnsNamespace', 'allNameSpaces', 'fileName',
+      'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
       'operationsArray');
 
     expect(wsdlObject.targetNamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
@@ -3158,6 +3166,209 @@ provides functions that convert numbers into words or dollar amounts.</documenta
       });
   });
 
+  it('should assign operations to wsdl object when services is not in the file', function() {
+    const parser = new Wsdl11Parser();
+    fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServicesTagNumberConvertion.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(4);
+
+    expect(wsdlObject.operationsArray[0]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToWords',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        style: 'document',
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+
+    expect(wsdlObject.operationsArray[0].description.replace(/[\r\n\s]+/g, '')).to.equal(
+      ('Returns the word corresponding to the positive number ' +
+        'passed as parameter. Limited to quadrillions.').replace(/[\r\n\s]+/g, ''));
+
+    expect(wsdlObject.operationsArray[1]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToDollars',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        style: 'document',
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+
+    expect(wsdlObject.operationsArray[2]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToWords',
+        method: POST_METHOD,
+        protocol: SOAP12_PROTOCOL,
+        style: 'document',
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+
+    expect(wsdlObject.operationsArray[3]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToDollars',
+        method: POST_METHOD,
+        protocol: SOAP12_PROTOCOL,
+        style: 'document',
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+  });
+
+  it('should assign operations empty object when bindings is not in the file', function() {
+    const parser = new Wsdl11Parser();
+    fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsTag.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(0);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
+      .to.equal(true);
+  });
+
+  it('should assign operations empty object when bindings operations are not in the file', function() {
+    const parser = new Wsdl11Parser();
+    fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsOperations.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(0);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
+      .to.equal(true);
+  });
+
+  it('should assign operations to wsdl object when services ports are not in the file', function() {
+    const parser = new Wsdl11Parser();
+    fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServicesPortTag.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(4);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
+      .to.equal(true);
+    expect(wsdlObject.operationsArray[0]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToWords',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        style: 'document',
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+
+    expect(wsdlObject.operationsArray[0].description.replace(/[\r\n\s]+/g, '')).to.equal(
+      ('Returns the word corresponding to the positive number ' +
+        'passed as parameter. Limited to quadrillions.').replace(/[\r\n\s]+/g, ''));
+
+    expect(wsdlObject.operationsArray[1]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToDollars',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        style: 'document',
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+
+    expect(wsdlObject.operationsArray[2]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToWords',
+        method: POST_METHOD,
+        protocol: SOAP12_PROTOCOL,
+        style: 'document',
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+
+    expect(wsdlObject.operationsArray[3]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToDollars',
+        method: POST_METHOD,
+        protocol: SOAP12_PROTOCOL,
+        style: 'document',
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+  });
+
+  it('should assign operations to wsdl object when schema is not in the file', function() {
+    const parser = new Wsdl11Parser(),
+      fileContent = fs.readFileSync(specialCasesWSDLs + '/NoSchema.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(4);
+
+    expect(wsdlObject.operationsArray[0]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToWords',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        style: 'document',
+        url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+        portName: 'NumberConversionSoap',
+        serviceName: 'NumberConversion'
+      });
+
+    expect(wsdlObject.operationsArray[0].description.replace(/[\r\n\s]+/g, '')).to.equal(
+      ('Returns the word corresponding to the positive number ' +
+        'passed as parameter. Limited to quadrillions.').replace(/[\r\n\s]+/g, ''));
+
+    expect(wsdlObject.operationsArray[1]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToDollars',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        style: 'document',
+        url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+        portName: 'NumberConversionSoap',
+        serviceName: 'NumberConversion'
+      });
+
+    expect(wsdlObject.operationsArray[2]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToWords',
+        method: POST_METHOD,
+        protocol: SOAP12_PROTOCOL,
+        style: 'document',
+        url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+        portName: 'NumberConversionSoap12',
+        serviceName: 'NumberConversion'
+      });
+
+    expect(wsdlObject.operationsArray[3]).to.be.an('object')
+      .and.to.include({
+        name: 'NumberToDollars',
+        method: POST_METHOD,
+        protocol: SOAP12_PROTOCOL,
+        style: 'document',
+        url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+        portName: 'NumberConversionSoap12',
+        serviceName: 'NumberConversion'
+      });
+  });
 });
 
 describe('WSDL 1.1 parser getServicePortByBindingName', function() {
@@ -3291,25 +3502,22 @@ describe('WSDL 1.1 parser getServicePortByBindingName', function() {
     }
   });
 
-  it('should throw an error when services is null', function() {
-    try {
-      parser.getServicePortByBindingName('somename', null, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from undefined or null object');
-    }
+  it('should return undefined when services is null', function() {
+    let wsdlObject = new WsdlObject(),
+      servicePort = parser.getServicePortByBindingName('somename', null, 'principal prefix', wsdlObject);
+    expect(servicePort).to.be.equal(undefined);
+    expect(wsdlObject.log.errors).to
+      .contain(DOC_HAS_NO_SERVICE_MESSAGE);
   });
 
-  it('should throw an error when services is undefined', function() {
-    try {
-      parser.getServicePortByBindingName('somename', undefined, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from undefined or null object');
-    }
+  it('should return undefined port type when services is undefined', function() {
+    let wsdlObject = new WsdlObject(),
+      servicePort = parser.getServicePortByBindingName('somename', undefined, 'principal prefix', wsdlObject);
+    expect(servicePort).to.be.equal(undefined);
+    expect(wsdlObject.log.errors).to
+      .contain(DOC_HAS_NO_SERVICE_MESSAGE);
   });
+
   it('should throw an error when services is an empty object', function() {
     try {
       parser.getServicePortByBindingName('somename', {}, 'principal prefix');
@@ -3537,24 +3745,16 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
     }
   });
 
-  it('should throw an error when services is null', function() {
-    try {
-      parser.getServiceByBindingName('somename', null, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from undefined or null object');
-    }
+  it('should get undefined when services is null', function() {
+    let service = parser.getServiceByBindingName('somename', null, 'principal prefix');
+    expect(service).to.equal(undefined);
   });
 
-  it('should throw an error when services is undefined', function() {
-    try {
-      parser.getServiceByBindingName('somename', undefined, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from undefined or null object');
-    }
+  it('should get undefined when services is undefined', function() {
+
+    let service = parser.getServiceByBindingName('somename', undefined, 'principal prefix');
+    expect(service).to.equal(undefined);
+
   });
 
   it('should throw an error when services is an empty object', function() {
@@ -3775,7 +3975,7 @@ describe('WSDL 1.1 parser getWsdlObject', function() {
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
         'SOAP12Namespace', 'schemaNamespace',
-        'tnsNamespace', 'allNameSpaces', 'fileName',
+        'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
         'operationsArray');
 
       expect(wsdlObject.allNameSpaces).to.be.an('array');
