@@ -1,3 +1,9 @@
+const {
+  HTTP_PROTOCOL,
+  SOAP12_PROTOCOL,
+  SOAP_PROTOCOL
+} = require('../../lib/Wsdl11Parser');
+
 const expect = require('chai').expect,
   assert = require('chai').assert,
   WsdlObject = require('../../lib/WsdlObject').WsdlObject,
@@ -5,6 +11,9 @@ const expect = require('chai').expect,
     Wsdl20Parser,
     WSDL_NS_URL
   } = require('../../lib/Wsdl20Parser'),
+  {
+    POST_METHOD
+  } = require('../../lib/utils/httpUtils'),
   {
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
   } = require('../../lib/WsdlParserCommon'),
@@ -817,6 +826,50 @@ describe('WSDL 2.0 parser assignOperations', function() {
     expect(wsdlObject).to.be.an('object');
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(3);
+
+  });
+
+  it('should assign operations to wsdl object assignlocation correctly http', function() {
+    const parser = new Wsdl20Parser();
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+
+    expect(wsdlObject).to.be.an('object');
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(3);
+
+
+    expect(wsdlObject.operationsArray[0]).to.be.an('object')
+      .and.to.include({
+        name: 'hi',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        url: 'http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap11Endpoint/',
+        portName: 'SayHelloHttpSoap11Endpoint',
+        serviceName: 'SayHello'
+      });
+
+    expect(wsdlObject.operationsArray[1]).to.be.an('object')
+      .and.to.include({
+        name: 'hi',
+        method: POST_METHOD,
+        protocol: SOAP12_PROTOCOL,
+        url: 'http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap12Endpoint/',
+        portName: 'SayHelloHttpSoap12Endpoint',
+        serviceName: 'SayHello'
+      });
+
+    expect(wsdlObject.operationsArray[2]).to.be.an('object')
+      .and.to.include({
+        name: 'hi',
+        method: POST_METHOD,
+        protocol: HTTP_PROTOCOL,
+        url: 'http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpEndpoint/hi',
+        portName: 'SayHelloHttpEndpoint',
+        serviceName: 'SayHello'
+      });
 
   });
 });

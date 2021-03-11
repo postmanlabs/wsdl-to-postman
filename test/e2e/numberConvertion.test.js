@@ -135,7 +135,7 @@ describe('Sanity tests', function() {
     Index.convert({
       type: 'string',
       data: fileContent
-    }, {}, (err, conversionResult) => {
+    }, { folderStrategy: 'No folders' }, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output[0].type).to.equal('collection');
