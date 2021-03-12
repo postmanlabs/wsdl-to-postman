@@ -15,15 +15,15 @@ const expect = require('chai').expect,
     host: ['{{url_variable_0}}'],
     query: [],
     variable: []
-  }
-header = [{
+  },
+  header = [{
     key: 'Content-Type',
     value: 'text/xml; charset=utf-8'
   }],
   defMethod = 'POST',
   reqBody = [{
-      mode: 'raw',
-      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+    mode: 'raw',
+    raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
         '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
         '  <soap:Body>\n' +
         '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -31,60 +31,60 @@ header = [{
         '    </NumberToWords>\n' +
         '  </soap:Body>\n' +
         '</soap:Envelope>\n',
-      options: {
-        raw: {
-          language: 'xml'
-        }
-      }
-    },
-    {
-      mode: 'raw',
-      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-        '  <soap:Body>\n' +
-        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-        '      <dNum>1</dNum>\n' +
-        '    </NumberToDollars>\n' +
-        '  </soap:Body>\n' +
-        '</soap:Envelope>\n',
-      options: {
-        raw: {
-          language: 'xml'
-        }
-      }
-    },
-    {
-      mode: 'raw',
-      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-        '  <soap12:Body>\n' +
-        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-        '      <ubiNum>18446744073709</ubiNum>\n' +
-        '    </NumberToWords>\n' +
-        '  </soap12:Body>\n' +
-        '</soap12:Envelope>\n',
-      options: {
-        raw: {
-          language: 'xml'
-        }
-      }
-    },
-    {
-      mode: 'raw',
-      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-        '  <soap12:Body>\n' +
-        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-        '      <dNum>1</dNum>\n' +
-        '    </NumberToDollars>\n' +
-        '  </soap12:Body>\n' +
-        '</soap12:Envelope>\n',
-      options: {
-        raw: {
-          language: 'xml'
-        }
+    options: {
+      raw: {
+        language: 'xml'
       }
     }
+  },
+  {
+    mode: 'raw',
+    raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
+    options: {
+      raw: {
+        language: 'xml'
+      }
+    }
+  },
+  {
+    mode: 'raw',
+    raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
+    options: {
+      raw: {
+        language: 'xml'
+      }
+    }
+  },
+  {
+    mode: 'raw',
+    raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
+    options: {
+      raw: {
+        language: 'xml'
+      }
+    }
+  }
   ],
   status = 'OK',
   code = 200,
@@ -96,7 +96,7 @@ header = [{
     '    </NumberToWordsResponse>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
-    '<?xml version="1.0" encoding="utf-8"?>\n' +
+  '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
     '  <soap:Body>\n' +
     '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -104,7 +104,7 @@ header = [{
     '    </NumberToDollarsResponse>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
-    '<?xml version="1.0" encoding="utf-8"?>\n' +
+  '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <NumberToWordsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -112,7 +112,7 @@ header = [{
     '    </NumberToWordsResponse>\n' +
     '  </soap12:Body>\n' +
     '</soap12:Envelope>\n',
-    '<?xml version="1.0" encoding="utf-8"?>\n' +
+  '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
