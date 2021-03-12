@@ -1,5 +1,8 @@
-module.exports = {
-	"parser": "@babel/eslint-parser",
+{
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaVersion": 2020
+	},
 	"plugins": [
 		"security",
 		"jsdoc",
@@ -9,14 +12,6 @@ module.exports = {
 		"browser": false,
 		"node":true,
 		"es2020": true
-	},
-	"plugins": [
-		"security",
-		"jsdoc",
-		"mocha"
-	],
-	"parserOptions": {
-		"ecmaVersion": 2020
 	},
 	"rules": {
 		// Possible Errors
@@ -268,4 +263,4 @@ module.exports = {
 		"mocha/no-top-level-hooks": 1,
 		"mocha/no-identical-title": 2
 	}
-};
+}
