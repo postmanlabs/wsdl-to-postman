@@ -238,43 +238,43 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements).to.be.a('array');
     expect(elements.length).to.eq(6);
 
-    expect(elements[4].name).to.equal('TestCustomModel');
-    expect(elements[4].isComplex).to.equal(true);
-    expect(elements[4].type).to.equal('complex');
-    expect(elements[4].minOccurs).to.equal('1');
-    expect(elements[4].maxOccurs).to.equal('1');
-    expect(elements[4].namespace).to.equal('http://tempuri.org/');
-    expect(elements[4].children).to.be.an('array');
+    expect(elements[5].name).to.equal('TestCustomModel');
+    expect(elements[5].isComplex).to.equal(true);
+    expect(elements[5].type).to.equal('complex');
+    expect(elements[5].minOccurs).to.equal('1');
+    expect(elements[5].maxOccurs).to.equal('1');
+    expect(elements[5].namespace).to.equal('http://tempuri.org/');
+    expect(elements[5].children).to.be.an('array');
 
-    expect(elements[4].children[0].name).to.equal('inputModel');
-    expect(elements[4].children[0].isComplex).to.equal(true);
-    expect(elements[4].children[0].type).to.equal('MyCustomModel');
-    expect(elements[4].children[0].children).to.be.an('array');
-    expect(elements[4].children[0].children.length).to.equal(3);
+    expect(elements[5].children[0].name).to.equal('inputModel');
+    expect(elements[5].children[0].isComplex).to.equal(true);
+    expect(elements[5].children[0].type).to.equal('MyCustomModel');
+    expect(elements[5].children[0].children).to.be.an('array');
+    expect(elements[5].children[0].children.length).to.equal(3);
 
-    expect(elements[4].children[0].children[0].name).to.equal('Id');
-    expect(elements[4].children[0].children[0].isComplex).to.equal(false);
-    expect(elements[4].children[0].children[0].type).to.equal('integer');
-    expect(elements[4].children[0].children[0].maximum).to.equal(2147483647);
-    expect(elements[4].children[0].children[0].minimum).to.equal(-2147483648);
-    expect(elements[4].children[0].children[0].children).to.be.an('array');
-    expect(elements[4].children[0].children[0].children).to.be.empty;
+    expect(elements[5].children[0].children[0].name).to.equal('Id');
+    expect(elements[5].children[0].children[0].isComplex).to.equal(false);
+    expect(elements[5].children[0].children[0].type).to.equal('integer');
+    expect(elements[5].children[0].children[0].maximum).to.equal(2147483647);
+    expect(elements[5].children[0].children[0].minimum).to.equal(-2147483648);
+    expect(elements[5].children[0].children[0].children).to.be.an('array');
+    expect(elements[5].children[0].children[0].children).to.be.empty;
 
-    expect(elements[4].children[0].children[1].name).to.equal('Name');
-    expect(elements[4].children[0].children[1].isComplex).to.equal(false);
-    expect(elements[4].children[0].children[1].type).to.equal('string');
-    expect(elements[4].children[0].children[1].minOccurs).to.equal('0');
-    expect(elements[4].children[0].children[1].maxOccurs).to.equal('1');
-    expect(elements[4].children[0].children[1].children).to.be.an('array');
-    expect(elements[4].children[0].children[1].children).to.be.empty;
+    expect(elements[5].children[0].children[1].name).to.equal('Name');
+    expect(elements[5].children[0].children[1].isComplex).to.equal(false);
+    expect(elements[5].children[0].children[1].type).to.equal('string');
+    expect(elements[5].children[0].children[1].minOccurs).to.equal('0');
+    expect(elements[5].children[0].children[1].maxOccurs).to.equal('1');
+    expect(elements[5].children[0].children[1].children).to.be.an('array');
+    expect(elements[5].children[0].children[1].children).to.be.empty;
 
-    expect(elements[4].children[0].children[2].name).to.equal('Email');
-    expect(elements[4].children[0].children[2].isComplex).to.equal(false);
-    expect(elements[4].children[0].children[2].type).to.equal('string');
-    expect(elements[4].children[0].children[2].minOccurs).to.equal('0');
-    expect(elements[4].children[0].children[2].maxOccurs).to.equal('1');
-    expect(elements[4].children[0].children[2].children).to.be.an('array');
-    expect(elements[4].children[0].children[2].children).to.be.empty;
+    expect(elements[5].children[0].children[2].name).to.equal('Email');
+    expect(elements[5].children[0].children[2].isComplex).to.equal(false);
+    expect(elements[5].children[0].children[2].type).to.equal('string');
+    expect(elements[5].children[0].children[2].minOccurs).to.equal('0');
+    expect(elements[5].children[0].children[2].maxOccurs).to.equal('1');
+    expect(elements[5].children[0].children[2].children).to.be.an('array');
+    expect(elements[5].children[0].children[2].children).to.be.empty;
   });
 
   it('should get an empty array when the input has no elements', function() {
@@ -576,45 +576,45 @@ describe('SchemaBuilderXSD getElements', function() {
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
-    expect(elements[0].name).to.equal('TestCustomModel');
-    expect(elements[0].isComplex).to.equal(true);
-    expect(elements[0].type).to.equal('complex');
-    expect(elements[0].minOccurs).to.equal('1');
-    expect(elements[0].maxOccurs).to.equal('1');
-    expect(elements[0].namespace).to.equal('http://tempuri.org/');
-    expect(elements[0].children).to.be.an('array');
+    expect(elements[1].name).to.equal('TestCustomModel');
+    expect(elements[1].isComplex).to.equal(true);
+    expect(elements[1].type).to.equal('complex');
+    expect(elements[1].minOccurs).to.equal('1');
+    expect(elements[1].maxOccurs).to.equal('1');
+    expect(elements[1].namespace).to.equal('http://tempuri.org/');
+    expect(elements[1].children).to.be.an('array');
 
-    expect(elements[0].children[0].name).to.equal('inputModel');
-    expect(elements[0].children[0].isComplex).to.equal(true);
-    expect(elements[0].children[0].type).to.equal('MyCustomModel');
-    expect(elements[0].children[0].minOccurs).to.equal('1');
-    expect(elements[0].children[0].maxOccurs).to.equal('1');
-    expect(elements[0].children[0].children).to.be.an('array');
-    expect(elements[0].children[0].children.length).to.equal(3);
+    expect(elements[1].children[0].name).to.equal('inputModel');
+    expect(elements[1].children[0].isComplex).to.equal(true);
+    expect(elements[1].children[0].type).to.equal('MyCustomModel');
+    expect(elements[1].children[0].minOccurs).to.equal('1');
+    expect(elements[1].children[0].maxOccurs).to.equal('1');
+    expect(elements[1].children[0].children).to.be.an('array');
+    expect(elements[1].children[0].children.length).to.equal(3);
 
-    expect(elements[0].children[0].children[0].name).to.equal('Id');
-    expect(elements[0].children[0].children[0].isComplex).to.equal(false);
-    expect(elements[0].children[0].children[0].type).to.equal('integer');
-    expect(elements[0].children[0].children[0].minOccurs).to.equal('1');
-    expect(elements[0].children[0].children[0].maxOccurs).to.equal('1');
-    expect(elements[0].children[0].children[0].children).to.be.an('array');
-    expect(elements[0].children[0].children[0].children).to.be.empty;
+    expect(elements[1].children[0].children[0].name).to.equal('Id');
+    expect(elements[1].children[0].children[0].isComplex).to.equal(false);
+    expect(elements[1].children[0].children[0].type).to.equal('integer');
+    expect(elements[1].children[0].children[0].minOccurs).to.equal('1');
+    expect(elements[1].children[0].children[0].maxOccurs).to.equal('1');
+    expect(elements[1].children[0].children[0].children).to.be.an('array');
+    expect(elements[1].children[0].children[0].children).to.be.empty;
 
-    expect(elements[0].children[0].children[1].name).to.equal('Name');
-    expect(elements[0].children[0].children[1].isComplex).to.equal(false);
-    expect(elements[0].children[0].children[1].type).to.equal('string');
-    expect(elements[0].children[0].children[1].minOccurs).to.equal('0');
-    expect(elements[0].children[0].children[1].maxOccurs).to.equal('1');
-    expect(elements[0].children[0].children[1].children).to.be.an('array');
-    expect(elements[0].children[0].children[1].children).to.be.empty;
+    expect(elements[1].children[0].children[1].name).to.equal('Name');
+    expect(elements[1].children[0].children[1].isComplex).to.equal(false);
+    expect(elements[1].children[0].children[1].type).to.equal('string');
+    expect(elements[1].children[0].children[1].minOccurs).to.equal('0');
+    expect(elements[1].children[0].children[1].maxOccurs).to.equal('1');
+    expect(elements[1].children[0].children[1].children).to.be.an('array');
+    expect(elements[1].children[0].children[1].children).to.be.empty;
 
-    expect(elements[0].children[0].children[2].name).to.equal('Email');
-    expect(elements[0].children[0].children[2].isComplex).to.equal(false);
-    expect(elements[0].children[0].children[2].type).to.equal('string');
-    expect(elements[0].children[0].children[2].minOccurs).to.equal('0');
-    expect(elements[0].children[0].children[2].maxOccurs).to.equal('1');
-    expect(elements[0].children[0].children[2].children).to.be.an('array');
-    expect(elements[0].children[0].children[2].children).to.be.empty;
+    expect(elements[1].children[0].children[2].name).to.equal('Email');
+    expect(elements[1].children[0].children[2].isComplex).to.equal(false);
+    expect(elements[1].children[0].children[2].type).to.equal('string');
+    expect(elements[1].children[0].children[2].minOccurs).to.equal('0');
+    expect(elements[1].children[0].children[2].maxOccurs).to.equal('1');
+    expect(elements[1].children[0].children[2].children).to.be.an('array');
+    expect(elements[1].children[0].children[2].children).to.be.empty;
   });
 
   it('should get an array of types with 1 root and 1 complex type Scenario 2', function() {
@@ -1294,6 +1294,116 @@ describe('SchemaBuilderXSD getElements', function() {
     let parsedXml = parser.parseFromXmlToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+    expect(elements[0].name).to.equal('PO');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('anonimous');
+    expect(elements[0].children[0].name).to.equal('enumType');
+    expect(elements[0].children[1].name).to.equal('MyCustomModel');
+
+  });
+
+  it('amazon', function() {
+    const simpleInput = `<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:tns="http://queue.amazonaws.com/doc/2009-02-01/" targetNamespace="http://queue.amazonaws.com/doc/2009-02-01/">
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://queue.amazonaws.com/doc/2009-02-01/" targetNamespace="http://queue.amazonaws.com/doc/2009-02-01/" elementFormDefault="qualified">
+            <!--  **************************** QueueService Interface ***************************  -->
+            <!--  CreateQueue Action  -->
+            <xs:element name="CreateQueue">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> The CreateQueue action creates a new queue, or returns the URL of an existing one. When you request CreateQueue, you provide a name for the queue. To successfully create a new queue, you must provide a name that is unique within the scope of your own queues. If you provide the name of an existing queue, a new queue isn't created and an error isn't returned. Instead, the request succeeds and the queue URL for the existing queue is returned. Exception: if you provide a value for DefaultVisibilityTimeout that is different from the value for the existing queue, you receive an error. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="QueueName" type="xs:string" />
+                        <xs:element name="DefaultVisibilityTimeout" type="xs:integer" minOccurs="0" />
+                        <xs:element ref="tns:Attribute" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!--  CreateQueue Action Response  -->
+            <xs:element name="CreateQueueResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="tns:CreateQueueResult" />
+                        <xs:element ref="tns:ResponseMetadata" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CreateQueueResult">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="QueueUrl" type="xs:anyURI" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+                        <xs:element name="ResponseMetadata">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RequestId" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <!--  ******************************** Messages *********************************  -->
+    <wsdl:message name="CreateQueueRequestMsg">
+        <wsdl:part name="body" element="tns:CreateQueue" />
+    </wsdl:message>
+    <wsdl:message name="CreateQueueResponseMsg">
+        <wsdl:part name="body" element="tns:CreateQueueResponse" />
+    </wsdl:message>
+    <!--  ********************************* Ports ***********************************  -->
+    <wsdl:portType name="QueueServicePortType">
+        <wsdl:operation name="CreateQueue">
+            <wsdl:documentation> The CreateQueue action creates a new queue, or returns the URL of an existing one. When you request CreateQueue, you provide a name for the queue. To successfully create a new queue, you must provide a name that is unique within the scope of your own queues. If you provide the name of an existing queue, a new queue isn't created and an error isn't returned. Instead, the request succeeds and the queue URL for the existing queue is returned. Exception: if you provide a value for DefaultVisibilityTimeout that is different from the value for the existing queue, you receive an error. </wsdl:documentation>
+            <wsdl:input message="tns:CreateQueueRequestMsg" wsa:Action="urn:CreateQueue" />
+            <wsdl:output message="tns:CreateQueueResponseMsg" wsa:Action="urn:CreateQueue:Response" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <!--  ******************************** Bindings **********************************  -->
+    <wsdl:binding name="QueueServiceBinding" type="tns:QueueServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="CreateQueue">
+            <soap:operation soapAction="CreateQueue" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <!--  ******************************** Service **********************************  -->
+    <wsdl:service name="QueueService">
+        <wsdl:documentation> Amazon Simple Queue Service (Amazon SQS) offers a reliable, highly scalable hosted queue for storing messages as they travel between computers. By using Amazon SQS, developers can simply move data between distributed application components performing different tasks, without losing messages or requiring each component to be always available. Amazon SQS works by exposing Amazon's web-scale messaging infrastructure as a web service. Any computer on the Internet can add or read messages without any installed software or special firewall configurations. Components of applications using Amazon SQS can run independently, and do not need to be on the same network, developed with the same technologies, or running at the same time. </wsdl:documentation>
+        <wsdl:port name="QueueServicePort" binding="tns:QueueServiceBinding">
+            <soap:address location="http://queue.amazonaws.com" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://queue.amazonaws.com/doc/2009-02-01/',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://queue.amazonaws.com/doc/2009-02-01/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
