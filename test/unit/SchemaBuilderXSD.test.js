@@ -1407,11 +1407,18 @@ describe('SchemaBuilderXSD getElements', function() {
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
-    expect(elements[0].name).to.equal('PO');
+    expect(elements[0].name).to.equal('CreateQueueResult');
     expect(elements[0].isComplex).to.equal(true);
-    expect(elements[0].type).to.equal('anonimous');
-    expect(elements[0].children[0].name).to.equal('enumType');
-    expect(elements[0].children[1].name).to.equal('MyCustomModel');
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].children[0].name).to.equal('QueueUrl');
+    expect(elements[0].children[0].type).to.equal('string');
+
+    expect(elements[2].name).to.equal('CreateQueueResponse');
+    expect(elements[2].type).to.equal('complex');
+    expect(elements[2].children[0].name).to.equal('CreateQueueResult');
+    expect(elements[2].children[0].isComplex).to.equal(true);
+    expect(elements[2].children[0].children[0].name).to.equal('QueueUrl');
+    expect(elements[2].children[0].children[0].type).to.equal('string');
 
   });
 
