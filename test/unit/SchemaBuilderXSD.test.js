@@ -1305,7 +1305,7 @@ describe('SchemaBuilderXSD getElements', function() {
 
   });
 
-  it('amazon', function() {
+  it('should get an array of elements when elements depend on other elements', function() {
     const simpleInput = `<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:tns="http://queue.amazonaws.com/doc/2009-02-01/" targetNamespace="http://queue.amazonaws.com/doc/2009-02-01/">
     <wsdl:types>
         <xs:schema xmlns:tns="http://queue.amazonaws.com/doc/2009-02-01/" targetNamespace="http://queue.amazonaws.com/doc/2009-02-01/" elementFormDefault="qualified">
