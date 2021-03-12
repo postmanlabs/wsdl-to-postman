@@ -1,0 +1,87 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing"
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:tns="http://queue.amazonaws.com/doc/2009-02-01/" targetNamespace="http://queue.amazonaws.com/doc/2009-02-01/">
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://queue.amazonaws.com/doc/2009-02-01/" targetNamespace="http://queue.amazonaws.com/doc/2009-02-01/" elementFormDefault="qualified">
+            <!--  **************************** QueueService Interface ***************************  -->
+            <!--  CreateQueue Action  -->
+            <xs:element name="CreateQueue">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> The CreateQueue action creates a new queue, or returns the URL of an existing one. When you request CreateQueue, you provide a name for the queue. To successfully create a new queue, you must provide a name that is unique within the scope of your own queues. If you provide the name of an existing queue, a new queue isn't created and an error isn't returned. Instead, the request succeeds and the queue URL for the existing queue is returned. Exception: if you provide a value for DefaultVisibilityTimeout that is different from the value for the existing queue, you receive an error. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="QueueName" type="xs:string" />
+                        <xs:element name="DefaultVisibilityTimeout" type="xs:integer" minOccurs="0" />
+                        <xs:element ref="tns:Attribute" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!--  CreateQueue Action Response  -->
+            <xs:element name="CreateQueueResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="tns:CreateQueueResult" />
+                        <xs:element ref="tns:ResponseMetadata" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CreateQueueResult">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="QueueUrl" type="xs:anyURI" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ResponseMetadata">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RequestId" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <!--  ******************************** Messages *********************************  -->
+    <wsdl:message name="CreateQueueRequestMsg">
+        <wsdl:part name="body" element="tns:CreateQueue" />
+    </wsdl:message>
+    <wsdl:message name="CreateQueueResponseMsg">
+        <wsdl:part name="body" element="tns:CreateQueueResponse" />
+    </wsdl:message>
+    <!--  ********************************* Ports ***********************************  -->
+    <wsdl:portType name="QueueServicePortType">
+        <wsdl:operation name="CreateQueue">
+            <wsdl:documentation> The CreateQueue action creates a new queue, or returns the URL of an existing one. When you request CreateQueue, you provide a name for the queue. To successfully create a new queue, you must provide a name that is unique within the scope of your own queues. If you provide the name of an existing queue, a new queue isn't created and an error isn't returned. Instead, the request succeeds and the queue URL for the existing queue is returned. Exception: if you provide a value for DefaultVisibilityTimeout that is different from the value for the existing queue, you receive an error. </wsdl:documentation>
+            <wsdl:input message="tns:CreateQueueRequestMsg" wsa:Action="urn:CreateQueue" />
+            <wsdl:output message="tns:CreateQueueResponseMsg" wsa:Action="urn:CreateQueue:Response" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!--  ******************************** Bindings **********************************  -->
+    <wsdl:binding name="QueueServiceBinding" type="tns:QueueServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="CreateQueue">
+            <soap:operation soapAction="CreateQueue" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!--  ******************************** Service **********************************  -->
+    <wsdl:service name="QueueService">
+        <wsdl:documentation> Amazon Simple Queue Service (Amazon SQS) offers a reliable, highly scalable hosted queue for storing messages as they travel between computers. By using Amazon SQS, developers can simply move data between distributed application components performing different tasks, without losing messages or requiring each component to be always available. Amazon SQS works by exposing Amazon's web-scale messaging infrastructure as a web service. Any computer on the Internet can add or read messages without any installed software or special firewall configurations. Components of applications using Amazon SQS can run independently, and do not need to be on the same network, developed with the same technologies, or running at the same time. </wsdl:documentation>
+        <wsdl:port name="QueueServicePort" binding="tns:QueueServiceBinding">
+            <soap:address location="http://queue.amazonaws.com" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

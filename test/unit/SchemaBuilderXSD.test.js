@@ -2,202 +2,14 @@ const expect = require('chai').expect,
   {
     SchemaBuilderXSD
   } = require('../../lib/utils/SchemaBuilderXSD'),
+  fs = require('fs'),
+  validSchemaFolder = 'test/data/schemaTest',
   {
     Wsdl11Parser
   } = require('../../lib/Wsdl11Parser'),
   {
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
-  } = require('../../lib/WsdlParserCommon'),
-  CORE_SCHEMA = `<xsd:schema elementFormDefault="qualified" xmlns:tns="http://tempuri.org/"
-    targetNamespace="http://tempuri.org/">
-<xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-<xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-<xsd:element name="Test">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:element name="TestResponse">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="TestResult" type="xsd:string" />
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:element name="XmlMethod">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="zapato">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:any processContents="lax" />
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:element name="XmlMethodResponse">
-    <xsd:complexType />
-</xsd:element>
-<xsd:element name="TestCustomModel">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:element name="TestCustomModelResponse">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:complexType name="MyCustomModel">
-    <xsd:sequence>
-        <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
-        <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
-        <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
-    </xsd:sequence>
-</xsd:complexType>
-</xsd:schema>`,
-  CORE_FILE_INPUT = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-   xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-   xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
-   xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
-   xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
-   xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
-   xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-   targetNamespace="http://tempuri.org/" name="ISampleService">
-<wsdl:types>
-    <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-        <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-        <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-        <xsd:element name="Test">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="TestResponse">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="TestResult" type="xsd:string" />
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="XmlMethod">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="zapato">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:any processContents="lax" />
-                            </xsd:sequence>
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="XmlMethodResponse">
-            <xsd:complexType />
-        </xsd:element>
-        <xsd:element name="TestCustomModel">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="TestCustomModelResponse">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:complexType name="MyCustomModel">
-            <xsd:sequence>
-                <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
-                <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
-                <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
-            </xsd:sequence>
-        </xsd:complexType>
-    </xsd:schema>
-</wsdl:types>
-<wsdl:message name="ISampleService_Test_InputMessage">
-    <wsdl:part name="parameters" element="tns:Test" />
-</wsdl:message>
-<wsdl:message name="ISampleService_Test_OutputMessage">
-    <wsdl:part name="parameters" element="tns:TestResponse" />
-</wsdl:message>
-<wsdl:message name="ISampleService_XmlMethod_InputMessage">
-    <wsdl:part name="parameters" element="tns:XmlMethod" />
-</wsdl:message>
-<wsdl:message name="ISampleService_XmlMethod_OutputMessage">
-    <wsdl:part name="parameters" element="tns:XmlMethodResponse" />
-</wsdl:message>
-<wsdl:message name="ISampleService_TestCustomModel_InputMessage">
-    <wsdl:part name="parameters" element="tns:TestCustomModel" />
-</wsdl:message>
-<wsdl:message name="ISampleService_TestCustomModel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:TestCustomModelResponse" />
-</wsdl:message>
-<wsdl:portType name="ISampleService">
-    <wsdl:operation name="Test">
-        <wsdl:input message="tns:ISampleService_Test_InputMessage" />
-        <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="XmlMethod">
-        <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
-        <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="TestCustomModel">
-        <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
-        <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
-    </wsdl:operation>
-</wsdl:portType>
-<wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="Test">
-        <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
-        <wsdl:input>
-            <soap:body use="literal" />
-        </wsdl:input>
-        <wsdl:output>
-            <soap:body use="literal" />
-        </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="XmlMethod">
-        <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
-        <wsdl:input>
-            <soap:body use="literal" />
-        </wsdl:input>
-        <wsdl:output>
-            <soap:body use="literal" />
-        </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="TestCustomModel">
-        <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
-        <wsdl:input>
-            <soap:body use="literal" />
-        </wsdl:input>
-        <wsdl:output>
-            <soap:body use="literal" />
-        </wsdl:output>
-    </wsdl:operation>
-</wsdl:binding>
-<wsdl:service name="ISampleService">
-    <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
-        <soap:address location="https://localhost:5001/Service.asmx" />
-    </wsdl:port>
-</wsdl:service>
-</wsdl:definitions>
-`;
+  } = require('../../lib/WsdlParserCommon');
 
 describe('SchemaBuilderXSD Constructor', function() {
   it('should get an object of the schema builder', function() {
@@ -210,7 +22,8 @@ describe('SchemaBuilderXSD Constructor', function() {
 describe('SchemaBuilderXSD parseSchema', function() {
   it('should get an object of the schema parsed', function() {
     const builder = new SchemaBuilderXSD(),
-      parsedSchema = builder.parseSchema(CORE_SCHEMA);
+      fileContent = fs.readFileSync(validSchemaFolder + '/coreSchema.wsdl', 'utf8'),
+      parsedSchema = builder.parseSchema(fileContent);
     expect(parsedSchema).to.be.a('object');
   });
 
@@ -232,7 +45,8 @@ describe('SchemaBuilderXSD getElements', function() {
         url: 'http://tempuri.org/',
         isDefault: false
       },
-      parsedXml = parser.parseFromXmlToObject(CORE_FILE_INPUT),
+      fileContent = fs.readFileSync(validSchemaFolder + '/coreFileInput.wsdl', 'utf8'),
+      parsedXml = parser.parseFromXmlToObject(fileContent),
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace,
         thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.a('array');
@@ -389,46 +203,7 @@ describe('SchemaBuilderXSD getElements', function() {
   });
 
   it('should get an array of types with 4 root and 1 child per root', function() {
-    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
-      <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
-      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-      <types>
-      <xs:schema elementFormDefault="qualified" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-        <xs:element name="NumberToWords">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="ubiNum" type="xs:unsignedLong"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="NumberToWordsResponse">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="NumberToWordsResult" type="xs:string"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="NumberToDollars">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="dNum" type="xs:decimal"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="NumberToDollarsResponse">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="NumberToDollarsResult" type="xs:string"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:schema>
-    </types>
-      </definitions>`,
+    const simpleInput = fs.readFileSync(validSchemaFolder + '/4Root1ChildPerRoot.wsdl', 'utf8'),
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xs',
@@ -515,48 +290,7 @@ describe('SchemaBuilderXSD getElements', function() {
   });
 
   it('should get an array of types with 1 root and 1 complex type', function() {
-    const simpleInput = `<wsdl:definitions
-       xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-       xmlns:tns="http://tempuri.org/" 
-       xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-       xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
-       xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
-       xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
-       xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
-       xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
-       xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-       targetNamespace="http://tempuri.org/" 
-       name="ISampleService">
-       <wsdl:types>
-       <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-           <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-           <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-           <xsd:element name="TestCustomModel">
-               <xsd:complexType>
-                   <xsd:sequence>
-                       <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
-                   </xsd:sequence>
-               </xsd:complexType>
-           </xsd:element>
-           <xsd:element name="TestCustomModelResponse">
-               <xsd:complexType>
-                   <xsd:sequence>
-                       <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" 
-                       type="tns:MyCustomModel" />
-                   </xsd:sequence>
-               </xsd:complexType>
-           </xsd:element>
-           <xsd:complexType name="MyCustomModel">
-               <xsd:sequence>
-                   <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
-                   <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
-                   <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
-               </xsd:sequence>
-           </xsd:complexType>
-       </xsd:schema>
-   </wsdl:types>
-  </wsdl:definitions>
-  `,
+    const simpleInput = fs.readFileSync(validSchemaFolder + '/1Root1Complextype.wsdl', 'utf8'),
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xsd',
@@ -1306,87 +1040,8 @@ describe('SchemaBuilderXSD getElements', function() {
   });
 
   it('should get an array of elements when elements depend on other elements', function() {
-    const simpleInput = `<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:tns="http://queue.amazonaws.com/doc/2009-02-01/" targetNamespace="http://queue.amazonaws.com/doc/2009-02-01/">
-    <wsdl:types>
-        <xs:schema xmlns:tns="http://queue.amazonaws.com/doc/2009-02-01/" targetNamespace="http://queue.amazonaws.com/doc/2009-02-01/" elementFormDefault="qualified">
-            <!--  **************************** QueueService Interface ***************************  -->
-            <!--  CreateQueue Action  -->
-            <xs:element name="CreateQueue">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en"> The CreateQueue action creates a new queue, or returns the URL of an existing one. When you request CreateQueue, you provide a name for the queue. To successfully create a new queue, you must provide a name that is unique within the scope of your own queues. If you provide the name of an existing queue, a new queue isn't created and an error isn't returned. Instead, the request succeeds and the queue URL for the existing queue is returned. Exception: if you provide a value for DefaultVisibilityTimeout that is different from the value for the existing queue, you receive an error. </xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="QueueName" type="xs:string" />
-                        <xs:element name="DefaultVisibilityTimeout" type="xs:integer" minOccurs="0" />
-                        <xs:element ref="tns:Attribute" minOccurs="0" maxOccurs="unbounded" />
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <!--  CreateQueue Action Response  -->
-            <xs:element name="CreateQueueResponse">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element ref="tns:CreateQueueResult" />
-                        <xs:element ref="tns:ResponseMetadata" />
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="CreateQueueResult">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="QueueUrl" type="xs:anyURI" />
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-                        <xs:element name="ResponseMetadata">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="RequestId" type="xs:string" />
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-        </xs:schema>
-    </wsdl:types>
-    <!--  ******************************** Messages *********************************  -->
-    <wsdl:message name="CreateQueueRequestMsg">
-        <wsdl:part name="body" element="tns:CreateQueue" />
-    </wsdl:message>
-    <wsdl:message name="CreateQueueResponseMsg">
-        <wsdl:part name="body" element="tns:CreateQueueResponse" />
-    </wsdl:message>
-    <!--  ********************************* Ports ***********************************  -->
-    <wsdl:portType name="QueueServicePortType">
-        <wsdl:operation name="CreateQueue">
-            <wsdl:documentation> The CreateQueue action creates a new queue, or returns the URL of an existing one. When you request CreateQueue, you provide a name for the queue. To successfully create a new queue, you must provide a name that is unique within the scope of your own queues. If you provide the name of an existing queue, a new queue isn't created and an error isn't returned. Instead, the request succeeds and the queue URL for the existing queue is returned. Exception: if you provide a value for DefaultVisibilityTimeout that is different from the value for the existing queue, you receive an error. </wsdl:documentation>
-            <wsdl:input message="tns:CreateQueueRequestMsg" wsa:Action="urn:CreateQueue" />
-            <wsdl:output message="tns:CreateQueueResponseMsg" wsa:Action="urn:CreateQueue:Response" />
-        </wsdl:operation>
-    </wsdl:portType>
-    
-    <!--  ******************************** Bindings **********************************  -->
-    <wsdl:binding name="QueueServiceBinding" type="tns:QueueServicePortType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
-        <wsdl:operation name="CreateQueue">
-            <soap:operation soapAction="CreateQueue" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-    </wsdl:binding>
-    
-    <!--  ******************************** Service **********************************  -->
-    <wsdl:service name="QueueService">
-        <wsdl:documentation> Amazon Simple Queue Service (Amazon SQS) offers a reliable, highly scalable hosted queue for storing messages as they travel between computers. By using Amazon SQS, developers can simply move data between distributed application components performing different tasks, without losing messages or requiring each component to be always available. Amazon SQS works by exposing Amazon's web-scale messaging infrastructure as a web service. Any computer on the Internet can add or read messages without any installed software or special firewall configurations. Components of applications using Amazon SQS can run independently, and do not need to be on the same network, developed with the same technologies, or running at the same time. </wsdl:documentation>
-        <wsdl:port name="QueueServicePort" binding="tns:QueueServiceBinding">
-            <soap:address location="http://queue.amazonaws.com" />
-        </wsdl:port>
-    </wsdl:service>
-</wsdl:definitions>
-`,
+    const
+      fileContent = fs.readFileSync(validSchemaFolder + '/elementsDependOnElements.wsdl', 'utf8'),
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xs',
@@ -1401,7 +1056,7 @@ describe('SchemaBuilderXSD getElements', function() {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseFromXmlToObject(fileContent),
 
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -1423,7 +1078,6 @@ describe('SchemaBuilderXSD getElements', function() {
   });
 
 });
-
 
 describe('SchemaBuilderXSD parseObjectToXML', function() {
   it('should get an error when the object sent is undefined', function() {
@@ -1485,48 +1139,9 @@ describe('SchemaBuilderXSD getTypes', function() {
   });
 });
 
-
 describe('replaceTagInSchema', function() {
-  const xml = `
-    <xsd:schema targetNamespace=“http://www.profixio.com/soap/services/getActivityByUser.php”>
-      <xsd:element name=“getActivityByUser”>
-          <xsd:complexType>
-              <xsd:sequence>
-                  <xsd:element name=“application_key” type=“xsd:string”/>
-                  <xsd:element name=“association” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“username” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“password” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“role” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“fromWeekNbr” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“toWeekNbr” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“fromDate” type=“xsd:date” nillable=“true”/>
-                  <xsd:element name=“toDate” type=“xsd:date” nillable=“true”/>
-              </xsd:sequence>
-          </xsd:complexType>
-      </xsd:element>
-      <xsd:complexType name=“userActivity”>
-          <xsd:all>
-              <xsd:element name=“activityID” type=“xsd:int” nillable=“true”/>
-              <xsd:element name=“registrationStatus” type=“xsd:int” nillable=“true”/>
-              <xsd:element name=“registrationStatusText” type=“xsd:int” nillable=“true”/>
-              <xsd:element name=“singleSession” type=“xsd:int” nillable=“true”/>
-              <xsd:element name=“singleSessionDate” type=“xsd:string” nillable=“true”/>
-          </xsd:all>
-      </xsd:complexType>
-      <xsd:complexType name=“ArrayOfUserActivity”>
-          <xsd:sequence>
-              <xsd:element name=“item” type=“tns:userActivity” minOccurs=“0" maxOccurs=“unbounded”/>
-          </xsd:sequence>
-      </xsd:complexType>
-      <xsd:element name=“getActivityByUserResponse”>
-          <xsd:complexType>
-              <xsd:sequence>
-                  <xsd:element name=“getActivityByUserResult” type=“tns:ArrayOfUserActivity”/>
-              </xsd:sequence>
-          </xsd:complexType>
-      </xsd:element>
-    </xsd:schema>
-    `,
+  const
+    fileContent = fs.readFileSync(validSchemaFolder + '/replaceAllToSequence.wsdl', 'utf8'),
     schemaNameSpace = {
       key: 'xsd',
       prefixFilter: 'xsd:',
@@ -1536,7 +1151,7 @@ describe('replaceTagInSchema', function() {
 
   it('Should switch all tags in document with sequence tags', function() {
     const schemaBuilder = new SchemaBuilderXSD(),
-      result = schemaBuilder.replaceTagInSchema(xml, schemaNameSpace, 'all', 'sequence');
+      result = schemaBuilder.replaceTagInSchema(fileContent, schemaNameSpace, 'all', 'sequence');
     expect(result.includes('<xsd:all>')).to.equal(false);
   });
 });

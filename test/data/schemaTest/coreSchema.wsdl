@@ -1,0 +1,56 @@
+<xsd:schema elementFormDefault="qualified"
+    xmlns:tns="http://tempuri.org/" targetNamespace="http://tempuri.org/">
+    <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+    <xsd:element name="Test">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="TestResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="1" name="TestResult" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="XmlMethod">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="1" name="zapato">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:any processContents="lax" />
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="XmlMethodResponse">
+        <xsd:complexType />
+    </xsd:element>
+    <xsd:element name="TestCustomModel">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="TestCustomModelResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="MyCustomModel">
+        <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
