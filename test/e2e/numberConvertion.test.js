@@ -11,19 +11,19 @@ const expect = require('chai').expect,
   ],
   descType = 'text/plain',
   url = {
-    path: ['NumberConversion.wso'],
-    host: ['{{url_variable_0}}webservicesserver'],
+    path: ['', 'webservicesserver', 'NumberConversion.wso'],
+    host: ['{{url_variable_0}}'],
     query: [],
     variable: []
-  },
-  header = [{
+  }
+header = [{
     key: 'Content-Type',
     value: 'text/xml; charset=utf-8'
   }],
   defMethod = 'POST',
   reqBody = [{
-    mode: 'raw',
-    raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
         '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
         '  <soap:Body>\n' +
         '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -31,15 +31,15 @@ const expect = require('chai').expect,
         '    </NumberToWords>\n' +
         '  </soap:Body>\n' +
         '</soap:Envelope>\n',
-    options: {
-      raw: {
-        language: 'xml'
+      options: {
+        raw: {
+          language: 'xml'
+        }
       }
-    }
-  },
-  {
-    mode: 'raw',
-    raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
         '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
         '  <soap:Body>\n' +
         '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -47,15 +47,15 @@ const expect = require('chai').expect,
         '    </NumberToDollars>\n' +
         '  </soap:Body>\n' +
         '</soap:Envelope>\n',
-    options: {
-      raw: {
-        language: 'xml'
+      options: {
+        raw: {
+          language: 'xml'
+        }
       }
-    }
-  },
-  {
-    mode: 'raw',
-    raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
         '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
         '  <soap12:Body>\n' +
         '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -63,15 +63,15 @@ const expect = require('chai').expect,
         '    </NumberToWords>\n' +
         '  </soap12:Body>\n' +
         '</soap12:Envelope>\n',
-    options: {
-      raw: {
-        language: 'xml'
+      options: {
+        raw: {
+          language: 'xml'
+        }
       }
-    }
-  },
-  {
-    mode: 'raw',
-    raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
         '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
         '  <soap12:Body>\n' +
         '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -79,12 +79,12 @@ const expect = require('chai').expect,
         '    </NumberToDollars>\n' +
         '  </soap12:Body>\n' +
         '</soap12:Envelope>\n',
-    options: {
-      raw: {
-        language: 'xml'
+      options: {
+        raw: {
+          language: 'xml'
+        }
       }
     }
-  }
   ],
   status = 'OK',
   code = 200,
@@ -96,7 +96,7 @@ const expect = require('chai').expect,
     '    </NumberToWordsResponse>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
-  '<?xml version="1.0" encoding="utf-8"?>\n' +
+    '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
     '  <soap:Body>\n' +
     '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -104,7 +104,7 @@ const expect = require('chai').expect,
     '    </NumberToDollarsResponse>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
-  '<?xml version="1.0" encoding="utf-8"?>\n' +
+    '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <NumberToWordsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -112,7 +112,7 @@ const expect = require('chai').expect,
     '    </NumberToWordsResponse>\n' +
     '  </soap12:Body>\n' +
     '</soap12:Envelope>\n',
-  '<?xml version="1.0" encoding="utf-8"?>\n' +
+    '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -135,7 +135,9 @@ describe('Sanity tests', function() {
     Index.convert({
       type: 'string',
       data: fileContent
-    }, { folderStrategy: 'No folders' }, (err, conversionResult) => {
+    }, {
+      folderStrategy: 'No folders'
+    }, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output[0].type).to.equal('collection');
