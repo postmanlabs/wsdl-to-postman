@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getTournamentReferees.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentReferees" targetNamespace="http://www.profixio.com/soap/services/getTournamentReferees.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getTournamentReferees.php">
+            <xsd:complexType name="ClubKey">
+                <xsd:sequence>
+                    <xsd:element name="club_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_licence" type="xsd:string" nillable="true"/>
+                    <xsd:element name="application_key" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getTournamentReferees">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ClubKey" type="tns:ClubKey"/>
+                        <xsd:element name="TournamentId" type="xsd:int" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="Referee">
+                <xsd:sequence>
+                    <xsd:element name="referee_club_id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="dommer_lagid" type="xsd:int" nillable="true"/>
+                    <xsd:element name="name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="first_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="last_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="referee_number" type="xsd:string" nillable="true"/>
+                    <xsd:element name="email" type="xsd:string" nillable="true"/>
+                    <xsd:element name="street_adress" type="xsd:string" nillable="true"/>
+                    <xsd:element name="postal_code" type="xsd:string" nillable="true"/>
+                    <xsd:element name="postal_town" type="xsd:string" nillable="true"/>
+                    <xsd:element name="telephone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="mobile_phone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="referee_grade" type="xsd:string" nillable="true"/>
+                    <xsd:element name="referee_type" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_date" type="xsd:date" nillable="true"/>
+                    <xsd:element name="next_of_kin_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="next_of_kin_telephone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="allergy_disease" type="xsd:string" nillable="true"/>
+                    <xsd:element name="extrainfo" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfReferee">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:Referee" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getTournamentRefereesResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getTournamentRefereesResult" type="tns:ArrayOfReferee"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getTournamentRefereesPort">
+        <operation name="getTournamentReferees">
+            <documentation>Returns registered referees for a tournament.</documentation>
+            <input message="tns:getTournamentRefereesIn"/>
+            <output message="tns:getTournamentRefereesOut"/>
+        </operation>
+    </portType>
+    <binding name="getTournamentRefereesBinding" type="tns:getTournamentRefereesPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getTournamentReferees">
+            <soap:operation soapAction="http://www.profixio.com/soap/services/getTournamentReferees.php#getTournamentReferees"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getTournamentRefereesService">
+        <port name="getTournamentRefereesPort" binding="tns:getTournamentRefereesBinding">
+            <soap:address location="http://www.profixio.com/soap/services/getTournamentReferees.php"/>
+        </port>
+    </service>
+    <message name="getTournamentRefereesIn">
+        <part name="parameters" element="tns:getTournamentReferees"/>
+    </message>
+    <message name="getTournamentRefereesOut">
+        <part name="parameters" element="tns:getTournamentRefereesResponse"/>
+    </message>
+</definitions>

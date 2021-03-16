@@ -1,0 +1,89 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getActivityByType.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getActivityByType" targetNamespace="http://www.profixio.com/soap/services/getActivityByType.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getActivityByType.php">
+            <xsd:element name="getActivityByType">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="typeID" type="xsd:int" nillable="true"/>
+                        <xsd:element name="seasonID" type="xsd:int" nillable="true"/>
+                        <xsd:element name="association" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="Activity">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="subtype" type="xsd:string" nillable="true"/>
+                    <xsd:element name="description" type="xsd:string" nillable="true"/>
+                    <xsd:element name="fee" type="xsd:string" nillable="true"/>
+                    <xsd:element name="info" type="xsd:string" nillable="true"/>
+                    <xsd:element name="day" type="xsd:int" nillable="true"/>
+                    <xsd:element name="time" type="xsd:string" nillable="true"/>
+                    <xsd:element name="duration" type="xsd:string" nillable="true"/>
+                    <xsd:element name="fromdate" type="xsd:date" nillable="true"/>
+                    <xsd:element name="todate" type="xsd:date" nillable="true"/>
+                    <xsd:element name="break" type="xsd:string" nillable="true"/>
+                    <xsd:element name="nbroftimes" type="xsd:int" nillable="true"/>
+                    <xsd:element name="trialsession" type="xsd:int" nillable="true"/>
+                    <xsd:element name="instructor" type="xsd:string" nillable="true"/>
+                    <xsd:element name="facilityArea" type="xsd:string" nillable="true"/>
+                    <xsd:element name="facility" type="xsd:string" nillable="true"/>
+                    <xsd:element name="facilityAdress" type="xsd:string" nillable="true"/>
+                    <xsd:element name="faciltyPnbr" type="xsd:string" nillable="true"/>
+                    <xsd:element name="faciltyCity" type="xsd:string" nillable="true"/>
+                    <xsd:element name="singleSession" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfActivity">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:Activity" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getActivityByTypeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getActivityByTypeResult" type="tns:ArrayOfActivity"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getActivityByTypePort">
+        <operation name="getActivityByType">
+            <documentation>Used for Grouptraining only</documentation>
+            <input message="tns:getActivityByTypeIn"/>
+            <output message="tns:getActivityByTypeOut"/>
+        </operation>
+    </portType>
+    <binding name="getActivityByTypeBinding" type="tns:getActivityByTypePort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getActivityByType">
+            <soap:operation soapAction="http://www.profixio.com/soap/services/getActivityByType.php#getActivityByType"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getActivityByTypeService">
+        <port name="getActivityByTypePort" binding="tns:getActivityByTypeBinding">
+            <soap:address location="http://www.profixio.com/soap/services/getActivityByType.php"/>
+        </port>
+    </service>
+    <message name="getActivityByTypeIn">
+        <part name="parameters" element="tns:getActivityByType"/>
+    </message>
+    <message name="getActivityByTypeOut">
+        <part name="parameters" element="tns:getActivityByTypeResponse"/>
+    </message>
+</definitions>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getMatchDetails.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchDetails" targetNamespace="http://www.profixio.com/soap/services/getMatchDetails.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getMatchDetails.php">
+            <xsd:element name="getMatchDetails">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="matchId" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="DateTime">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:complexType name="MatchDetail">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="hometeamid" type="xsd:int" nillable="true"/>
+                    <xsd:element name="hometeamidname" type="xsd:string" nillable="true"/>
+                    <xsd:element name="guestteamid" type="xsd:int" nillable="true"/>
+                    <xsd:element name="guestteamname" type="xsd:string" nillable="true"/>
+                    <xsd:element name="matchdate" type="xsd:date" nillable="true"/>
+                    <xsd:element name="homegoal" type="xsd:int" nillable="true"/>
+                    <xsd:element name="guestgoal" type="xsd:int" nillable="true"/>
+                    <xsd:element name="status" type="xsd:int" nillable="true"/>
+                    <xsd:element name="UpdateTimeStamp" type="tns:DateTime" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfMatchDetail">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:MatchDetail" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getMatchDetailsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getMatchDetailsResult" type="tns:ArrayOfMatchDetail"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getMatchDetailsPort">
+        <operation name="getMatchDetails">
+            <documentation>Returns the details - including results - that belong to a match.</documentation>
+            <input message="tns:getMatchDetailsIn"/>
+            <output message="tns:getMatchDetailsOut"/>
+        </operation>
+    </portType>
+    <binding name="getMatchDetailsBinding" type="tns:getMatchDetailsPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getMatchDetails">
+            <soap:operation soapAction="http://www.profixio.com/soap/services/getMatchDetails.php#getMatchDetails"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getMatchDetailsService">
+        <port name="getMatchDetailsPort" binding="tns:getMatchDetailsBinding">
+            <soap:address location="http://www.profixio.com/soap/services/getMatchDetails.php"/>
+        </port>
+    </service>
+    <message name="getMatchDetailsIn">
+        <part name="parameters" element="tns:getMatchDetails"/>
+    </message>
+    <message name="getMatchDetailsOut">
+        <part name="parameters" element="tns:getMatchDetailsResponse"/>
+    </message>
+</definitions>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getTournamentsForClub.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentsForClub" targetNamespace="http://www.profixio.com/soap/services/getTournamentsForClub.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getTournamentsForClub.php">
+            <xsd:complexType name="ClubKey">
+                <xsd:sequence>
+                    <xsd:element name="club_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_licence" type="xsd:string" nillable="true"/>
+                    <xsd:element name="application_key" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getTournamentsForClub">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ClubKey" type="tns:ClubKey"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="Tournament">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="tournament_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="tournament_shortname" type="xsd:string" nillable="true"/>
+                    <xsd:element name="tournament_club" type="xsd:string" nillable="true"/>
+                    <xsd:element name="tournament_url" type="xsd:string" nillable="true"/>
+                    <xsd:element name="startdate" type="xsd:date" nillable="true"/>
+                    <xsd:element name="enddate" type="xsd:date" nillable="true"/>
+                    <xsd:element name="sportCode" type="xsd:string" nillable="true"/>
+                    <xsd:element name="countryCode" type="xsd:string" nillable="true"/>
+                    <xsd:element name="access_level" type="xsd:int" nillable="true"/>
+                    <xsd:element name="update_timestamp" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfTournament">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:Tournament" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getTournamentsForClubResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getTournamentsForClubResult" type="tns:ArrayOfTournament"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getTournamentsForClubPort">
+        <operation name="getTournamentsForClub">
+            <documentation>The club identifies itself with the ClubKey.</documentation>
+            <input message="tns:getTournamentsForClubIn"/>
+            <output message="tns:getTournamentsForClubOut"/>
+        </operation>
+    </portType>
+    <binding name="getTournamentsForClubBinding" type="tns:getTournamentsForClubPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getTournamentsForClub">
+            <soap:operation soapAction="http://www.profixio.com/soap/services/getTournamentsForClub.php#getTournamentsForClub"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getTournamentsForClubService">
+        <port name="getTournamentsForClubPort" binding="tns:getTournamentsForClubBinding">
+            <soap:address location="http://www.profixio.com/soap/services/getTournamentsForClub.php"/>
+        </port>
+    </service>
+    <message name="getTournamentsForClubIn">
+        <part name="parameters" element="tns:getTournamentsForClub"/>
+    </message>
+    <message name="getTournamentsForClubOut">
+        <part name="parameters" element="tns:getTournamentsForClubResponse"/>
+    </message>
+</definitions>

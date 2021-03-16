@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getSeasons.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getSeasons" targetNamespace="http://www.profixio.com/soap/services/getSeasons.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getSeasons.php">
+            <xsd:element name="getSeasons">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="association" type="xsd:string" nillable="true"/>
+                        <xsd:element name="sportID" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="Season">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="from_date" type="xsd:date" nillable="true"/>
+                    <xsd:element name="to_date" type="xsd:date" nillable="true"/>
+                    <xsd:element name="sport" type="xsd:string" nillable="true"/>
+                    <xsd:element name="active" type="xsd:string" nillable="true"/>
+                    <xsd:element name="singlesession" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfSeason">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:Season" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getSeasonsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getSeasonsResult" type="tns:ArrayOfSeason"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getSeasonsPort">
+        <operation name="getSeasons">
+            <documentation>Used by Associatons only</documentation>
+            <input message="tns:getSeasonsIn"/>
+            <output message="tns:getSeasonsOut"/>
+        </operation>
+    </portType>
+    <binding name="getSeasonsBinding" type="tns:getSeasonsPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getSeasons">
+            <soap:operation soapAction="http://www.profixio.com/soap/services/getSeasons.php#getSeasons"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getSeasonsService">
+        <port name="getSeasonsPort" binding="tns:getSeasonsBinding">
+            <soap:address location="http://www.profixio.com/soap/services/getSeasons.php"/>
+        </port>
+    </service>
+    <message name="getSeasonsIn">
+        <part name="parameters" element="tns:getSeasons"/>
+    </message>
+    <message name="getSeasonsOut">
+        <part name="parameters" element="tns:getSeasonsResponse"/>
+    </message>
+</definitions>

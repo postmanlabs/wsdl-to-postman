@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getLeagueTable.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getLeagueTable" targetNamespace="http://www.profixio.com/soap/services/getLeagueTable.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getLeagueTable.php">
+            <xsd:element name="getLeagueTable">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="competitionId" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="LeagueTable">
+                <xsd:sequence>
+                    <xsd:element name="SortOrder" type="xsd:int" nillable="true"/>
+                    <xsd:element name="TeamName" type="xsd:string" nillable="true"/>
+                    <xsd:element name="PlayedMatches" type="xsd:int" nillable="true"/>
+                    <xsd:element name="WonCount" type="xsd:int" nillable="true"/>
+                    <xsd:element name="DrawCount" type="xsd:int" nillable="true"/>
+                    <xsd:element name="LostCount" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Points" type="xsd:int" nillable="true"/>
+                    <xsd:element name="GoalDifference" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Expired" type="xsd:int" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfLeagueTable">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:LeagueTable" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getLeagueTableResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getLeagueTableResult" type="tns:ArrayOfLeagueTable"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getLeagueTablePort">
+        <operation name="getLeagueTable">
+            <documentation>Used by Associations only</documentation>
+            <input message="tns:getLeagueTableIn"/>
+            <output message="tns:getLeagueTableOut"/>
+        </operation>
+    </portType>
+    <binding name="getLeagueTableBinding" type="tns:getLeagueTablePort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getLeagueTable">
+            <soap:operation soapAction="http://www.profixio.com/soap/services/getLeagueTable.php#getLeagueTable"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getLeagueTableService">
+        <port name="getLeagueTablePort" binding="tns:getLeagueTableBinding">
+            <soap:address location="http://www.profixio.com/soap/services/getLeagueTable.php"/>
+        </port>
+    </service>
+    <message name="getLeagueTableIn">
+        <part name="parameters" element="tns:getLeagueTable"/>
+    </message>
+    <message name="getLeagueTableOut">
+        <part name="parameters" element="tns:getLeagueTableResponse"/>
+    </message>
+</definitions>
