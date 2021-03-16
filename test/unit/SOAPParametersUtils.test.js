@@ -14,6 +14,10 @@ const expect = require('chai').expect,
     }
   };
 
+jsonError = {
+  'error': 'Could not find element'
+};
+
 describe('ParametersUtils  constructor', function() {
   it('should get an object for the factory with empty input', function() {
     const parametersUtils = new SOAPParametersUtils();
@@ -79,6 +83,12 @@ describe('ParametersUtils parseObjectToXML', function() {
     catch (error) {
       expect(error.message).to.equal('Cannot convert undefined or null to object');
     }
+  });
+
+  it('should get an string representing the xml with error', function() {
+    const parametersUtils = new SOAPParametersUtils(),
+      xmlParameters = parametersUtils.parseObjectToXML(jsonError);
+    expect(xmlParameters).to.be.an('string');
   });
 });
 

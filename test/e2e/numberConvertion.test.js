@@ -11,8 +11,8 @@ const expect = require('chai').expect,
   ],
   descType = 'text/plain',
   url = {
-    path: ['NumberConversion.wso'],
-    host: ['{{url_variable_0}}webservicesserver'],
+    path: ['', 'webservicesserver', 'NumberConversion.wso'],
+    host: ['{{url_variable_0}}'],
     query: [],
     variable: []
   },
@@ -135,7 +135,9 @@ describe('Sanity tests', function() {
     Index.convert({
       type: 'string',
       data: fileContent
-    }, { folderStrategy: 'No folders' }, (err, conversionResult) => {
+    }, {
+      folderStrategy: 'No folders'
+    }, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output[0].type).to.equal('collection');

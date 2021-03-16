@@ -1,11 +1,17 @@
-const {
-  HTTP_PROTOCOL,
-  SOAP12_PROTOCOL,
-  SOAP_PROTOCOL
-} = require('../../lib/Wsdl11Parser');
-
 const expect = require('chai').expect,
+  {
+    HTTP_PROTOCOL,
+    SOAP12_PROTOCOL,
+    SOAP_PROTOCOL
+  } = require('../../lib/Wsdl11Parser'),
+  {
+    DOC_HAS_NO_SERVICE_MESSAGE,
+    DOC_HAS_NO_BINDIGS_MESSAGE,
+    DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,
+    DOC_HAS_NO_SERVICE_PORT_MESSAGE
+  } = require('../../lib/constants/messageConstants'),
   assert = require('chai').assert,
+  fs = require('fs'),
   WsdlObject = require('../../lib/WsdlObject').WsdlObject,
   {
     Wsdl20Parser,
@@ -17,6 +23,7 @@ const expect = require('chai').expect,
   {
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
   } = require('../../lib/WsdlParserCommon'),
+  specialCasesWSDLs = 'test/data/specialCases/wsdl2',
   WSDL_SAMPLE = `<?xml version="1.0" encoding="utf-8" ?>
   <description xmlns="http://www.w3.org/ns/wsdl" 
   targetNamespace="http://greath.example.com/2004/wsdl/resSvc" 
@@ -590,7 +597,7 @@ describe('WSDL 2.0 parser assignNamespaces', function() {
     expect(wsdlObject).to.have.all.keys('targetNamespace',
       'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
       'SOAP12Namespace', 'schemaNamespace',
-      'tnsNamespace', 'allNameSpaces', 'fileName',
+      'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
       'operationsArray');
 
     expect(wsdlObject.targetNamespace.url).to.equal('http://axis2.org');
@@ -611,7 +618,7 @@ describe('WSDL 2.0 parser getWsdlObject', function() {
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
         'SOAP12Namespace', 'schemaNamespace',
-        'tnsNamespace', 'allNameSpaces', 'fileName',
+        'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
         'operationsArray');
 
       expect(wsdlObject.allNameSpaces).to.be.an('array');
@@ -872,6 +879,79 @@ describe('WSDL 2.0 parser assignOperations', function() {
       });
 
   });
+
+  it('should assign operations to wsdl object when services is not in the file', function() {
+    const parser = new Wsdl20Parser(),
+      fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServicesTag.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(3);
+
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_MESSAGE))
+      .to.equal(true);
+
+    expect(wsdlObject.operationsArray[0]).to.be.an('object')
+      .and.to.include({
+        name: 'hi',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+  });
+
+  it('should assign operations empty object when bindings is not in the file', function() {
+    const parser = new Wsdl20Parser(),
+      fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsTags.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(0);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
+      .to.equal(true);
+  });
+
+  it('should assign operations empty object when bindings operations are not in the file', function() {
+    const parser = new Wsdl20Parser(),
+      fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsOperations.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(0);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
+      .to.equal(true);
+  });
+
+  it('should assign operations to wsdl object when services endpoints are not in the file', function() {
+    const parser = new Wsdl20Parser(),
+      fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServiceEndpoint.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(3);
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
+      .to.equal(true);
+
+    expect(wsdlObject.operationsArray[0]).to.be.an('object')
+      .and.to.include({
+        name: 'hi',
+        method: POST_METHOD,
+        protocol: SOAP_PROTOCOL,
+        url: '',
+        portName: '',
+        serviceName: ''
+      });
+  });
 });
 
 describe('WSDL 2.0 parser getServiceEndpointByBindingName', function() {
@@ -928,14 +1008,11 @@ describe('WSDL 2.0 parser getServiceEndpointByBindingName', function() {
   });
 
   it('should throw an error when services is null', function() {
-    try {
-      const parser = new Wsdl20Parser();
-      parser.getServiceEndpointByBindingName('bindingName', null, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service endpoint from undefined or null object');
-    }
+
+    const parser = new Wsdl20Parser();
+    let wsdlObject = new WsdlObject(),
+      serviceEndpoint = parser.getServiceEndpointByBindingName('bindingName', null, 'principal prefix', wsdlObject);
+    expect(serviceEndpoint).to.equal(undefined);
   });
 
   it('should throw an error when service enpdoint is not found', function() {
@@ -1095,7 +1172,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
 describe('WSDL 2.0 parser getDocumentationString', function() {
   it('should get the same when is called with string', function() {
     const parser = new Wsdl20Parser(),
-      documentation = parser.getDocumentationString('documentation');
+      documentation = parser.getDocumentationStringFromNode('documentation');
     expect(documentation).to.eq('documentation');
   });
 
@@ -1103,7 +1180,7 @@ describe('WSDL 2.0 parser getDocumentationString', function() {
     const parser = new Wsdl20Parser(),
       documentationNode = {};
     documentationNode['#text'] = 'documentation';
-    documentation = parser.getDocumentationString(documentationNode);
+    documentation = parser.getDocumentationStringFromNode(documentationNode);
     expect(documentation).to.eq('documentation');
   });
 });
@@ -1182,28 +1259,16 @@ describe('WSDL 2.0 parser  getServiceByBindingName', function() {
     }
   });
 
-  it('should throw an error when services is null', function() {
+  it('should return undefined when services is null', function() {
     const parser = new Wsdl20Parser();
-
-    try {
-      parser.getServiceByBindingName('somename', null, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from undefined or null object');
-    }
+    let service = parser.getServiceByBindingName('somename', null, 'principal prefix');
+    expect(service).to.be.equal(undefined);
   });
 
   it('should throw an error when services is undefined', function() {
     const parser = new Wsdl20Parser();
-
-    try {
-      parser.getServiceByBindingName('somename', undefined, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from undefined or null object');
-    }
+    let service = parser.getServiceByBindingName('somename', undefined, 'principal prefix');
+    expect(service).to.be.equal(undefined);
   });
 
   it('should throw an error when services is an empty object', function() {

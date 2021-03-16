@@ -43,7 +43,7 @@ describe('knownTypes getValueExample', function() {
 
   it('should get 200 when called with "number" min 200 max 250', function() {
     const element = new Element();
-    element.type = 'integer';
+    element.type = 'number';
     element.minimum = 200;
     element.maximum = 250;
     let example = getValueExample(element);
@@ -53,7 +53,7 @@ describe('knownTypes getValueExample', function() {
 
   it('should get 250 when called with "number" min undefined max 250', function() {
     const element = new Element();
-    element.type = 'integer';
+    element.type = 'number';
     element.minimum = undefined;
     element.maximum = 250;
     let example = getValueExample(element);
@@ -124,28 +124,28 @@ describe('knownTypes getValueExample', function() {
     expect(example).to.equal(true);
   });
 
-  it('should get true when called with decimal', function() {
+  it('should get 1 when called with decimal', function() {
     const element = new Element();
     element.type = 'decimal';
     let example = getValueExample(element);
     expect(example).to.equal(1);
   });
 
-  it('should get true when called with float', function() {
+  it('should get 1 when called with float', function() {
     const element = new Element();
     element.type = 'float';
     let example = getValueExample(element);
     expect(example).to.equal(1);
   });
 
-  it('should get true when called with double', function() {
+  it('should get 1 when called with double', function() {
     const element = new Element();
     element.type = 'double';
     let example = getValueExample(element);
     expect(example).to.equal(1);
   });
 
-  it('should get true when called with int', function() {
+  it('should get 1 when called with int', function() {
     const element = new Element();
     element.type = 'int';
     let example = getValueExample(element);
@@ -166,14 +166,14 @@ describe('knownTypes getValueExample', function() {
     expect(example).to.equal(1);
   });
 
-  it('should get true when called with unsignedInt', function() {
+  it('should get 1 when called with unsignedInt', function() {
     const element = new Element();
     element.type = 'unsignedInt';
     let example = getValueExample(element);
     expect(example).to.equal(1);
   });
 
-  it('should get true when called with unsignedLong', function() {
+  it('should get 1 when called with unsignedLong', function() {
     const element = new Element();
     element.type = 'unsignedLong';
     let example = getValueExample(element);
@@ -181,13 +181,29 @@ describe('knownTypes getValueExample', function() {
   });
 
 
-  it('should get true when called with unsignedShort', function() {
+  it('should get 1 when called with unsignedShort', function() {
     const element = new Element();
     element.type = 'unsignedShort';
     let example = getValueExample(element);
     expect(example).to.equal(1);
   });
 
+
+  it('should get true when called with date', function() {
+    const element = new Element();
+    element.type = 'string';
+    element.pattern = '-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]' +
+      '|[12][0-9]|3[01])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?';
+    let example = getValueExample(element);
+    expect(example).to.be.string;
+  });
+
+  it('should get default value when called with unknown type', function() {
+    const element = new Element();
+    element.type = 'unknown';
+    let example = getValueExample(element);
+    expect(example).to.equal('default value');
+  });
 
 });
 

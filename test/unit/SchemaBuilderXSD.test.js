@@ -1367,3 +1367,59 @@ describe('SchemaBuilderXSD getTypes', function() {
     }
   });
 });
+
+
+describe('replaceTagInSchema', function() {
+  const xml = `
+    <xsd:schema targetNamespace=“http://www.profixio.com/soap/services/getActivityByUser.php”>
+      <xsd:element name=“getActivityByUser”>
+          <xsd:complexType>
+              <xsd:sequence>
+                  <xsd:element name=“application_key” type=“xsd:string”/>
+                  <xsd:element name=“association” type=“xsd:string” nillable=“true”/>
+                  <xsd:element name=“username” type=“xsd:string” nillable=“true”/>
+                  <xsd:element name=“password” type=“xsd:string” nillable=“true”/>
+                  <xsd:element name=“role” type=“xsd:string” nillable=“true”/>
+                  <xsd:element name=“fromWeekNbr” type=“xsd:string” nillable=“true”/>
+                  <xsd:element name=“toWeekNbr” type=“xsd:string” nillable=“true”/>
+                  <xsd:element name=“fromDate” type=“xsd:date” nillable=“true”/>
+                  <xsd:element name=“toDate” type=“xsd:date” nillable=“true”/>
+              </xsd:sequence>
+          </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name=“userActivity”>
+          <xsd:all>
+              <xsd:element name=“activityID” type=“xsd:int” nillable=“true”/>
+              <xsd:element name=“registrationStatus” type=“xsd:int” nillable=“true”/>
+              <xsd:element name=“registrationStatusText” type=“xsd:int” nillable=“true”/>
+              <xsd:element name=“singleSession” type=“xsd:int” nillable=“true”/>
+              <xsd:element name=“singleSessionDate” type=“xsd:string” nillable=“true”/>
+          </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name=“ArrayOfUserActivity”>
+          <xsd:sequence>
+              <xsd:element name=“item” type=“tns:userActivity” minOccurs=“0" maxOccurs=“unbounded”/>
+          </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name=“getActivityByUserResponse”>
+          <xsd:complexType>
+              <xsd:sequence>
+                  <xsd:element name=“getActivityByUserResult” type=“tns:ArrayOfUserActivity”/>
+              </xsd:sequence>
+          </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    `,
+    schemaNameSpace = {
+      key: 'xsd',
+      prefixFilter: 'xsd:',
+      url: 'http://www.w3.org/2001/XMLSchema',
+      isDefault: false
+    };
+
+  it('Should switch all tags in document with sequence tags', function() {
+    const schemaBuilder = new SchemaBuilderXSD(),
+      result = schemaBuilder.replaceTagInSchema(xml, schemaNameSpace, 'all', 'sequence');
+    expect(result.includes('<xsd:all>')).to.equal(false);
+  });
+});

@@ -1,7 +1,10 @@
 const expect = require('chai').expect,
   {
     BFSSoapParametersHelper
-  } = require('../../lib/utils/BFSSoapParametersHelper');
+  } = require('../../lib/utils/BFSSoapParametersHelper'),
+  {
+    ERROR_ELEMENT_IDENTIFIER
+  } = require('../../lib/constants/processConstants');
 
 describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
   it('Should get a json object when NumberToWords->ubinum is sent', function() {
@@ -101,6 +104,45 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
       jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(undefined, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.be.empty;
+  });
+
+  it('Should get a json object indicating the error', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+      node = {
+        children: [],
+        name: ERROR_ELEMENT_IDENTIFIER,
+        isComplex: false,
+        type: ERROR_ELEMENT_IDENTIFIER,
+        namespace: ''
+      },
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+    expect(jsonObjectMessage).to.have.own.property(ERROR_ELEMENT_IDENTIFIER);
+  });
+
+  it('Should get a json object indicating the error from child', function() {
+    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+
+      child = {
+        children: [],
+        name: ERROR_ELEMENT_IDENTIFIER,
+        isComplex: false,
+        type: ERROR_ELEMENT_IDENTIFIER,
+        namespace: ''
+      },
+      node = {
+        children: [child],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
+    expect(jsonObjectMessage).to.have.own.property('soap:Envelope');
+    expect(jsonObjectMessage['soap:Envelope']).to.have.own.property('soap:Body');
+    expect(jsonObjectMessage['soap:Envelope']['soap:Body']).to.have.own.property('NumberToWords');
+    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords)
+      .to.have.own.property(ERROR_ELEMENT_IDENTIFIER);
   });
 
 });
