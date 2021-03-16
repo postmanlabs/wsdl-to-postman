@@ -10,16 +10,13 @@ const fs = require('fs'),
   {
     parseFromXmlToObject
   } = require('./../../lib/WsdlParserCommon'),
-  // validWSDLs = 'test/data/validWSDLs11';
-  validWSDLs = 'test/data/validWSDLs11/getTournamentDetails.wsdl';
+  validWSDLs = 'test/data/validWSDLs11';
 
 describe('Validating wsdlObject bodyMessages using validateOperationMessagesWithSchema function', function() {
-  //const WSDLsFiles = fs.readdirSync(validWSDLs);
-  //WSDLsFiles.forEach((file) => {
-    //it(`Should return an empty array when body messages matches with schema. ${file}`, function() {
-    it(`Should return an empty array when body messages matches with schema.`, function() {
-      //const xmlDocumentContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8'),
-      const xmlDocumentContent = fs.readFileSync(validWSDLs, 'utf8'),  
+  const WSDLsFiles = fs.readdirSync(validWSDLs);
+  WSDLsFiles.forEach((file) => {
+    it(`Should return an empty array when body messages matches with schema. ${file}`, function() {
+      const xmlDocumentContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8'),
         factory = new ParserFactory(),
         version = factory.getWsdlVersion(xmlDocumentContent),
         parser = factory.getParser(xmlDocumentContent),
@@ -29,8 +26,7 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
 
       let errors = validateOperationMessagesWithSchema(wsdlObject, schemaToValidate);
       expect(errors).to.be.an('array');
-      //expect(errors.length).to.be.equal(0);
-      console.log(errors);
+      expect(errors.length).to.be.equal(0);
     });
-  //});
+  });
 });
