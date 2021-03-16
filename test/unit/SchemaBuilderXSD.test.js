@@ -2,202 +2,14 @@ const expect = require('chai').expect,
   {
     SchemaBuilderXSD
   } = require('../../lib/utils/SchemaBuilderXSD'),
+  fs = require('fs'),
+  validSchemaFolder = 'test/data/schemaTest',
   {
     Wsdl11Parser
   } = require('../../lib/Wsdl11Parser'),
   {
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
-  } = require('../../lib/WsdlParserCommon'),
-  CORE_SCHEMA = `<xsd:schema elementFormDefault="qualified" xmlns:tns="http://tempuri.org/"
-    targetNamespace="http://tempuri.org/">
-<xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-<xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-<xsd:element name="Test">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:element name="TestResponse">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="TestResult" type="xsd:string" />
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:element name="XmlMethod">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="zapato">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:any processContents="lax" />
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:element name="XmlMethodResponse">
-    <xsd:complexType />
-</xsd:element>
-<xsd:element name="TestCustomModel">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:element name="TestCustomModelResponse">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
-<xsd:complexType name="MyCustomModel">
-    <xsd:sequence>
-        <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
-        <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
-        <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
-    </xsd:sequence>
-</xsd:complexType>
-</xsd:schema>`,
-  CORE_FILE_INPUT = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-   xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-   xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
-   xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
-   xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
-   xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
-   xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-   targetNamespace="http://tempuri.org/" name="ISampleService">
-<wsdl:types>
-    <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-        <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-        <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-        <xsd:element name="Test">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="TestResponse">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="TestResult" type="xsd:string" />
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="XmlMethod">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="zapato">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:any processContents="lax" />
-                            </xsd:sequence>
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="XmlMethodResponse">
-            <xsd:complexType />
-        </xsd:element>
-        <xsd:element name="TestCustomModel">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="TestCustomModelResponse">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" type="tns:MyCustomModel" />
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-        <xsd:complexType name="MyCustomModel">
-            <xsd:sequence>
-                <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
-                <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
-                <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
-            </xsd:sequence>
-        </xsd:complexType>
-    </xsd:schema>
-</wsdl:types>
-<wsdl:message name="ISampleService_Test_InputMessage">
-    <wsdl:part name="parameters" element="tns:Test" />
-</wsdl:message>
-<wsdl:message name="ISampleService_Test_OutputMessage">
-    <wsdl:part name="parameters" element="tns:TestResponse" />
-</wsdl:message>
-<wsdl:message name="ISampleService_XmlMethod_InputMessage">
-    <wsdl:part name="parameters" element="tns:XmlMethod" />
-</wsdl:message>
-<wsdl:message name="ISampleService_XmlMethod_OutputMessage">
-    <wsdl:part name="parameters" element="tns:XmlMethodResponse" />
-</wsdl:message>
-<wsdl:message name="ISampleService_TestCustomModel_InputMessage">
-    <wsdl:part name="parameters" element="tns:TestCustomModel" />
-</wsdl:message>
-<wsdl:message name="ISampleService_TestCustomModel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:TestCustomModelResponse" />
-</wsdl:message>
-<wsdl:portType name="ISampleService">
-    <wsdl:operation name="Test">
-        <wsdl:input message="tns:ISampleService_Test_InputMessage" />
-        <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="XmlMethod">
-        <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
-        <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="TestCustomModel">
-        <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
-        <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
-    </wsdl:operation>
-</wsdl:portType>
-<wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="Test">
-        <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
-        <wsdl:input>
-            <soap:body use="literal" />
-        </wsdl:input>
-        <wsdl:output>
-            <soap:body use="literal" />
-        </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="XmlMethod">
-        <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
-        <wsdl:input>
-            <soap:body use="literal" />
-        </wsdl:input>
-        <wsdl:output>
-            <soap:body use="literal" />
-        </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="TestCustomModel">
-        <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
-        <wsdl:input>
-            <soap:body use="literal" />
-        </wsdl:input>
-        <wsdl:output>
-            <soap:body use="literal" />
-        </wsdl:output>
-    </wsdl:operation>
-</wsdl:binding>
-<wsdl:service name="ISampleService">
-    <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
-        <soap:address location="https://localhost:5001/Service.asmx" />
-    </wsdl:port>
-</wsdl:service>
-</wsdl:definitions>
-`;
+  } = require('../../lib/WsdlParserCommon');
 
 describe('SchemaBuilderXSD Constructor', function() {
   it('should get an object of the schema builder', function() {
@@ -210,7 +22,8 @@ describe('SchemaBuilderXSD Constructor', function() {
 describe('SchemaBuilderXSD parseSchema', function() {
   it('should get an object of the schema parsed', function() {
     const builder = new SchemaBuilderXSD(),
-      parsedSchema = builder.parseSchema(CORE_SCHEMA);
+      fileContent = fs.readFileSync(validSchemaFolder + '/coreSchema.wsdl', 'utf8'),
+      parsedSchema = builder.parseSchema(fileContent);
     expect(parsedSchema).to.be.a('object');
   });
 
@@ -232,49 +45,50 @@ describe('SchemaBuilderXSD getElements', function() {
         url: 'http://tempuri.org/',
         isDefault: false
       },
-      parsedXml = parser.parseFromXmlToObject(CORE_FILE_INPUT),
+      fileContent = fs.readFileSync(validSchemaFolder + '/coreFileInput.wsdl', 'utf8'),
+      parsedXml = parser.parseFromXmlToObject(fileContent),
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace,
         thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.a('array');
     expect(elements.length).to.eq(6);
 
-    expect(elements[4].name).to.equal('TestCustomModel');
-    expect(elements[4].isComplex).to.equal(true);
-    expect(elements[4].type).to.equal('complex');
-    expect(elements[4].minOccurs).to.equal('1');
-    expect(elements[4].maxOccurs).to.equal('1');
-    expect(elements[4].namespace).to.equal('http://tempuri.org/');
-    expect(elements[4].children).to.be.an('array');
+    expect(elements[5].name).to.equal('TestCustomModel');
+    expect(elements[5].isComplex).to.equal(true);
+    expect(elements[5].type).to.equal('complex');
+    expect(elements[5].minOccurs).to.equal('1');
+    expect(elements[5].maxOccurs).to.equal('1');
+    expect(elements[5].namespace).to.equal('http://tempuri.org/');
+    expect(elements[5].children).to.be.an('array');
 
-    expect(elements[4].children[0].name).to.equal('inputModel');
-    expect(elements[4].children[0].isComplex).to.equal(true);
-    expect(elements[4].children[0].type).to.equal('MyCustomModel');
-    expect(elements[4].children[0].children).to.be.an('array');
-    expect(elements[4].children[0].children.length).to.equal(3);
+    expect(elements[5].children[0].name).to.equal('inputModel');
+    expect(elements[5].children[0].isComplex).to.equal(true);
+    expect(elements[5].children[0].type).to.equal('MyCustomModel');
+    expect(elements[5].children[0].children).to.be.an('array');
+    expect(elements[5].children[0].children.length).to.equal(3);
 
-    expect(elements[4].children[0].children[0].name).to.equal('Id');
-    expect(elements[4].children[0].children[0].isComplex).to.equal(false);
-    expect(elements[4].children[0].children[0].type).to.equal('integer');
-    expect(elements[4].children[0].children[0].maximum).to.equal(2147483647);
-    expect(elements[4].children[0].children[0].minimum).to.equal(-2147483648);
-    expect(elements[4].children[0].children[0].children).to.be.an('array');
-    expect(elements[4].children[0].children[0].children).to.be.empty;
+    expect(elements[5].children[0].children[0].name).to.equal('Id');
+    expect(elements[5].children[0].children[0].isComplex).to.equal(false);
+    expect(elements[5].children[0].children[0].type).to.equal('integer');
+    expect(elements[5].children[0].children[0].maximum).to.equal(2147483647);
+    expect(elements[5].children[0].children[0].minimum).to.equal(-2147483648);
+    expect(elements[5].children[0].children[0].children).to.be.an('array');
+    expect(elements[5].children[0].children[0].children).to.be.empty;
 
-    expect(elements[4].children[0].children[1].name).to.equal('Name');
-    expect(elements[4].children[0].children[1].isComplex).to.equal(false);
-    expect(elements[4].children[0].children[1].type).to.equal('string');
-    expect(elements[4].children[0].children[1].minOccurs).to.equal('0');
-    expect(elements[4].children[0].children[1].maxOccurs).to.equal('1');
-    expect(elements[4].children[0].children[1].children).to.be.an('array');
-    expect(elements[4].children[0].children[1].children).to.be.empty;
+    expect(elements[5].children[0].children[1].name).to.equal('Name');
+    expect(elements[5].children[0].children[1].isComplex).to.equal(false);
+    expect(elements[5].children[0].children[1].type).to.equal('string');
+    expect(elements[5].children[0].children[1].minOccurs).to.equal('0');
+    expect(elements[5].children[0].children[1].maxOccurs).to.equal('1');
+    expect(elements[5].children[0].children[1].children).to.be.an('array');
+    expect(elements[5].children[0].children[1].children).to.be.empty;
 
-    expect(elements[4].children[0].children[2].name).to.equal('Email');
-    expect(elements[4].children[0].children[2].isComplex).to.equal(false);
-    expect(elements[4].children[0].children[2].type).to.equal('string');
-    expect(elements[4].children[0].children[2].minOccurs).to.equal('0');
-    expect(elements[4].children[0].children[2].maxOccurs).to.equal('1');
-    expect(elements[4].children[0].children[2].children).to.be.an('array');
-    expect(elements[4].children[0].children[2].children).to.be.empty;
+    expect(elements[5].children[0].children[2].name).to.equal('Email');
+    expect(elements[5].children[0].children[2].isComplex).to.equal(false);
+    expect(elements[5].children[0].children[2].type).to.equal('string');
+    expect(elements[5].children[0].children[2].minOccurs).to.equal('0');
+    expect(elements[5].children[0].children[2].maxOccurs).to.equal('1');
+    expect(elements[5].children[0].children[2].children).to.be.an('array');
+    expect(elements[5].children[0].children[2].children).to.be.empty;
   });
 
   it('should get an empty array when the input has no elements', function() {
@@ -389,46 +203,7 @@ describe('SchemaBuilderXSD getElements', function() {
   });
 
   it('should get an array of types with 4 root and 1 child per root', function() {
-    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
-      <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
-      xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-      xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-      xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-      <types>
-      <xs:schema elementFormDefault="qualified" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-        <xs:element name="NumberToWords">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="ubiNum" type="xs:unsignedLong"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="NumberToWordsResponse">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="NumberToWordsResult" type="xs:string"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="NumberToDollars">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="dNum" type="xs:decimal"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="NumberToDollarsResponse">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="NumberToDollarsResult" type="xs:string"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:schema>
-    </types>
-      </definitions>`,
+    const simpleInput = fs.readFileSync(validSchemaFolder + '/4Root1ChildPerRoot.wsdl', 'utf8'),
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xs',
@@ -515,48 +290,7 @@ describe('SchemaBuilderXSD getElements', function() {
   });
 
   it('should get an array of types with 1 root and 1 complex type', function() {
-    const simpleInput = `<wsdl:definitions
-       xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-       xmlns:tns="http://tempuri.org/" 
-       xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-       xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
-       xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
-       xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
-       xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
-       xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
-       xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-       targetNamespace="http://tempuri.org/" 
-       name="ISampleService">
-       <wsdl:types>
-       <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-           <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-           <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-           <xsd:element name="TestCustomModel">
-               <xsd:complexType>
-                   <xsd:sequence>
-                       <xsd:element minOccurs="0" maxOccurs="1" name="inputModel" type="tns:MyCustomModel" />
-                   </xsd:sequence>
-               </xsd:complexType>
-           </xsd:element>
-           <xsd:element name="TestCustomModelResponse">
-               <xsd:complexType>
-                   <xsd:sequence>
-                       <xsd:element minOccurs="0" maxOccurs="1" name="TestCustomModelResult" 
-                       type="tns:MyCustomModel" />
-                   </xsd:sequence>
-               </xsd:complexType>
-           </xsd:element>
-           <xsd:complexType name="MyCustomModel">
-               <xsd:sequence>
-                   <xsd:element minOccurs="1" maxOccurs="1" name="Id" type="xsd:int" />
-                   <xsd:element minOccurs="0" maxOccurs="1" name="Name" type="xsd:string" />
-                   <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
-               </xsd:sequence>
-           </xsd:complexType>
-       </xsd:schema>
-   </wsdl:types>
-  </wsdl:definitions>
-  `,
+    const simpleInput = fs.readFileSync(validSchemaFolder + '/1Root1Complextype.wsdl', 'utf8'),
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
         key: 'xsd',
@@ -576,45 +310,45 @@ describe('SchemaBuilderXSD getElements', function() {
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
-    expect(elements[0].name).to.equal('TestCustomModel');
-    expect(elements[0].isComplex).to.equal(true);
-    expect(elements[0].type).to.equal('complex');
-    expect(elements[0].minOccurs).to.equal('1');
-    expect(elements[0].maxOccurs).to.equal('1');
-    expect(elements[0].namespace).to.equal('http://tempuri.org/');
-    expect(elements[0].children).to.be.an('array');
+    expect(elements[1].name).to.equal('TestCustomModel');
+    expect(elements[1].isComplex).to.equal(true);
+    expect(elements[1].type).to.equal('complex');
+    expect(elements[1].minOccurs).to.equal('1');
+    expect(elements[1].maxOccurs).to.equal('1');
+    expect(elements[1].namespace).to.equal('http://tempuri.org/');
+    expect(elements[1].children).to.be.an('array');
 
-    expect(elements[0].children[0].name).to.equal('inputModel');
-    expect(elements[0].children[0].isComplex).to.equal(true);
-    expect(elements[0].children[0].type).to.equal('MyCustomModel');
-    expect(elements[0].children[0].minOccurs).to.equal('1');
-    expect(elements[0].children[0].maxOccurs).to.equal('1');
-    expect(elements[0].children[0].children).to.be.an('array');
-    expect(elements[0].children[0].children.length).to.equal(3);
+    expect(elements[1].children[0].name).to.equal('inputModel');
+    expect(elements[1].children[0].isComplex).to.equal(true);
+    expect(elements[1].children[0].type).to.equal('MyCustomModel');
+    expect(elements[1].children[0].minOccurs).to.equal('1');
+    expect(elements[1].children[0].maxOccurs).to.equal('1');
+    expect(elements[1].children[0].children).to.be.an('array');
+    expect(elements[1].children[0].children.length).to.equal(3);
 
-    expect(elements[0].children[0].children[0].name).to.equal('Id');
-    expect(elements[0].children[0].children[0].isComplex).to.equal(false);
-    expect(elements[0].children[0].children[0].type).to.equal('integer');
-    expect(elements[0].children[0].children[0].minOccurs).to.equal('1');
-    expect(elements[0].children[0].children[0].maxOccurs).to.equal('1');
-    expect(elements[0].children[0].children[0].children).to.be.an('array');
-    expect(elements[0].children[0].children[0].children).to.be.empty;
+    expect(elements[1].children[0].children[0].name).to.equal('Id');
+    expect(elements[1].children[0].children[0].isComplex).to.equal(false);
+    expect(elements[1].children[0].children[0].type).to.equal('integer');
+    expect(elements[1].children[0].children[0].minOccurs).to.equal('1');
+    expect(elements[1].children[0].children[0].maxOccurs).to.equal('1');
+    expect(elements[1].children[0].children[0].children).to.be.an('array');
+    expect(elements[1].children[0].children[0].children).to.be.empty;
 
-    expect(elements[0].children[0].children[1].name).to.equal('Name');
-    expect(elements[0].children[0].children[1].isComplex).to.equal(false);
-    expect(elements[0].children[0].children[1].type).to.equal('string');
-    expect(elements[0].children[0].children[1].minOccurs).to.equal('0');
-    expect(elements[0].children[0].children[1].maxOccurs).to.equal('1');
-    expect(elements[0].children[0].children[1].children).to.be.an('array');
-    expect(elements[0].children[0].children[1].children).to.be.empty;
+    expect(elements[1].children[0].children[1].name).to.equal('Name');
+    expect(elements[1].children[0].children[1].isComplex).to.equal(false);
+    expect(elements[1].children[0].children[1].type).to.equal('string');
+    expect(elements[1].children[0].children[1].minOccurs).to.equal('0');
+    expect(elements[1].children[0].children[1].maxOccurs).to.equal('1');
+    expect(elements[1].children[0].children[1].children).to.be.an('array');
+    expect(elements[1].children[0].children[1].children).to.be.empty;
 
-    expect(elements[0].children[0].children[2].name).to.equal('Email');
-    expect(elements[0].children[0].children[2].isComplex).to.equal(false);
-    expect(elements[0].children[0].children[2].type).to.equal('string');
-    expect(elements[0].children[0].children[2].minOccurs).to.equal('0');
-    expect(elements[0].children[0].children[2].maxOccurs).to.equal('1');
-    expect(elements[0].children[0].children[2].children).to.be.an('array');
-    expect(elements[0].children[0].children[2].children).to.be.empty;
+    expect(elements[1].children[0].children[2].name).to.equal('Email');
+    expect(elements[1].children[0].children[2].isComplex).to.equal(false);
+    expect(elements[1].children[0].children[2].type).to.equal('string');
+    expect(elements[1].children[0].children[2].minOccurs).to.equal('0');
+    expect(elements[1].children[0].children[2].maxOccurs).to.equal('1');
+    expect(elements[1].children[0].children[2].children).to.be.an('array');
+    expect(elements[1].children[0].children[2].children).to.be.empty;
   });
 
   it('should get an array of types with 1 root and 1 complex type Scenario 2', function() {
@@ -1305,8 +1039,45 @@ describe('SchemaBuilderXSD getElements', function() {
 
   });
 
-});
+  it('should get an array of elements when elements depend on other elements', function() {
+    const
+      fileContent = fs.readFileSync(validSchemaFolder + '/elementsDependOnElements.wsdl', 'utf8'),
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://queue.amazonaws.com/doc/2009-02-01/',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://queue.amazonaws.com/doc/2009-02-01/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseFromXmlToObject(fileContent),
 
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+    expect(elements[0].name).to.equal('CreateQueueResult');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].children[0].name).to.equal('QueueUrl');
+    expect(elements[0].children[0].type).to.equal('string');
+
+    expect(elements[2].name).to.equal('CreateQueueResponse');
+    expect(elements[2].type).to.equal('complex');
+    expect(elements[2].children[0].name).to.equal('CreateQueueResult');
+    expect(elements[2].children[0].isComplex).to.equal(true);
+    expect(elements[2].children[0].children[0].name).to.equal('QueueUrl');
+    expect(elements[2].children[0].children[0].type).to.equal('string');
+
+  });
+
+});
 
 describe('SchemaBuilderXSD parseObjectToXML', function() {
   it('should get an error when the object sent is undefined', function() {
@@ -1368,48 +1139,9 @@ describe('SchemaBuilderXSD getTypes', function() {
   });
 });
 
-
 describe('replaceTagInSchema', function() {
-  const xml = `
-    <xsd:schema targetNamespace=“http://www.profixio.com/soap/services/getActivityByUser.php”>
-      <xsd:element name=“getActivityByUser”>
-          <xsd:complexType>
-              <xsd:sequence>
-                  <xsd:element name=“application_key” type=“xsd:string”/>
-                  <xsd:element name=“association” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“username” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“password” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“role” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“fromWeekNbr” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“toWeekNbr” type=“xsd:string” nillable=“true”/>
-                  <xsd:element name=“fromDate” type=“xsd:date” nillable=“true”/>
-                  <xsd:element name=“toDate” type=“xsd:date” nillable=“true”/>
-              </xsd:sequence>
-          </xsd:complexType>
-      </xsd:element>
-      <xsd:complexType name=“userActivity”>
-          <xsd:all>
-              <xsd:element name=“activityID” type=“xsd:int” nillable=“true”/>
-              <xsd:element name=“registrationStatus” type=“xsd:int” nillable=“true”/>
-              <xsd:element name=“registrationStatusText” type=“xsd:int” nillable=“true”/>
-              <xsd:element name=“singleSession” type=“xsd:int” nillable=“true”/>
-              <xsd:element name=“singleSessionDate” type=“xsd:string” nillable=“true”/>
-          </xsd:all>
-      </xsd:complexType>
-      <xsd:complexType name=“ArrayOfUserActivity”>
-          <xsd:sequence>
-              <xsd:element name=“item” type=“tns:userActivity” minOccurs=“0" maxOccurs=“unbounded”/>
-          </xsd:sequence>
-      </xsd:complexType>
-      <xsd:element name=“getActivityByUserResponse”>
-          <xsd:complexType>
-              <xsd:sequence>
-                  <xsd:element name=“getActivityByUserResult” type=“tns:ArrayOfUserActivity”/>
-              </xsd:sequence>
-          </xsd:complexType>
-      </xsd:element>
-    </xsd:schema>
-    `,
+  const
+    fileContent = fs.readFileSync(validSchemaFolder + '/replaceAllToSequence.wsdl', 'utf8'),
     schemaNameSpace = {
       key: 'xsd',
       prefixFilter: 'xsd:',
@@ -1419,7 +1151,7 @@ describe('replaceTagInSchema', function() {
 
   it('Should switch all tags in document with sequence tags', function() {
     const schemaBuilder = new SchemaBuilderXSD(),
-      result = schemaBuilder.replaceTagInSchema(xml, schemaNameSpace, 'all', 'sequence');
+      result = schemaBuilder.replaceTagInSchema(fileContent, schemaNameSpace, 'all', 'sequence');
     expect(result.includes('<xsd:all>')).to.equal(false);
   });
 });
