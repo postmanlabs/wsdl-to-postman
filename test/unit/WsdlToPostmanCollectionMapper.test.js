@@ -378,7 +378,7 @@ describe('getCollectionName method', function() {
     expect(collectionName).to.be.equal(DEFAULT_COLLECTION_NAME);
   });
 
-  it('Should return the default name when target namespace url is empty', function() {
+  it('Should return the provided name when target namespace url is empty', function() {
     const expectedName = 'providedName',
       mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
       collectionName = mapper.getCollectionName(expectedName);

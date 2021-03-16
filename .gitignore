@@ -10,3 +10,5 @@ node_modules
 temp3.xml
 # - Do not allow package-lock.json to be uploaded
 package-lock.json
+# - Do not allow IDE conf to be uploaded
+.vscode
