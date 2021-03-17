@@ -2,7 +2,6 @@ const expect = require('chai').expect,
   assert = require('chai').assert,
   WsdlObject = require('../../lib/WsdlObject').WsdlObject,
   {
-    DOC_HAS_NO_SERVICE_MESSAGE,
     DOC_HAS_NO_BINDIGS_MESSAGE,
     DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,
     DOC_HAS_NO_SERVICE_PORT_MESSAGE
@@ -3371,249 +3370,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
   });
 });
 
-describe('WSDL 1.1 parser getServicePortByBindingName', function() {
-  it('should get service port from service', function() {
-    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
-    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" 
-    targetNamespace="http://www.dataaccess.com/webservicesserver/">
-      <portType name="NumberConversionSoapType">
-        <operation name="NumberToWords">
-          <documentation>Returns the word corresponding to the positive number
-           passed as parameter. Limited to quadrillions.</documentation>
-          <input message="tns:NumberToWordsSoapRequest"/>
-          <output message="tns:NumberToWordsSoapResponse"/>
-        </operation>
-        <operation name="NumberToDollars">
-          <documentation>Returns the non-zero dollar amount of the passed number.</documentation>
-          <input message="tns:NumberToDollarsSoapRequest"/>
-          <output message="tns:NumberToDollarsSoapResponse"/>
-        </operation>
-      </portType>
-      <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="NumberToWords">
-          <soap:operation soapAction="" style="document"/>
-          <input>
-            <soap:body use="literal"/>
-          </input>
-          <output>
-            <soap:body use="literal"/>
-          </output>
-        </operation>
-        <operation name="NumberToDollars">
-          <soap:operation soapAction="" style="document"/>
-          <input>
-            <soap:body use="literal"/>
-          </input>
-          <output>
-            <soap:body use="literal"/>
-          </output>
-        </operation>
-      </binding>
-      <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
-        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="NumberToWords">
-          <soap12:operation soapAction="" style="document"/>
-          <input>
-            <soap12:body use="literal"/>
-          </input>
-          <output>
-            <soap12:body use="literal"/>
-          </output>
-        </operation>
-        <operation name="NumberToDollars">
-          <soap12:operation soapAction="" style="document"/>
-          <input>
-            <soap12:body use="literal"/>
-          </input>
-          <output>
-            <soap12:body use="literal"/>
-          </output>
-        </operation>
-      </binding>
-      <service name="NumberConversion">
-        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
-         provides functions that convert numbers into words or dollar amounts.</documentation>
-        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
-          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-        </port>
-        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
-          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-        </port>
-      </service>
-    </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    services = parser.getServices(parsed);
-    servicePort = parser.getServicePortByBindingName('NumberConversionSoapBinding', services, '');
-    expect(servicePort).to.be.an('object');
-    expect(servicePort[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberConversionSoap');
-  });
-
-  it('should throw an error when binding name is null', function() {
-    try {
-      parser.getServicePortByBindingName(null, {}, '');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('BindingName must have a value');
-    }
-  });
-  it('should throw an error when binding name is undefined', function() {
-    try {
-      parser.getServicePortByBindingName(undefined, {}, '');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('BindingName must have a value');
-    }
-  });
-  it('should throw an error when binding name is an empty string', function() {
-    try {
-      parser.getServicePortByBindingName('', {}, '');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('BindingName must have a value');
-    }
-  });
-
-  it('should throw an error when PrincipalPrefix is undefined', function() {
-    try {
-      parser.getServicePortByBindingName('somename', {}, undefined);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('PrincipalPrefix must have a value');
-    }
-  });
-  it('should throw an error when PrincipalPrefix is null', function() {
-    try {
-      parser.getServicePortByBindingName('somename', {}, null);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('PrincipalPrefix must have a value');
-    }
-  });
-
-  it('should return undefined when services is null', function() {
-    let wsdlObject = new WsdlObject(),
-      servicePort = parser.getServicePortByBindingName('somename', null, 'principal prefix', wsdlObject);
-    expect(servicePort).to.be.equal(undefined);
-    expect(wsdlObject.log.errors).to
-      .contain(DOC_HAS_NO_SERVICE_MESSAGE);
-  });
-
-  it('should return undefined port type when services is undefined', function() {
-    let wsdlObject = new WsdlObject(),
-      servicePort = parser.getServicePortByBindingName('somename', undefined, 'principal prefix', wsdlObject);
-    expect(servicePort).to.be.equal(undefined);
-    expect(wsdlObject.log.errors).to
-      .contain(DOC_HAS_NO_SERVICE_MESSAGE);
-  });
-
-  it('should throw an error when services is an empty object', function() {
-    try {
-      parser.getServicePortByBindingName('somename', {}, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from object');
-    }
-  });
-  it('should throw an error when the port is not found port', function() {
-    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
-    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" 
-    targetNamespace="http://www.dataaccess.com/webservicesserver/">
-      <portType name="NumberConversionSoapType">
-        <operation name="NumberToWords">
-          <documentation>Returns the word corresponding to the positive number
-           passed as parameter. Limited to quadrillions.</documentation>
-          <input message="tns:NumberToWordsSoapRequest"/>
-          <output message="tns:NumberToWordsSoapResponse"/>
-        </operation>
-        <operation name="NumberToDollars">
-          <documentation>Returns the non-zero dollar amount of the passed number.</documentation>
-          <input message="tns:NumberToDollarsSoapRequest"/>
-          <output message="tns:NumberToDollarsSoapResponse"/>
-        </operation>
-      </portType>
-      <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="NumberToWords">
-          <soap:operation soapAction="" style="document"/>
-          <input>
-            <soap:body use="literal"/>
-          </input>
-          <output>
-            <soap:body use="literal"/>
-          </output>
-        </operation>
-        <operation name="NumberToDollars">
-          <soap:operation soapAction="" style="document"/>
-          <input>
-            <soap:body use="literal"/>
-          </input>
-          <output>
-            <soap:body use="literal"/>
-          </output>
-        </operation>
-      </binding>
-      <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
-        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="NumberToWords">
-          <soap12:operation soapAction="" style="document"/>
-          <input>
-            <soap12:body use="literal"/>
-          </input>
-          <output>
-            <soap12:body use="literal"/>
-          </output>
-        </operation>
-        <operation name="NumberToDollars">
-          <soap12:operation soapAction="" style="document"/>
-          <input>
-            <soap12:body use="literal"/>
-          </input>
-          <output>
-            <soap12:body use="literal"/>
-          </output>
-        </operation>
-      </binding>
-      <service name="NumberConversion">
-        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
-         provides functions that convert numbers into words or dollar amounts.</documentation>
-        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
-          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-        </port>
-      </service>
-    </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    services = parser.getServices(parsed);
-    try {
-      parser.getServicePortByBindingName('NumberConversionSoapBinding12', services, '');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from object');
-    }
-
-  });
-});
-
-describe('WSDL 1.1 parser getServiceByBindingName', function() {
+describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function() {
   it('should get service by binding name', function() {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -3692,7 +3449,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
       parser = new Wsdl11Parser();
     let parsed = parser.parseFromXmlToObject(simpleInput);
     services = parser.getServices(parsed);
-    service = parser.getServiceByBindingName('NumberConversionSoapBinding', services, '');
+    service = parser.getServiceAndServicePortByBindingName('NumberConversionSoapBinding', services, '').service;
     expect(service).to.be.an('object');
     expect(service[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberConversion');
   });
@@ -3700,7 +3457,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
 
   it('should throw an error when binding name is null', function() {
     try {
-      parser.getServiceByBindingName(null, {}, '');
+      parser.getServiceAndServicePortByBindingName(null, {}, '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -3709,7 +3466,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
   });
   it('should throw an error when binding name is undefined', function() {
     try {
-      parser.getServiceByBindingName(undefined, {}, '');
+      parser.getServiceAndServicePortByBindingName(undefined, {}, '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -3718,7 +3475,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
   });
   it('should throw an error when binding name is an empty string', function() {
     try {
-      parser.getServiceByBindingName('', {}, '');
+      parser.getServiceAndServicePortByBindingName('', {}, '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -3728,7 +3485,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
 
   it('should throw an error when PrincipalPrefix is undefined', function() {
     try {
-      parser.getServiceByBindingName('somename', {}, undefined);
+      parser.getServiceAndServicePortByBindingName('somename', {}, undefined);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -3737,7 +3494,7 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
   });
   it('should throw an error when PrincipalPrefix is null', function() {
     try {
-      parser.getServiceByBindingName('somename', {}, null);
+      parser.getServiceAndServicePortByBindingName('somename', {}, null);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -3746,20 +3503,22 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
   });
 
   it('should get undefined when services is null', function() {
-    let service = parser.getServiceByBindingName('somename', null, 'principal prefix');
+    let wsdlObject = new WsdlObject(),
+      service = parser.getServiceAndServicePortByBindingName('somename', null, 'principal prefix', wsdlObject);
     expect(service).to.equal(undefined);
   });
 
   it('should get undefined when services is undefined', function() {
-
-    let service = parser.getServiceByBindingName('somename', undefined, 'principal prefix');
+    let wsdlObject = new WsdlObject(),
+      service = parser.getServiceAndServicePortByBindingName('somename', undefined, 'principal prefix', wsdlObject);
     expect(service).to.equal(undefined);
 
   });
 
   it('should throw an error when services is an empty object', function() {
-    let service = parser.getServiceByBindingName('somename', {}, 'principal prefix');
-    expect(service).to.equal(null);
+    let wsdlObject = new WsdlObject(),
+      service = parser.getServiceAndServicePortByBindingName('somename', {}, 'principal prefix', wsdlObject);
+    expect(service).to.equal(undefined);
   });
 
 });
@@ -4045,6 +3804,30 @@ describe('WSDL 1.1 parser getWsdlObject', function() {
     }
     catch (error) {
       expect(error.message).to.equal('xmlDocumentContent must have a value');
+    }
+  });
+});
+
+describe('WSDL 1.1 parser getBindingOperation', function() {
+  it('should throw an error when binding is null', function() {
+    try {
+      const parser = new Wsdl11Parser();
+      parser.getBindingOperation(null, '', {});
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get operations from undefined or null object');
+    }
+  });
+
+  it('should throw an error when binding is emptyObject', function() {
+    try {
+      const parser = new Wsdl11Parser();
+      parser.getBindingOperation({}, '', {});
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get binding operations from object');
     }
   });
 
