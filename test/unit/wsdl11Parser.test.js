@@ -3758,13 +3758,8 @@ describe('WSDL 1.1 parser getServiceByBindingName', function() {
   });
 
   it('should throw an error when services is an empty object', function() {
-    try {
-      parser.getServiceByBindingName('somename', {}, 'principal prefix');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get service port from object');
-    }
+    let service = parser.getServiceByBindingName('somename', {}, 'principal prefix');
+    expect(service).to.equal(null);
   });
 
 });
