@@ -26,12 +26,10 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
       },
       jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
-    expect(jsonObjectMessage).to.have.own.property('soap:Envelope');
-    expect(jsonObjectMessage['soap:Envelope']).to.have.own.property('soap:Body');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body']).to.have.own.property('NumberToWords');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords)
+    expect(jsonObjectMessage).to.have.own.property('NumberToWords');
+    expect(jsonObjectMessage.NumberToWords)
       .to.have.own.property('ubiNum');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords.ubiNum)
+    expect(jsonObjectMessage.NumberToWords.ubiNum)
       .to.equal(18446744073709);
   });
 
@@ -72,23 +70,21 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
       },
       jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
-    expect(jsonObjectMessage).to.have.own.property('soap:Envelope');
-    expect(jsonObjectMessage['soap:Envelope']).to.have.own.property('soap:Body');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body']).to.have.own.property('TestCustomModel');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel)
+    expect(jsonObjectMessage).to.have.own.property('TestCustomModel');
+    expect(jsonObjectMessage.TestCustomModel)
       .to.have.own.property('inputModel');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel)
+    expect(jsonObjectMessage.TestCustomModel.inputModel)
       .to.have.own.property('id');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel)
+    expect(jsonObjectMessage.TestCustomModel.inputModel)
       .to.have.own.property('name');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel)
+    expect(jsonObjectMessage.TestCustomModel.inputModel)
       .to.have.own.property('email');
 
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel.id)
+    expect(jsonObjectMessage.TestCustomModel.inputModel.id)
       .to.equal(-2147483648);
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel.name)
+    expect(jsonObjectMessage.TestCustomModel.inputModel.name)
       .to.equal('this is a string');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].TestCustomModel.inputModel.email)
+    expect(jsonObjectMessage.TestCustomModel.inputModel.email)
       .to.equal('this is a string');
   });
 
@@ -138,10 +134,8 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
       jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
-    expect(jsonObjectMessage).to.have.own.property('soap:Envelope');
-    expect(jsonObjectMessage['soap:Envelope']).to.have.own.property('soap:Body');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body']).to.have.own.property('NumberToWords');
-    expect(jsonObjectMessage['soap:Envelope']['soap:Body'].NumberToWords)
+    expect(jsonObjectMessage).to.have.own.property('NumberToWords');
+    expect(jsonObjectMessage.NumberToWords)
       .to.have.own.property(ERROR_ELEMENT_IDENTIFIER);
   });
 
