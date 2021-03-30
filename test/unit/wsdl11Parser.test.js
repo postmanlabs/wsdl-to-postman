@@ -1150,7 +1150,8 @@ describe('WSDL 1.1 parser assignNamespaces', function() {
       'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
       'SOAP12Namespace', 'schemaNamespace',
       'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
-      'operationsArray');
+      'operationsArray', 'securityPolicyArray',
+      'securityPolicyNamespace');
 
     expect(wsdlObject.targetNamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
     expect(wsdlObject.tnsNamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
@@ -3730,7 +3731,8 @@ describe('WSDL 1.1 parser getWsdlObject', function() {
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
         'SOAP12Namespace', 'schemaNamespace',
         'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
-        'operationsArray');
+        'operationsArray', 'securityPolicyArray',
+        'securityPolicyNamespace');
 
       expect(wsdlObject.allNameSpaces).to.be.an('array');
       expect(wsdlObject.allNameSpaces.length).to.equal(6);
