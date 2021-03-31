@@ -24,6 +24,7 @@ const expect = require('chai').expect,
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
   } = require('../../lib/WsdlParserCommon'),
   specialCasesWSDLs = 'test/data/specialCases/wsdl2',
+  validWSDLs20 = 'test/data/validWSDLs20',
   WSDL_SAMPLE = `<?xml version="1.0" encoding="utf-8" ?>
   <description xmlns="http://www.w3.org/ns/wsdl" 
   targetNamespace="http://greath.example.com/2004/wsdl/resSvc" 
@@ -1169,6 +1170,20 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     catch (error) {
       expect(error.message).to.equal('Can not get port type with no filter operationName');
     }
+  });
+});
+
+describe('WSDL 2.0 parser assignSecurity', function() {
+  it('Should return a wsdlObject with securityPolicyArray if file has security', function() {
+    const parser = new Wsdl20Parser();
+    fileContent = fs.readFileSync(validWSDLs20 + '/Axis2WSD20WithSecurity.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    wsdlObject = parser.assignSecurity(wsdlObject, parsed);
+
+    expect(wsdlObject).to.be.an('object').to.include.key('securityPolicyArray');
   });
 });
 

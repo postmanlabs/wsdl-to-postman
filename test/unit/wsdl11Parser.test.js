@@ -26,6 +26,7 @@ const expect = require('chai').expect,
   } = require('../../lib/WsdlParserCommon'),
   fs = require('fs'),
   specialCasesWSDLs = 'test/data/specialCases',
+  validWSDLs11 = 'test/data/validWSDLs11',
   NUMBERCONVERSION_INPUT = `
   <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
@@ -1163,6 +1164,20 @@ describe('WSDL 1.1 parser assignNamespaces', function() {
 
   });
 
+});
+
+describe('WSDL 1.1 parser assignSecurity', function() {
+  it('Should return a wsdlObject with securityPolicyArray if file has security', function() {
+    const parser = new Wsdl11Parser();
+    fileContent = fs.readFileSync(validWSDLs11 + '/NumberConvertionWithSecurity.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      parsed = parser.parseFromXmlToObject(fileContent);
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    wsdlObject = parser.assignSecurity(wsdlObject, parsed);
+
+    expect(wsdlObject).to.be.an('object').to.include.key('securityPolicyArray');
+  });
 });
 
 describe('WSDL 1.1 parser getPortTypeOperations', function() {
@@ -3832,5 +3847,4 @@ describe('WSDL 1.1 parser getBindingOperation', function() {
       expect(error.message).to.equal('Can not get binding operations from object');
     }
   });
-
 });
