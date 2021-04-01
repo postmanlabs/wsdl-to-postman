@@ -97,7 +97,9 @@ const expect = require('chai').expect,
         </wsp:Policy>`;
 
 describe('SecurityAssertionsHelper getSecurityAssertions', function() {
-  const securityNamespace = { prefixFilter: 'wsp:' };
+  const securityNamespace = {
+    prefixFilter: 'wsp:'
+  };
   it('should get an object indicating username password normal mode is used', function() {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
       parsedXml = parseFromXmlToObject(USERNAME_TOKEN);
@@ -163,7 +165,7 @@ describe('SecurityAssertionsHelper getSecurityAssertions', function() {
 
   });
 
-  it('should get an object indicating username and ssl password mode is used', function() {
+  it('should get an object indicating username and ssl saml token', function() {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
       parsedXml = parseFromXmlToObject(SAML_SSL_HTTPS_TOKEN_POLICY_REQUIRE_CLIENT_CERTIFICATE);
     securityAssertions = securityAssertionsHelper.getSecurityAssertions([parsedXml], securityNamespace);

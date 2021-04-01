@@ -2,6 +2,9 @@ const expect = require('chai').expect,
   {
     SOAPMessageHelper
   } = require('../../lib/utils/SOAPMessageHelper'),
+  {
+    UsernameTokenInput
+  } = require('../../lib/security/schemas/inputs/tokens/UsernameTokenInput'),
   json = {
     'soap:Envelope': {
       '@_xmlns:soap': 'http://schemas.xmlsoap.org/soap/envelope/',
@@ -33,11 +36,11 @@ const expect = require('chai').expect,
         }
       }
     }
-  };
+  },
 
-jsonError = {
-  'error': 'Could not find element'
-};
+  jsonError = {
+    'error': 'Could not find element'
+  };
 
 describe('SOAPMessageHelper  constructor', function() {
   it('should get an object for the factory with empty input', function() {
@@ -122,7 +125,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      xmlParameters = parametersUtils.convertInputToMessage(node, {}, 'soap');
+      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -176,7 +179,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
         type: 'complex',
         namespace: 'http://tempuri.org/'
       },
-      xmlParameters = parametersUtils.convertInputToMessage(node, {}, 'soap');
+      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -212,7 +215,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
         type: 'complex',
         namespace: 'https://geoservices.tamu.edu/'
       },
-      xmlParameters = parametersUtils.convertInputToMessage(node, {}, 'soap');
+      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -240,7 +243,32 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
           '1032'
         ]
       };
-    xmlParameters = parametersUtils.convertInputToMessage(node, {}, 'soap');
+    xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
+
+  });
+
+  it('should get an string representing the security element for simple username password', function() {
+    const parametersUtils = new SOAPMessageHelper(),
+      xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
+          <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+           <soap:Header>
+            <wsse:Security soap:mustUnderstand="1" xmlns:wsse="...">
+             <wsse:UsernameToken>
+                <wsse:Username>place username here</wsse:Username>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/
+oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</wsse:Password>
+                <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>
+                <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>
+              </wsse:UsernameToken>
+            </wsse:Security>
+          </soap:Header><soap:Body></soap:Body></soap:Envelope>`,
+      usernameTokenInput = new UsernameTokenInput();
+    usernameTokenInput.includeToken =
+      'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
+    usernameTokenInput.passwordType = 'normal';
+    xmlParameters = parametersUtils.convertInputToMessage(undefined, [usernameTokenInput], 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
