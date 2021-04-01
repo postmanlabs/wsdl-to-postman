@@ -267,7 +267,28 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
-    usernameTokenInput.passwordType = 'normal';
+    usernameTokenInput.passwordType = 'Normal';
+    xmlParameters = parametersUtils.convertInputToMessage(undefined, [usernameTokenInput], 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
+
+  });
+
+  it('should get an string representing the security element for username password NoPassword', function() {
+    const parametersUtils = new SOAPMessageHelper(),
+      xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
+          <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+           <soap:Header>
+            <wsse:Security soap:mustUnderstand="1" xmlns:wsse="...">
+             <wsse:UsernameToken>
+                <wsse:Username>place username here</wsse:Username>
+              </wsse:UsernameToken>
+            </wsse:Security>
+          </soap:Header><soap:Body></soap:Body></soap:Envelope>`,
+      usernameTokenInput = new UsernameTokenInput();
+    usernameTokenInput.includeToken =
+      'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
+    usernameTokenInput.passwordType = 'NoPassword';
     xmlParameters = parametersUtils.convertInputToMessage(undefined, [usernameTokenInput], 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));

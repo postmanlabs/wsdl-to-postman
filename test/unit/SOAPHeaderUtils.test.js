@@ -19,7 +19,7 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
-    usernameTokenInput.passwordType = 'normal';
+    usernameTokenInput.passwordType = 'Normal';
 
     jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput], 'soap');
     expect(jsonObjectMessage).to.be.an('object');
@@ -32,14 +32,22 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       .to.have.own.property('wsse:Password');
     expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken'])
       .to.have.own.property('wsse:Nonce');
+  });
 
-    // expect(jsonObjectMessage.TestCustomModel.inputModel.id)
-    //   .to.equal(-2147483648);
-    // expect(jsonObjectMessage.TestCustomModel.inputModel.name)
-    //   .to.equal('this is a string');
-    // expect(jsonObjectMessage.TestCustomModel.inputModel.email)
-    //   .to.equal('this is a string');
+  it('should get an object correctly created', function() {
+    const parametersUtils = new SOAPHeaderUtils(),
+      usernameTokenInput = new UsernameTokenInput();
+    usernameTokenInput.includeToken =
+      'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
+    usernameTokenInput.passwordType = 'NoPassword';
 
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput], 'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+
+    expect(jsonObjectMessage['wsse:Security'])
+      .to.have.own.property('wsse:UsernameToken');
+    expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken'])
+      .to.have.own.property('wsse:Username');
 
   });
 
