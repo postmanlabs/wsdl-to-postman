@@ -295,4 +295,29 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
 
   });
 
+  it('should get an string representing the security element for simple username password', function() {
+    const parametersUtils = new SOAPMessageHelper(),
+      xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
+          <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+           <soap:Header>
+            <wsse:Security soap:mustUnderstand="1" xmlns:wsse="...">
+             <wsse:UsernameToken>
+                <wsse:Username>place username here</wsse:Username>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/
+oasis-200401-wss-username-token-profile-1.0#PasswordDigest">place hashed password here</wsse:Password>
+                <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>
+                <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>
+              </wsse:UsernameToken>
+            </wsse:Security>
+          </soap:Header><soap:Body></soap:Body></soap:Envelope>`,
+      usernameTokenInput = new UsernameTokenInput();
+    usernameTokenInput.includeToken =
+      'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
+    usernameTokenInput.passwordType = 'HashPassword';
+    xmlParameters = parametersUtils.convertInputToMessage(undefined, [usernameTokenInput], 'soap');
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
+
+  });
+
 });

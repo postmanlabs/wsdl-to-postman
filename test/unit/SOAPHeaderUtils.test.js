@@ -14,7 +14,7 @@ describe('SOAPHeaderUtils  constructor', function() {
 });
 
 describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
-  it('should get an object correctly created', function() {
+  it('should get an object correctly created username normal token', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
@@ -32,9 +32,12 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       .to.have.own.property('wsse:Password');
     expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken'])
       .to.have.own.property('wsse:Nonce');
+    expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken']['wsse:Password']['@_Type'])
+      .to.equal('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText');
+
   });
 
-  it('should get an object correctly created', function() {
+  it('should get an object correctly created username no password token', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
@@ -48,6 +51,26 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       .to.have.own.property('wsse:UsernameToken');
     expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken'])
       .to.have.own.property('wsse:Username');
+
+  });
+
+  it('should get an object correctly created hashed password', function() {
+    const parametersUtils = new SOAPHeaderUtils(),
+      usernameTokenInput = new UsernameTokenInput();
+    usernameTokenInput.includeToken =
+      'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
+    usernameTokenInput.passwordType = 'HashPassword';
+
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput], 'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+
+    expect(jsonObjectMessage['wsse:Security'])
+      .to.have.own.property('wsse:UsernameToken');
+    expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken'])
+      .to.have.own.property('wsse:Username');
+    expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken']['wsse:Password']['@_Type'])
+      .to.equal('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest');
+
 
   });
 
