@@ -32,7 +32,7 @@ describe('ParametersUtils buildObjectParameters', function() {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = parametersUtils.buildObjectParameters(node, 'soap');
+      jsonObjectMessage = parametersUtils.buildObjectParameters(node);
     expect(jsonObjectMessage).to.be.an('object');
   });
 

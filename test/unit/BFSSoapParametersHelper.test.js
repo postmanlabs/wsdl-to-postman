@@ -24,7 +24,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.have.own.property('NumberToWords');
     expect(jsonObjectMessage.NumberToWords)
@@ -68,7 +68,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.have.own.property('TestCustomModel');
     expect(jsonObjectMessage.TestCustomModel)
@@ -90,14 +90,14 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
 
   it('Should get an empty json object when null is sent', function() {
     const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(null, 'soap');
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(null);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.be.empty;
   });
 
   it('Should get an empty json object when undefined is sent', function() {
     const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(undefined, 'soap');
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(undefined);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.be.empty;
   });
@@ -133,7 +133,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
+      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node);
     expect(jsonObjectMessage).to.have.own.property('NumberToWords');
     expect(jsonObjectMessage.NumberToWords)
       .to.have.own.property(ERROR_ELEMENT_IDENTIFIER);

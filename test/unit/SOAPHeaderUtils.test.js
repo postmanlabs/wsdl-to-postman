@@ -13,7 +13,7 @@ describe('SOAPHeaderUtils  constructor', function() {
   });
 });
 
-describe('ParametersUtils buildObjectParameters', function() {
+describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
   it('should get an object correctly created', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       usernameTokenInput = new UsernameTokenInput();
