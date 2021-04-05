@@ -7,7 +7,10 @@ const expect = require('chai').expect,
   } = require('../../lib/security/schemas/inputs/tokens/UsernameTokenInput'),
   {
     TransportBindingInput
-  } = require('../../lib/security/schemas/inputs/transport/TransportBindingInput');
+  } = require('../../lib/security/schemas/inputs/transport/TransportBindingInput'),
+  {
+    SAMLTokenInput
+  } = require('../../lib/security/schemas/inputs/tokens/SAMLTokenInput');
 
 describe('SOAPHeaderUtils  constructor', function() {
   it('should get an object for the factory with empty input', function() {
@@ -102,6 +105,94 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       .to.equal('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText');
     expect(jsonObjectMessage['wsse:Security'])
       .to.have.own.property('wsse:Timestamp');
+  });
+
+  it('should get an object correctly created sender vouches saml', function() {
+    const parametersUtils = new SOAPHeaderUtils(),
+      sAMLTokenInput = new SAMLTokenInput();
+    sAMLTokenInput.mode = 'sender-vouches';
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([sAMLTokenInput],
+      'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+    expect(jsonObjectMessage['wsse:Security'])
+      .to.have.own.property('saml2:Assertion');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_ID');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_IssueInstant');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_Version');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Issuer');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Conditions');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Subject');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion']['saml2:Subject']['saml2:SubjectConfirmation'])
+      .to.have.own.property('@_Method').to.equal('urn:oasis:names:tc:SAML:2.0:cm:sender-vouches');
+  });
+
+  it('should get an object correctly created holder of key saml', function() {
+    const parametersUtils = new SOAPHeaderUtils(),
+      sAMLTokenInput = new SAMLTokenInput();
+    sAMLTokenInput.mode = 'holder-of-key';
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([sAMLTokenInput],
+      'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+    expect(jsonObjectMessage['wsse:Security'])
+      .to.have.own.property('saml2:Assertion');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_ID');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_IssueInstant');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_Version');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Issuer');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Conditions');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Subject');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion']['saml2:Subject']['saml2:SubjectConfirmation'])
+      .to.have.own.property('@_Method').to.equal('urn:oasis:names:tc:SAML:2.0:cm:holder-of-key');
+  });
+
+
+  it('should get an object correctly created holder of key saml', function() {
+    const parametersUtils = new SOAPHeaderUtils(),
+      sAMLTokenInput = new SAMLTokenInput();
+    sAMLTokenInput.mode = 'bearer';
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([sAMLTokenInput],
+      'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+    expect(jsonObjectMessage['wsse:Security'])
+      .to.have.own.property('saml2:Assertion');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_ID');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_IssueInstant');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('@_Version');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Issuer');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Conditions');
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion'])
+      .to.have.own.property('saml2:Subject');
+
+    expect(jsonObjectMessage['wsse:Security']['saml2:Assertion']['saml2:Subject']['saml2:SubjectConfirmation'])
+      .to.have.own.property('@_Method').to.equal('urn:oasis:names:tc:SAML:2.0:cm:bearer');
   });
 
 });
