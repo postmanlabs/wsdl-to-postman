@@ -27,6 +27,24 @@ describe('SchemaPack convert unit test WSDL 1.1', function() {
       });
     });
   });
+
+  it('Should get an object representing PM Collection from a file sending the path', function() {
+    const
+      VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl',
+      schemaPack = new SchemaPack({
+        type: 'file',
+        data: VALID_WSDL_PATH
+      }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+    });
+  });
 });
 
 describe('SchemaPack convert unit test WSDL 1.1 with options', function() {
