@@ -254,7 +254,8 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
       xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
           <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
            <soap:Header>
-            <wsse:Security soap:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+            <wsse:Security soap:mustUnderstand="1" 
+            xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
              <wsse:UsernameToken>
                 <wsse:Username>place username here</wsse:Username>
                 <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/
@@ -279,7 +280,8 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
       xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
           <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
            <soap:Header>
-            <wsse:Security soap:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+            <wsse:Security soap:mustUnderstand="1" 
+            xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
              <wsse:UsernameToken>
                 <wsse:Username>place username here</wsse:Username>
               </wsse:UsernameToken>
@@ -300,7 +302,8 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
       xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
           <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
            <soap:Header>
-            <wsse:Security soap:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+            <wsse:Security soap:mustUnderstand="1"
+             xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
              <wsse:UsernameToken>
                 <wsse:Username>place username here</wsse:Username>
                 <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/

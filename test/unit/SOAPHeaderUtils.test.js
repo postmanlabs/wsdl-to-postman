@@ -90,7 +90,8 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'Normal';
 
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput, transportBindingAssertion], 'soap');
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput, transportBindingAssertion],
+      'soap');
     expect(jsonObjectMessage).to.be.an('object');
 
     expect(jsonObjectMessage['wsse:Security'])
