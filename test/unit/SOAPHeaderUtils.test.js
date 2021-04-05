@@ -4,7 +4,10 @@ const expect = require('chai').expect,
   } = require('../../lib/utils/SOAPHeaderUtils'),
   {
     UsernameTokenInput
-  } = require('../../lib/security/schemas/inputs/tokens/UsernameTokenInput');
+  } = require('../../lib/security/schemas/inputs/tokens/UsernameTokenInput'),
+  {
+    TransportBindingInput
+  } = require('../../lib/security/schemas/inputs/transport/TransportBindingInput');
 
 describe('SOAPHeaderUtils  constructor', function() {
   it('should get an object for the factory with empty input', function() {
@@ -70,8 +73,34 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       .to.have.own.property('wsse:Username');
     expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken']['wsse:Password']['@_Type'])
       .to.equal('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest');
+  });
+
+  it('should get an object correctly created normal password and ssl', function() {
+    const parametersUtils = new SOAPHeaderUtils(),
+      usernameTokenInput = new UsernameTokenInput(),
+      transportBindingAssertion = new TransportBindingInput();
+
+    transportBindingAssertion.transportToken = 'HttpsToken';
+    transportBindingAssertion.algorithmSuite = 'Basic256';
+    transportBindingAssertion.layout = 'Strict';
+    transportBindingAssertion.includeTimestamp = true;
 
 
+    usernameTokenInput.includeToken =
+      'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
+    usernameTokenInput.passwordType = 'Normal';
+
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput, transportBindingAssertion], 'soap');
+    expect(jsonObjectMessage).to.be.an('object');
+
+    expect(jsonObjectMessage['wsse:Security'])
+      .to.have.own.property('wsse:UsernameToken');
+    expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken'])
+      .to.have.own.property('wsse:Username');
+    expect(jsonObjectMessage['wsse:Security']['wsse:UsernameToken']['wsse:Password']['@_Type'])
+      .to.equal('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText');
+    expect(jsonObjectMessage['wsse:Security'])
+      .to.have.own.property('wsse:Timestamp');
   });
 
 });
