@@ -99,7 +99,8 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'Normal';
 
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj(
+      {
         1: [usernameTokenInput, transportBindingAssertion]
       },
       'soap');
@@ -119,7 +120,8 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'sender-vouches';
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj(
+      {
         1: [sAMLTokenInput]
       },
       'soap');
@@ -150,7 +152,8 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'holder-of-key';
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj(
+      {
         1: [sAMLTokenInput]
       },
       'soap');
@@ -182,7 +185,8 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'bearer';
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj(
+      {
         1: [sAMLTokenInput]
       },
       'soap');

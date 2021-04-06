@@ -21,7 +21,8 @@ const expect = require('chai').expect,
     value: 'text/xml; charset=utf-8'
   }],
   defMethod = 'POST',
-  reqBody = [{
+  reqBody = [
+    {
       mode: 'raw',
       raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
         '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
@@ -96,7 +97,7 @@ const expect = require('chai').expect,
     '    </NumberToWordsResponse>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
-    '<?xml version="1.0" encoding="utf-8"?>\n' +
+  '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
     '  <soap:Body>\n' +
     '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -104,7 +105,7 @@ const expect = require('chai').expect,
     '    </NumberToDollarsResponse>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
-    '<?xml version="1.0" encoding="utf-8"?>\n' +
+  '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <NumberToWordsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
@@ -112,7 +113,7 @@ const expect = require('chai').expect,
     '    </NumberToWordsResponse>\n' +
     '  </soap12:Body>\n' +
     '</soap12:Envelope>\n',
-    '<?xml version="1.0" encoding="utf-8"?>\n' +
+  '<?xml version="1.0" encoding="utf-8"?>\n' +
     '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
     '  <soap12:Body>\n' +
     '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
