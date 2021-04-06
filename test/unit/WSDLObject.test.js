@@ -2,7 +2,7 @@ const expect = require('chai').expect,
   {
     WsdlObject,
     Log
-  } = require('../../lib/WsdlObject');
+  } = require('../../lib/WSDLObject');
 
 
 describe('WSDLObject constructor', function() {

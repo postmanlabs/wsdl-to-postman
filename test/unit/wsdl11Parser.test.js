@@ -1,6 +1,6 @@
 const expect = require('chai').expect,
   assert = require('chai').assert,
-  WsdlObject = require('../../lib/WsdlObject').WsdlObject,
+  WsdlObject = require('../../lib/WSDLObject').WsdlObject,
   {
     DOC_HAS_NO_BINDIGS_MESSAGE,
     DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,

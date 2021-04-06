@@ -12,7 +12,7 @@ const expect = require('chai').expect,
   } = require('../../lib/constants/messageConstants'),
   assert = require('chai').assert,
   fs = require('fs'),
-  WsdlObject = require('../../lib/WsdlObject').WsdlObject,
+  WsdlObject = require('../../lib/WSDLObject').WsdlObject,
   {
     Wsdl20Parser,
     WSDL_NS_URL
