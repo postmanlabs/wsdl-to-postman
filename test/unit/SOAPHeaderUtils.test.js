@@ -166,7 +166,7 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
   });
 
 
-  it('should get an object correctly created holder of key saml', function() {
+  it('should get an object correctly created bearer saml', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'bearer';
