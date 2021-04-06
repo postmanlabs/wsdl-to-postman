@@ -269,7 +269,9 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'Normal';
-    xmlParameters = parametersUtils.convertInputToMessage(undefined, [usernameTokenInput], 'soap');
+    xmlParameters = parametersUtils.convertInputToMessage(undefined, {
+      1: [usernameTokenInput]
+    }, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -291,7 +293,9 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'NoPassword';
-    xmlParameters = parametersUtils.convertInputToMessage(undefined, [usernameTokenInput], 'soap');
+    xmlParameters = parametersUtils.convertInputToMessage(undefined, {
+      1: [usernameTokenInput]
+    }, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -317,7 +321,9 @@ oasis-200401-wss-username-token-profile-1.0#PasswordDigest">place hashed passwor
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'HashPassword';
-    xmlParameters = parametersUtils.convertInputToMessage(undefined, [usernameTokenInput], 'soap');
+    xmlParameters = parametersUtils.convertInputToMessage(undefined, {
+      1: [usernameTokenInput]
+    }, 'soap');
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 

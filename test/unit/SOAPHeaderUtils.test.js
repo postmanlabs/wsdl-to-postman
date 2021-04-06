@@ -27,7 +27,9 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'Normal';
 
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput], 'soap');
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+      1: [usernameTokenInput]
+    }, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
 
     expect(jsonObjectMessage['wsse:Security'])
@@ -50,7 +52,9 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'NoPassword';
 
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput], 'soap');
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+      1: [usernameTokenInput]
+    }, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
 
     expect(jsonObjectMessage['wsse:Security'])
@@ -67,7 +71,9 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'HashPassword';
 
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput], 'soap');
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+      1: [usernameTokenInput]
+    }, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
 
     expect(jsonObjectMessage['wsse:Security'])
@@ -93,7 +99,9 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
     usernameTokenInput.passwordType = 'Normal';
 
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([usernameTokenInput, transportBindingAssertion],
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+        1: [usernameTokenInput, transportBindingAssertion]
+      },
       'soap');
     expect(jsonObjectMessage).to.be.an('object');
 
@@ -111,7 +119,9 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'sender-vouches';
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([sAMLTokenInput],
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+        1: [sAMLTokenInput]
+      },
       'soap');
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage['wsse:Security'])
@@ -140,7 +150,9 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'holder-of-key';
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([sAMLTokenInput],
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+        1: [sAMLTokenInput]
+      },
       'soap');
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage['wsse:Security'])
@@ -170,7 +182,9 @@ describe('SOAPHeaderUtils convertObjectHeaderToJObj', function() {
     const parametersUtils = new SOAPHeaderUtils(),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'bearer';
-    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj([sAMLTokenInput],
+    jsonObjectMessage = parametersUtils.convertObjectHeaderToJObj({
+        1: [sAMLTokenInput]
+      },
       'soap');
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage['wsse:Security'])
