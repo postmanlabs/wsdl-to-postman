@@ -140,8 +140,8 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
       '<TestCustomModel xmlns="http://tempuri.org/">' +
       '<inputModel>' +
       '<Id>-2147483648</Id>' +
-      '<Name> this is a string </Name>' +
-      '<Email> this is a string</Email>' +
+      '<Name>place your string value here</Name>' +
+      '<Email>place your string value here</Email>' +
       '</inputModel>' +
       '</TestCustomModel>' +
       '</soap:Body>' +

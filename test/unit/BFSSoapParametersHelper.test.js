@@ -83,9 +83,9 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function() {
     expect(jsonObjectMessage.TestCustomModel.inputModel.id)
       .to.equal(-2147483648);
     expect(jsonObjectMessage.TestCustomModel.inputModel.name)
-      .to.equal('this is a string');
+      .to.equal('place your string value here');
     expect(jsonObjectMessage.TestCustomModel.inputModel.email)
-      .to.equal('this is a string');
+      .to.equal('place your string value here');
   });
 
   it('Should get an empty json object when null is sent', function() {
