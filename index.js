@@ -28,10 +28,10 @@ module.exports = {
     const schema = new SchemaPack(input);
     schema.mergeAndValidate(cb);
   },
-  
+
   getOptions: function(mode, criteria) {
-    return {}
+    return SchemaPack.getOptions(mode, criteria);
   },
-  
+
   SchemaPack
 };
