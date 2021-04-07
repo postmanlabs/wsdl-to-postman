@@ -16,7 +16,7 @@ describe('Index getOptions', function() {
 
 describe('getMetaData', function() {
 
-  it('Should return external options when called without parameters', function() {
+  it('Should return the metadata for the valid input file', function() {
 
     const
       VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl';
