@@ -79,7 +79,7 @@ describe('validate', function() {
       type: 'file',
       data: VALID_WSDL_PATH
     });
-    expect(result.result).to.equal(true)
+    expect(result.result).to.equal(true);
 
   });
 });
