@@ -65,7 +65,6 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function() {
       expect(result.output).to.be.an('array');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].type).to.equal('collection');
-      expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(2);
       expect(result.output[0].data.item[0].name).to.equal('CalculatorSoap');
