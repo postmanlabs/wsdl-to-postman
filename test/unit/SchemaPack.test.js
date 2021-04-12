@@ -205,3 +205,18 @@ describe('SchemaPack getOptions', function() {
   });
 
 });
+
+describe('validateTransactions method', function() {
+  const notIdCollectionItems = require('./../data/transactionsValidation/notIdCollectionItems.json');
+  it('Should return an error when transactions id is null', function() {
+    const
+      VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl',
+      schemaPack = new SchemaPack({
+        type: 'file',
+        data: VALID_WSDL_PATH
+      }, {});
+    schemaPack.validateTransactions(notIdCollectionItems, (error, result) => {
+      expect(error.message).to.equal('Invalid syntax provided for requestList');
+    });
+  });
+});
