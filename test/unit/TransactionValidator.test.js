@@ -11,7 +11,7 @@ const { assert, expect } = require('chai'),
   nullRequestCollectionItems = require('./../data/transactionsValidation/nullRequestCollectionItems.json'),
   emptyRequestCollectionItems = require('./../data/transactionsValidation/emptyRequestCollectionItems.json');
 
-describe('Transaction Validator', function() {
+describe('Transaction Validator validateTransaction function', function() {
   const emptyWsdlObject = new WsdlObject();
   it('Should not throw any error when transactions structure are valid', function() {
     const transactionValidator = new TransactionValidator();
@@ -56,6 +56,41 @@ describe('Transaction Validator', function() {
     try {
       transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject);
       assert.fail('Expected error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Required field is null, empty or undefined');
+    }
+  });
+
+  it('Should return an error when wsdlObject is not provided', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateTransaction(emptyRequestCollectionItems);
+      assert.fail('Expected error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('wsdlObject not provided');
+    }
+  });
+});
+
+describe('TransactionValidator validateRequiredFields function', function() {
+  it('Should return an error when id is not in any item', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateRequiredFields(notIdCollectionItems);
+      assert.fail('Error expected');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Required field is null, empty or undefined');
+    }
+  });
+
+  it('Should return an error when request is not in any item', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateRequiredFields(emptyRequestCollectionItems);
+      assert.fail('Error expected');
     }
     catch (error) {
       expect(error.message).to.equal('Required field is null, empty or undefined');
