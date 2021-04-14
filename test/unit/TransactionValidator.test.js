@@ -1,19 +1,23 @@
-const {
-  assert,
-  expect
-} = require('chai'), {
-    WsdlObject
-  } = require('./../../lib/WSDLObject'), {
-    TransactionValidator
-  } = require('./../../lib/TransactionValidator'),
-  //validCollectionItems = require('./../data/transactionsValidation/validCollectionItems.json'),
-  notIdCollectionItems = require('./../data/transactionsValidation/notIdCollectionItems.json'),
+const notIdCollectionItems = require('./../data/transactionsValidation/notIdCollectionItems.json'),
   emptyIdCollectionItems = require('./../data/transactionsValidation/emptyIdCollectionItems.json'),
   nullRequestCollectionItems = require('./../data/transactionsValidation/nullRequestCollectionItems.json'),
   emptyRequestCollectionItems = require('./../data/transactionsValidation/emptyRequestCollectionItems.json'),
   numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
-  numberToWordsNoOperationsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
-  numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json');
+  numberToWordsNoOperationsWSDLObject =
+  require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
+  numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json'),
+  //  validCollectionItems = require('./../data/transactionsValidation/validCollectionItems.json'),
+  {
+    assert,
+    expect
+  } = require('chai'),
+  {
+    WsdlObject
+  } = require('./../../lib/WSDLObject'),
+  {
+    TransactionValidator
+  } = require('./../../lib/TransactionValidator');
+
 
 describe('Transaction Validator validate structure', function() {
   let emptyWsdlObject = new WsdlObject();
@@ -199,7 +203,8 @@ describe('Validate method and url', function() {
 
   it('Should return empty endpoints when not matched found in transaction', function() {
     const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsNoOperationsWSDLObject);
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItems,
+        numberToWordsNoOperationsWSDLObject);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
