@@ -12,6 +12,7 @@ const {
   nullRequestCollectionItems = require('./../data/transactionsValidation/nullRequestCollectionItems.json'),
   emptyRequestCollectionItems = require('./../data/transactionsValidation/emptyRequestCollectionItems.json'),
   numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
+  numberToWordsNoOperationsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
   numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json');
 
 describe('Transaction Validator validate structure', function() {
@@ -190,6 +191,32 @@ describe('Validate method and url', function() {
               }
             }
           }],
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+        }
+      }
+    });
+  });
+
+  it('Should return empty endpoints when not matched found in transaction', function() {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsNoOperationsWSDLObject);
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: true,
+      requests: {
+        '18403328-4213-4c3e-b0e9-b21a636697c3': {
+          endpoints: [],
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+        },
+        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+          endpoints: [],
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+        },
+        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+          endpoints: [],
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+        },
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+          endpoints: [],
           requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
         }
       }
