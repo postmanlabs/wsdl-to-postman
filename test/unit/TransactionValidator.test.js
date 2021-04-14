@@ -6,13 +6,13 @@ const {
   } = require('./../../lib/WSDLObject'), {
     TransactionValidator
   } = require('./../../lib/TransactionValidator'),
-  validCollectionItems = require('./../data/transactionsValidation/validCollectionItems.json'),
+  //validCollectionItems = require('./../data/transactionsValidation/validCollectionItems.json'),
   notIdCollectionItems = require('./../data/transactionsValidation/notIdCollectionItems.json'),
   emptyIdCollectionItems = require('./../data/transactionsValidation/emptyIdCollectionItems.json'),
   nullRequestCollectionItems = require('./../data/transactionsValidation/nullRequestCollectionItems.json'),
   emptyRequestCollectionItems = require('./../data/transactionsValidation/emptyRequestCollectionItems.json'),
   numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
-  numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json')
+  numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json');
 
 describe('Transaction Validator validate structure', function() {
   let emptyWsdlObject = new WsdlObject();
@@ -109,7 +109,7 @@ describe('Transaction Validator validate structure', function() {
     }
   });
 
-  it('Should return an error when transaction request is null', function() {
+  it('Should return an error when transaction request is empty', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject);
@@ -142,7 +142,7 @@ describe('Validate method and url', function() {
               }
             }
           }],
-          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3',
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
         },
         '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
           endpoints: [{
@@ -158,7 +158,7 @@ describe('Validate method and url', function() {
               }
             }
           }],
-          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10',
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
         },
         '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
           endpoints: [{
@@ -174,7 +174,7 @@ describe('Validate method and url', function() {
               }
             }
           }],
-          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92',
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
         },
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
           endpoints: [{
@@ -190,10 +190,10 @@ describe('Validate method and url', function() {
               }
             }
           }],
-          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
         }
       }
     });
   });
 
-})
+});
