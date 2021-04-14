@@ -230,7 +230,6 @@ describe('validateTransactions method', function() {
       }, {});
     schemaPack.validateTransactions(notIdCollectionItems, (error) => {
       expect(error.message).to.equal('Invalid syntax provided for requestList');
-      expect(result).to.equal(undefined);
     });
   });
 });
