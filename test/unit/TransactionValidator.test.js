@@ -51,7 +51,7 @@ describe('Transaction Validator validateTransaction function', function() {
     }
   });
 
-  it('Should return an error when transaction request is null', function() {
+  it('Should return an error when transaction request contains an empty WSDL Object', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject);
