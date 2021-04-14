@@ -62,6 +62,19 @@ describe('readInput utility', function() {
         expect(name).to.be.a('string')
           .to.equal('');
       });
+
+      it('Should throw an error when input is neither string or file', function() {
+        const input = {
+          type: 'notvalid'
+        };
+        try {
+          getCollectionNameFromFileOrEmpty(input);
+          assert.fail('we expected an error');
+        }
+        catch (inputError) {
+          expect(inputError.message).to.equal('Invalid input type (notvalid). Type must be file/string.');
+        }
+      });
     });
   });
 

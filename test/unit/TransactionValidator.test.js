@@ -320,3 +320,12 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
   });
 
 });
+
+
+describe('get Raw URL', function() {
+  it('Should return the same url when is string', function() {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.getRawURL('http://url.com');
+    expect(result).to.be.equal('http://url.com');
+  });
+});
