@@ -19,114 +19,8 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   } = require('./../../lib/TransactionValidator');
 
 
-describe('Transaction Validator validate structure', function() {
-  let emptyWsdlObject = new WsdlObject();
-  // it('Should not throw any error when transactions structure are valid', function() {
-  //   const transactionValidator = new TransactionValidator();
-  //   emptyWsdlObject.operationsArray = [];
-  //   emptyWsdlObject.operationsArray[0] = {};
-  //   emptyWsdlObject.operationsArray[1] = {};
-  //   emptyWsdlObject.operationsArray[0].url = 'https://domain.com/v1/petsa/{{hello}}';
-  //   emptyWsdlObject.operationsArray[0].name = 'req1';
-  //   emptyWsdlObject.operationsArray[1].url = 'https://domain.com/petsa/4';
-  //   emptyWsdlObject.operationsArray[1].name = 'req2';
-
-  //   result = transactionValidator.validateTransaction(validCollectionItems, emptyWsdlObject);
-  //   expect(result).to.be.an('object').and.to.deep.include({
-  //     matched: true,
-  //     requests: {
-  //       r1: {
-  //         endpoints: [{
-  //           matched: true,
-  //           endpointMatchScore: 1,
-  //           endpoint: 'req1',
-  //           mismatches: [],
-  //           responses: {
-  //             r1s1: {
-  //               id: 'r1s1',
-  //               matched: true,
-  //               mismatches: []
-  //             },
-  //             r1s2: {
-  //               id: 'r1s2',
-  //               matched: true,
-  //               mismatches: []
-  //             }
-  //           }
-  //         }],
-  //         requestId: 'r1',
-  //       },
-  //       r2: {
-  //         endpoints: [{
-  //           matched: true,
-  //           endpointMatchScore: 1,
-  //           endpoint: 'req2',
-  //           mismatches: [],
-  //           responses: {
-  //             r2s1: {
-  //               id: 'r2s1',
-  //               matched: true,
-  //               mismatches: []
-  //             },
-  //             r2s2: {
-  //               id: 'r2s2',
-  //               matched: true,
-  //               mismatches: []
-  //             }
-  //           }
-  //         }],
-  //         requestId: 'r2',
-  //       }
-  //     }
-  //   });
-  // });
-
-  it('Should return an error when transaction id is null', function() {
-    const transactionValidator = new TransactionValidator();
-    try {
-      transactionValidator.validateTransaction(notIdCollectionItems, emptyWsdlObject);
-      assert.fail('Expected error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Invalid syntax provided for requestList');
-    }
-  });
-
-  it('Should return an error when transaction id is empty string', function() {
-    const transactionValidator = new TransactionValidator();
-    try {
-      transactionValidator.validateTransaction(emptyIdCollectionItems, emptyWsdlObject);
-      assert.fail('Expected error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Required field is null, empty or undefined');
-    }
-  });
-
-  it('Should return an error when transaction request is null', function() {
-    const transactionValidator = new TransactionValidator();
-    try {
-      transactionValidator.validateTransaction(nullRequestCollectionItems, emptyWsdlObject);
-      assert.fail('Expected error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Invalid syntax provided for requestList');
-    }
-  });
-
-  it('Should return an error when transaction request is empty', function() {
-    const transactionValidator = new TransactionValidator();
-    try {
-      transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject);
-      assert.fail('Expected error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Required field is null, empty or undefined');
-    }
-  });
-});
-
-describe('Validate method and url', function() {
+describe('Transaction Validator validateTransaction function', function() {
+  const emptyWsdlObject = new WsdlObject();
   it('Should validate correct number to words mock wsdl and collection items', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject);
@@ -200,6 +94,89 @@ describe('Validate method and url', function() {
       }
     });
   });
+
+  it('Should return an error when transaction id is null', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateTransaction(notIdCollectionItems, emptyWsdlObject);
+      assert.fail('Expected error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Invalid syntax provided for requestList');
+    }
+  });
+
+  it('Should return an error when transaction id is empty string', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateTransaction(emptyIdCollectionItems, emptyWsdlObject);
+      assert.fail('Expected error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Required field is null, empty or undefined');
+    }
+  });
+
+  it('Should return an error when transaction request is null', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateTransaction(nullRequestCollectionItems, emptyWsdlObject);
+      assert.fail('Expected error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Invalid syntax provided for requestList');
+    }
+  });
+
+  it('Should return an error when transaction request contains an empty WSDL Object', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject);
+      assert.fail('Expected error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Required field is null, empty or undefined');
+    }
+  });
+
+  it('Should return an error when wsdlObject is not provided', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateTransaction(emptyRequestCollectionItems);
+      assert.fail('Expected error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('wsdlObject not provided');
+    }
+  });
+});
+
+describe('TransactionValidator validateRequiredFields function', function() {
+  it('Should return an error when id is not in any item', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateRequiredFields(notIdCollectionItems);
+      assert.fail('Error expected');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Required field is null, empty or undefined');
+    }
+  });
+
+  it('Should return an error when request is not in any item', function() {
+    const transactionValidator = new TransactionValidator();
+    try {
+      transactionValidator.validateRequiredFields(emptyRequestCollectionItems);
+      assert.fail('Error expected');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Required field is null, empty or undefined');
+    }
+  });
+});
+
+describe('Validate method and url', function() {
+
 
   it('Should return empty endpoints when not matched found in transaction', function() {
     const transactionValidator = new TransactionValidator(),

@@ -228,7 +228,7 @@ describe('validateTransactions method', function() {
         type: 'file',
         data: VALID_WSDL_PATH
       }, {});
-    schemaPack.validateTransactions(notIdCollectionItems, (error, result) => {
+    schemaPack.validateTransactions(notIdCollectionItems, (error) => {
       expect(error.message).to.equal('Invalid syntax provided for requestList');
       expect(result).to.equal(undefined);
     });
