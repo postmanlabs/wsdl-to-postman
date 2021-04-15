@@ -4,11 +4,11 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   emptyRequestCollectionItems = require('./../data/transactionsValidation/emptyRequestCollectionItems.json'),
   numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
   numberToWordsNoOperationsWSDLObject =
-  require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
+    require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
   numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json'),
   numberToWordsCollectionItemsGET = require('./../data/transactionsValidation/numberToWordsCollectionItemsGET.json'),
   numberToWordsCollectionItemsIncompleteItems =
-  require('./../data/transactionsValidation/numberToWordsCollectionItemsIncompleteItems.json'),
+    require('./../data/transactionsValidation/numberToWordsCollectionItemsIncompleteItems.json'),
   //  validCollectionItems = require('./../data/transactionsValidation/validCollectionItems.json'),
   {
     assert,
@@ -22,9 +22,9 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   } = require('./../../lib/TransactionValidator');
 
 
-describe('Transaction Validator validateTransaction function', function() {
+describe('Transaction Validator validateTransaction function', function () {
   const emptyWsdlObject = new WsdlObject();
-  it('Should validate correct number to words mock wsdl and collection items', function() {
+  it('Should validate correct number to words mock wsdl and collection items', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject);
     expect(result).to.be.an('object').and.to.deep.include({
@@ -98,7 +98,7 @@ describe('Transaction Validator validateTransaction function', function() {
     });
   });
 
-  it('Should return an error when transaction id is null', function() {
+  it('Should return an error when transaction id is null', function () {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(notIdCollectionItems, emptyWsdlObject);
@@ -109,7 +109,7 @@ describe('Transaction Validator validateTransaction function', function() {
     }
   });
 
-  it('Should return an error when transaction id is empty string', function() {
+  it('Should return an error when transaction id is empty string', function () {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyIdCollectionItems, emptyWsdlObject);
@@ -120,7 +120,7 @@ describe('Transaction Validator validateTransaction function', function() {
     }
   });
 
-  it('Should return an error when transaction request is null', function() {
+  it('Should return an error when transaction request is null', function () {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(nullRequestCollectionItems, emptyWsdlObject);
@@ -131,7 +131,7 @@ describe('Transaction Validator validateTransaction function', function() {
     }
   });
 
-  it('Should return an error when transaction request contains an empty WSDL Object', function() {
+  it('Should return an error when transaction request contains an empty WSDL Object', function () {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject);
@@ -142,7 +142,7 @@ describe('Transaction Validator validateTransaction function', function() {
     }
   });
 
-  it('Should return an error when wsdlObject is not provided', function() {
+  it('Should return an error when wsdlObject is not provided', function () {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyRequestCollectionItems);
@@ -154,8 +154,8 @@ describe('Transaction Validator validateTransaction function', function() {
   });
 });
 
-describe('TransactionValidator validateRequiredFields function', function() {
-  it('Should return an error when id is not in any item', function() {
+describe('TransactionValidator validateRequiredFields function', function () {
+  it('Should return an error when id is not in any item', function () {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateRequiredFields(notIdCollectionItems);
@@ -166,7 +166,7 @@ describe('TransactionValidator validateRequiredFields function', function() {
     }
   });
 
-  it('Should return an error when request is not in any item', function() {
+  it('Should return an error when request is not in any item', function () {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateRequiredFields(emptyRequestCollectionItems);
@@ -178,9 +178,9 @@ describe('TransactionValidator validateRequiredFields function', function() {
   });
 });
 
-describe('Validate method and url found item in wsdl and operation wsdl in collection', function() {
+describe('Validate method and url found item in wsdl and operation wsdl in collection', function () {
 
-  it('Should return empty endpoints when not matched found in transaction', function() {
+  it('Should return empty endpoints when not matched found in transaction', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItems,
         numberToWordsNoOperationsWSDLObject);
@@ -207,36 +207,36 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
     });
   });
 
-  it('Should return missin endpoints when the wsdl has operations not found in collection', function() {
+  it('Should return missin endpoints when the wsdl has operations not found in collection', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsIncompleteItems,
         numberToWordsWSDLObject);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       missingEndpoints: [{
-          property: 'ENDPOINT',
-          transactionJsonPath: null,
-          schemaJsonPath: 'soap NumberToDollars',
-          reasonCode: 'MISSING_ENDPOINT',
-          reason: 'The endpoint "POST soap NumberToDollars" is missing in collection',
-          endpoint: 'POST soap NumberToDollars'
-        },
-        {
-          property: 'ENDPOINT',
-          transactionJsonPath: null,
-          schemaJsonPath: 'soap12 NumberToWords',
-          reasonCode: 'MISSING_ENDPOINT',
-          reason: 'The endpoint "POST soap12 NumberToWords" is missing in collection',
-          endpoint: 'POST soap12 NumberToWords'
-        },
-        {
-          property: 'ENDPOINT',
-          transactionJsonPath: null,
-          schemaJsonPath: 'soap12 NumberToDollars',
-          reasonCode: 'MISSING_ENDPOINT',
-          reason: 'The endpoint "POST soap12 NumberToDollars" is missing in collection',
-          endpoint: 'POST soap12 NumberToDollars'
-        }
+        property: 'ENDPOINT',
+        transactionJsonPath: null,
+        schemaJsonPath: 'soap NumberToDollars',
+        reasonCode: 'MISSING_ENDPOINT',
+        reason: 'The endpoint "POST soap NumberToDollars" is missing in collection',
+        endpoint: 'POST soap NumberToDollars'
+      },
+      {
+        property: 'ENDPOINT',
+        transactionJsonPath: null,
+        schemaJsonPath: 'soap12 NumberToWords',
+        reasonCode: 'MISSING_ENDPOINT',
+        reason: 'The endpoint "POST soap12 NumberToWords" is missing in collection',
+        endpoint: 'POST soap12 NumberToWords'
+      },
+      {
+        property: 'ENDPOINT',
+        transactionJsonPath: null,
+        schemaJsonPath: 'soap12 NumberToDollars',
+        reasonCode: 'MISSING_ENDPOINT',
+        reason: 'The endpoint "POST soap12 NumberToDollars" is missing in collection',
+        endpoint: 'POST soap12 NumberToDollars'
+      }
       ],
       requests: {
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
@@ -259,44 +259,44 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
     });
   });
 
-  it('Should return empty endpoints when not matched found in transaction by incorrect method', function() {
+  it('Should return empty endpoints when not matched found in transaction by incorrect method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
         numberToWordsWSDLObject);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       missingEndpoints: [{
-          property: 'ENDPOINT',
-          transactionJsonPath: null,
-          schemaJsonPath: 'soap NumberToWords',
-          reasonCode: 'MISSING_ENDPOINT',
-          reason: 'The endpoint "POST soap NumberToWords" is missing in collection',
-          endpoint: 'POST soap NumberToWords'
-        },
-        {
-          property: 'ENDPOINT',
-          transactionJsonPath: null,
-          schemaJsonPath: 'soap NumberToDollars',
-          reasonCode: 'MISSING_ENDPOINT',
-          reason: 'The endpoint "POST soap NumberToDollars" is missing in collection',
-          endpoint: 'POST soap NumberToDollars'
-        },
-        {
-          property: 'ENDPOINT',
-          transactionJsonPath: null,
-          schemaJsonPath: 'soap12 NumberToWords',
-          reasonCode: 'MISSING_ENDPOINT',
-          reason: 'The endpoint "POST soap12 NumberToWords" is missing in collection',
-          endpoint: 'POST soap12 NumberToWords'
-        },
-        {
-          property: 'ENDPOINT',
-          transactionJsonPath: null,
-          schemaJsonPath: 'soap12 NumberToDollars',
-          reasonCode: 'MISSING_ENDPOINT',
-          reason: 'The endpoint "POST soap12 NumberToDollars" is missing in collection',
-          endpoint: 'POST soap12 NumberToDollars'
-        }
+        property: 'ENDPOINT',
+        transactionJsonPath: null,
+        schemaJsonPath: 'soap NumberToWords',
+        reasonCode: 'MISSING_ENDPOINT',
+        reason: 'The endpoint "POST soap NumberToWords" is missing in collection',
+        endpoint: 'POST soap NumberToWords'
+      },
+      {
+        property: 'ENDPOINT',
+        transactionJsonPath: null,
+        schemaJsonPath: 'soap NumberToDollars',
+        reasonCode: 'MISSING_ENDPOINT',
+        reason: 'The endpoint "POST soap NumberToDollars" is missing in collection',
+        endpoint: 'POST soap NumberToDollars'
+      },
+      {
+        property: 'ENDPOINT',
+        transactionJsonPath: null,
+        schemaJsonPath: 'soap12 NumberToWords',
+        reasonCode: 'MISSING_ENDPOINT',
+        reason: 'The endpoint "POST soap12 NumberToWords" is missing in collection',
+        endpoint: 'POST soap12 NumberToWords'
+      },
+      {
+        property: 'ENDPOINT',
+        transactionJsonPath: null,
+        schemaJsonPath: 'soap12 NumberToDollars',
+        reasonCode: 'MISSING_ENDPOINT',
+        reason: 'The endpoint "POST soap12 NumberToDollars" is missing in collection',
+        endpoint: 'POST soap12 NumberToDollars'
+      }
       ],
       requests: {
         '18403328-4213-4c3e-b0e9-b21a636697c3': {
@@ -322,8 +322,8 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
 });
 
 
-describe('get Raw URL', function() {
-  it('Should return the same url when is string', function() {
+describe('get Raw URL', function () {
+  it('Should return the same url when is string', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.getRawURL('http://url.com');
     expect(result).to.be.equal('http://url.com');

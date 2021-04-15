@@ -24,7 +24,7 @@
        },
     },
     "[javascript]": {
-        "editor.defaultFormatter": "HookyQR.beautify"
+        "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "prettier.jsxSingleQuote": true,
     "prettier.singleQuote": true,
