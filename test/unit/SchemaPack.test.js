@@ -45,6 +45,19 @@ describe('SchemaPack convert unit test WSDL 1.1', function() {
       expect(result.output[0].data).to.be.an('object');
     });
   });
+
+  it('Should get an error when input is not file nor string', function() {
+    const
+      schemaPack = new SchemaPack({
+        type: 'string',
+        data: '<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"</wsdl:definitions>'
+      }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error.message).to.equal('Cannot convert undefined or null to object');
+      expect(result).to.equal(undefined);
+    });
+  });
 });
 
 describe('SchemaPack convert unit test WSDL 1.1 with options', function() {

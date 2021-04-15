@@ -1,0 +1,67 @@
+[{
+  "id": "aebb36fc-1be3-44c3-8f4a-0b5042dc17d0",
+  "name": "NumberToWords",
+  "description": {
+    "content": "Returns the word corresponding to the positive number passed as parameter. Limited to quadrillions.",
+    "type": "text/plain"
+  },
+  "request": {
+    "url": {
+      "path": ["webservicesserver", "NumberConversion.wso"],
+      "host": ["https://www.dataaccess.com"],
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <ubiNum>18446744073709</ubiNum>\n    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "d36c56cf-0cf6-4273-a34d-973e842bf80f",
+    "name": "NumberToWords response",
+    "originalRequest": {
+      "url": {
+        "protocol": "https",
+        "path": ["webservicesserver", "NumberConversion.wso"],
+        "host": ["www", "dataaccess", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <ubiNum>18446744073709</ubiNum>\n    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWordsResponse xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <NumberToWordsResult>place your string value here</NumberToWordsResult>\n    </NumberToWordsResponse>\n  </soap:Body>\n</soap:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}]
