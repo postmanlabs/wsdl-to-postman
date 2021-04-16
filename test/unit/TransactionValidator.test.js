@@ -328,7 +328,8 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
 describe('Validate Headers', function () {
   it('Should return missing header when not content-type header is present', function () {
     const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader, numberToWordsWSDLObject);
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
+        numberToWordsWSDLObject);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -390,7 +391,7 @@ describe('Validate Headers', function () {
               transactionJsonPath: '$.request.header',
               schemaJsonPath: 'schemaPathPrefix',
               reasonCode: 'MISSING_IN_REQUEST',
-              reason: `The header "Content-Type" was not found in the transaction`
+              reason: 'The header "Content-Type" was not found in the transaction'
             }],
             responses: {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
@@ -401,7 +402,7 @@ describe('Validate Headers', function () {
                   transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header',
                   schemaJsonPath: 'schemaPathPrefix',
                   reasonCode: 'MISSING_IN_REQUEST',
-                  reason: `The header "Content-Type" was not found in the transaction`
+                  reason: 'The header "Content-Type" was not found in the transaction'
                 }]
               }
             }
@@ -477,7 +478,8 @@ describe('Validate Headers', function () {
               transactionJsonPath: '$.request.header[0].value',
               schemaJsonPath: 'schemaPathPrefix',
               reasonCode: 'INVALID_TYPE',
-              reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we found \"text/plain; charset=utf-8\" instead'
+              reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we ' +
+                'found \"text/plain; charset=utf-8\" instead'
             }],
             responses: {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
@@ -488,7 +490,8 @@ describe('Validate Headers', function () {
                   transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header[0].value',
                   schemaJsonPath: 'schemaPathPrefix',
                   reasonCode: 'INVALID_TYPE',
-                  reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we found \"text/plain; charset=utf-8\" instead'
+                  reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we' +
+                    ' found \"text/plain; charset=utf-8\" instead'
                 }]
               }
             }
