@@ -9,16 +9,16 @@ const expect = require('chai').expect,
   validWSDLs = 'test/data/validWSDLs11',
   fs = require('fs');
 
-describe('Index getOptions', function() {
-  it('Should return external options when called without parameters', function() {
+describe('Index getOptions', function () {
+  it('Should return external options when called without parameters', function () {
     const options = getOptions();
     expect(options).to.be.an('array');
     expect(options.length).to.eq(1);
   });
 });
 
-describe('getMetaData', function() {
-  it('Should return the metadata for the valid input file', function() {
+describe('getMetaData', function () {
+  it('Should return the metadata for the valid input file', function () {
 
     const
       VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl';
@@ -26,17 +26,17 @@ describe('getMetaData', function() {
     getMetaData({
       type: 'file',
       data: VALID_WSDL_PATH
-    }, function(x, y) {
+    }, function (x, y) {
       expect(x).to.eq(null);
-      expect(y.name).to.eq('Converted from WSDL');
+      expect(y.name).to.eq('calculator-soap11and12.wsdl');
     });
 
   });
 });
 
 
-describe('convert', function() {
-  it('Should convert the valid input file', function() {
+describe('convert', function () {
+  it('Should convert the valid input file', function () {
     const
       VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl';
     convert({
@@ -51,7 +51,7 @@ describe('convert', function() {
     });
 
   });
-  it('Should convert the valid input data from file', function() {
+  it('Should convert the valid input data from file', function () {
     const
       VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl',
       fileContent = fs.readFileSync(VALID_WSDL_PATH, 'utf8');
@@ -69,8 +69,8 @@ describe('convert', function() {
   });
 });
 
-describe('validate', function() {
-  it('Should return the validate correct for the valid input file', function() {
+describe('validate', function () {
+  it('Should return the validate correct for the valid input file', function () {
 
     const
       VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl';
@@ -85,8 +85,8 @@ describe('validate', function() {
 });
 
 
-describe('merge and validate', function() {
-  it('Should send error', function() {
+describe('merge and validate', function () {
+  it('Should send error', function () {
     const
       VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl';
     mergeAndValidate({
