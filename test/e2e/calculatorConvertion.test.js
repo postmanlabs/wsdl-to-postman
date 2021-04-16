@@ -9,7 +9,7 @@ const expect = require('chai').expect,
   ],
   descType = 'text/plain',
   url = {
-    path: ['', 'calculator.asmx'],
+    path: ['calculator.asmx'],
     host: ['{{url_variable_0}}'],
     'query': [],
     'variable': []
