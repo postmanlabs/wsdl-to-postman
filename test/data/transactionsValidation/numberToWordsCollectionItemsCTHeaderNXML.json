@@ -57,7 +57,7 @@
     "code": 200,
     "header": [{
       "key": "Content-Type",
-      "value": "text/xml; charset=utf-8"
+      "value": "text/plain; charset=utf-8"
     }],
     "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWordsResponse xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <NumberToWordsResult>place your string value here</NumberToWordsResult>\n    </NumberToWordsResponse>\n  </soap:Body>\n</soap:Envelope>\n",
     "cookie": [],

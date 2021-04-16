@@ -395,8 +395,14 @@ describe('Validate Headers', function () {
             responses: {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
                 id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
-                matched: true,
-                mismatches: []
+                matched: false,
+                mismatches: [{
+                  property: 'HEADER',
+                  transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header',
+                  schemaJsonPath: 'schemaPathPrefix',
+                  reasonCode: 'MISSING_IN_REQUEST',
+                  reason: `The header "Content-Type" was not found in the transaction`
+                }]
               }
             }
           }],
@@ -406,7 +412,7 @@ describe('Validate Headers', function () {
     });
   });
 
-  it('Should return bad header when not content-type header is not xml', function () {
+  it('Should return bad header when not content-type header is not text/xml', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
         numberToWordsWSDLObject);
@@ -468,16 +474,22 @@ describe('Validate Headers', function () {
             endpoint: 'NumberToWords',
             mismatches: [{
               property: 'HEADER',
-              transactionJsonPath: '$.request.header',
+              transactionJsonPath: '$.request.header[0].value',
               schemaJsonPath: 'schemaPathPrefix',
-              reasonCode: 'MISSING_IN_REQUEST',
-              reason: `The header "Content-Type" was not found in the transaction`
+              reasonCode: 'INVALID_TYPE',
+              reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we found \"text/plain; charset=utf-8\" instead'
             }],
             responses: {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
                 id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
-                matched: true,
-                mismatches: []
+                matched: false,
+                mismatches: [{
+                  property: 'HEADER',
+                  transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header[0].value',
+                  schemaJsonPath: 'schemaPathPrefix',
+                  reasonCode: 'INVALID_TYPE',
+                  reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we found \"text/plain; charset=utf-8\" instead'
+                }]
               }
             }
           }],
