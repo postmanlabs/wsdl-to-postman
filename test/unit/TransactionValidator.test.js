@@ -109,7 +109,7 @@ describe('Transaction Validator validateTransaction function', function () {
     }
   });
 
-  it('Should return an error when transaction id is empty string', function () {
+  it('Should return an error when transaction id is an empty string', function () {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyIdCollectionItems, emptyWsdlObject);
@@ -180,7 +180,7 @@ describe('TransactionValidator validateRequiredFields function', function () {
 
 describe('Validate method and url found item in wsdl and operation wsdl in collection', function () {
 
-  it('Should return empty endpoints when not matched found in transaction', function () {
+  it('Should return empty endpoints when not matchs found in transaction', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItems,
         numberToWordsNoOperationsWSDLObject);
@@ -207,7 +207,7 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
     });
   });
 
-  it('Should return missin endpoints when the wsdl has operations not found in collection', function () {
+  it('Should return missing endpoints when the wsdl has operations not found in the collection', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsIncompleteItems,
         numberToWordsWSDLObject);
@@ -259,7 +259,7 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
     });
   });
 
-  it('Should return empty endpoints when not matched found in transaction by incorrect method', function () {
+  it('Should return empty endpoints when not matchs found in the transaction by incorrect method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
         numberToWordsWSDLObject);
@@ -323,7 +323,7 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
 
 
 describe('get Raw URL', function () {
-  it('Should return the same url when is string', function () {
+  it('Should return the same url when it is a string', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.getRawURL('http://url.com');
     expect(result).to.be.equal('http://url.com');
