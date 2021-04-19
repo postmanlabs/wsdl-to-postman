@@ -5,6 +5,7 @@ const expect = require('chai').expect,
   validWSDLs = 'test/data/validWSDLs11',
   validWSDLs20 = 'test/data/validWSDLs20',
   fs = require('fs'),
+  getAllTransactions = require('../../lib/utils/getAllTransactions').getAllTransactions,
   async = require('async');
 
 describe('SchemaPack convert unit test WSDL 1.1', function () {
@@ -238,6 +239,33 @@ describe('validateTransactions method', function () {
       }, {});
     schemaPack.validateTransactions(notIdCollectionItems, (error) => {
       expect(error.message).to.equal('Invalid syntax provided for requestList');
+    });
+  });
+
+  it('Should return no missmatches when entry is valid', function () {
+    const
+      VALID_WSDL_PATH = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8'),
+      schemaPack = new SchemaPack({
+        type: 'string',
+        data: VALID_WSDL_PATH
+      }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+
+      let historyRequests = [];
+      getAllTransactions(result.output[0].data, historyRequests);
+
+      // postman application should substitute variables
+      historyRequests.forEach((historyRequest) => {
+        historyRequest.request.url.host = 'http://www.dneonline.com';
+      });
+
+      schemaPack.validateTransactions(historyRequests, (error, result) => {
+        expect(error).to.be.null;
+        expect(result).to.be.an('object');
+      });
     });
   });
 });

@@ -38,7 +38,7 @@ describe('Transaction Validator validateTransaction function', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToDollars',
+            endpoint: 'POST soap12 NumberToDollars',
             mismatches: [],
             responses: {
               '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
@@ -54,7 +54,7 @@ describe('Transaction Validator validateTransaction function', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToWords',
+            endpoint: 'POST soap12 NumberToWords',
             mismatches: [],
             responses: {
               'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
@@ -70,7 +70,7 @@ describe('Transaction Validator validateTransaction function', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToDollars',
+            endpoint: 'POST soap NumberToDollars',
             mismatches: [],
             responses: {
               '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
@@ -86,7 +86,7 @@ describe('Transaction Validator validateTransaction function', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToWords',
+            endpoint: 'POST soap NumberToWords',
             mismatches: [],
             responses: {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
@@ -247,7 +247,7 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToWords',
+            endpoint: 'POST soap NumberToWords',
             mismatches: [],
             responses: {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
@@ -337,7 +337,7 @@ describe('Validate Headers', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToDollars',
+            endpoint: 'POST soap12 NumberToDollars',
             mismatches: [],
             responses: {
               '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
@@ -353,7 +353,7 @@ describe('Validate Headers', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToWords',
+            endpoint: 'POST soap12 NumberToWords',
             mismatches: [],
             responses: {
               'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
@@ -369,7 +369,7 @@ describe('Validate Headers', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToDollars',
+            endpoint: 'POST soap NumberToDollars',
             mismatches: [],
             responses: {
               '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
@@ -385,7 +385,7 @@ describe('Validate Headers', function () {
           endpoints: [{
             matched: false,
             endpointMatchScore: 1,
-            endpoint: 'NumberToWords',
+            endpoint: 'POST soap NumberToWords',
             mismatches: [{
               property: 'HEADER',
               transactionJsonPath: '$.request.header',
@@ -424,7 +424,7 @@ describe('Validate Headers', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToDollars',
+            endpoint: 'POST soap12 NumberToDollars',
             mismatches: [],
             responses: {
               '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
@@ -440,7 +440,7 @@ describe('Validate Headers', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToWords',
+            endpoint: 'POST soap12 NumberToWords',
             mismatches: [],
             responses: {
               'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
@@ -456,7 +456,7 @@ describe('Validate Headers', function () {
           endpoints: [{
             matched: true,
             endpointMatchScore: 1,
-            endpoint: 'NumberToDollars',
+            endpoint: 'POST soap NumberToDollars',
             mismatches: [],
             responses: {
               '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
@@ -472,7 +472,7 @@ describe('Validate Headers', function () {
           endpoints: [{
             matched: false,
             endpointMatchScore: 1,
-            endpoint: 'NumberToWords',
+            endpoint: 'POST soap NumberToWords',
             mismatches: [{
               property: 'HEADER',
               transactionJsonPath: '$.request.header[0].value',
