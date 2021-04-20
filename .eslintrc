@@ -1,7 +1,7 @@
 {
 	"parser": "babel-eslint",
 	"parserOptions": {
-		"ecmaVersion": 2020
+		"ecmaVersion": 2015
 	},
 	"plugins": [
 		"security",
@@ -11,7 +11,7 @@
 	"env": {
 		"browser": false,
 		"node":true,
-		"es2020": true
+		"es6": true
 	},
 	"rules": {
 		// Possible Errors
@@ -37,6 +37,7 @@
 		"no-negated-in-lhs": "error",
 		"no-obj-calls": "error",
 		"no-regex-spaces": "error",
+		"no-restricted-modules": ["error", "fs", "path"],
 		"no-sparse-arrays": "error",
 		"no-unexpected-multiline": "error",
 		"no-unreachable": "error",
