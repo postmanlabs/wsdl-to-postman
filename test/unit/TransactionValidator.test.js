@@ -6,6 +6,10 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   numberToWordsNoOperationsWSDLObject =
     require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
   numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json'),
+  numberToWordsCollectionItemsBodyWrongType = require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyWrongType.json'),
+  numberToWordsCollectionItemsBodyIncomplete = require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyIncomplete.json'),
+  numberToWordsCollectionItemsBodyMoreFields = require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyMoreFields.json'),
+  numberToWordsCollectionItemsBodyLess = require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyLess.json'),
   numberToWordsCollectionItemsNoCTHeader =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsNoCTHeader.json'),
   numberToWordsCollectionItemsCTHeaderNXML =
@@ -513,10 +517,23 @@ describe('get Raw URL', function () {
 });
 
 describe('validateBody method', function() {
-  it('Should validate correct number to words mock wsdl and collection items', function () {
-    const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject);
-    expect(result).to.be.an('object').and.to.deep.include({
+  const bodyMismatchMockWithReason = (reason) => {
+    let newMismatch = Object.assign({}, {
+      property: "BODY",
+      transactionJsonPath: "$.request.body",
+      schemaJsonPath: "schemaPathPrefix",
+      reasonCode: "INVALID_BODY",
+      reason: reason
+    });
+      return newMismatch;
+    },
+    getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch) => {
+      let newExpected = Object.assign({}, expectedBase);
+      newExpected.requests[itemId].endpoints[0].mismatches = [mismatch];
+      newExpected.requests[itemId].endpoints[0].matched = false;
+      return newExpected;
+    },
+    expectedBase = {
       matched: true,
       requests: {
         '18403328-4213-4c3e-b0e9-b21a636697c3': {
@@ -584,6 +601,46 @@ describe('validateBody method', function() {
           requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
         }
       }
-    });
+    };
+  it('Should return an object with no mismatches when bodies are valid', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject);
+    expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
-})
+  
+  it('Should have a mismatch when an endpoint has a type error in body', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsBodyWrongType, numberToWordsWSDLObject),
+      mismatchReason = "Element 'ubiNum': 'WRONG TYPE' is not a valid value of the atomic type 'xs:unsignedLong'.\n",
+      expected = getExpectedWithMismatchInEndpoint(
+          expectedBase, 
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', 
+          bodyMismatchMockWithReason(mismatchReason)
+        );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when endpoint body has not complete all required fields', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsBodyIncomplete, numberToWordsWSDLObject),
+      mismatchReason = "Element 'NumberToWords': Missing child element(s). Expected is ( ubiNum ).\n",
+      expected = getExpectedWithMismatchInEndpoint(
+          expectedBase, 
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', 
+          bodyMismatchMockWithReason(mismatchReason)
+        );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when endpoint body has more fields than expected', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsBodyMoreFields, numberToWordsWSDLObject),
+      mismatchReason = "Element 'WORNGFIELD': This element is not expected.\n",
+      expected = getExpectedWithMismatchInEndpoint(
+          expectedBase, 
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', 
+          bodyMismatchMockWithReason(mismatchReason)
+        );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+});
