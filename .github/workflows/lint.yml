@@ -1,9 +1,7 @@
 name: Lint
 
 on:
-  push:
-    branches: 
-    - development
+  [push]
 
 jobs:
   eslint:
