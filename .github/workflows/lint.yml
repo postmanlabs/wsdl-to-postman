@@ -7,4 +7,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: bradennapier/eslint-plus-action@v3.4.2
+        with:
+          cmd: npm run lint
