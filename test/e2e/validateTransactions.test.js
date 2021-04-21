@@ -1,5 +1,3 @@
-const { error } = require('ajv/dist/vocabularies/applicator/dependencies');
-
 const expect = require('chai').expect,
   fs = require('fs'),
   {
