@@ -526,14 +526,14 @@ describe('get Raw URL', function () {
   });
 });
 
-describe('validateBody method', function() {
-  const bodyMismatchMockWithReason = (reason) => {
+describe('validateBody method', function () {
+  const bodyMismatchMockWithReason = (reason, schemaJsonPath) => {
       let newMismatch = Object.assign(
         {},
         {
           property: 'BODY',
           transactionJsonPath: '$.request.body',
-          schemaJsonPath: 'schemaPathPrefix',
+          schemaJsonPath: schemaJsonPath,
           reasonCode: 'INVALID_BODY',
           reason: reason
         }
@@ -639,7 +639,11 @@ describe('validateBody method', function() {
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
-        bodyMismatchMockWithReason(mismatchReason)
+        bodyMismatchMockWithReason(mismatchReason, {
+          'wsdlNamespaceUrl': 'http://schemas.xmlsoap.org/wsdl/',
+          'xpath': '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
+            '//pm:operation[@name="NumberToWords"]'
+        })
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -654,7 +658,11 @@ describe('validateBody method', function() {
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
-        bodyMismatchMockWithReason(mismatchReason)
+        bodyMismatchMockWithReason(mismatchReason, {
+          'wsdlNamespaceUrl': 'http://schemas.xmlsoap.org/wsdl/',
+          'xpath': '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
+            '//pm:operation[@name="NumberToWords"]'
+        })
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -669,7 +677,11 @@ describe('validateBody method', function() {
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
-        bodyMismatchMockWithReason(mismatchReason)
+        bodyMismatchMockWithReason(mismatchReason, {
+          'wsdlNamespaceUrl': 'http://schemas.xmlsoap.org/wsdl/',
+          'xpath': '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
+            '//pm:operation[@name="NumberToWords"]'
+        })
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -807,7 +819,11 @@ describe('validateBody method', function() {
                   {
                     property: 'RESPONSE_BODY',
                     transactionJsonPath: '$.response.body',
-                    schemaJsonPath: 'schemaPathPrefix',
+                    schemaJsonPath: {
+                      'wsdlNamespaceUrl': 'http://schemas.xmlsoap.org/wsdl/',
+                      'xpath': '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
+                        '//pm:operation[@name="NumberToWords"]'
+                    },
                     reasonCode: 'INVALID_RESPONSE_BODY',
                     reason: 'Element \'NumberToWordsResponse\': Missing child element(s).' +
                       ' Expected is ( NumberToWordsResult ).\n'
@@ -893,7 +909,11 @@ describe('validateBody method', function() {
                   {
                     property: 'RESPONSE_BODY',
                     transactionJsonPath: '$.response.body',
-                    schemaJsonPath: 'schemaPathPrefix',
+                    schemaJsonPath: {
+                      'wsdlNamespaceUrl': 'http://schemas.xmlsoap.org/wsdl/',
+                      'xpath': '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
+                        '//pm:operation[@name="NumberToWords"]'
+                    },
                     reasonCode: 'INVALID_RESPONSE_BODY',
                     reason: 'Element \'WRONGFIELD\': This element is not expected.\n'
                   }
@@ -978,7 +998,11 @@ describe('validateBody method', function() {
                   {
                     property: 'RESPONSE_BODY',
                     transactionJsonPath: '$.response.body',
-                    schemaJsonPath: 'schemaPathPrefix',
+                    schemaJsonPath: {
+                      'wsdlNamespaceUrl': 'http://schemas.xmlsoap.org/wsdl/',
+                      'xpath': '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
+                        '//pm:operation[@name="NumberToWords"]'
+                    },
                     reasonCode: 'INVALID_RESPONSE_BODY',
                     reason: 'Response body not provided'
                   }
