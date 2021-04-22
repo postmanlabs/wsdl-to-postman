@@ -12,11 +12,14 @@
       "query": [],
       "variable": []
     },
-    "header": [],
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
     "method": "POST",
     "body": {
       "mode": "raw",
-      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <ubiNum>18446744073709</ubiNum>\n    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <ubiNum>WRONG TYPE</ubiNum>\n    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n",
       "options": {
         "raw": {
           "language": "xml"
@@ -35,7 +38,10 @@
         "query": [],
         "variable": []
       },
-      "header": [],
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
       "method": "POST",
       "body": {
         "mode": "raw",
@@ -49,7 +55,10 @@
     },
     "status": "OK",
     "code": 200,
-    "header": [],
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
     "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWordsResponse xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <NumberToWordsResult>place your string value here</NumberToWordsResult>\n    </NumberToWordsResponse>\n  </soap:Body>\n</soap:Envelope>\n",
     "cookie": [],
     "_postman_previewlanguage": "xml"

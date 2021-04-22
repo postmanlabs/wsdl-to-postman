@@ -43,7 +43,7 @@ describe('Test validate Transactions method in SchemaPack', function () {
     schemaPack.validateTransactions(numberToWordsCollectionItemsNoCTHeader, (error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object').and.to.deep.include({
-        matched: true,
+        matched: false,
         requests: {
           '18403328-4213-4c3e-b0e9-b21a636697c3': {
             endpoints: [{
@@ -130,7 +130,7 @@ describe('Test validate Transactions method in SchemaPack', function () {
     schemaPack.validateTransactions(numberToWordsCollectionItemsCTHeaderNXML, (error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object').and.to.deep.include({
-        matched: true,
+        matched: false,
         requests: {
           '18403328-4213-4c3e-b0e9-b21a636697c3': {
             endpoints: [{

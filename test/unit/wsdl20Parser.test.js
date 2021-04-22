@@ -600,7 +600,7 @@ describe('WSDL 2.0 parser assignNamespaces', function () {
       'SOAP12Namespace', 'schemaNamespace',
       'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
       'operationsArray', 'securityPolicyArray',
-      'securityPolicyNamespace');
+      'securityPolicyNamespace', 'xmlParsed', 'version');
 
     expect(wsdlObject.targetNamespace.url).to.equal('http://axis2.org');
     expect(wsdlObject.tnsNamespace.url).to.equal('http://axis2.org');
@@ -622,7 +622,7 @@ describe('WSDL 2.0 parser getWsdlObject', function () {
         'SOAP12Namespace', 'schemaNamespace',
         'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
         'operationsArray', 'securityPolicyArray',
-        'securityPolicyNamespace');
+        'securityPolicyNamespace', 'xmlParsed', 'version');
 
       expect(wsdlObject.allNameSpaces).to.be.an('array');
       expect(wsdlObject.allNameSpaces.length).to.equal(7);
