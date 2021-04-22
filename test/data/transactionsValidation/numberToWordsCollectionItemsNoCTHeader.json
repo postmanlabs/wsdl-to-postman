@@ -35,10 +35,7 @@
         "query": [],
         "variable": []
       },
-      "header": [{
-        "key": "Content-Type",
-        "value": "text/xml; charset=utf-8"
-      }],
+      "header": [],
       "method": "POST",
       "body": {
         "mode": "raw",
