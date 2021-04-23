@@ -143,16 +143,16 @@ whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
 </wsdl2:service>
 </wsdl2:description>`;
 
-describe('WSDL 2.0 parser constructor', function() {
-  it('should get an object wsdl 2.0 parser', function() {
+describe('WSDL 2.0 parser constructor', function () {
+  it('should get an object wsdl 2.0 parser', function () {
     const parser = new Wsdl20Parser();
     expect(parser).to.be.an('object');
   });
 });
 
-describe('WSDL 2.0 parser parseFromXmlToObject', function() {
+describe('WSDL 2.0 parser parseFromXmlToObject', function () {
 
-  it('should get an object in memory representing xml object with valid input', function() {
+  it('should get an object in memory representing xml object with valid input', function () {
     const simpleInput = `<user is='great'>
       <name>Tobias</name>
       <familyName>Nickel</familyName>
@@ -168,7 +168,7 @@ describe('WSDL 2.0 parser parseFromXmlToObject', function() {
 
   });
 
-  it('should throw an error when input is an empty string', function() {
+  it('should throw an error when input is an empty string', function () {
     parser = new Wsdl20Parser();
     try {
       parser.parseFromXmlToObject('');
@@ -179,7 +179,7 @@ describe('WSDL 2.0 parser parseFromXmlToObject', function() {
     }
   });
 
-  it('should throw an error when input is null', function() {
+  it('should throw an error when input is null', function () {
     parser = new Wsdl20Parser();
     try {
       parser.parseFromXmlToObject(null);
@@ -190,7 +190,7 @@ describe('WSDL 2.0 parser parseFromXmlToObject', function() {
     }
   });
 
-  it('should throw an error when input is undefined', function() {
+  it('should throw an error when input is undefined', function () {
     parser = new Wsdl20Parser();
     try {
       parser.parseFromXmlToObject(undefined);
@@ -202,8 +202,8 @@ describe('WSDL 2.0 parser parseFromXmlToObject', function() {
   });
 });
 
-describe('WSDL 2.0 get principalPrefix', function() {
-  it('should get empty string when called with <description>', function() {
+describe('WSDL 2.0 get principalPrefix', function () {
+  it('should get empty string when called with <description>', function () {
     const simpleInput = `<?xml version="1.0" encoding="utf-8" ?>
     <description xmlns="http://www.w3.org/ns/wsdl" 
     targetNamespace="http://greath.example.com/2004/wsdl/resSvc" 
@@ -221,7 +221,7 @@ describe('WSDL 2.0 get principalPrefix', function() {
     expect(principalPrefix).to.equal('');
   });
 
-  it('should get wsdl2 called with <wsdl2:description>', function() {
+  it('should get wsdl2 called with <wsdl2:description>', function () {
     const simpleInput = `<?xml version="1.0" encoding="utf-8" ?>
     <wsdl2:description xmlns="http://www.w3.org/ns/wsdl" 
     targetNamespace="http://greath.example.com/2004/wsdl/resSvc" 
@@ -239,7 +239,7 @@ describe('WSDL 2.0 get principalPrefix', function() {
     expect(principalPrefix).to.equal('wsdl2:');
   });
 
-  it('should throw an error when called with null', function() {
+  it('should throw an error when called with null', function () {
     const parser = new Wsdl20Parser();
     try {
       parser.getPrincipalPrefix(
@@ -252,7 +252,7 @@ describe('WSDL 2.0 get principalPrefix', function() {
     }
   });
 
-  it('should throw an error when called with undefined', function() {
+  it('should throw an error when called with undefined', function () {
     const parser = new Wsdl20Parser();
     try {
       parser.getPrincipalPrefix(
@@ -266,9 +266,9 @@ describe('WSDL 2.0 get principalPrefix', function() {
   });
 });
 
-describe('WSDL 2.0 parser getNamespaceByURL', function() {
+describe('WSDL 2.0 parser getNamespaceByURL', function () {
 
-  it('should get wsoap when called with http://www.w3.org/ns/wsdl/soap', function() {
+  it('should get wsoap when called with http://www.w3.org/ns/wsdl/soap', function () {
     const simpleInput = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -293,7 +293,7 @@ describe('WSDL 2.0 parser getNamespaceByURL', function() {
 
   });
 
-  it('should get ns when called with http://axis2.org', function() {
+  it('should get ns when called with http://axis2.org', function () {
     const simpleInput = `<description xmlns="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -317,7 +317,7 @@ describe('WSDL 2.0 parser getNamespaceByURL', function() {
     expect(wsdlnamespace.isDefault).to.equal(true);
   });
 
-  it('should throw an error when url input is empty', function() {
+  it('should throw an error when url input is empty', function () {
     const simpleInput = `<description xmlns="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -343,7 +343,7 @@ describe('WSDL 2.0 parser getNamespaceByURL', function() {
     }
   });
 
-  it('should throw an error when url input is null', function() {
+  it('should throw an error when url input is null', function () {
     const simpleInput = `<description xmlns="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -369,7 +369,7 @@ describe('WSDL 2.0 parser getNamespaceByURL', function() {
     }
   });
 
-  it('should throw an error when url input is undefined', function() {
+  it('should throw an error when url input is undefined', function () {
     const simpleInput = `<description xmlns="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -396,9 +396,9 @@ describe('WSDL 2.0 parser getNamespaceByURL', function() {
   });
 });
 
-describe('WSDL 2.0 parser getNamespaceBykey', function() {
+describe('WSDL 2.0 parser getNamespaceBykey', function () {
 
-  it('should get wsoap when called with http://www.w3.org/ns/wsdl/soap', function() {
+  it('should get wsoap when called with http://www.w3.org/ns/wsdl/soap', function () {
     const simpleInput = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -422,7 +422,7 @@ describe('WSDL 2.0 parser getNamespaceBykey', function() {
     expect(wsdlnamespace.isDefault).to.equal(false);
   });
 
-  it('should throw an error when key input is empty', function() {
+  it('should throw an error when key input is empty', function () {
     const simpleInput = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -448,7 +448,7 @@ describe('WSDL 2.0 parser getNamespaceBykey', function() {
     }
   });
 
-  it('should throw an error when key input is null', function() {
+  it('should throw an error when key input is null', function () {
     const simpleInput = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -474,7 +474,7 @@ describe('WSDL 2.0 parser getNamespaceBykey', function() {
     }
   });
 
-  it('should throw an error when key input is undefined', function() {
+  it('should throw an error when key input is undefined', function () {
     const simpleInput = `<wsdl2:description xmlns:wsdl2="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
       xmlns:whttp="http://www.w3.org/ns/wsdl/http"
@@ -501,9 +501,9 @@ describe('WSDL 2.0 parser getNamespaceBykey', function() {
   });
 });
 
-describe('WSDL 2.0 parser getAllNamespaces', function() {
+describe('WSDL 2.0 parser getAllNamespaces', function () {
 
-  it('should get 11 elements when called with nex entry', function() {
+  it('should get 11 elements when called with nex entry', function () {
     const simpleInput = `<wsdl2:description 
       xmlns:wsdl2="http://www.w3.org/ns/wsdl"
       xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
@@ -527,7 +527,7 @@ describe('WSDL 2.0 parser getAllNamespaces', function() {
     expect(wsdlnamespace.length).to.equal(11);
   });
 
-  it('should throw an error when parsed is empty', function() {
+  it('should throw an error when parsed is empty', function () {
     const parser = new Wsdl20Parser();
     try {
       let wsdlnamespace = parser.getAllNamespaces({});
@@ -542,7 +542,7 @@ describe('WSDL 2.0 parser getAllNamespaces', function() {
     }
   });
 
-  it('should throw an error when parsed is null', function() {
+  it('should throw an error when parsed is null', function () {
     const parser = new Wsdl20Parser();
     try {
       let wsdlnamespace = parser.getAllNamespaces(null);
@@ -557,7 +557,7 @@ describe('WSDL 2.0 parser getAllNamespaces', function() {
     }
   });
 
-  it('should throw an error when parsed is undefined', function() {
+  it('should throw an error when parsed is undefined', function () {
     const parser = new Wsdl20Parser();
     try {
       let wsdlnamespace = parser.getAllNamespaces(undefined);
@@ -573,9 +573,9 @@ describe('WSDL 2.0 parser getAllNamespaces', function() {
   });
 });
 
-describe('WSDL 2.0 parser assignNamespaces', function() {
+describe('WSDL 2.0 parser assignNamespaces', function () {
 
-  it('should assign namespaces to wsdl object', function() {
+  it('should assign namespaces to wsdl object', function () {
     const simpleInput = `<wsdl2:description 
     xmlns:wsdl2="http://www.w3.org/ns/wsdl"
     xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
@@ -600,7 +600,7 @@ describe('WSDL 2.0 parser assignNamespaces', function() {
       'SOAP12Namespace', 'schemaNamespace',
       'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
       'operationsArray', 'securityPolicyArray',
-      'securityPolicyNamespace');
+      'securityPolicyNamespace', 'xmlParsed', 'version');
 
     expect(wsdlObject.targetNamespace.url).to.equal('http://axis2.org');
     expect(wsdlObject.tnsNamespace.url).to.equal('http://axis2.org');
@@ -610,10 +610,10 @@ describe('WSDL 2.0 parser assignNamespaces', function() {
   });
 });
 
-describe('WSDL 2.0 parser getWsdlObject', function() {
+describe('WSDL 2.0 parser getWsdlObject', function () {
 
   it('should get an object in memory representing wsdlObject 2.0',
-    function() {
+    function () {
       const parser = new Wsdl20Parser();
       let wsdlObject = parser.getWsdlObject(WSDL_SAMPLE);
       expect(wsdlObject).to.be.an('object');
@@ -622,7 +622,7 @@ describe('WSDL 2.0 parser getWsdlObject', function() {
         'SOAP12Namespace', 'schemaNamespace',
         'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
         'operationsArray', 'securityPolicyArray',
-        'securityPolicyNamespace');
+        'securityPolicyNamespace', 'xmlParsed', 'version');
 
       expect(wsdlObject.allNameSpaces).to.be.an('array');
       expect(wsdlObject.allNameSpaces.length).to.equal(7);
@@ -638,7 +638,7 @@ describe('WSDL 2.0 parser getWsdlObject', function() {
       expect(wsdlObject.schemaNamespace.key).to.equal('xs');
     });
 
-  it('should throw an error when parsedxml is null', function() {
+  it('should throw an error when parsedxml is null', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getWsdlObject(null);
@@ -649,7 +649,7 @@ describe('WSDL 2.0 parser getWsdlObject', function() {
     }
   });
 
-  it('should throw an error when parsedxml is empty', function() {
+  it('should throw an error when parsedxml is empty', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getWsdlObject('');
@@ -661,8 +661,8 @@ describe('WSDL 2.0 parser getWsdlObject', function() {
   });
 });
 
-describe('WSDL 2.0 parser getServices', function() {
-  it('should get an array object representing services using default namespace', function() {
+describe('WSDL 2.0 parser getServices', function () {
+  it('should get an array object representing services using default namespace', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
       services = parser.getServices(
@@ -672,7 +672,7 @@ describe('WSDL 2.0 parser getServices', function() {
     expect(services.length).to.equal(1);
   });
 
-  it('should get an array object representing services using default WSDL_SAMPLE_AXIS', function() {
+  it('should get an array object representing services using default WSDL_SAMPLE_AXIS', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
       services = parser.getServices(
@@ -682,7 +682,7 @@ describe('WSDL 2.0 parser getServices', function() {
     expect(services.length).to.equal(1);
   });
 
-  it('should throw an error when call with null', function() {
+  it('should throw an error when call with null', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getServices(
@@ -695,7 +695,7 @@ describe('WSDL 2.0 parser getServices', function() {
     }
   });
 
-  it('should throw an error when call with empty', function() {
+  it('should throw an error when call with empty', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getServices(
@@ -709,8 +709,8 @@ describe('WSDL 2.0 parser getServices', function() {
   });
 });
 
-describe('WSDL 2.0 parser getBindings', function() {
-  it('should get an array object representing bindings using default namespace', function() {
+describe('WSDL 2.0 parser getBindings', function () {
+  it('should get an array object representing bindings using default namespace', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
       bindings = parser.getBindings(
@@ -720,7 +720,7 @@ describe('WSDL 2.0 parser getBindings', function() {
     expect(bindings.length).to.equal(1);
   });
 
-  it('should get an array object representing bindings using default WSDL_SAMPLE_AXIS', function() {
+  it('should get an array object representing bindings using default WSDL_SAMPLE_AXIS', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
       bindings = parser.getBindings(
@@ -730,7 +730,7 @@ describe('WSDL 2.0 parser getBindings', function() {
     expect(bindings.length).to.equal(3);
   });
 
-  it('should throw an error when call with null', function() {
+  it('should throw an error when call with null', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getServices(
@@ -743,7 +743,7 @@ describe('WSDL 2.0 parser getBindings', function() {
     }
   });
 
-  it('should throw an error when call with empty', function() {
+  it('should throw an error when call with empty', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getServices(
@@ -757,8 +757,8 @@ describe('WSDL 2.0 parser getBindings', function() {
   });
 });
 
-describe('WSDL 2.0 parser getElementsFromWSDL', function() {
-  it('should get an array object representing elements using default namespace', function() {
+describe('WSDL 2.0 parser getElementsFromWSDL', function () {
+  it('should get an array object representing elements using default namespace', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
       schemaNameSpace = {
@@ -783,7 +783,7 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
     expect(elements.length).to.equal(3);
   });
 
-  it('should get an array object representing elements using default WSDL_SAMPLE_AXIS', function() {
+  it('should get an array object representing elements using default WSDL_SAMPLE_AXIS', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
       schemaNameSpace = {
@@ -811,9 +811,9 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function() {
 });
 
 
-describe('WSDL 2.0 parser assignOperations', function() {
+describe('WSDL 2.0 parser assignOperations', function () {
 
-  it('should assign operations to wsdl object', function() {
+  it('should assign operations to wsdl object', function () {
     const parser = new Wsdl20Parser();
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
@@ -826,7 +826,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
 
   });
 
-  it('should assign operations to wsdl object when called with WSDL_SAMPLE_AXIS', function() {
+  it('should assign operations to wsdl object when called with WSDL_SAMPLE_AXIS', function () {
     const parser = new Wsdl20Parser();
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
@@ -839,7 +839,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
 
   });
 
-  it('should assign operations to wsdl object assignlocation correctly http', function() {
+  it('should assign operations to wsdl object assignlocation correctly http', function () {
     const parser = new Wsdl20Parser();
     let wsdlObject = new WsdlObject(),
       parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
@@ -852,38 +852,50 @@ describe('WSDL 2.0 parser assignOperations', function() {
 
 
     expect(wsdlObject.operationsArray[0]).to.be.an('object')
-      .and.to.include({
+      .and.to.deep.include({
         name: 'hi',
         method: POST_METHOD,
         protocol: SOAP_PROTOCOL,
         url: 'http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap11Endpoint/',
         portName: 'SayHelloHttpSoap11Endpoint',
-        serviceName: 'SayHello'
+        serviceName: 'SayHello',
+        xpathInfo: {
+          xpath: '//pm:definitions//pm:binding[@name="SayHelloSoap11Binding"]//pm:operation[@name="hi"]',
+          wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
+        }
       });
 
     expect(wsdlObject.operationsArray[1]).to.be.an('object')
-      .and.to.include({
+      .and.to.deep.include({
         name: 'hi',
         method: POST_METHOD,
         protocol: SOAP12_PROTOCOL,
         url: 'http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap12Endpoint/',
         portName: 'SayHelloHttpSoap12Endpoint',
-        serviceName: 'SayHello'
+        serviceName: 'SayHello',
+        xpathInfo: {
+          xpath: '//pm:definitions//pm:binding[@name="SayHelloSoap12Binding"]//pm:operation[@name="hi"]',
+          wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
+        }
       });
 
     expect(wsdlObject.operationsArray[2]).to.be.an('object')
-      .and.to.include({
+      .and.to.deep.include({
         name: 'hi',
         method: POST_METHOD,
         protocol: HTTP_PROTOCOL,
         url: 'http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpEndpoint/hi',
         portName: 'SayHelloHttpEndpoint',
-        serviceName: 'SayHello'
+        serviceName: 'SayHello',
+        xpathInfo: {
+          xpath: '//pm:definitions//pm:binding[@name="SayHelloHttpBinding"]//pm:operation[@name="hi"]',
+          wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
+        }
       });
 
   });
 
-  it('should assign operations to wsdl object when services is not in the file', function() {
+  it('should assign operations to wsdl object when services is not in the file', function () {
     const parser = new Wsdl20Parser(),
       fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServicesTag.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
@@ -907,7 +919,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
       });
   });
 
-  it('should assign operations empty object when bindings is not in the file', function() {
+  it('should assign operations empty object when bindings is not in the file', function () {
     const parser = new Wsdl20Parser(),
       fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsTags.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
@@ -920,7 +932,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
       .to.equal(true);
   });
 
-  it('should assign operations empty object when bindings operations are not in the file', function() {
+  it('should assign operations empty object when bindings operations are not in the file', function () {
     const parser = new Wsdl20Parser(),
       fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsOperations.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
@@ -933,7 +945,7 @@ describe('WSDL 2.0 parser assignOperations', function() {
       .to.equal(true);
   });
 
-  it('should assign operations to wsdl object when services endpoints are not in the file', function() {
+  it('should assign operations to wsdl object when services endpoints are not in the file', function () {
     const parser = new Wsdl20Parser(),
       fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServiceEndpoint.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
@@ -957,8 +969,8 @@ describe('WSDL 2.0 parser assignOperations', function() {
   });
 });
 
-describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function() {
-  it('should get the service endpoint when exists', function() {
+describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function () {
+  it('should get the service endpoint when exists', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
       services = parser.getServices(
@@ -973,7 +985,7 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function()
     expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('reservationEndpoint');
   });
 
-  it('should get the service endpoint when exists and called with WSDL_SAMPLE_AXIS', function() {
+  it('should get the service endpoint when exists and called with WSDL_SAMPLE_AXIS', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
       services = parser.getServices(
@@ -988,7 +1000,7 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function()
     expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('SayHelloHttpSoap11Endpoint');
   });
 
-  it('should throw an error when binding name is null', function() {
+  it('should throw an error when binding name is null', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getServiceAndServiceEndpointByBindingName(null, {}, '');
@@ -999,7 +1011,7 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function()
     }
   });
 
-  it('should throw an error when principal prefix is null', function() {
+  it('should throw an error when principal prefix is null', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getServiceAndServiceEndpointByBindingName('bindingName', {}, null);
@@ -1010,7 +1022,7 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function()
     }
   });
 
-  it('should throw an error when services is null', function() {
+  it('should throw an error when services is null', function () {
 
     const parser = new Wsdl20Parser();
     let wsdlObject = new WsdlObject(),
@@ -1019,7 +1031,7 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function()
     expect(serviceEndpoint).to.equal(undefined);
   });
 
-  it('should throw an error when service enpdoint is not found', function() {
+  it('should throw an error when service enpdoint is not found', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getServiceAndServiceEndpointByBindingName('bindingName', [], 'principal prefix');
@@ -1029,7 +1041,7 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function()
       expect(error.message).to.equal('Can not get service endpoint from object');
     }
   });
-  it('should throw an error when service enpdoint is array of null not found', function() {
+  it('should throw an error when service enpdoint is array of null not found', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getServiceAndServiceEndpointByBindingName('bindingName', [null], 'principal prefix');
@@ -1041,8 +1053,8 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function()
   });
 });
 
-describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName', function() {
-  it('should get interface operation by name', function() {
+describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName', function () {
+  it('should get interface operation by name', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
     services = parser.getServices(parsed);
@@ -1052,7 +1064,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('opCheckAvailability');
   });
 
-  it('should get interface operation by name in WSDL_SAMPLE_AXIS', function() {
+  it('should get interface operation by name in WSDL_SAMPLE_AXIS', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
     services = parser.getServices(parsed);
@@ -1062,7 +1074,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('hi');
   });
 
-  it('should throw an error when parsedxml is null', function() {
+  it('should throw an error when parsedxml is null', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
@@ -1074,7 +1086,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     }
   });
 
-  it('should throw an error when parsedxml is undefined', function() {
+  it('should throw an error when parsedxml is undefined', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
@@ -1086,7 +1098,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     }
   });
 
-  it('should throw an error when parsedxml is an empty object', function() {
+  it('should throw an error when parsedxml is an empty object', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
@@ -1099,7 +1111,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   });
 
 
-  it('should throw an error when portTypeName is null', function() {
+  it('should throw an error when portTypeName is null', function () {
     try {
       const parser = new Wsdl20Parser();
 
@@ -1112,7 +1124,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     }
   });
 
-  it('should throw an error when portTypeName is undefined', function() {
+  it('should throw an error when portTypeName is undefined', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getInterfaceOperationByInterfaceNameAndOperationName(undefined,
@@ -1124,7 +1136,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     }
   });
 
-  it('should throw an error when portTypeName is an empty string', function() {
+  it('should throw an error when portTypeName is an empty string', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getInterfaceOperationByInterfaceNameAndOperationName('',
@@ -1136,7 +1148,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     }
   });
 
-  it('should throw an error when operationName is null', function() {
+  it('should throw an error when operationName is null', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getInterfaceOperationByInterfaceNameAndOperationName('some string',
@@ -1148,7 +1160,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     }
   });
 
-  it('should throw an error when operationName is undefined', function() {
+  it('should throw an error when operationName is undefined', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getInterfaceOperationByInterfaceNameAndOperationName('some string',
@@ -1160,7 +1172,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     }
   });
 
-  it('should throw an error when operationName is an empty string', function() {
+  it('should throw an error when operationName is an empty string', function () {
     try {
       const parser = new Wsdl20Parser();
       parser.getInterfaceOperationByInterfaceNameAndOperationName('ddd',
@@ -1173,8 +1185,8 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   });
 });
 
-describe('WSDL 2.0 parser assignSecurity', function() {
-  it('Should return a wsdlObject with securityPolicyArray if file has security', function() {
+describe('WSDL 2.0 parser assignSecurity', function () {
+  it('Should return a wsdlObject with securityPolicyArray if file has security', function () {
     const parser = new Wsdl20Parser();
     fileContent = fs.readFileSync(validWSDLs20 + '/Axis2WSD20WithSecurity.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
@@ -1187,14 +1199,14 @@ describe('WSDL 2.0 parser assignSecurity', function() {
   });
 });
 
-describe('WSDL 2.0 parser getDocumentationString', function() {
-  it('should get the same when is called with string', function() {
+describe('WSDL 2.0 parser getDocumentationString', function () {
+  it('should get the same when is called with string', function () {
     const parser = new Wsdl20Parser(),
       documentation = parser.getDocumentationStringFromNode('documentation');
     expect(documentation).to.eq('documentation');
   });
 
-  it('should get the property value when is called with a node', function() {
+  it('should get the property value when is called with a node', function () {
     const parser = new Wsdl20Parser(),
       documentationNode = {};
     documentationNode['#text'] = 'documentation';
@@ -1203,8 +1215,8 @@ describe('WSDL 2.0 parser getDocumentationString', function() {
   });
 });
 
-describe('WSDL 2.0 parser  getBindingInfoFromBindinTag', function() {
-  it('should throw an error when can not get protocol', function() {
+describe('WSDL 2.0 parser  getBindingInfoFromBindinTag', function () {
+  it('should throw an error when can not get protocol', function () {
     const parser = new Wsdl20Parser();
     try {
       let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
@@ -1220,8 +1232,8 @@ describe('WSDL 2.0 parser  getBindingInfoFromBindinTag', function() {
   });
 });
 
-describe('WSDL 2.0 parser getInterfaceByInterfaceName', function() {
-  it('should get an error when called with null parsed xml', function() {
+describe('WSDL 2.0 parser getInterfaceByInterfaceName', function () {
+  it('should get an error when called with null parsed xml', function () {
     const parser = new Wsdl20Parser();
     try {
       parser.getInterfaceByInterfaceName('intefacename', null, '');
@@ -1231,7 +1243,7 @@ describe('WSDL 2.0 parser getInterfaceByInterfaceName', function() {
       expect(error.message).to.equal('Can not interface from undefined or null object');
     }
   });
-  it('should get an error when called with empty name', function() {
+  it('should get an error when called with empty name', function () {
     const parser = new Wsdl20Parser();
     try {
       parser.getInterfaceByInterfaceName('', {}, '');
@@ -1241,7 +1253,7 @@ describe('WSDL 2.0 parser getInterfaceByInterfaceName', function() {
       expect(error.message).to.equal('Can not get interface with no filter name');
     }
   });
-  it('should get an error when called not found property', function() {
+  it('should get an error when called not found property', function () {
     const parser = new Wsdl20Parser();
     try {
       parser.getInterfaceByInterfaceName('s', {}, '');
@@ -1253,16 +1265,16 @@ describe('WSDL 2.0 parser getInterfaceByInterfaceName', function() {
   });
 });
 
-describe('WSDL 2.0 parser getElementFromInterfaceOperationInOut', function() {
-  it('should get null when not found element', function() {
+describe('WSDL 2.0 parser getElementFromInterfaceOperationInOut', function () {
+  it('should get null when not found element', function () {
     const parser = new Wsdl20Parser(),
       element = parser.getElementFromInterfaceOperationInOut({}, null, 'notfound', '');
     expect(element).to.eq(null);
   });
 });
 
-describe('WSDL 2.0 parser getElementFromInterfaceOperationFault', function() {
-  it('should get null when found element but not found ref', function() {
+describe('WSDL 2.0 parser getElementFromInterfaceOperationFault', function () {
+  it('should get null when found element but not found ref', function () {
     const parser = new Wsdl20Parser(),
       element = parser.getElementFromInterfaceOperationFault({}, {
         outfault: {}
@@ -1271,8 +1283,8 @@ describe('WSDL 2.0 parser getElementFromInterfaceOperationFault', function() {
   });
 });
 
-describe('WSDL 2.0 parser getLocationFromBindingOperation', function() {
-  it('should throw error when operation is null', function() {
+describe('WSDL 2.0 parser getLocationFromBindingOperation', function () {
+  it('should throw error when operation is null', function () {
     const parser = new Wsdl20Parser();
     try {
       parser.getLocationFromBindingOperation(null, {});
@@ -1283,7 +1295,7 @@ describe('WSDL 2.0 parser getLocationFromBindingOperation', function() {
     }
   });
 
-  it('should get null when binding tag info is null', function() {
+  it('should get null when binding tag info is null', function () {
     const parser = new Wsdl20Parser();
     try {
       parser.getLocationFromBindingOperation({}, null);
