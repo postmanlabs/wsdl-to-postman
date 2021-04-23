@@ -171,13 +171,13 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called without parameters', function () {
     const options = SchemaPack.getOptions();
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(1);
+    expect(options.length).to.eq(2);
   });
 
   it('Should return external options when called with mode = document', function () {
     const options = SchemaPack.getOptions('document');
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(1);
+    expect(options.length).to.eq(2);
   });
 
   it('Should return external options when called with mode = use', function () {
@@ -200,7 +200,7 @@ describe('SchemaPack getOptions', function () {
       usage: ['VALIDATION']
     });
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(0);
+    expect(options.length).to.eq(1);
   });
 
   it('Should return external options when called with mode use and usage conversion', function () {
@@ -223,7 +223,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode document and usage not an object', function () {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(1);
+    expect(options.length).to.eq(2);
   });
 
 });
