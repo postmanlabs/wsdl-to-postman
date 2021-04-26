@@ -860,7 +860,7 @@ describe('WSDL 2.0 parser assignOperations', function () {
         portName: 'SayHelloHttpSoap11Endpoint',
         serviceName: 'SayHello',
         xpathInfo: {
-          xpath: '//pm:definitions//pm:binding[@name="SayHelloSoap11Binding"]//pm:operation[@name="hi"]',
+          xpath: '//description//binding[@name="SayHelloSoap11Binding"]//operation[@ref="tns:hi"]',
           wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
         }
       });
@@ -874,7 +874,7 @@ describe('WSDL 2.0 parser assignOperations', function () {
         portName: 'SayHelloHttpSoap12Endpoint',
         serviceName: 'SayHello',
         xpathInfo: {
-          xpath: '//pm:definitions//pm:binding[@name="SayHelloSoap12Binding"]//pm:operation[@name="hi"]',
+          xpath: '//description//binding[@name="SayHelloSoap12Binding"]//operation[@ref="tns:hi"]',
           wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
         }
       });
@@ -888,7 +888,7 @@ describe('WSDL 2.0 parser assignOperations', function () {
         portName: 'SayHelloHttpEndpoint',
         serviceName: 'SayHello',
         xpathInfo: {
-          xpath: '//pm:definitions//pm:binding[@name="SayHelloHttpBinding"]//pm:operation[@name="hi"]',
+          xpath: '//description//binding[@name="SayHelloHttpBinding"]//operation[@ref="tns:hi"]',
           wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
         }
       });

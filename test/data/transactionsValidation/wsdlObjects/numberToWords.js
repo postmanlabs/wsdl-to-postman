@@ -48,8 +48,8 @@ module.exports = {
     method: 'POST',
     protocol: 'soap',
     xpathInfo: {
-      xpath: '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-        '//pm:operation[@name="NumberToWords"]',
+      xpath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+        '//operation[@name="NumberToWords"]',
       wsdlNamespaceUrl: 'http://schemas.xmlsoap.org/wsdl/'
     }
   },
@@ -77,8 +77,8 @@ module.exports = {
     method: 'POST',
     protocol: 'soap',
     xpathInfo: {
-      xpath: '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-        '//pm:operation[@name="NumberToDollars"]',
+      xpath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+        '//operation[@name="NumberToDollars"]',
       wsdlNamespaceUrl: 'http://schemas.xmlsoap.org/wsdl/'
     }
   },
