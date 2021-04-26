@@ -2883,8 +2883,8 @@ describe('WSDL 1.1 parser assignOperations', function () {
         portName: 'NumberConversionSoap',
         serviceName: 'NumberConversion',
         xpathInfo: {
-          xpath: '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-            '//pm:operation[@name="NumberToWords"]',
+          xpath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToWords"]',
           wsdlNamespaceUrl: 'http://schemas.xmlsoap.org/wsdl/'
         }
       });
@@ -2903,8 +2903,8 @@ describe('WSDL 1.1 parser assignOperations', function () {
         portName: 'NumberConversionSoap',
         serviceName: 'NumberConversion',
         xpathInfo: {
-          xpath: '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-            '//pm:operation[@name="NumberToDollars"]',
+          xpath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToDollars"]',
           wsdlNamespaceUrl: 'http://schemas.xmlsoap.org/wsdl/'
         }
       });
@@ -2920,7 +2920,7 @@ describe('WSDL 1.1 parser assignOperations', function () {
         serviceName: 'NumberConversion',
         xpathInfo: {
           xpath:
-            '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding12"]//pm:operation[@name="NumberToWords"]',
+            '//definitions//binding[@name="NumberConversionSoapBinding12"]//operation[@name="NumberToWords"]',
           wsdlNamespaceUrl: 'http://schemas.xmlsoap.org/wsdl/'
         }
       });
@@ -2935,8 +2935,8 @@ describe('WSDL 1.1 parser assignOperations', function () {
         portName: 'NumberConversionSoap12',
         serviceName: 'NumberConversion',
         xpathInfo: {
-          xpath: '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding12"]' +
-            '//pm:operation[@name="NumberToDollars"]',
+          xpath: '//definitions//binding[@name="NumberConversionSoapBinding12"]' +
+            '//operation[@name="NumberToDollars"]',
           wsdlNamespaceUrl: 'http://schemas.xmlsoap.org/wsdl/'
         }
       });
