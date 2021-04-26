@@ -958,8 +958,8 @@ describe('validateBody method', function () {
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
-        bodyMismatchMockWithReason(mismatchReason, '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-          '//pm:operation[@name="NumberToWords"]')
+        bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+          '//operation[@name="NumberToWords"]')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -974,8 +974,8 @@ describe('validateBody method', function () {
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
-        bodyMismatchMockWithReason(mismatchReason, '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-          '//pm:operation[@name="NumberToWords"]')
+        bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+          '//operation[@name="NumberToWords"]')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -991,8 +991,8 @@ describe('validateBody method', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason,
-          '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-          '//pm:operation[@name="NumberToWords"]')
+          '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+          '//operation[@name="NumberToWords"]')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -1130,8 +1130,8 @@ describe('validateBody method', function () {
                   {
                     property: 'RESPONSE_BODY',
                     transactionJsonPath: '$.response.body',
-                    schemaJsonPath: '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-                      '//pm:operation[@name="NumberToWords"]',
+                    schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+                      '//operation[@name="NumberToWords"]',
                     reasonCode: 'INVALID_RESPONSE_BODY',
                     reason: 'Element \'NumberToWordsResponse\': Missing child element(s).' +
                       ' Expected is ( NumberToWordsResult ).\n'
@@ -1217,8 +1217,8 @@ describe('validateBody method', function () {
                   {
                     property: 'RESPONSE_BODY',
                     transactionJsonPath: '$.response.body',
-                    schemaJsonPath: '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-                      '//pm:operation[@name="NumberToWords"]',
+                    schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+                      '//operation[@name="NumberToWords"]',
                     reasonCode: 'INVALID_RESPONSE_BODY',
                     reason: 'Element \'WRONGFIELD\': This element is not expected.\n'
                   }
@@ -1303,8 +1303,8 @@ describe('validateBody method', function () {
                   {
                     property: 'RESPONSE_BODY',
                     transactionJsonPath: '$.response.body',
-                    schemaJsonPath: '//pm:definitions//pm:binding[@name="NumberConversionSoapBinding"]' +
-                      '//pm:operation[@name="NumberToWords"]',
+                    schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+                      '//operation[@name="NumberToWords"]',
                     reasonCode: 'INVALID_RESPONSE_BODY',
                     reason: 'Response body not provided'
                   }
