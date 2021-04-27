@@ -35,12 +35,12 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
 
         schemaPack.validateTransactions(historyRequests, (error, result) => {
           if (error) {
-            fs.writeFileSync(outputDirectory + file + 'validatrionResult.json', JSON.stringify(error));
-            fs.writeFileSync(outputDirectory + file + 'collection.json', JSON.stringify(collectionResult.output[0].data));
+            fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify(error));
+            fs.writeFileSync(outputDirectory + file + '-collection.json', JSON.stringify(collectionResult.output[0].data));
           }
           if (!result.matched) {
-            fs.writeFileSync(outputDirectory + file + 'validatrionResult.json', JSON.stringify(result));
-            fs.writeFileSync(outputDirectory + file + 'collection.json', JSON.stringify(collectionResult.output[0].data));
+            fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify(result));
+            fs.writeFileSync(outputDirectory + file + '-collection.json', JSON.stringify(collectionResult.output[0].data));
           }
         });
       });
