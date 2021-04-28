@@ -529,11 +529,11 @@ describe('SchemaBuilderXSD getElements', function () {
 
   it('should throw an error when parsed is undefined', function () {
     const schemaNameSpace = {
-      key: 'xs',
-      prefixFilter: 'xs:',
-      url: 'http://www.w3.org/2001/XMLSchema',
-      isDefault: false
-    },
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
       thisNameSpace = {
         key: 'tns',
         prefixFilter: 'tns:',
@@ -553,11 +553,11 @@ describe('SchemaBuilderXSD getElements', function () {
 
   it('should throw an error when parsed is null', function () {
     const schemaNameSpace = {
-      key: 'xs',
-      prefixFilter: 'xs:',
-      url: 'http://www.w3.org/2001/XMLSchema',
-      isDefault: false
-    },
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
       thisNameSpace = {
         key: 'tns',
         prefixFilter: 'tns:',

@@ -10,6 +10,12 @@ const expect = require('chai').expect,
 
 describe('SchemaPack convert and validate report missmatches WSDL 1.1', function () {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
+  if (fs.existsSync(outputDirectory)) {
+    fs.rmdirSync(outputDirectory, { recursive: true });
+  }
+  if (!fs.existsSync(outputDirectory)) {
+    fs.mkdirSync(outputDirectory);
+  }
   async.each(validWSDLsFolder, function (file) {
     it('Should counvert and validate all files ' + file, function () {
       let fileContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8');
@@ -36,11 +42,13 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
         schemaPack.validateTransactions(historyRequests, (error, result) => {
           if (error) {
             fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify(error));
-            fs.writeFileSync(outputDirectory + file + '-collection.json', JSON.stringify(collectionResult.output[0].data));
+            fs.writeFileSync(outputDirectory + file + '-collection.json',
+              JSON.stringify(collectionResult.output[0].data));
           }
-          if (!result.matched) {
+          if (!error && !result.matched) {
             fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify(result));
-            fs.writeFileSync(outputDirectory + file + '-collection.json', JSON.stringify(collectionResult.output[0].data));
+            fs.writeFileSync(outputDirectory + file + '-collection.json',
+              JSON.stringify(collectionResult.output[0].data));
           }
         });
       });
