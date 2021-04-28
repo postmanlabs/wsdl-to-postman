@@ -529,11 +529,11 @@ describe('SchemaBuilderXSD getElements', function () {
 
   it('should throw an error when parsed is undefined', function () {
     const schemaNameSpace = {
-        key: 'xs',
-        prefixFilter: 'xs:',
-        url: 'http://www.w3.org/2001/XMLSchema',
-        isDefault: false
-      },
+      key: 'xs',
+      prefixFilter: 'xs:',
+      url: 'http://www.w3.org/2001/XMLSchema',
+      isDefault: false
+    },
       thisNameSpace = {
         key: 'tns',
         prefixFilter: 'tns:',
@@ -553,11 +553,11 @@ describe('SchemaBuilderXSD getElements', function () {
 
   it('should throw an error when parsed is null', function () {
     const schemaNameSpace = {
-        key: 'xs',
-        prefixFilter: 'xs:',
-        url: 'http://www.w3.org/2001/XMLSchema',
-        isDefault: false
-      },
+      key: 'xs',
+      prefixFilter: 'xs:',
+      url: 'http://www.w3.org/2001/XMLSchema',
+      isDefault: false
+    },
       thisNameSpace = {
         key: 'tns',
         prefixFilter: 'tns:',
@@ -1176,7 +1176,7 @@ describe('SchemaBuilderXSD getElements', function () {
 
     expect(elements[2].name).to.equal('CreateQueueResponse');
     expect(elements[2].type).to.equal('complex');
-    expect(elements[2].children[0].name).to.equal('CreateQueueResult');
+    expect(elements[2].children[0].name).to.equal('tns:CreateQueueResult');
     expect(elements[2].children[0].isComplex).to.equal(true);
     expect(elements[2].children[0].children[0].name).to.equal('QueueUrl');
     expect(elements[2].children[0].children[0].type).to.equal('string');
