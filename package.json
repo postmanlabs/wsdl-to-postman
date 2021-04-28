@@ -9,6 +9,16 @@
     "lint": "eslint ./lib/** ./test/**/*.js",
     "coverage": "nyc --reporter=text npm run unit-tests"
   },
+  "com_postman_plugin": {
+    "plugin_type": "importer",
+    "name": "WSDL",
+    "source_format": "WSDL",
+    "source_format_name": "WSDL",
+    "sample_input": {
+      "type": "string",
+      "data": ""
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/postmanlabs/wsdl-to-postman.git"
