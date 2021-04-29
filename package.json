@@ -1,6 +1,6 @@
 {
   "name": "@postman/wsdl-to-postman",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Convert a given WSDL specification (1.1) to Postman Collection",
   "main": "index.js",
   "scripts": {
