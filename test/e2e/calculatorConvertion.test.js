@@ -22,14 +22,14 @@ const expect = require('chai').expect,
   reqBody = [{
     mode: 'raw',
     raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-        '  <soap:Body>\n' +
-        '    <Add xmlns="http://tempuri.org/">\n' +
-        '      <intA>-2147483648</intA>\n' +
-        '      <intB>-2147483648</intB>\n' +
-        '    </Add>\n' +
-        '  </soap:Body>\n' +
-        '</soap:Envelope>\n',
+      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<Add xmlns="http://tempuri.org/">' +
+      '<intA>-2147483648</intA>' +
+      '<intB>-2147483648</intB>' +
+      '</Add>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
     options: {
       raw: {
         language: 'xml'
@@ -39,14 +39,14 @@ const expect = require('chai').expect,
   {
     mode: 'raw',
     raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-        '  <soap:Body>\n' +
-        '    <Subtract xmlns="http://tempuri.org/">\n' +
-        '      <intA>-2147483648</intA>\n' +
-        '      <intB>-2147483648</intB>\n' +
-        '    </Subtract>\n' +
-        '  </soap:Body>\n' +
-        '</soap:Envelope>\n',
+      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<Subtract xmlns="http://tempuri.org/">' +
+      '<intA>-2147483648</intA>' +
+      '<intB>-2147483648</intB>' +
+      '</Subtract>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
     options: {
       raw: {
         language: 'xml'
@@ -56,14 +56,14 @@ const expect = require('chai').expect,
   {
     mode: 'raw',
     raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-        '  <soap:Body>\n' +
-        '    <Multiply xmlns="http://tempuri.org/">\n' +
-        '      <intA>-2147483648</intA>\n' +
-        '      <intB>-2147483648</intB>\n' +
-        '    </Multiply>\n' +
-        '  </soap:Body>\n' +
-        '</soap:Envelope>\n',
+      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<Multiply xmlns="http://tempuri.org/">' +
+      '<intA>-2147483648</intA>' +
+      '<intB>-2147483648</intB>' +
+      '</Multiply>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
     options: {
       raw: {
         language: 'xml'
@@ -73,14 +73,14 @@ const expect = require('chai').expect,
   {
     mode: 'raw',
     raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-        '  <soap:Body>\n' +
-        '    <Divide xmlns="http://tempuri.org/">\n' +
-        '      <intA>-2147483648</intA>\n' +
-        '      <intB>-2147483648</intB>\n' +
-        '    </Divide>\n' +
-        '  </soap:Body>\n' +
-        '</soap:Envelope>\n',
+      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+      '<Divide xmlns="http://tempuri.org/">' +
+      '<intA>-2147483648</intA>' +
+      '<intB>-2147483648</intB>' +
+      '</Divide>' +
+      '</soap:Body>' +
+      '</soap:Envelope>',
     options: {
       raw: {
         language: 'xml'
@@ -90,14 +90,14 @@ const expect = require('chai').expect,
   {
     mode: 'raw',
     raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-        '  <soap12:Body>\n' +
-        '    <Add xmlns="http://tempuri.org/">\n' +
-        '      <intA>-2147483648</intA>\n' +
-        '      <intB>-2147483648</intB>\n' +
-        '    </Add>\n' +
-        '  </soap12:Body>\n' +
-        '</soap12:Envelope>\n',
+      '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+      '<soap12:Body>' +
+      '<Add xmlns="http://tempuri.org/">' +
+      '<intA>-2147483648</intA>' +
+      '<intB>-2147483648</intB>' +
+      '</Add>' +
+      '</soap12:Body>' +
+      '</soap12:Envelope>',
     options: {
       raw: {
         language: 'xml'
@@ -107,14 +107,14 @@ const expect = require('chai').expect,
   {
     mode: 'raw',
     raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-        '  <soap12:Body>\n' +
-        '    <Subtract xmlns="http://tempuri.org/">\n' +
-        '      <intA>-2147483648</intA>\n' +
-        '      <intB>-2147483648</intB>\n' +
-        '    </Subtract>\n' +
-        '  </soap12:Body>\n' +
-        '</soap12:Envelope>\n',
+      '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+      '<soap12:Body>' +
+      '<Subtract xmlns="http://tempuri.org/">' +
+      '<intA>-2147483648</intA>' +
+      '<intB>-2147483648</intB>' +
+      '</Subtract>' +
+      '</soap12:Body>' +
+      '</soap12:Envelope>',
     options: {
       raw: {
         language: 'xml'
@@ -124,14 +124,14 @@ const expect = require('chai').expect,
   {
     mode: 'raw',
     raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-        '  <soap12:Body>\n' +
-        '    <Multiply xmlns="http://tempuri.org/">\n' +
-        '      <intA>-2147483648</intA>\n' +
-        '      <intB>-2147483648</intB>\n' +
-        '    </Multiply>\n' +
-        '  </soap12:Body>\n' +
-        '</soap12:Envelope>\n',
+      '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+      '<soap12:Body>' +
+      '<Multiply xmlns="http://tempuri.org/">' +
+      '<intA>-2147483648</intA>' +
+      '<intB>-2147483648</intB>' +
+      '</Multiply>' +
+      '</soap12:Body>' +
+      '</soap12:Envelope>',
     options: {
       raw: {
         language: 'xml'
@@ -141,14 +141,14 @@ const expect = require('chai').expect,
   {
     mode: 'raw',
     raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-        '  <soap12:Body>\n' +
-        '    <Divide xmlns="http://tempuri.org/">\n' +
-        '      <intA>-2147483648</intA>\n' +
-        '      <intB>-2147483648</intB>\n' +
-        '    </Divide>\n' +
-        '  </soap12:Body>\n' +
-        '</soap12:Envelope>\n',
+      '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+      '<soap12:Body>' +
+      '<Divide xmlns="http://tempuri.org/">' +
+      '<intA>-2147483648</intA>' +
+      '<intB>-2147483648</intB>' +
+      '</Divide>' +
+      '</soap12:Body>' +
+      '</soap12:Envelope>',
     options: {
       raw: {
         language: 'xml'
@@ -159,69 +159,69 @@ const expect = require('chai').expect,
   status = 'OK',
   code = 200,
   resBody = ['<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-    '  <soap:Body>\n' +
-    '    <AddResponse xmlns="http://tempuri.org/">\n' +
-    '      <AddResult>-2147483648</AddResult>\n' +
-    '    </AddResponse>\n' +
-    '  </soap:Body>\n' +
-    '</soap:Envelope>\n',
+    '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+    '<soap:Body>' +
+    '<AddResponse xmlns="http://tempuri.org/">' +
+    '<AddResult>-2147483648</AddResult>' +
+    '</AddResponse>' +
+    '</soap:Body>' +
+    '</soap:Envelope>',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-    '  <soap:Body>\n' +
-    '    <SubtractResponse xmlns="http://tempuri.org/">\n' +
-    '      <SubtractResult>-2147483648</SubtractResult>\n' +
-    '    </SubtractResponse>\n' +
-    '  </soap:Body>\n' +
-    '</soap:Envelope>\n',
+  '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+  '<soap:Body>' +
+  '<SubtractResponse xmlns="http://tempuri.org/">' +
+  '<SubtractResult>-2147483648</SubtractResult>' +
+  '</SubtractResponse>' +
+  '</soap:Body>' +
+  '</soap:Envelope>',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-    '  <soap:Body>\n' +
-    '    <MultiplyResponse xmlns="http://tempuri.org/">\n' +
-    '      <MultiplyResult>-2147483648</MultiplyResult>\n' +
-    '    </MultiplyResponse>\n' +
-    '  </soap:Body>\n' +
-    '</soap:Envelope>\n',
+  '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+  '<soap:Body>' +
+  '<MultiplyResponse xmlns="http://tempuri.org/">' +
+  '<MultiplyResult>-2147483648</MultiplyResult>' +
+  '</MultiplyResponse>' +
+  '</soap:Body>' +
+  '</soap:Envelope>',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-    '  <soap:Body>\n' +
-    '    <DivideResponse xmlns="http://tempuri.org/">\n' +
-    '      <DivideResult>-2147483648</DivideResult>\n' +
-    '    </DivideResponse>\n' +
-    '  </soap:Body>\n' +
-    '</soap:Envelope>\n',
+  '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+  '<soap:Body>' +
+  '<DivideResponse xmlns="http://tempuri.org/">' +
+  '<DivideResult>-2147483648</DivideResult>' +
+  '</DivideResponse>' +
+  '</soap:Body>' +
+  '</soap:Envelope>',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-    '  <soap12:Body>\n' +
-    '    <AddResponse xmlns="http://tempuri.org/">\n' +
-    '      <AddResult>-2147483648</AddResult>\n' +
-    '    </AddResponse>\n' +
-    '  </soap12:Body>\n' +
-    '</soap12:Envelope>\n',
+  '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+  '<soap12:Body>' +
+  '<AddResponse xmlns="http://tempuri.org/">' +
+  '<AddResult>-2147483648</AddResult>' +
+  '</AddResponse>' +
+  '</soap12:Body>' +
+  '</soap12:Envelope>',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-    '  <soap12:Body>\n' +
-    '    <SubtractResponse xmlns="http://tempuri.org/">\n' +
-    '      <SubtractResult>-2147483648</SubtractResult>\n' +
-    '    </SubtractResponse>\n' +
-    '  </soap12:Body>\n' +
-    '</soap12:Envelope>\n',
+  '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+  '<soap12:Body>' +
+  '<SubtractResponse xmlns="http://tempuri.org/">' +
+  '<SubtractResult>-2147483648</SubtractResult>' +
+  '</SubtractResponse>' +
+  '</soap12:Body>' +
+  '</soap12:Envelope>',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-    '  <soap12:Body>\n' +
-    '    <MultiplyResponse xmlns="http://tempuri.org/">\n' +
-    '      <MultiplyResult>-2147483648</MultiplyResult>\n' +
-    '    </MultiplyResponse>\n' +
-    '  </soap12:Body>\n' +
-    '</soap12:Envelope>\n',
+  '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+  '<soap12:Body>' +
+  '<MultiplyResponse xmlns="http://tempuri.org/">' +
+  '<MultiplyResult>-2147483648</MultiplyResult>' +
+  '</MultiplyResponse>' +
+  '</soap12:Body>' +
+  '</soap12:Envelope>',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-    '  <soap12:Body>\n' +
-    '    <DivideResponse xmlns="http://tempuri.org/">\n' +
-    '      <DivideResult>-2147483648</DivideResult>\n' +
-    '    </DivideResponse>\n' +
-    '  </soap12:Body>\n' +
-    '</soap12:Envelope>\n'
+  '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+  '<soap12:Body>' +
+  '<DivideResponse xmlns="http://tempuri.org/">' +
+  '<DivideResult>-2147483648</DivideResult>' +
+  '</DivideResponse>' +
+  '</soap12:Body>' +
+  '</soap12:Envelope>'
   ],
   urlOR = {
     protocol: 'http',
@@ -231,8 +231,8 @@ const expect = require('chai').expect,
     variable: []
   };
 
-describe('Sanity tests', function() {
-  it('Should deeply validate a WSDL 11 file (calculatorFile.wsdl)', function() {
+describe('Sanity tests', function () {
+  it('Should deeply validate a WSDL 11 file (calculatorFile.wsdl)', function () {
     let fileContent = fs.readFileSync(calculatorFile, 'utf8');
     Index.convert({
       type: 'string',

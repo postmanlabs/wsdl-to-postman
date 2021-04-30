@@ -40,7 +40,7 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
         });
 
         schemaPack.validateTransactions(historyRequests, (error, result) => {
-          if (file === 'numberConvertion.wsdl') {
+          if (error) {
             fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify(error));
             fs.writeFileSync(outputDirectory + file + '-collection.json',
               JSON.stringify(collectionResult.output[0].data));
