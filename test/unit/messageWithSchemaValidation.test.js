@@ -110,7 +110,7 @@ describe('Tools from messageWithSchemaValidation', function() {
       `;
 
     it('Should unwrap body and remove namespaces and attributes', function() {
-      const unwrappedMessage = unwrapAndCleanBody(dirtyMessage, 'soap'),
+      const unwrappedMessage = unwrapAndCleanBody(dirtyMessage, 'NumberToWords'),
         generatedToCompare = unwrappedMessage.replace(/\s/g, ''),
         expectedToCompare = cleanBodyMessage.replace(/\s/g, '');
       expect(generatedToCompare).to.be.equal(expectedToCompare);
