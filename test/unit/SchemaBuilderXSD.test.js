@@ -11,16 +11,16 @@ const expect = require('chai').expect,
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
   } = require('../../lib/WsdlParserCommon');
 
-describe('SchemaBuilderXSD Constructor', function() {
-  it('should get an object of the schema builder', function() {
+describe('SchemaBuilderXSD Constructor', function () {
+  it('should get an object of the schema builder', function () {
     const builder = new SchemaBuilderXSD();
     expect(builder).to.be.a('object');
   });
 
 });
 
-describe('SchemaBuilderXSD parseSchema', function() {
-  it('should get an object of the schema parsed', function() {
+describe('SchemaBuilderXSD parseSchema', function () {
+  it('should get an object of the schema parsed', function () {
     const builder = new SchemaBuilderXSD(),
       fileContent = fs.readFileSync(validSchemaFolder + '/coreSchema.wsdl', 'utf8'),
       parsedSchema = builder.parseSchema(fileContent);
@@ -29,8 +29,8 @@ describe('SchemaBuilderXSD parseSchema', function() {
 
 });
 
-describe('SchemaBuilderXSD getElements', function() {
-  it('should get schema elements', function() {
+describe('SchemaBuilderXSD getElements', function () {
+  it('should get schema elements', function () {
     const builder = new SchemaBuilderXSD(),
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
@@ -91,7 +91,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[5].children[0].children[2].children).to.be.empty;
   });
 
-  it('should get an empty array when the input has no elements', function() {
+  it('should get an empty array when the input has no elements', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -126,7 +126,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements).to.be.empty;
   });
 
-  it('should get an array of types with 1 root and 1 child', function() {
+  it('should get an array of types with 1 root and 1 child', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
       <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
       xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -202,7 +202,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[0].children[0].children).to.be.empty;
   });
 
-  it('should get an array of types with 4 root and 1 child per root', function() {
+  it('should get an array of types with 4 root and 1 child per root', function () {
     const simpleInput = fs.readFileSync(validSchemaFolder + '/4Root1ChildPerRoot.wsdl', 'utf8'),
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
@@ -289,7 +289,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[3].children[0].children).to.be.empty;
   });
 
-  it('should get an array of types with 1 root and 1 complex type', function() {
+  it('should get an array of types with 1 root and 1 complex type', function () {
     const simpleInput = fs.readFileSync(validSchemaFolder + '/1Root1Complextype.wsdl', 'utf8'),
       parser = new Wsdl11Parser(),
       schemaNameSpace = {
@@ -351,7 +351,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[1].children[0].children[2].children).to.be.empty;
   });
 
-  it('should get an array of types with 1 root and 1 complex type Scenario 2', function() {
+  it('should get an array of types with 1 root and 1 complex type Scenario 2', function () {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
       xmlns:xs="http://www.w3.org/2001/XMLSchema" 
       xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -421,7 +421,113 @@ describe('SchemaBuilderXSD getElements', function() {
 
   });
 
-  it('should throw an error when parsed is undefined', function() {
+  it('should get an array of types with 1 root and 1 complex type Scenario 3', function () {
+    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.profixio.com/soap/services/getMatchClassesForTournament.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchClassesForTournament" 
+    targetNamespace="http://www.profixio.com/soap/services/getMatchClassesForTournament.php">
+    <types>
+        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getMatchClassesForTournament.php">
+            <xsd:element name="getMatchClassesForTournament">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="competitionId" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="MatchGroup">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="MatchClassId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="IsPlayoffLeague" type="xsd:boolean" nillable="true"/>
+                    <xsd:element name="IsPlayoff" type="xsd:boolean" nillable="true"/>
+                    <xsd:element name="PlayoffId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="EndGameLevel" type="xsd:int" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfMatchGroup">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:MatchGroup" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="MatchClass">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Code" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Gender" type="xsd:string" nillable="true"/>
+                    <xsd:element name="PeriodLengthInMinutes" type="xsd:string" nillable="true"/>
+                    <xsd:element name="HideTable" type="xsd:string" nillable="true"/>
+                    <xsd:element name="HideResults" type="xsd:string" nillable="true"/>
+                    <xsd:element name="NumberOfPeriodsInMatch" type="xsd:string" nillable="true"/>
+                    <xsd:element name="MatchGroups" type="tns:ArrayOfMatchGroup" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfMatchClass">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:MatchClass" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getMatchClassesForTournamentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getMatchClassesForTournamentResult" type="tns:ArrayOfMatchClass"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+  </definitions>`,
+      parser = new Wsdl11Parser(),
+      schemaNameSpace = {
+        key: 'xsd',
+        prefixFilter: 'xsd:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      thisNameSpace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://www.profixio.com/soap/services/getMatchClassesForTournament.php',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsed = parser.parseFromXmlToObject(simpleInput),
+      elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace,
+        PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
+    expect(elements).to.be.an('array');
+
+    expect(elements[1].name).to.equal('getMatchClassesForTournamentResponse');
+    expect(elements[1].isComplex).to.equal(true);
+    expect(elements[1].type).to.equal('complex');
+    expect(elements[1].minOccurs).to.equal('0');
+    expect(elements[1].maxOccurs).to.equal('1');
+    expect(elements[1].namespace).to.equal('http://www.profixio.com/soap/services/getMatchClassesForTournament.php');
+    expect(elements[1].children).to.be.an('array');
+
+    expect(elements[1].children[0].name).to.equal('getMatchClassesForTournamentResult');
+    expect(elements[1].children[0].isComplex).to.equal(true);
+    expect(elements[1].children[0].children[0].name).to.equal('item');
+    expect(elements[1].children[0].children[0].isComplex).to.equal(true);
+
+    expect(elements[1].children[0].children[0].children[0].name).to.equal('id');
+    expect(elements[1].children[0].children[0].children[0].isComplex).to.equal(false);
+    expect(elements[1].children[0].children[0].children[0].type).to.equal('integer');
+
+
+    expect(elements[1].children[0].children[0].children[8].name).to.equal('MatchGroups');
+    expect(elements[1].children[0].children[0].children[8].isComplex).to.equal(true);
+    expect(elements[1].children[0].children[0].children[8].type).to.equal('ArrayOfMatchGroup');
+
+  });
+
+  it('should throw an error when parsed is undefined', function () {
     const schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -445,7 +551,7 @@ describe('SchemaBuilderXSD getElements', function() {
     }
   });
 
-  it('should throw an error when parsed is null', function() {
+  it('should throw an error when parsed is null', function () {
     const schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -469,7 +575,7 @@ describe('SchemaBuilderXSD getElements', function() {
     }
   });
 
-  it('should get an array of types with 1 root and 1 child with simple types one level', function() {
+  it('should get an array of types with 1 root and 1 child with simple types one level', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
       <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
       xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -539,7 +645,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[0].children[0].children).to.be.empty;
   });
 
-  it('should get an array of types with 1 root and 1 child with simple types three levels', function() {
+  it('should get an array of types with 1 root and 1 child with simple types three levels', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
       <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
       xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -613,7 +719,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[0].children[0].children).to.be.empty;
   });
 
-  it('should get an array of types with 1 root and 1 child with simple types with enum', function() {
+  it('should get an array of types with 1 root and 1 child with simple types with enum', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
       <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
       xmlns:s="http://www.w3.org/2001/XMLSchema" 
@@ -687,7 +793,7 @@ describe('SchemaBuilderXSD getElements', function() {
     ]);
   });
 
-  it('should get an array of types with 1 root and 1 child with simple types with enum of integers', function() {
+  it('should get an array of types with 1 root and 1 child with simple types with enum of integers', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
       <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
       xmlns:s="http://www.w3.org/2001/XMLSchema" 
@@ -744,7 +850,7 @@ describe('SchemaBuilderXSD getElements', function() {
     ]);
   });
 
-  it('should get an array of elements defined in the message when all are knowntypes', function() {
+  it('should get an array of elements defined in the message when all are knowntypes', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
       <wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
       xmlns:s="http://www.w3.org/2001/XMLSchema" 
@@ -834,7 +940,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[1].children.length).to.equal(22);
   });
 
-  it('should get an array of elements defined in the message when all are knowntypes from xsd', function() {
+  it('should get an array of elements defined in the message when all are knowntypes from xsd', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
       <wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
       xmlns:s="http://www.w3.org/2001/XMLSchema" 
@@ -909,7 +1015,7 @@ describe('SchemaBuilderXSD getElements', function() {
     expect(elements[1].children).to.be.an('array');
     expect(elements[1].children.length).to.equal(9);
   });
-  it('should get an array of elements defined in the message when have 2 elements', function() {
+  it('should get an array of elements defined in the message when have 2 elements', function () {
     const simpleInput = `<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
     xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
@@ -976,7 +1082,7 @@ describe('SchemaBuilderXSD getElements', function() {
 
   });
 
-  it('should get an array of elements defined in the message when have 2 types', function() {
+  it('should get an array of elements defined in the message when have 2 types', function () {
     const simpleInput = `<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
     xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
@@ -1039,7 +1145,7 @@ describe('SchemaBuilderXSD getElements', function() {
 
   });
 
-  it('should get an array of elements when elements depend on other elements', function() {
+  it('should get an array of elements when elements depend on other elements', function () {
     const
       fileContent = fs.readFileSync(validSchemaFolder + '/elementsDependOnElements.wsdl', 'utf8'),
       parser = new Wsdl11Parser(),
@@ -1070,7 +1176,7 @@ describe('SchemaBuilderXSD getElements', function() {
 
     expect(elements[2].name).to.equal('CreateQueueResponse');
     expect(elements[2].type).to.equal('complex');
-    expect(elements[2].children[0].name).to.equal('CreateQueueResult');
+    expect(elements[2].children[0].name).to.equal('tns:CreateQueueResult');
     expect(elements[2].children[0].isComplex).to.equal(true);
     expect(elements[2].children[0].children[0].name).to.equal('QueueUrl');
     expect(elements[2].children[0].children[0].type).to.equal('string');
@@ -1079,8 +1185,8 @@ describe('SchemaBuilderXSD getElements', function() {
 
 });
 
-describe('SchemaBuilderXSD parseObjectToXML', function() {
-  it('should get an error when the object sent is undefined', function() {
+describe('SchemaBuilderXSD parseObjectToXML', function () {
+  it('should get an error when the object sent is undefined', function () {
     const builder = new SchemaBuilderXSD();
     try {
       builder.parseObjectToXML(undefined);
@@ -1090,7 +1196,7 @@ describe('SchemaBuilderXSD parseObjectToXML', function() {
       expect(error.message).to.equal('Cannot convert undefined or null to xml');
     }
   });
-  it('should get an error when the object sent is null', function() {
+  it('should get an error when the object sent is null', function () {
     const builder = new SchemaBuilderXSD();
     try {
       builder.parseObjectToXML(null);
@@ -1102,8 +1208,8 @@ describe('SchemaBuilderXSD parseObjectToXML', function() {
   });
 });
 
-describe('SchemaBuilderXSD getElementsFromType', function() {
-  it('should get an error when the object sent is undefined', function() {
+describe('SchemaBuilderXSD getElementsFromType', function () {
+  it('should get an error when the object sent is undefined', function () {
     const builder = new SchemaBuilderXSD();
     try {
       builder.getElementsFromType('', null, '', '', PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -1115,8 +1221,8 @@ describe('SchemaBuilderXSD getElementsFromType', function() {
   });
 });
 
-describe('SchemaBuilderXSD getTypes', function() {
-  it('should get an error when the object sent is undefined', function() {
+describe('SchemaBuilderXSD getTypes', function () {
+  it('should get an error when the object sent is undefined', function () {
     const builder = new SchemaBuilderXSD();
     try {
       builder.getTypes(null, '', '');
@@ -1127,7 +1233,7 @@ describe('SchemaBuilderXSD getTypes', function() {
     }
   });
 
-  it('should get an error when the object sent is empty object', function() {
+  it('should get an error when the object sent is empty object', function () {
     const builder = new SchemaBuilderXSD();
     try {
       builder.getTypes({}, '', '');
@@ -1139,7 +1245,7 @@ describe('SchemaBuilderXSD getTypes', function() {
   });
 });
 
-describe('replaceTagInSchema', function() {
+describe('replaceTagInSchema', function () {
   const
     fileContent = fs.readFileSync(validSchemaFolder + '/replaceAllToSequence.wsdl', 'utf8'),
     schemaNameSpace = {
@@ -1149,7 +1255,7 @@ describe('replaceTagInSchema', function() {
       isDefault: false
     };
 
-  it('Should switch all tags in document with sequence tags', function() {
+  it('Should switch all tags in document with sequence tags', function () {
     const schemaBuilder = new SchemaBuilderXSD(),
       result = schemaBuilder.replaceTagInSchema(fileContent, schemaNameSpace, 'all', 'sequence');
     expect(result.includes('<xsd:all>')).to.equal(false);

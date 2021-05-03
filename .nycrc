@@ -1,0 +1,10 @@
+{
+  "all": true,
+  "include": [
+    "**/**/*.js"
+  ],
+  "exclude": [ 
+    "assets/**/*.js",
+    "test/**/*.js"
+  ]
+}

@@ -70,7 +70,18 @@ module.exports = {
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
     },
-    output: undefined,
+    output: {
+      children: [{
+        children: [],
+        name: 'NumberToDollarsResult',
+        isComplex: false,
+        type: 'string'
+      }],
+      name: 'NumberToDollarsResponse',
+      isComplex: true,
+      type: 'complex',
+      namespace: 'http://www.dataaccess.com/webservicesserver/'
+    },
     fault: undefined,
     portName: 'NumberConversionSoap',
     serviceName: 'NumberConversion',
@@ -101,7 +112,18 @@ module.exports = {
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
     },
-    output: undefined,
+    output: {
+      children: [{
+        children: [],
+        name: 'NumberToWordsResult',
+        isComplex: false,
+        type: 'string'
+      }],
+      name: 'NumberToWordsResponse',
+      isComplex: true,
+      type: 'complex',
+      namespace: 'http://www.dataaccess.com/webservicesserver/'
+    },
     fault: undefined,
     portName: 'NumberConversionSoap12',
     serviceName: 'NumberConversion',
@@ -130,7 +152,18 @@ module.exports = {
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
     },
-    output: undefined,
+    output: {
+      children: [{
+        children: [],
+        name: 'NumberToDollarsResult',
+        isComplex: false,
+        type: 'string'
+      }],
+      name: 'NumberToDollarsResponse',
+      isComplex: true,
+      type: 'complex',
+      namespace: 'http://www.dataaccess.com/webservicesserver/'
+    },
     fault: undefined,
     portName: 'NumberConversionSoap12',
     serviceName: 'NumberConversion',

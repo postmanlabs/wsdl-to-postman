@@ -6,6 +6,7 @@
   "scripts": {
     "unit-tests": "./node_modules/mocha/bin/mocha test/unit/**.test.js",
     "e2e-tests": "./node_modules/mocha/bin/mocha test/e2e/**.test.js",
+    "convert-validation-tests": "./node_modules/mocha/bin/mocha test/convert-validation/**.test.js",
     "lint": "eslint ./lib/** ./test/**/*.js",
     "coverage": "nyc --reporter=text npm run unit-tests"
   },

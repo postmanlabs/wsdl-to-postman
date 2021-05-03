@@ -12,3 +12,5 @@ temp3.xml
 package-lock.json
 # - Do not allow IDE conf to be uploaded
 .vscode
+
+/test/convert-validation/output
