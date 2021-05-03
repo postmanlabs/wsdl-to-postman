@@ -276,67 +276,6 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
       }
     });
   });
-
-  it('Should return empty endpoints when not matchs found in the transaction by incorrect method', function () {
-    const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
-        numberToWordsWSDLObject);
-    expect(result).to.be.an('object').and.to.deep.include({
-      matched: true,
-      missingEndpoints: [{
-        property: 'ENDPOINT',
-        transactionJsonPath: null,
-        schemaJsonPath: 'soap NumberToWords',
-        reasonCode: 'MISSING_ENDPOINT',
-        reason: 'The endpoint "POST soap NumberToWords" is missing in collection',
-        endpoint: 'POST soap NumberToWords'
-      },
-      {
-        property: 'ENDPOINT',
-        transactionJsonPath: null,
-        schemaJsonPath: 'soap NumberToDollars',
-        reasonCode: 'MISSING_ENDPOINT',
-        reason: 'The endpoint "POST soap NumberToDollars" is missing in collection',
-        endpoint: 'POST soap NumberToDollars'
-      },
-      {
-        property: 'ENDPOINT',
-        transactionJsonPath: null,
-        schemaJsonPath: 'soap12 NumberToWords',
-        reasonCode: 'MISSING_ENDPOINT',
-        reason: 'The endpoint "POST soap12 NumberToWords" is missing in collection',
-        endpoint: 'POST soap12 NumberToWords'
-      },
-      {
-        property: 'ENDPOINT',
-        transactionJsonPath: null,
-        schemaJsonPath: 'soap12 NumberToDollars',
-        reasonCode: 'MISSING_ENDPOINT',
-        reason: 'The endpoint "POST soap12 NumberToDollars" is missing in collection',
-        endpoint: 'POST soap12 NumberToDollars'
-      }
-      ],
-      requests: {
-        '18403328-4213-4c3e-b0e9-b21a636697c3': {
-          endpoints: [],
-          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
-        },
-        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
-          endpoints: [],
-          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
-        },
-        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
-          endpoints: [],
-          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
-        },
-        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
-          endpoints: [],
-          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
-        }
-      }
-    });
-  });
-
 });
 
 describe('Validate Headers', function () {
@@ -1309,6 +1248,119 @@ describe('validateBody method', function () {
                     reason: 'Response body not provided'
                   }
                 ]
+              }
+            }
+          }],
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+        }
+      }
+    });
+  });
+});
+
+describe('soapMethodValidation', function() {
+  it('Should have a mismatch when item request has a different method than POST in a /soap12 request', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
+        numberToWordsWSDLObject);
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: false,
+      requests: {
+        '18403328-4213-4c3e-b0e9-b21a636697c3': {
+          endpoints: [{
+            matched: false,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToDollars',
+            mismatches: [
+              {
+                'property': 'SOAP_METHOD',
+                'reason': 'Soap requests must use POST method.',
+                'reasonCode': 'INVALID_SOAP_METHOD',
+                'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding12\"]' +
+                  '//operation[@name=\"NumberToDollars\"]',
+                'transactionJsonPath': '$.request.method'
+              }
+            ],
+            responses: {
+              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+        },
+        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+          endpoints: [{
+            matched: false,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToWords',
+            mismatches: [
+              {
+                'property': 'SOAP_METHOD',
+                'reason': 'Soap requests must use POST method.',
+                'reasonCode': 'INVALID_SOAP_METHOD',
+                'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding12\"]' +
+                  '//operation[@name=\"NumberToWords\"]',
+                'transactionJsonPath': '$.request.method'
+              }
+            ],
+            responses: {
+              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+        },
+        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+          endpoints: [{
+            matched: false,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToDollars',
+            mismatches: [
+              {
+                'property': 'SOAP_METHOD',
+                'reason': 'Soap requests must use POST method.',
+                'reasonCode': 'INVALID_SOAP_METHOD',
+                'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding\"]' +
+                  '//operation[@name=\"NumberToDollars\"]',
+                'transactionJsonPath': '$.request.method'
+              }
+            ],
+            responses: {
+              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+        },
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+          endpoints: [{
+            matched: false,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToWords',
+            mismatches: [
+              {
+                'property': 'SOAP_METHOD',
+                'reason': 'Soap requests must use POST method.',
+                'reasonCode': 'INVALID_SOAP_METHOD',
+                'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding\"]' +
+                  '//operation[@name=\"NumberToWords\"]',
+                'transactionJsonPath': '$.request.method'
+              }
+            ],
+            responses: {
+              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                matched: true,
+                mismatches: []
               }
             }
           }],
