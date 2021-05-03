@@ -191,28 +191,28 @@ describe('Tools from messageWithSchemaValidation', function() {
           <xs:element name="NumberToWords">
             <xs:complexType>
               <xs:sequence>
-                <xs:element name="ubiNum" type="xs:integer"></xs:element>
+                <xs:element name="ubiNum" type="xs:integer"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
           <xs:element name="NumberToWordsResponse">
             <xs:complexType>
               <xs:sequence>
-                <xs:element name="NumberToWordsResult" type="xs:string"></xs:element>
+                <xs:element name="NumberToWordsResult" type="xs:string"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
           <xs:element name="NumberToDollars">
             <xs:complexType>
               <xs:sequence>
-                <xs:element name="dNum" type="xs:number"></xs:element>
+                <xs:element name="dNum" type="xs:number"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
           <xs:element name="NumberToDollarsResponse">
             <xs:complexType>
               <xs:sequence>
-                <xs:element name="NumberToDollarsResult" type="xs:string"></xs:element>
+                <xs:element name="NumberToDollarsResult" type="xs:string"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
