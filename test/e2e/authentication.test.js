@@ -413,10 +413,10 @@ const expect = require('chai').expect,
     variable: []
   };
 
-describe('Authentication tests', function () {
+describe('Test the convertion of valid WSDL files with authetication mechanisms', function () {
   var authFolder = fs.readdirSync(usernameTokenExamples);
   async.each(authFolder, function (file, cb) {
-    it('Should deeply validate a WSDL11 file with UsernameToken ' + file, function () {
+    it('Should validate the convertion of a file with ' + file, function () {
       let fileContent = fs.readFileSync(usernameTokenExamples + '/' + file, 'utf8');
       Index.convert(
         { type: 'string', data: fileContent },
@@ -466,10 +466,7 @@ describe('Authentication tests', function () {
     });
   });
 
-});
-
-describe('Authentication test for SSL', function () {
-  it('Should test a convertion of WSDL11 file with SSL Transport Binding mechanism', function () {
+  it('Should validate the convertion of a file with SSL Transport Binding mechanism', function () {
     let fileContent = fs.readFileSync(sslExmaple, 'utf8');
     Index.convert(
       { type: 'string', data: fileContent },
@@ -522,7 +519,7 @@ describe('Authentication test for SSL', function () {
 describe('Authenticacion with SAML11 Token', function () {
   var authFolder = fs.readdirSync(SAMLTokenExamples);
   async.each(authFolder, function (file, cb) {
-    it('Should deeply validate a WSDL11 file with SAML11 Token ' + file, function () {
+    it('Should validate the convertion of a file with SAML11 Token ' + file, function () {
       let fileContent = fs.readFileSync(SAMLTokenExamples + '/' + file, 'utf8');
       Index.convert(
         { type: 'string', data: fileContent },
