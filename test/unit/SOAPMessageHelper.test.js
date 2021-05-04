@@ -264,7 +264,7 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
                 <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>
               </wsse:UsernameToken>
             </wsse:Security>
-          </soap:Header><soap:Body></soap:Body></soap:Envelope>`,
+          </soap:Header><soap:Body/></soap:Envelope>`,
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
@@ -288,7 +288,7 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
                 <wsse:Username>place username here</wsse:Username>
               </wsse:UsernameToken>
             </wsse:Security>
-          </soap:Header><soap:Body></soap:Body></soap:Envelope>`,
+          </soap:Header><soap:Body/></soap:Envelope>`,
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
@@ -316,7 +316,7 @@ oasis-200401-wss-username-token-profile-1.0#PasswordDigest">place hashed passwor
                 <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>
               </wsse:UsernameToken>
             </wsse:Security>
-          </soap:Header><soap:Body></soap:Body></soap:Envelope>`,
+          </soap:Header><soap:Body/></soap:Envelope>`,
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
