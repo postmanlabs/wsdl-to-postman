@@ -15,7 +15,7 @@ const expect = require('chai').expect,
   descType = 'text/plain',
   url = {
     path: ['webservicesserver', 'NumberConversion.wso'],
-    host: ['{{url_variable_0}}'],
+    host: ['{{baseUrl}}'],
     query: [],
     variable: []
   },

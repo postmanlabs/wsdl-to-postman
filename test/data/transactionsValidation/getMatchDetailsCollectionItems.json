@@ -8,7 +8,7 @@
   "request": {
     "url": {
       "path": ["soap", "services", "getMatchDetails.php"],
-      "host": ["{{url_variable_0}}"],
+      "host": ["{{baseUrl}}"],
       "query": [],
       "variable": []
     },
