@@ -779,8 +779,24 @@ describe('Validate Headers', function () {
 describe('get Raw URL', function () {
   it('Should return the same url when it is a string', function () {
     const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.getRawURL('http://url.com');
+      result = transactionValidator.getUrlPath('http://url.com');
     expect(result).to.be.equal('http://url.com');
+  });
+
+  it('Should return empty string when url does not have path', function() {
+    const transactionValidator = new TransactionValidator(),
+      url = {
+        'raw': 'https://queue.amazonaws.com',
+        'protocol': 'https',
+        'host': [
+          'queue',
+          'amazonaws',
+          'com'
+        ]
+      },
+      result = transactionValidator.getUrlPath(url);
+
+    expect(result).to.be.equal('');
   });
 });
 
