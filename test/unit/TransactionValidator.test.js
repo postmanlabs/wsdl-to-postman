@@ -3,6 +3,7 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   nullRequestCollectionItems = require('./../data/transactionsValidation/nullRequestCollectionItems.json'),
   emptyRequestCollectionItems = require('./../data/transactionsValidation/emptyRequestCollectionItems.json'),
   numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
+  getMatchDetailsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/getMatchDetails'),
   numberToWordsNoOperationsWSDLObject =
     require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
   numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json'),
@@ -27,7 +28,7 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   numberToWordsCollectionItemsGET = require('./../data/transactionsValidation/numberToWordsCollectionItemsGET.json'),
   numberToWordsCollectionItemsIncompleteItems =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsIncompleteItems.json'),
-  //  validCollectionItems = require('./../data/transactionsValidation/validCollectionItems.json'),
+  getMatchDetailsCollectionItems = require('./../data/transactionsValidation/getMatchDetailsCollectionItems.json'),
   {
     assert,
     expect
@@ -281,498 +282,498 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
 describe('Validate Headers', function () {
   it('Should return missing header when validateContentType option is on true' +
     ' and not content-type header is present', function () {
-    const options = {
+      const options = {
         validateContentType: true
       },
-      transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
-        numberToWordsWSDLObject, options);
-    expect(result).to.be.an('object').and.to.deep.include({
-      matched: false,
-      requests: {
-        '18403328-4213-4c3e-b0e9-b21a636697c3': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToDollars',
-            mismatches: [],
-            responses: {
-              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
-                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
-                matched: true,
-                mismatches: []
+        transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
+          numberToWordsWSDLObject, options);
+      expect(result).to.be.an('object').and.to.deep.include({
+        matched: false,
+        requests: {
+          '18403328-4213-4c3e-b0e9-b21a636697c3': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToDollars',
+              mismatches: [],
+              responses: {
+                '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                  id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
-        },
-        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToWords',
-            mismatches: [],
-            responses: {
-              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
-                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
-                matched: true,
-                mismatches: []
-              }
-            }
-          }],
-          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
-        },
-        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToDollars',
-            mismatches: [],
-            responses: {
-              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
-                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
-                matched: true,
-                mismatches: []
-              }
-            }
-          }],
-          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
-        },
-        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
-          endpoints: [{
-            matched: false,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToWords',
-            mismatches: [{
-              property: 'HEADER',
-              transactionJsonPath: '$.request.header',
-              schemaJsonPath: 'schemaPathPrefix',
-              reasonCode: 'MISSING_IN_REQUEST',
-              reason: 'The header "Content-Type" was not found in the transaction'
             }],
-            responses: {
-              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
-                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
-                matched: false,
-                mismatches: [{
-                  property: 'HEADER',
-                  transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header',
-                  schemaJsonPath: 'schemaPathPrefix',
-                  reasonCode: 'MISSING_IN_REQUEST',
-                  reason: 'The header "Content-Type" was not found in the transaction'
-                }]
+            requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+          },
+          '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToWords',
+              mismatches: [],
+              responses: {
+                'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                  id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+            }],
+            requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+          },
+          '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToDollars',
+              mismatches: [],
+              responses: {
+                '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                  id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                  matched: true,
+                  mismatches: []
+                }
+              }
+            }],
+            requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+          },
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+            endpoints: [{
+              matched: false,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToWords',
+              mismatches: [{
+                property: 'HEADER',
+                transactionJsonPath: '$.request.header',
+                schemaJsonPath: 'schemaPathPrefix',
+                reasonCode: 'MISSING_IN_REQUEST',
+                reason: 'The header "Content-Type" was not found in the transaction'
+              }],
+              responses: {
+                'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                  id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                  matched: false,
+                  mismatches: [{
+                    property: 'HEADER',
+                    transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header',
+                    schemaJsonPath: 'schemaPathPrefix',
+                    reasonCode: 'MISSING_IN_REQUEST',
+                    reason: 'The header "Content-Type" was not found in the transaction'
+                  }]
+                }
+              }
+            }],
+            requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+          }
         }
-      }
+      });
     });
-  });
 
   it('Should return bad header mismatch when validateContentType option' +
-  ' is true and content-type header is not text/xml', function () {
-    const options = {
+    ' is true and content-type header is not text/xml', function () {
+      const options = {
         validateContentType: true
       },
-      transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
-        numberToWordsWSDLObject, options);
-    expect(result).to.be.an('object').and.to.deep.include({
-      matched: false,
-      requests: {
-        '18403328-4213-4c3e-b0e9-b21a636697c3': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToDollars',
-            mismatches: [],
-            responses: {
-              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
-                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
-                matched: true,
-                mismatches: []
+        transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
+          numberToWordsWSDLObject, options);
+      expect(result).to.be.an('object').and.to.deep.include({
+        matched: false,
+        requests: {
+          '18403328-4213-4c3e-b0e9-b21a636697c3': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToDollars',
+              mismatches: [],
+              responses: {
+                '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                  id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
-        },
-        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToWords',
-            mismatches: [],
-            responses: {
-              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
-                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
-                matched: true,
-                mismatches: []
-              }
-            }
-          }],
-          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
-        },
-        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToDollars',
-            mismatches: [],
-            responses: {
-              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
-                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
-                matched: true,
-                mismatches: []
-              }
-            }
-          }],
-          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
-        },
-        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
-          endpoints: [{
-            matched: false,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToWords',
-            mismatches: [{
-              property: 'HEADER',
-              transactionJsonPath: '$.request.header[0].value',
-              schemaJsonPath: 'schemaPathPrefix',
-              reasonCode: 'INVALID_TYPE',
-              reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we ' +
-                'found \"text/plain; charset=utf-8\" instead'
             }],
-            responses: {
-              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
-                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
-                matched: false,
-                mismatches: [{
-                  property: 'HEADER',
-                  transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header[0].value',
-                  schemaJsonPath: 'schemaPathPrefix',
-                  reasonCode: 'INVALID_TYPE',
-                  reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we' +
-                    ' found \"text/plain; charset=utf-8\" instead'
-                }]
+            requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+          },
+          '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToWords',
+              mismatches: [],
+              responses: {
+                'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                  id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+            }],
+            requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+          },
+          '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToDollars',
+              mismatches: [],
+              responses: {
+                '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                  id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                  matched: true,
+                  mismatches: []
+                }
+              }
+            }],
+            requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+          },
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+            endpoints: [{
+              matched: false,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToWords',
+              mismatches: [{
+                property: 'HEADER',
+                transactionJsonPath: '$.request.header[0].value',
+                schemaJsonPath: 'schemaPathPrefix',
+                reasonCode: 'INVALID_TYPE',
+                reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we ' +
+                  'found \"text/plain; charset=utf-8\" instead'
+              }],
+              responses: {
+                'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                  id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                  matched: false,
+                  mismatches: [{
+                    property: 'HEADER',
+                    transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header[0].value',
+                    schemaJsonPath: 'schemaPathPrefix',
+                    reasonCode: 'INVALID_TYPE',
+                    reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we' +
+                      ' found \"text/plain; charset=utf-8\" instead'
+                  }]
+                }
+              }
+            }],
+            requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+          }
         }
-      }
+      });
     });
-  });
 
   it('Should not return missing header when validateContentType option is not provided' +
-  ' and not content-type header is present', function () {
-    const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
-        numberToWordsWSDLObject);
-    expect(result).to.be.an('object').and.to.deep.include({
-      matched: true,
-      requests: {
-        '18403328-4213-4c3e-b0e9-b21a636697c3': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToDollars',
-            mismatches: [],
-            responses: {
-              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
-                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
-                matched: true,
-                mismatches: []
+    ' and not content-type header is present', function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
+          numberToWordsWSDLObject);
+      expect(result).to.be.an('object').and.to.deep.include({
+        matched: true,
+        requests: {
+          '18403328-4213-4c3e-b0e9-b21a636697c3': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToDollars',
+              mismatches: [],
+              responses: {
+                '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                  id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
-        },
-        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToWords',
-            mismatches: [],
-            responses: {
-              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
-                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+          },
+          '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToWords',
+              mismatches: [],
+              responses: {
+                'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                  id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
-        },
-        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToDollars',
-            mismatches: [],
-            responses: {
-              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
-                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+          },
+          '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToDollars',
+              mismatches: [],
+              responses: {
+                '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                  id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
-        },
-        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToWords',
-            mismatches: [],
-            responses: {
-              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
-                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+          },
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToWords',
+              mismatches: [],
+              responses: {
+                'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                  id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+            }],
+            requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+          }
         }
-      }
+      });
     });
-  });
 
   it('Should not return bad header mismatch when validateContentType option' +
-  ' is not provided and content-type header is not text/xml', function () {
-    const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
-        numberToWordsWSDLObject);
-    expect(result).to.be.an('object').and.to.deep.include({
-      matched: true,
-      requests: {
-        '18403328-4213-4c3e-b0e9-b21a636697c3': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToDollars',
-            mismatches: [],
-            responses: {
-              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
-                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
-                matched: true,
-                mismatches: []
+    ' is not provided and content-type header is not text/xml', function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
+          numberToWordsWSDLObject);
+      expect(result).to.be.an('object').and.to.deep.include({
+        matched: true,
+        requests: {
+          '18403328-4213-4c3e-b0e9-b21a636697c3': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToDollars',
+              mismatches: [],
+              responses: {
+                '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                  id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
-        },
-        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToWords',
-            mismatches: [],
-            responses: {
-              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
-                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+          },
+          '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToWords',
+              mismatches: [],
+              responses: {
+                'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                  id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
-        },
-        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToDollars',
-            mismatches: [],
-            responses: {
-              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
-                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+          },
+          '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToDollars',
+              mismatches: [],
+              responses: {
+                '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                  id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
-        },
-        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToWords',
-            mismatches: [],
-            responses: {
-              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
-                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+          },
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToWords',
+              mismatches: [],
+              responses: {
+                'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                  id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+            }],
+            requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+          }
         }
-      }
+      });
     });
-  });
 
 
   it('Should not return missing header when validateContentType option is set explicitly on false' +
-  ' and not content-type header is present', function () {
-    const options = {
+    ' and not content-type header is present', function () {
+      const options = {
         validateContentType: false
       },
-      transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
-        numberToWordsWSDLObject, options);
-    expect(result).to.be.an('object').and.to.deep.include({
-      matched: true,
-      requests: {
-        '18403328-4213-4c3e-b0e9-b21a636697c3': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToDollars',
-            mismatches: [],
-            responses: {
-              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
-                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
-                matched: true,
-                mismatches: []
+        transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
+          numberToWordsWSDLObject, options);
+      expect(result).to.be.an('object').and.to.deep.include({
+        matched: true,
+        requests: {
+          '18403328-4213-4c3e-b0e9-b21a636697c3': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToDollars',
+              mismatches: [],
+              responses: {
+                '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                  id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
-        },
-        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToWords',
-            mismatches: [],
-            responses: {
-              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
-                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+          },
+          '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToWords',
+              mismatches: [],
+              responses: {
+                'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                  id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
-        },
-        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToDollars',
-            mismatches: [],
-            responses: {
-              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
-                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+          },
+          '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToDollars',
+              mismatches: [],
+              responses: {
+                '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                  id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
-        },
-        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToWords',
-            mismatches: [],
-            responses: {
-              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
-                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+          },
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToWords',
+              mismatches: [],
+              responses: {
+                'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                  id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+            }],
+            requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+          }
         }
-      }
+      });
     });
-  });
 
   it('Should not return bad header mismatch when validateContentType option is set explicitly on false' +
-  ' and content-type header is not text/xml', function () {
-    const options = {
+    ' and content-type header is not text/xml', function () {
+      const options = {
         validateContentType: false
       },
-      transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
-        numberToWordsWSDLObject, options);
-    expect(result).to.be.an('object').and.to.deep.include({
-      matched: true,
-      requests: {
-        '18403328-4213-4c3e-b0e9-b21a636697c3': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToDollars',
-            mismatches: [],
-            responses: {
-              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
-                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
-                matched: true,
-                mismatches: []
+        transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
+          numberToWordsWSDLObject, options);
+      expect(result).to.be.an('object').and.to.deep.include({
+        matched: true,
+        requests: {
+          '18403328-4213-4c3e-b0e9-b21a636697c3': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToDollars',
+              mismatches: [],
+              responses: {
+                '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                  id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
-        },
-        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap12 NumberToWords',
-            mismatches: [],
-            responses: {
-              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
-                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+          },
+          '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap12 NumberToWords',
+              mismatches: [],
+              responses: {
+                'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                  id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
-        },
-        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToDollars',
-            mismatches: [],
-            responses: {
-              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
-                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+          },
+          '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToDollars',
+              mismatches: [],
+              responses: {
+                '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                  id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
-        },
-        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
-          endpoints: [{
-            matched: true,
-            endpointMatchScore: 1,
-            endpoint: 'POST soap NumberToWords',
-            mismatches: [],
-            responses: {
-              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
-                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
-                matched: true,
-                mismatches: []
+            }],
+            requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+          },
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+            endpoints: [{
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap NumberToWords',
+              mismatches: [],
+              responses: {
+                'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                  id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                  matched: true,
+                  mismatches: []
+                }
               }
-            }
-          }],
-          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+            }],
+            requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+          }
         }
-      }
+      });
     });
-  });
 });
 
 
@@ -783,7 +784,7 @@ describe('get Raw URL', function () {
     expect(result).to.be.equal('http://url.com');
   });
 
-  it('Should return empty string when url does not have path', function() {
+  it('Should return empty string when url does not have path', function () {
     const transactionValidator = new TransactionValidator(),
       url = {
         'raw': 'https://queue.amazonaws.com',
@@ -802,18 +803,18 @@ describe('get Raw URL', function () {
 
 describe('validateBody method', function () {
   const bodyMismatchMockWithReason = (reason, schemaJsonPath) => {
-      let newMismatch = Object.assign(
-        {},
-        {
-          property: 'BODY',
-          transactionJsonPath: '$.request.body',
-          schemaJsonPath: schemaJsonPath,
-          reasonCode: 'INVALID_BODY',
-          reason: reason
-        }
-      );
-      return newMismatch;
-    },
+    let newMismatch = Object.assign(
+      {},
+      {
+        property: 'BODY',
+        transactionJsonPath: '$.request.body',
+        schemaJsonPath: schemaJsonPath,
+        reasonCode: 'INVALID_BODY',
+        reason: reason
+      }
+    );
+    return newMismatch;
+  },
     getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch, type = 'request') => {
       let newExpected = Object.assign({}, expectedBase);
       if (type === 'request') {
@@ -1272,9 +1273,95 @@ describe('validateBody method', function () {
       }
     });
   });
+
+  it('Should have a mismatch sdfdsfdfdf', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        getMatchDetailsCollectionItems,
+        getMatchDetailsWSDLObject
+      );
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: false,
+      requests: {
+        '18403328-4213-4c3e-b0e9-b21a636697c3': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToDollars',
+            mismatches: [],
+            responses: {
+              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+        },
+        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToWords',
+            mismatches: [],
+            responses: {
+              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+        },
+        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToDollars',
+            mismatches: [],
+            responses: {
+              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+        },
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+          endpoints: [{
+            matched: false,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToWords',
+            mismatches: [],
+            responses: {
+              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                matched: false,
+                mismatches: [
+                  {
+                    property: 'RESPONSE_BODY',
+                    transactionJsonPath: '$.response.body',
+                    schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+                      '//operation[@name="NumberToWords"]',
+                    reasonCode: 'INVALID_RESPONSE_BODY',
+                    reason: 'Response body not provided'
+                  }
+                ]
+              }
+            }
+          }],
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+        }
+      }
+    });
+  });
 });
 
-describe('soapMethodValidation', function() {
+describe('soapMethodValidation', function () {
   it('Should have a mismatch when item request has a different method than POST in a /soap12 request', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
