@@ -200,13 +200,13 @@ const {
     }
   };
 
-describe('WsdlToPostmanCollectionMapper constructor', function() {
-  it('Should return a WsdlToPostmanCollectionMapper object', function() {
+describe('WsdlToPostmanCollectionMapper constructor', function () {
+  it('Should return a WsdlToPostmanCollectionMapper object', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
     expect(mapper instanceof WsdlToPostmanCollectionMapper).to.be.true;
   });
 
-  it('Should throw an error if wsdlObject is undefined', function() {
+  it('Should throw an error if wsdlObject is undefined', function () {
     const undefinedWsdl = undefined,
       expectedMessage = 'Wsdl Object must be provided and must not be empty';
     try {
@@ -219,7 +219,7 @@ describe('WsdlToPostmanCollectionMapper constructor', function() {
     }
   });
 
-  it('Should throw an error if wsdlObject is null', function() {
+  it('Should throw an error if wsdlObject is null', function () {
     const nullWsdl = null,
       expectedMessage = 'Wsdl Object must be provided and must not be empty';
     try {
@@ -233,8 +233,8 @@ describe('WsdlToPostmanCollectionMapper constructor', function() {
   });
 });
 
-describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
-  it('Should return a PostmanCollection object', function() {
+describe('WsdlToPostmanCollectionMapper getPostmanCollection', function () {
+  it('Should return a PostmanCollection object', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
     let postmanCollection = mapper.getPostmanCollection('collection name');
     expect(postmanCollection instanceof Collection).to.be.true;
@@ -242,7 +242,7 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
 
   it(
     'Should return a postman collection with name equals to providedName when it is different than empty string',
-    function() {
+    function () {
       const providedName = 'provided name',
         mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
         postmanCollection = mapper.getPostmanCollection({}, providedName);
@@ -253,7 +253,7 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
   it(
     `Should return a postman collection with name equals to provided wsdlObject targetNamespace url
     when provided name is equal to empty string`,
-    function() {
+    function () {
       const providedEmptyStringName = '',
         expectedName = wsdlMockObject.targetNamespace.url,
         mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
@@ -262,7 +262,7 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
     }
   );
 
-  it('Should throw an error if provided folderStrategy option is not supported', function() {
+  it('Should throw an error if provided folderStrategy option is not supported', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
       options = {
         folderStrategy: 'Not supported value'
@@ -285,8 +285,8 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function() {
   });
 });
 
-describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function() {
-  it('Should return postmanCollection items definition from wsdlObject.operationsArray', function() {
+describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function () {
+  it('Should return postmanCollection items definition from wsdlObject.operationsArray', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
     let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray),
       urlVariables = mapper.getVariablesFromUrlList(urls),
@@ -294,26 +294,26 @@ describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function() {
       requests;
     expect(items).to.be.an('array');
     requests = items.map((item) => {
-      expect(item).to.include.all.keys('name', 'description', 'request');
+      expect(item).to.include.all.keys('name', 'request');
       return item.request;
     });
     requests.forEach((request) => {
       expect(request).to.be.an('object')
-        .to.include.all.keys('url', 'method', 'header', 'body');
+        .to.include.all.keys('url', 'method', 'header', 'body', 'description');
     });
   });
 });
 
-describe('WsdlToPostmanCollectionMapper getUrlFromOperations', function() {
-  it('Should an array of urls', function() {
+describe('WsdlToPostmanCollectionMapper getUrlFromOperations', function () {
+  it('Should an array of urls', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
     let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray);
     expect(urls).to.be.an('array');
   });
 });
 
-describe('WsdlToPostmanCollectionMapper getVariablesFromUrlList', function() {
-  it('Should return an array of objects with format {key, value}', function() {
+describe('WsdlToPostmanCollectionMapper getVariablesFromUrlList', function () {
+  it('Should return an array of objects with format {key, value}', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
       urls = [
         'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
@@ -332,8 +332,8 @@ describe('WsdlToPostmanCollectionMapper getVariablesFromUrlList', function() {
   });
 });
 
-describe('generateMappingObject method', function() {
-  it('Should return a mappingObject with provided name', function() {
+describe('generateMappingObject method', function () {
+  it('Should return a mappingObject with provided name', function () {
     const expectedName = 'providedName',
       mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
       mappingObject = mapper.generateMappingObject(wsdlMockObject, {}, expectedName);
@@ -341,22 +341,22 @@ describe('generateMappingObject method', function() {
   });
 });
 
-describe('getCollectionName method', function() {
-  it('Should return the target namespace url', function() {
+describe('getCollectionName method', function () {
+  it('Should return the target namespace url', function () {
     const expectedName = 'http://www.dataaccess.com/webservicesserver/',
       mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
       collectionName = mapper.getCollectionName('');
     expect(collectionName).to.be.equal(expectedName);
   });
 
-  it('Should return the target namespace url when called without params', function() {
+  it('Should return the target namespace url when called without params', function () {
     const expectedName = 'http://www.dataaccess.com/webservicesserver/',
       mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
       collectionName = mapper.getCollectionName();
     expect(collectionName).to.be.equal(expectedName);
   });
 
-  it('Should return the default name when target namespace is undefined', function() {
+  it('Should return the default name when target namespace is undefined', function () {
     let wsdlMockObjectToTest = Object.assign({}, wsdlMockObject);
     wsdlMockObjectToTest.targetNamespace = undefined;
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObjectToTest),
@@ -364,7 +364,7 @@ describe('getCollectionName method', function() {
     expect(collectionName).to.be.equal(DEFAULT_COLLECTION_NAME);
   });
 
-  it('Should return the default name when target namespace url is empty', function() {
+  it('Should return the default name when target namespace url is empty', function () {
     let wsdlMockObjectToTest = Object.assign({}, wsdlMockObject);
     wsdlMockObjectToTest.targetNamespace.url = '';
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObjectToTest),
@@ -372,7 +372,7 @@ describe('getCollectionName method', function() {
     expect(collectionName).to.be.equal(DEFAULT_COLLECTION_NAME);
   });
 
-  it('Should return the default name when target namespace url is empty and not provided name', function() {
+  it('Should return the default name when target namespace url is empty and not provided name', function () {
     let wsdlMockObjectToTest = Object.assign({}, wsdlMockObject);
     wsdlMockObjectToTest.targetNamespace.url = '';
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObjectToTest),
@@ -380,7 +380,7 @@ describe('getCollectionName method', function() {
     expect(collectionName).to.be.equal(DEFAULT_COLLECTION_NAME);
   });
 
-  it('Should return the provided name when target namespace url is empty', function() {
+  it('Should return the provided name when target namespace url is empty', function () {
     const expectedName = 'providedName',
       mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
       collectionName = mapper.getCollectionName(expectedName);

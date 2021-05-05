@@ -423,17 +423,17 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
             expect(conversionResult.output[0].data.info.name).to.be.eql(collName);
             for (i = 0; i < conversionResult.output[0].data.item.length; i++) {
               expect(conversionResult.output[0].data.item[i]).to.include
-                .all.keys('name', 'description', 'request', 'response');
+                .all.keys('name', 'request', 'response');
               expect(conversionResult.output[0].data.item[i].name).to.be.eql(namesArray[i]);
-              expect(conversionResult.output[0].data.item[i].description.content).to.be.eql(descArray[i]);
-              expect(conversionResult.output[0].data.item[i].description.type).to.be.eql(descType);
               // Expects for Request
               expect(conversionResult.output[0].data.item[i].request)
-                .to.include.all.keys('url', 'header', 'method', 'body');
+                .to.include.all.keys('url', 'header', 'method', 'body', 'description');
               expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
               expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
               expect(conversionResult.output[0].data.item[i].request.body).to.be.eql(reqBody[i]);
+              expect(conversionResult.output[0].data.item[i].request.description.content).to.be.eql(descArray[i]);
+              expect(conversionResult.output[0].data.item[i].request.description.type).to.be.eql(descType);
               // Expects for Response
               expect(conversionResult.output[0].data.item[i].response[0]).to.include
                 .all.keys('name', 'originalRequest', 'status', 'code', 'header', 'body');
@@ -473,17 +473,17 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
           expect(conversionResult.output[0].data.info.name).to.be.eql(collName);
           for (i = 0; i < conversionResult.output[0].data.item.length; i++) {
             expect(conversionResult.output[0].data.item[i]).to.include
-              .all.keys('name', 'description', 'request', 'response');
+              .all.keys('name', 'request', 'response');
             expect(conversionResult.output[0].data.item[i].name).to.be.eql(namesArray[i]);
-            expect(conversionResult.output[0].data.item[i].description.content).to.be.eql(descArray[i]);
-            expect(conversionResult.output[0].data.item[i].description.type).to.be.eql(descType);
             // Expects for Request
             expect(conversionResult.output[0].data.item[i].request)
-              .to.include.all.keys('url', 'header', 'method', 'body');
+              .to.include.all.keys('url', 'header', 'method', 'body', 'description');
             expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
             expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
             expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
             expect(conversionResult.output[0].data.item[i].request.body).to.be.eql(reqBodySSL[i]);
+            expect(conversionResult.output[0].data.item[i].request.description.content).to.be.eql(descArray[i]);
+            expect(conversionResult.output[0].data.item[i].request.description.type).to.be.eql(descType);
             // Expects for Response
             expect(conversionResult.output[0].data.item[i].response[0]).to.include
               .all.keys('name', 'originalRequest', 'status', 'code', 'header', 'body');
@@ -526,17 +526,17 @@ describe('Authenticacion with SAML11 Token', function () {
             expect(conversionResult.output[0].data.info.name).to.be.eql(collName);
             for (i = 0; i < conversionResult.output[0].data.item.length; i++) {
               expect(conversionResult.output[0].data.item[i]).to.include
-                .all.keys('name', 'description', 'request', 'response');
+                .all.keys('name', 'request', 'response');
               expect(conversionResult.output[0].data.item[i].name).to.be.eql(namesArray[i]);
-              expect(conversionResult.output[0].data.item[i].description.content).to.be.eql(descArray[i]);
-              expect(conversionResult.output[0].data.item[i].description.type).to.be.eql(descType);
               // Expects for Request
               expect(conversionResult.output[0].data.item[i].request)
-                .to.include.all.keys('url', 'header', 'method', 'body');
+                .to.include.all.keys('url', 'header', 'method', 'body', 'description');
               expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
               expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
               expect(conversionResult.output[0].data.item[i].request.body).to.be.eql(reqBodySAML[i]);
+              expect(conversionResult.output[0].data.item[i].request.description.content).to.be.eql(descArray[i]);
+              expect(conversionResult.output[0].data.item[i].request.description.type).to.be.eql(descType);
               // Expects for Response
               expect(conversionResult.output[0].data.item[i].response[0]).to.include
                 .all.keys('name', 'originalRequest', 'status', 'code', 'header', 'body');
