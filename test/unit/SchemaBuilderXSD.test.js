@@ -424,14 +424,14 @@ describe('SchemaBuilderXSD getElements', function () {
   it('should get an array of types with 1 root and 1 complex type Scenario 3', function () {
     const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getMatchClassesForTournament.php"
+    xmlns:tns="url/soap/services/getMatchClassesForTournament.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchClassesForTournament" 
-    targetNamespace="http://www.profixio.com/soap/services/getMatchClassesForTournament.php">
+    targetNamespace="url/soap/services/getMatchClassesForTournament.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getMatchClassesForTournament.php">
+        <xsd:schema targetNamespace="url/soap/services/getMatchClassesForTournament.php">
             <xsd:element name="getMatchClassesForTournament">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -494,7 +494,7 @@ describe('SchemaBuilderXSD getElements', function () {
       thisNameSpace = {
         key: 'tns',
         prefixFilter: 'tns:',
-        url: 'http://www.profixio.com/soap/services/getMatchClassesForTournament.php',
+        url: 'url/soap/services/getMatchClassesForTournament.php',
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
@@ -508,7 +508,7 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[1].type).to.equal('complex');
     expect(elements[1].minOccurs).to.equal('0');
     expect(elements[1].maxOccurs).to.equal('1');
-    expect(elements[1].namespace).to.equal('http://www.profixio.com/soap/services/getMatchClassesForTournament.php');
+    expect(elements[1].namespace).to.equal('url/soap/services/getMatchClassesForTournament.php');
     expect(elements[1].children).to.be.an('array');
 
     expect(elements[1].children[0].name).to.equal('getMatchClassesForTournamentResult');

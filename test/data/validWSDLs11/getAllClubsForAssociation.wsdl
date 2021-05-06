@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getAllClubsForAssociation.php"
+    xmlns:tns="url/soap/services/getAllClubsForAssociation.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllClubsForAssociation" targetNamespace="http://www.profixio.com/soap/services/getAllClubsForAssociation.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllClubsForAssociation" targetNamespace="url/soap/services/getAllClubsForAssociation.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getAllClubsForAssociation.php">
+        <xsd:schema targetNamespace="url/soap/services/getAllClubsForAssociation.php">
             <xsd:element name="getAllClubsForAssociation">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -53,7 +53,7 @@
     <binding name="getAllClubsForAssociationBinding" type="tns:getAllClubsForAssociationPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getAllClubsForAssociation">
-            <soap:operation soapAction="http://www.profixio.com/soap/services/getAllClubsForAssociation.php#getAllClubsForAssociation"/>
+            <soap:operation soapAction="url/soap/services/getAllClubsForAssociation.php#getAllClubsForAssociation"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -64,7 +64,7 @@
     </binding>
     <service name="getAllClubsForAssociationService">
         <port name="getAllClubsForAssociationPort" binding="tns:getAllClubsForAssociationBinding">
-            <soap:address location="http://www.profixio.com/soap/services/getAllClubsForAssociation.php"/>
+            <soap:address location="url/soap/services/getAllClubsForAssociation.php"/>
         </port>
     </service>
     <message name="getAllClubsForAssociationIn">

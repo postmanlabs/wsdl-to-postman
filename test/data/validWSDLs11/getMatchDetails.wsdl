@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getMatchDetails.php"
+    xmlns:tns="url/soap/services/getMatchDetails.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchDetails" targetNamespace="http://www.profixio.com/soap/services/getMatchDetails.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchDetails" targetNamespace="url/soap/services/getMatchDetails.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getMatchDetails.php">
+        <xsd:schema targetNamespace="url/soap/services/getMatchDetails.php">
             <xsd:element name="getMatchDetails">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -57,7 +57,7 @@
     <binding name="getMatchDetailsBinding" type="tns:getMatchDetailsPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getMatchDetails">
-            <soap:operation soapAction="http://www.profixio.com/soap/services/getMatchDetails.php#getMatchDetails"/>
+            <soap:operation soapAction="url/soap/services/getMatchDetails.php#getMatchDetails"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -68,7 +68,7 @@
     </binding>
     <service name="getMatchDetailsService">
         <port name="getMatchDetailsPort" binding="tns:getMatchDetailsBinding">
-            <soap:address location="http://www.profixio.com/soap/services/getMatchDetails.php"/>
+            <soap:address location="url/soap/services/getMatchDetails.php"/>
         </port>
     </service>
     <message name="getMatchDetailsIn">

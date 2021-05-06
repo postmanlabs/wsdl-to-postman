@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getTournamentDetails.php"
+    xmlns:tns="url/soap/services/getTournamentDetails.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentDetails" targetNamespace="http://www.profixio.com/soap/services/getTournamentDetails.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentDetails" targetNamespace="url/soap/services/getTournamentDetails.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getTournamentDetails.php">
+        <xsd:schema targetNamespace="url/soap/services/getTournamentDetails.php">
             <xsd:complexType name="ClubKey">
                 <xsd:sequence>
                     <xsd:element name="club_name" type="xsd:string" nillable="true"/>
@@ -145,7 +145,7 @@
     <binding name="getTournamentDetailsBinding" type="tns:getTournamentDetailsPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getTournamentDetails">
-            <soap:operation soapAction="http://www.profixio.com/soap/services/getTournamentDetails.php#getTournamentDetails"/>
+            <soap:operation soapAction="url/soap/services/getTournamentDetails.php#getTournamentDetails"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -156,7 +156,7 @@
     </binding>
     <service name="getTournamentDetailsService">
         <port name="getTournamentDetailsPort" binding="tns:getTournamentDetailsBinding">
-            <soap:address location="http://www.profixio.com/soap/services/getTournamentDetails.php"/>
+            <soap:address location="url/soap/services/getTournamentDetails.php"/>
         </port>
     </service>
     <message name="getTournamentDetailsIn">
