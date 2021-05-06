@@ -1844,7 +1844,7 @@ describe('WSDL 1.1 parser getServices', function () {
   });
 });
 
-describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
+describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
   it('should get info from binding for soap when binding is soap', function () {
 
     const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -1921,7 +1921,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace);
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
     expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
     expect(bindingInfo.verb).to.equal(POST_METHOD);
 
@@ -2003,7 +2003,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace);
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
     expect(bindingInfo.protocol).to.equal(SOAP12_PROTOCOL);
     expect(bindingInfo.verb).to.equal(POST_METHOD);
 
@@ -2076,13 +2076,13 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace);
     expect(bindingInfo.protocol).to.equal(HTTP_PROTOCOL);
     expect(bindingInfo.verb).to.equal(POST_METHOD);
 
   });
 
-  it('should throw an error when call getBindingInfoFromBindinTag with binding null', function () {
+  it('should throw an error when call getBindingInfoFromBindingTag with binding null', function () {
     const parser = new Wsdl11Parser(),
       soap12Namespace = {
         key: 'soap12',
@@ -2095,7 +2095,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
         isDefault: 'false'
       };
     try {
-      parser.getBindingInfoFromBindinTag(
+      parser.getBindingInfoFromBindingTag(
         null,
         soapNamespace, soap12Namespace
       );
@@ -2105,7 +2105,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
     }
   });
 
-  it('should throw an error when call getBindingInfoFromBindinTag with binding undefined', function () {
+  it('should throw an error when call getBindingInfoFromBindingTag with binding undefined', function () {
     const parser = new Wsdl11Parser(),
       soap12Namespace = {
         key: 'soap12',
@@ -2118,7 +2118,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
         isDefault: 'false'
       };
     try {
-      parser.getBindingInfoFromBindinTag(
+      parser.getBindingInfoFromBindingTag(
         undefined,
         soapNamespace, soap12Namespace
       );
@@ -2128,7 +2128,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
     }
   });
 
-  it('should throw an error when call getBindingInfoFromBindinTag with binding an empty object', function () {
+  it('should throw an error when call getBindingInfoFromBindingTag with binding an empty object', function () {
     const parser = new Wsdl11Parser(),
       soap12Namespace = {
         key: 'soap12',
@@ -2141,7 +2141,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
         isDefault: 'false'
       };
     try {
-      parser.getBindingInfoFromBindinTag({},
+      parser.getBindingInfoFromBindingTag({},
         soapNamespace, soap12Namespace
       );
       assert.fail('we expected an error');
@@ -2217,7 +2217,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
         binding = parser.getBindings(
           parsed
         )[0];
-      parser.getBindingInfoFromBindinTag(binding, undefined, undefined);
+      parser.getBindingInfoFromBindingTag(binding, undefined, undefined);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -2296,7 +2296,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindinTag', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, null);
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, null);
     expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
     expect(bindingInfo.verb).to.equal(POST_METHOD);
 
@@ -2381,7 +2381,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace),
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace),
       operation = {};
     operation['soap:operation'] = {
       '@_style': 'document'
@@ -2465,7 +2465,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace),
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace),
       operation = {};
     operation['soap12:operation'] = {
       '@_style': 'document'
@@ -2560,7 +2560,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace),
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace),
       operation = {};
     operation['http:operation'] = {
       '@_location': '/FahrenheitToCelsius'
@@ -2655,7 +2655,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace),
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace),
 
       operation = {};
     operation['http:operation'] = {
@@ -2756,7 +2756,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace),
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace),
 
       operation = {};
     operation['http:operation'] = {
@@ -2852,7 +2852,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       binding = parser.getBindings(
         parsed
       )[0],
-      bindingInfo = parser.getBindingInfoFromBindinTag(binding, soapNamespace, soap12Namespace, httpNamespace);
+      bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace);
     try {
       parser.getStyleFromBindingOperation({}, bindingInfo);
       assert.fail('we expected an error');
