@@ -1215,7 +1215,7 @@ describe('WSDL 2.0 parser getDocumentationString', function () {
   });
 });
 
-describe('WSDL 2.0 parser  getBindingInfoFromBindinTag', function () {
+describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
   it('should throw an error when can not get protocol', function () {
     const parser = new Wsdl20Parser();
     try {
@@ -1223,7 +1223,7 @@ describe('WSDL 2.0 parser  getBindingInfoFromBindinTag', function () {
         binding = parser.getBindings(
           parsed
         )[0];
-      parser.getBindingInfoFromBindinTag(binding, undefined, undefined);
+      parser.getBindingInfoFromBindingTag(binding, undefined, undefined);
       assert.fail('we expected an error');
     }
     catch (error) {
