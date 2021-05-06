@@ -4,6 +4,7 @@
   "description": "Convert a given WSDL specification (1.1) to Postman Collection",
   "main": "index.js",
   "scripts": {
+    "test": "./scripts/test.sh",
     "unit-tests": "./node_modules/mocha/bin/mocha test/unit/**.test.js",
     "e2e-tests": "./node_modules/mocha/bin/mocha test/e2e/**.test.js",
     "convert-validation-tests": "./node_modules/mocha/bin/mocha test/convert-validation/**.test.js",

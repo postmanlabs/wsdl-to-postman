@@ -3,6 +3,7 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   nullRequestCollectionItems = require('./../data/transactionsValidation/nullRequestCollectionItems.json'),
   emptyRequestCollectionItems = require('./../data/transactionsValidation/emptyRequestCollectionItems.json'),
   numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
+  getMatchDetailsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/getMatchDetails'),
   numberToWordsNoOperationsWSDLObject =
     require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
   numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json'),
@@ -27,7 +28,7 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   numberToWordsCollectionItemsGET = require('./../data/transactionsValidation/numberToWordsCollectionItemsGET.json'),
   numberToWordsCollectionItemsIncompleteItems =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsIncompleteItems.json'),
-  //  validCollectionItems = require('./../data/transactionsValidation/validCollectionItems.json'),
+  getMatchDetailsCollectionItems = require('./../data/transactionsValidation/getMatchDetailsCollectionItems.json'),
   {
     assert,
     expect
@@ -371,7 +372,7 @@ describe('Validate Headers', function () {
   });
 
   it('Should return bad header mismatch when validateContentType option' +
-  ' is true and content-type header is not text/xml', function () {
+    ' is true and content-type header is not text/xml', function () {
     const options = {
         validateContentType: true
       },
@@ -540,7 +541,7 @@ describe('Validate Headers', function () {
   });
 
   it('Should not return bad header mismatch when validateContentType option' +
-  ' is not provided and content-type header is not text/xml', function () {
+    ' is not provided and content-type header is not text/xml', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
         numberToWordsWSDLObject);
@@ -617,7 +618,7 @@ describe('Validate Headers', function () {
 
 
   it('Should not return missing header when validateContentType option is set explicitly on false' +
-  ' and not content-type header is present', function () {
+    ' and not content-type header is present', function () {
     const options = {
         validateContentType: false
       },
@@ -696,7 +697,7 @@ describe('Validate Headers', function () {
   });
 
   it('Should not return bad header mismatch when validateContentType option is set explicitly on false' +
-  ' and content-type header is not text/xml', function () {
+    ' and content-type header is not text/xml', function () {
     const options = {
         validateContentType: false
       },
@@ -783,7 +784,7 @@ describe('get Raw URL', function () {
     expect(result).to.be.equal('http://url.com');
   });
 
-  it('Should return empty string when url does not have path', function() {
+  it('Should return empty string when url does not have path', function () {
     const transactionValidator = new TransactionValidator(),
       url = {
         'raw': 'https://queue.amazonaws.com',
@@ -1272,9 +1273,53 @@ describe('validateBody method', function () {
       }
     });
   });
+
+  it('Should have a mismatch sdfdsfdfdf', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        getMatchDetailsCollectionItems,
+        getMatchDetailsWSDLObject
+      );
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: false,
+      requests: {
+        '1a8221fe-3d87-4a7f-8667-483b75b809e0': {
+          requestId: '1a8221fe-3d87-4a7f-8667-483b75b809e0',
+          endpoints: [
+            {
+              matched: false,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap getMatchDetails',
+              mismatches: [
+              ],
+              responses: {
+                '5bd6970c-5011-4fb6-941e-fc534057be74': {
+                  id: '5bd6970c-5011-4fb6-941e-fc534057be74',
+                  matched: false,
+                  mismatches: [
+                    {
+                      property: 'RESPONSE_BODY',
+                      transactionJsonPath: '$.response.body',
+                      schemaJsonPath: '//definitions//binding[@name="getMatchDetailsBinding"]' +
+                      '//operation[@name="getMatchDetails"]',
+                      reasonCode: 'INVALID_RESPONSE_BODY',
+                      reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
+                      ' because the content type is empty.\n'
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      missingEndpoints: [
+      ]
+    });
+  });
 });
 
-describe('soapMethodValidation', function() {
+describe('soapMethodValidation', function () {
   it('Should have a mismatch when item request has a different method than POST in a /soap12 request', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
