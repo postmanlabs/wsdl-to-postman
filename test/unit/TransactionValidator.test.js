@@ -787,7 +787,7 @@ describe('get Raw URL', function () {
   it('Should return empty string when url does not have path', function () {
     const transactionValidator = new TransactionValidator(),
       url = {
-        'raw': 'https://queue.amazonaws.com',
+        'raw': 'url',
         'protocol': 'https',
         'host': [
           'queue',
