@@ -34,7 +34,7 @@
       "url": {
         "protocol": "http",
         "path": ["soap", "services", "getMatchDetails.php"],
-        "host": ["www", "profixio", "com"],
+        "host": ["www", "url", "com"],
         "query": [],
         "variable": []
       },
