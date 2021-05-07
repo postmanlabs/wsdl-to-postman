@@ -1,3 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.profixio.com/soap/services/getUserAuthentication.php" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getUserAuthentication" targetNamespace="http://www.profixio.com/soap/services/getUserAuthentication.php"><types><xsd:schema targetNamespace="http://www.profixio.com/soap/services/getUserAuthentication.php"><xsd:element name="getUserAuthentication"><xsd:complexType><xsd:sequence><xsd:element name="application_key" type="xsd:string"/><xsd:element name="username" type="xsd:string" nillable="true"/><xsd:element name="password" type="xsd:string" nillable="true"/><xsd:element name="role" type="xsd:string" nillable="true"/><xsd:element name="association" type="xsd:string" nillable="true"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="getUserAuthenticationResponse"><xsd:complexType><xsd:sequence><xsd:element name="getUserAuthenticationResult" type="xsd:boolean"/></xsd:sequence></xsd:complexType></xsd:element></xsd:schema></types><portType name="getUserAuthenticationPort"><operation name="getUserAuthentication"><documentation>Checks userAuthentication, returns true or false</documentation><input message="tns:getUserAuthenticationIn"/><output message="tns:getUserAuthenticationOut"/></operation></portType><binding name="getUserAuthenticationBinding" type="tns:getUserAuthenticationPort"><soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/><operation name="getUserAuthentication"><soap:operation soapAction="http://www.profixio.com/soap/services/getUserAuthentication.php#getUserAuthentication"/><input><soap:body use="literal"/></input><output><soap:body use="literal"/></output></operation></binding><service name="getUserAuthenticationService"><port name="getUserAuthenticationPort" binding="tns:getUserAuthenticationBinding"><soap:address location="http://www.profixio.com/soap/services/getUserAuthentication.php"/></port></service><message name="getUserAuthenticationIn"><part name="parameters" element="tns:getUserAuthentication"/></message><message name="getUserAuthenticationOut"><part name="parameters" element="tns:getUserAuthenticationResponse"/></message></definitions>
-                                                       
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="url/soap/services/getUserAuthentication.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getUserAuthentication" targetNamespace="url/soap/services/getUserAuthentication.php">
+    <types>
+        <xsd:schema targetNamespace="url/soap/services/getUserAuthentication.php">
+            <xsd:element name="getUserAuthentication">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="username" type="xsd:string" nillable="true"/>
+                        <xsd:element name="password" type="xsd:string" nillable="true"/>
+                        <xsd:element name="role" type="xsd:string" nillable="true"/>
+                        <xsd:element name="association" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getUserAuthenticationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getUserAuthenticationResult" type="xsd:boolean"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getUserAuthenticationPort">
+        <operation name="getUserAuthentication">
+            <documentation>Checks userAuthentication, returns true or false</documentation>
+            <input message="tns:getUserAuthenticationIn"/>
+            <output message="tns:getUserAuthenticationOut"/>
+        </operation>
+    </portType>
+    <binding name="getUserAuthenticationBinding" type="tns:getUserAuthenticationPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getUserAuthentication">
+            <soap:operation soapAction="url/soap/services/getUserAuthentication.php#getUserAuthentication"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getUserAuthenticationService">
+        <port name="getUserAuthenticationPort" binding="tns:getUserAuthenticationBinding">
+            <soap:address location="url/soap/services/getUserAuthentication.php"/>
+        </port>
+    </service>
+    <message name="getUserAuthenticationIn">
+        <part name="parameters" element="tns:getUserAuthentication"/>
+    </message>
+    <message name="getUserAuthenticationOut">
+        <part name="parameters" element="tns:getUserAuthenticationResponse"/>
+    </message>
+</definitions>

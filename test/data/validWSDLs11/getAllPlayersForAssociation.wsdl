@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getAllPlayersForAssociation.php"
+    xmlns:tns="url/soap/services/getAllPlayersForAssociation.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllPlayersForAssociation" targetNamespace="http://www.profixio.com/soap/services/getAllPlayersForAssociation.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllPlayersForAssociation" targetNamespace="url/soap/services/getAllPlayersForAssociation.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getAllPlayersForAssociation.php">
+        <xsd:schema targetNamespace="url/soap/services/getAllPlayersForAssociation.php">
             <xsd:element name="getAllPlayersForAssociation">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -55,7 +55,7 @@
     <binding name="getAllPlayersForAssociationBinding" type="tns:getAllPlayersForAssociationPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getAllPlayersForAssociation">
-            <soap:operation soapAction="http://www.profixio.com/soap/services/getAllPlayersForAssociation.php#getAllPlayersForAssociation"/>
+            <soap:operation soapAction="url/soap/services/getAllPlayersForAssociation.php#getAllPlayersForAssociation"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -66,7 +66,7 @@
     </binding>
     <service name="getAllPlayersForAssociationService">
         <port name="getAllPlayersForAssociationPort" binding="tns:getAllPlayersForAssociationBinding">
-            <soap:address location="http://www.profixio.com/soap/services/getAllPlayersForAssociation.php"/>
+            <soap:address location="url/soap/services/getAllPlayersForAssociation.php"/>
         </port>
     </service>
     <message name="getAllPlayersForAssociationIn">

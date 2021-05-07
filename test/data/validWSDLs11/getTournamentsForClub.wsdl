@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getTournamentsForClub.php"
+    xmlns:tns="url/soap/services/getTournamentsForClub.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentsForClub" targetNamespace="http://www.profixio.com/soap/services/getTournamentsForClub.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentsForClub" targetNamespace="url/soap/services/getTournamentsForClub.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getTournamentsForClub.php">
+        <xsd:schema targetNamespace="url/soap/services/getTournamentsForClub.php">
             <xsd:complexType name="ClubKey">
                 <xsd:sequence>
                     <xsd:element name="club_name" type="xsd:string" nillable="true"/>
@@ -61,7 +61,7 @@
     <binding name="getTournamentsForClubBinding" type="tns:getTournamentsForClubPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getTournamentsForClub">
-            <soap:operation soapAction="http://www.profixio.com/soap/services/getTournamentsForClub.php#getTournamentsForClub"/>
+            <soap:operation soapAction="url/soap/services/getTournamentsForClub.php#getTournamentsForClub"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -72,7 +72,7 @@
     </binding>
     <service name="getTournamentsForClubService">
         <port name="getTournamentsForClubPort" binding="tns:getTournamentsForClubBinding">
-            <soap:address location="http://www.profixio.com/soap/services/getTournamentsForClub.php"/>
+            <soap:address location="url/soap/services/getTournamentsForClub.php"/>
         </port>
     </service>
     <message name="getTournamentsForClubIn">

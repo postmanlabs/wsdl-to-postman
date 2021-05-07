@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getAllActivityTypesForAssociation.php"
+    xmlns:tns="url/soap/services/getAllActivityTypesForAssociation.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllActivityTypesForAssociation" targetNamespace="http://www.profixio.com/soap/services/getAllActivityTypesForAssociation.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllActivityTypesForAssociation" targetNamespace="url/soap/services/getAllActivityTypesForAssociation.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getAllActivityTypesForAssociation.php">
+        <xsd:schema targetNamespace="url/soap/services/getAllActivityTypesForAssociation.php">
             <xsd:element name="getAllActivityTypesForAssociation">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -49,7 +49,7 @@
     <binding name="getAllActivityTypesForAssociationBinding" type="tns:getAllActivityTypesForAssociationPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getAllActivityTypesForAssociation">
-            <soap:operation soapAction="http://www.profixio.com/soap/services/getAllActivityTypesForAssociation.php#getAllActivityTypesForAssociation"/>
+            <soap:operation soapAction="url/soap/services/getAllActivityTypesForAssociation.php#getAllActivityTypesForAssociation"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -60,7 +60,7 @@
     </binding>
     <service name="getAllActivityTypesForAssociationService">
         <port name="getAllActivityTypesForAssociationPort" binding="tns:getAllActivityTypesForAssociationBinding">
-            <soap:address location="http://www.profixio.com/soap/services/getAllActivityTypesForAssociation.php"/>
+            <soap:address location="url/soap/services/getAllActivityTypesForAssociation.php"/>
         </port>
     </service>
     <message name="getAllActivityTypesForAssociationIn">

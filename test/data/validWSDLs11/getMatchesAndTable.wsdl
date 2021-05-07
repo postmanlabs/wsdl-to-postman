@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getMatchesAndTable.php"
+    xmlns:tns="url/soap/services/getMatchesAndTable.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchesAndTable" targetNamespace="http://www.profixio.com/soap/services/getMatchesAndTable.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchesAndTable" targetNamespace="url/soap/services/getMatchesAndTable.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getMatchesAndTable.php">
+        <xsd:schema targetNamespace="url/soap/services/getMatchesAndTable.php">
             <xsd:element name="getMatchesAndTable">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -159,7 +159,7 @@
     <binding name="getMatchesAndTableBinding" type="tns:getMatchesAndTablePort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getMatchesAndTable">
-            <soap:operation soapAction="http://www.profixio.com/soap/services/getMatchesAndTable.php#getMatchesAndTable"/>
+            <soap:operation soapAction="url/soap/services/getMatchesAndTable.php#getMatchesAndTable"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -170,7 +170,7 @@
     </binding>
     <service name="getMatchesAndTableService">
         <port name="getMatchesAndTablePort" binding="tns:getMatchesAndTableBinding">
-            <soap:address location="http://www.profixio.com/soap/services/getMatchesAndTable.php"/>
+            <soap:address location="url/soap/services/getMatchesAndTable.php"/>
         </port>
     </service>
     <message name="getMatchesAndTableIn">

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="http://www.profixio.com/soap/services/getTournamentReferees.php"
+    xmlns:tns="url/soap/services/getTournamentReferees.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentReferees" targetNamespace="http://www.profixio.com/soap/services/getTournamentReferees.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentReferees" targetNamespace="url/soap/services/getTournamentReferees.php">
     <types>
-        <xsd:schema targetNamespace="http://www.profixio.com/soap/services/getTournamentReferees.php">
+        <xsd:schema targetNamespace="url/soap/services/getTournamentReferees.php">
             <xsd:complexType name="ClubKey">
                 <xsd:sequence>
                     <xsd:element name="club_name" type="xsd:string" nillable="true"/>
@@ -70,7 +70,7 @@
     <binding name="getTournamentRefereesBinding" type="tns:getTournamentRefereesPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getTournamentReferees">
-            <soap:operation soapAction="http://www.profixio.com/soap/services/getTournamentReferees.php#getTournamentReferees"/>
+            <soap:operation soapAction="url/soap/services/getTournamentReferees.php#getTournamentReferees"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -81,7 +81,7 @@
     </binding>
     <service name="getTournamentRefereesService">
         <port name="getTournamentRefereesPort" binding="tns:getTournamentRefereesBinding">
-            <soap:address location="http://www.profixio.com/soap/services/getTournamentReferees.php"/>
+            <soap:address location="url/soap/services/getTournamentReferees.php"/>
         </port>
     </service>
     <message name="getTournamentRefereesIn">

@@ -4,7 +4,7 @@ module.exports = {
             name: "getMatchDetails",
             description: "Returns the details - including results - that belong to a match.",
             style: undefined,
-            url: "http://www.profixio.com/soap/services/getMatchDetails.php",
+            url: "url/soap/services/getMatchDetails.php",
             input: {
                 children: [
                     {
@@ -45,7 +45,7 @@ module.exports = {
                 name: "getMatchDetails",
                 type: "complex",
                 isComplex: true,
-                namespace: "http://www.profixio.com/soap/services/getMatchDetails.php",
+                namespace: "url/soap/services/getMatchDetails.php",
                 maximum: undefined,
                 minimum: undefined,
                 maxLength: undefined,
@@ -254,7 +254,7 @@ module.exports = {
                 name: "getMatchDetailsResponse",
                 type: "complex",
                 isComplex: true,
-                namespace: "http://www.profixio.com/soap/services/getMatchDetails.php",
+                namespace: "url/soap/services/getMatchDetails.php",
                 maximum: undefined,
                 minimum: undefined,
                 maxLength: undefined,
@@ -276,7 +276,7 @@ module.exports = {
     ],
     targetNamespace: {
         key: "targetNamespace",
-        url: "http://www.profixio.com/soap/services/getMatchDetails.php",
+        url: "url/soap/services/getMatchDetails.php",
         prefixFilter: "targetNamespace:",
         isDefault: false,
     },
@@ -307,7 +307,7 @@ module.exports = {
     },
     tnsNamespace: {
         key: "tns",
-        url: "http://www.profixio.com/soap/services/getMatchDetails.php",
+        url: "url/soap/services/getMatchDetails.php",
         prefixFilter: "xmlns:tns:",
         isDefault: false,
     },
@@ -326,7 +326,7 @@ module.exports = {
         },
         {
             key: "tns",
-            url: "http://www.profixio.com/soap/services/getMatchDetails.php",
+            url: "url/soap/services/getMatchDetails.php",
             prefixFilter: "xmlns:tns:",
             isDefault: false,
         },
@@ -356,7 +356,7 @@ module.exports = {
         },
         {
             key: "targetNamespace",
-            url: "http://www.profixio.com/soap/services/getMatchDetails.php",
+            url: "url/soap/services/getMatchDetails.php",
             prefixFilter: "targetNamespace:",
             isDefault: false,
         },
@@ -371,16 +371,16 @@ module.exports = {
         definitions: {
             "@_xmlns": "http://schemas.xmlsoap.org/wsdl/",
             "@_xmlns:wsdl": "http://schemas.xmlsoap.org/wsdl/",
-            "@_xmlns:tns": "http://www.profixio.com/soap/services/getMatchDetails.php",
+            "@_xmlns:tns": "url/soap/services/getMatchDetails.php",
             "@_xmlns:soap": "http://schemas.xmlsoap.org/wsdl/soap/",
             "@_xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
             "@_xmlns:soap-enc": "http://schemas.xmlsoap.org/soap/encoding/",
             "@_xmlns:soap12": "http://schemas.xmlsoap.org/wsdl/soap12/",
             "@_name": "getMatchDetails",
-            "@_targetNamespace": "http://www.profixio.com/soap/services/getMatchDetails.php",
+            "@_targetNamespace": "url/soap/services/getMatchDetails.php",
             types: {
                 "xsd:schema": {
-                    "@_targetNamespace": "http://www.profixio.com/soap/services/getMatchDetails.php",
+                    "@_targetNamespace": "url/soap/services/getMatchDetails.php",
                     "xsd:element": [
                         {
                             "@_name": "getMatchDetails",
@@ -511,7 +511,7 @@ module.exports = {
                 operation: {
                     "@_name": "getMatchDetails",
                     "soap:operation": {
-                        "@_soapAction": "http://www.profixio.com/soap/services/getMatchDetails.php#getMatchDetails",
+                        "@_soapAction": "url/soap/services/getMatchDetails.php#getMatchDetails",
                     },
                     input: {
                         "soap:body": {
@@ -531,7 +531,7 @@ module.exports = {
                     "@_name": "getMatchDetailsPort",
                     "@_binding": "tns:getMatchDetailsBinding",
                     "soap:address": {
-                        "@_location": "http://www.profixio.com/soap/services/getMatchDetails.php",
+                        "@_location": "url/soap/services/getMatchDetails.php",
                     },
                 },
             },

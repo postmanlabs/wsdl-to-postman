@@ -737,7 +737,7 @@
             <soap:address location="http://queue.amazonaws.com"/>
         </wsdl:port>
         <wsdl:port name="QueueServiceHttpsPort" binding="tns:QueueServiceHttpsBinding">
-            <soap:address location="https://queue.amazonaws.com"/>
+            <soap:address location="url"/>
         </wsdl:port>
     </wsdl:service>
     <wsdl:service name="MessageQueue">
@@ -746,7 +746,7 @@
             <soap:address location="http://queue.amazonaws.com"/>
         </wsdl:port>
         <wsdl:port name="MessageQueueHttpsPort" binding="tns:MessageQueueHttpsBinding">
-            <soap:address location="https://queue.amazonaws.com"/>
+            <soap:address location="url"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
