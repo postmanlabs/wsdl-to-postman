@@ -5,8 +5,8 @@ const expect = require('chai').expect,
   fs = require('fs'),
   validSchemaFolder = 'test/data/schemaTest',
   {
-    Wsdl11Parser
-  } = require('../../lib/Wsdl11Parser'),
+    XMLParser
+  } = require('../../lib/XMLParser'),
   {
     PARSER_ATRIBUTE_NAME_PLACE_HOLDER
   } = require('../../lib/WsdlParserCommon');
@@ -32,7 +32,7 @@ describe('SchemaBuilderXSD parseSchema', function () {
 describe('SchemaBuilderXSD getElements', function () {
   it('should get schema elements', function () {
     const builder = new SchemaBuilderXSD(),
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
@@ -46,7 +46,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       fileContent = fs.readFileSync(validSchemaFolder + '/coreFileInput.wsdl', 'utf8'),
-      parsedXml = parser.parseFromXmlToObject(fileContent),
+      parsedXml = parser.parseToObject(fileContent),
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace,
         thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.a('array');
@@ -105,7 +105,7 @@ describe('SchemaBuilderXSD getElements', function () {
         </xs:schema>
       </types>
     </definitions>`,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -119,7 +119,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace,
         thisNameSpace, PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
@@ -147,7 +147,7 @@ describe('SchemaBuilderXSD getElements', function () {
           </xs:schema>
         </types>
       </definitions>`,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -161,7 +161,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -204,7 +204,7 @@ describe('SchemaBuilderXSD getElements', function () {
 
   it('should get an array of types with 4 root and 1 child per root', function () {
     const simpleInput = fs.readFileSync(validSchemaFolder + '/4Root1ChildPerRoot.wsdl', 'utf8'),
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -218,7 +218,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
 
@@ -291,7 +291,7 @@ describe('SchemaBuilderXSD getElements', function () {
 
   it('should get an array of types with 1 root and 1 complex type', function () {
     const simpleInput = fs.readFileSync(validSchemaFolder + '/1Root1Complextype.wsdl', 'utf8'),
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
@@ -305,7 +305,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
@@ -382,7 +382,7 @@ describe('SchemaBuilderXSD getElements', function () {
          </xs:schema>
      </types>
   </definitions>`,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -396,7 +396,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+    let parsed = parser.parseToObject(simpleInput),
       elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
@@ -484,7 +484,7 @@ describe('SchemaBuilderXSD getElements', function () {
         </xsd:schema>
     </types>
   </definitions>`,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
@@ -498,7 +498,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+    let parsed = parser.parseToObject(simpleInput),
       elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
@@ -607,7 +607,7 @@ describe('SchemaBuilderXSD getElements', function () {
         </xs:schema>
         </types>
       </definitions>`,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -621,7 +621,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -681,7 +681,7 @@ describe('SchemaBuilderXSD getElements', function () {
         </xs:schema>
         </types>
       </definitions>`,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -695,7 +695,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -750,7 +750,7 @@ describe('SchemaBuilderXSD getElements', function () {
        </s:schema>
         </types> 
         </definitions > `,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 's',
         prefixFilter: 's:',
@@ -764,7 +764,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -816,7 +816,7 @@ describe('SchemaBuilderXSD getElements', function () {
        </s:schema>
         </types> 
         </definitions > `,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 's',
         prefixFilter: 's:',
@@ -830,7 +830,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -900,7 +900,7 @@ describe('SchemaBuilderXSD getElements', function () {
         <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
     </wsdl:message>
         </wsdl:definitions > `,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 's',
         prefixFilter: 's:',
@@ -914,7 +914,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -977,7 +977,7 @@ describe('SchemaBuilderXSD getElements', function () {
         <wsdl:part name="Body" element="tns:WebServiceGeocodeQueryResultSet" />
     </wsdl:message>
         </wsdl:definitions > `,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 's',
         prefixFilter: 's:',
@@ -991,7 +991,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -1050,7 +1050,7 @@ describe('SchemaBuilderXSD getElements', function () {
     </message>
 </definitions>
 `,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
@@ -1064,7 +1064,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -1117,7 +1117,7 @@ describe('SchemaBuilderXSD getElements', function () {
     </message>
 </definitions>
 `,
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
@@ -1131,7 +1131,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(simpleInput),
+    let parsedXml = parser.parseToObject(simpleInput),
 
       elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);
@@ -1148,7 +1148,7 @@ describe('SchemaBuilderXSD getElements', function () {
   it('should get an array of elements when elements depend on other elements', function () {
     const
       fileContent = fs.readFileSync(validSchemaFolder + '/elementsDependOnElements.wsdl', 'utf8'),
-      parser = new Wsdl11Parser(),
+      parser = new XMLParser(),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -1162,7 +1162,7 @@ describe('SchemaBuilderXSD getElements', function () {
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
-    let parsedXml = parser.parseFromXmlToObject(fileContent),
+    let parsedXml = parser.parseToObject(fileContent),
 
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
         PARSER_ATRIBUTE_NAME_PLACE_HOLDER);

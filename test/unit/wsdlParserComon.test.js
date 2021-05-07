@@ -1,7 +1,6 @@
 const expect = require('chai').expect,
   assert = require('chai').assert,
   {
-    Wsdl11Parser,
     WSDL_NS_URL: WSDL_NS_URL_1_1,
     SOAP_12_NS_URL: SOAP_12_NS_URL_1_1,
     SCHEMA_NS_URL: SCHEMA_NS_URL_1_1,
@@ -22,9 +21,11 @@ const expect = require('chai').expect,
     getDocumentationStringFromNode
   } = require('../../lib/WsdlParserCommon'),
   {
-    Wsdl20Parser,
     WSDL_ROOT: WSDL_ROOT_2_0
   } = require('../../lib/Wsdl20Parser'),
+  {
+    XMLParser
+  } = require('../../lib/XMLParser'),
   WSDL_SAMPLE = `<?xml version="1.0" encoding="utf-8" ?>
 <description xmlns="http://www.w3.org/ns/wsdl" 
 targetNamespace="http://greath.example.com/2004/wsdl/resSvc" 
@@ -154,8 +155,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
   </definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByKey(
         parsed,
         TARGETNAMESPACE_KEY_1_1,
@@ -176,8 +177,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
   </definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByKey(
         parsed,
         TNS_NS_KEY_1_1,
@@ -198,8 +199,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
   </wsdl:definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByKey(
         parsed,
         TARGETNAMESPACE_KEY_1_1,
@@ -220,8 +221,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
  </definitions>
    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByKey(
         parsed,
@@ -244,8 +245,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
  </definitions>
    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByKey(
         parsed,
@@ -268,8 +269,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
  </definitions>
    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByKey(
         parsed,
@@ -322,8 +323,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
       xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
     <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
 </wsdl2:description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByKey(
         parsed,
         'xmlns:tns',
@@ -347,8 +348,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
       xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
     <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
 </wsdl2:description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByKey(
         parsed,
@@ -374,8 +375,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
       xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
     <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
 </wsdl2:description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByKey(
         parsed,
@@ -401,8 +402,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
       xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
     <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
 </wsdl2:description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByKey(
         parsed,
@@ -477,8 +478,8 @@ describe('WSDL parser common getServices', function () {
         </port>
       </service>
     </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       services = getServices(
         parsed,
         WSDL_ROOT_1_1
@@ -552,8 +553,8 @@ describe('WSDL parser common getServices', function () {
   </wsdl:service>
 </wsdl:definitions>
 `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       services = getServices(
         parsed,
         WSDL_ROOT_1_1
@@ -596,8 +597,8 @@ describe('WSDL parser common getServices', function () {
     }
   });
   it('should get an array object representing services using default namespace WSDL 2.0', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+    const parser = new XMLParser();
+    let parsed = parser.parseToObject(WSDL_SAMPLE),
       services = getServices(
         parsed,
         WSDL_ROOT_2_0
@@ -607,8 +608,8 @@ describe('WSDL parser common getServices', function () {
   });
 
   it('should get an array object representing services using default WSDL_SAMPLE_AXIS WSDL 2.0', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+    const parser = new XMLParser();
+    let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
       services = getServices(
         parsed,
         WSDL_ROOT_2_0
@@ -704,8 +705,8 @@ describe('WSDL parser common getBindings', function () {
         </port>
       </service>
     </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       bindings = getBindings(
         parsed,
         WSDL_ROOT_1_1
@@ -774,8 +775,8 @@ describe('WSDL parser common getBindings', function () {
     </wsdl:service>
 </wsdl:definitions>
 `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       bindings = getBindings(
         parsed,
         WSDL_ROOT_1_1
@@ -819,8 +820,8 @@ describe('WSDL parser common getBindings', function () {
   });
 
   it('should get an array object representing bindings using default namespace WSDL 2.0', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+    const parser = new XMLParser();
+    let parsed = parser.parseToObject(WSDL_SAMPLE),
       bindings = getBindings(
         parsed,
         WSDL_ROOT_2_0
@@ -830,8 +831,8 @@ describe('WSDL parser common getBindings', function () {
   });
 
   it('should get an array object representing bindings using default WSDL_SAMPLE_AXIS  WSDL 2.0', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+    const parser = new XMLParser();
+    let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
       bindings = getBindings(
         parsed,
         WSDL_ROOT_2_0
@@ -938,8 +939,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
     </service>
   </definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByURL(
         parsed,
         WSDL_NS_URL_1_1,
@@ -1014,8 +1015,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
 </wsdl:definitions>
 
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByURL(
         parsed,
         WSDL_NS_URL_1_1,
@@ -1044,8 +1045,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
     </service>
   </definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByURL(
         parsed,
         SOAP_NS_URL_1_1,
@@ -1073,8 +1074,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
     </service>
   </definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByURL(
         parsed,
         SOAP_12_NS_URL_1_1,
@@ -1102,8 +1103,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
     </service>
   </definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByURL(
         parsed,
         SCHEMA_NS_URL_1_1,
@@ -1124,8 +1125,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
  </definitions>
    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByURL(
         parsed,
@@ -1148,8 +1149,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
  </definitions>
    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByURL(
         parsed,
@@ -1172,8 +1173,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
  </definitions>
    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput);
     try {
       getNamespaceByURL(
         parsed,
@@ -1259,8 +1260,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
     </wsdl:service>
 </wsdl:definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByURL(
         parsed,
         WSDL_NS_URL_1_1,
@@ -1281,8 +1282,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
       xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
     <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
 </wsdl2:description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByURL(
         parsed,
         'http://www.w3.org/ns/wsdl/soap',
@@ -1307,8 +1308,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
       xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
     <documentation> Please Type your service description here </documentation>
     </description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getNamespaceByURL(
         parsed,
         'http://www.w3.org/ns/wsdl',
@@ -1334,9 +1335,9 @@ describe('WSDL parser common getAllNamespaces', function () {
      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
   </definitions>
     `,
-      parser = new Wsdl11Parser();
+      parser = new XMLParser();
     let xmlns = {},
-      parsed = parser.parseFromXmlToObject(simpleInput),
+      parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getAllNamespaces(
         parsed,
         WSDL_ROOT_1_1
@@ -1406,9 +1407,9 @@ describe('WSDL parser common getAllNamespaces', function () {
      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
   </wsdl:definitions>
     `,
-      parser = new Wsdl11Parser();
+      parser = new XMLParser();
     let xmlns = {},
-      parsed = parser.parseFromXmlToObject(simpleInput),
+      parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getAllNamespaces(
         parsed,
         WSDL_ROOT_1_1
@@ -1436,8 +1437,8 @@ describe('WSDL parser common getAllNamespaces', function () {
       targetNamespace="http://axis2.org">
     <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
 </wsdl2:description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getAllNamespaces(
         parsed,
         WSDL_ROOT_2_0
@@ -1459,8 +1460,8 @@ describe('WSDL parser common getPrincipalPrefix', function () {
      name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
   </definitions>
     `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       principalPrefix = getPrincipalPrefix(
         parsed,
         WSDL_ROOT_1_1
@@ -1478,8 +1479,8 @@ describe('WSDL parser common getPrincipalPrefix', function () {
     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
  </wsdl:definitions>
    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       principalPrefix = getPrincipalPrefix(
         parsed,
         WSDL_ROOT_1_1
@@ -1535,8 +1536,8 @@ describe('WSDL parser common getPrincipalPrefix', function () {
     xmlns:soap="http://www.w3.org/2003/05/soap-envelope" 
     xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions">
     </description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       principalPrefix = getPrincipalPrefix(
         parsed,
         WSDL_ROOT_2_0
@@ -1554,8 +1555,8 @@ describe('WSDL parser common getPrincipalPrefix', function () {
     xmlns:soap="http://www.w3.org/2003/05/soap-envelope" 
     xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions">
     </wsdl2:description>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new XMLParser();
+    let parsed = parser.parseToObject(simpleInput),
       principalPrefix = getPrincipalPrefix(
         parsed,
         WSDL_ROOT_2_0
@@ -1589,8 +1590,8 @@ describe('WSDL parser common getBindingOperation', function () {
 
 describe('WSDL parser common getElementsFromWSDL', function () {
   it('should get an array object representing elements using default namespace', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+    const parser = new XMLParser();
+    let parsed = parser.parseToObject(WSDL_SAMPLE),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',
@@ -1615,8 +1616,8 @@ describe('WSDL parser common getElementsFromWSDL', function () {
   });
 
   it('should get an array object representing elements using default WSDL_SAMPLE_AXIS', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+    const parser = new XMLParser();
+    let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
       schemaNameSpace = {
         key: 'xs',
         prefixFilter: 'xs:',

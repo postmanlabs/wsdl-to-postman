@@ -7,10 +7,10 @@ const fs = require('fs'),
     validateOperationMessagesWithSchema,
     getCleanSchema
   } = require('./../../lib/utils/messageWithSchemaValidation'),
+  validWSDLs = 'test/data/validWSDLs11',
   {
-    parseFromXmlToObject
-  } = require('./../../lib/WsdlParserCommon'),
-  validWSDLs = 'test/data/validWSDLs11';
+    XMLParser
+  } = require('../../lib/XMLParser');
 
 describe('Validating wsdlObject bodyMessages using validateOperationMessagesWithSchema function', function() {
   const WSDLsFiles = fs.readdirSync(validWSDLs);
@@ -18,10 +18,11 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
     it(`Should return an empty array when body messages matches with schema. ${file}`, function() {
       const xmlDocumentContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8'),
         factory = new ParserFactory(),
+        xmlParser = new XMLParser(),
         version = factory.getWsdlVersion(xmlDocumentContent),
         parser = factory.getParser(xmlDocumentContent),
-        wsdlObject = parser.getWsdlObject(xmlDocumentContent),
-        xmlParsed = parseFromXmlToObject(xmlDocumentContent),
+        wsdlObject = parser.getWsdlObject(xmlDocumentContent, xmlParser),
+        xmlParsed = xmlParser.parseToObject(xmlDocumentContent),
         schemaToValidate = getCleanSchema(xmlParsed, wsdlObject.schemaNamespace, version);
 
       let errors = validateOperationMessagesWithSchema(wsdlObject, schemaToValidate);

@@ -19,6 +19,9 @@ const expect = require('chai').expect,
     WSDL_ROOT
   } = require('../../lib/Wsdl20Parser'),
   {
+    XMLParser
+  } = require('../../lib/XMLParser'),
+  {
     POST_METHOD
   } = require('../../lib/utils/httpUtils'),
   {
@@ -153,58 +156,6 @@ describe('WSDL 2.0 parser constructor', function () {
   });
 });
 
-describe('WSDL 2.0 parser parseFromXmlToObject', function () {
-
-  it('should get an object in memory representing xml object with valid input', function () {
-    const simpleInput = `<user is='great'>
-      <name>Tobias</name>
-      <familyName>Nickel</familyName>
-      <profession>Software Developer</profession>
-      <location>Shanghai / China</location>
-      </user>`,
-      parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    expect(parsed).to.be.an('object');
-    expect(parsed).to.have.own.property('user');
-    expect(parsed.user).to.have.own.property('name');
-    expect(parsed.user[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'is']).to.equal('great');
-
-  });
-
-  it('should throw an error when input is an empty string', function () {
-    parser = new Wsdl20Parser();
-    try {
-      parser.parseFromXmlToObject('');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
-    }
-  });
-
-  it('should throw an error when input is null', function () {
-    parser = new Wsdl20Parser();
-    try {
-      parser.parseFromXmlToObject(null);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
-    }
-  });
-
-  it('should throw an error when input is undefined', function () {
-    parser = new Wsdl20Parser();
-    try {
-      parser.parseFromXmlToObject(undefined);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
-    }
-  });
-});
-
 describe('WSDL 2.0 parser assignNamespaces', function () {
 
   it('should assign namespaces to wsdl object', function () {
@@ -222,9 +173,10 @@ describe('WSDL 2.0 parser assignNamespaces', function () {
     targetNamespace="http://axis2.org">
   <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
 </wsdl2:description>`,
-      parser = new Wsdl20Parser();
+      parser = new Wsdl20Parser(),
+      xmlParser = new XMLParser();
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(simpleInput);
+      parsed = xmlParser.parseToObject(simpleInput);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
 
     expect(wsdlObject).to.have.all.keys('targetNamespace',
@@ -247,7 +199,7 @@ describe('WSDL 2.0 parser getWsdlObject', function () {
   it('should get an object in memory representing wsdlObject 2.0',
     function () {
       const parser = new Wsdl20Parser();
-      let wsdlObject = parser.getWsdlObject(WSDL_SAMPLE);
+      let wsdlObject = parser.getWsdlObject(WSDL_SAMPLE, new XMLParser());
       expect(wsdlObject).to.be.an('object');
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
@@ -298,7 +250,8 @@ describe('WSDL 2.0 parser assignOperations', function () {
   it('should assign operations to wsdl object', function () {
     const parser = new Wsdl20Parser();
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
+      xmlParser = new XMLParser(),
+      parsed = xmlParser.parseToObject(WSDL_SAMPLE);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
 
@@ -311,7 +264,8 @@ describe('WSDL 2.0 parser assignOperations', function () {
   it('should assign operations to wsdl object when called with WSDL_SAMPLE_AXIS', function () {
     const parser = new Wsdl20Parser();
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
+      xmlParser = new XMLParser(),
+      parsed = xmlParser.parseToObject(WSDL_SAMPLE_AXIS);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
 
@@ -324,7 +278,8 @@ describe('WSDL 2.0 parser assignOperations', function () {
   it('should assign operations to wsdl object assignlocation correctly http', function () {
     const parser = new Wsdl20Parser();
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
+      xmlParser = new XMLParser(),
+      parsed = xmlParser.parseToObject(WSDL_SAMPLE_AXIS);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
 
@@ -381,7 +336,8 @@ describe('WSDL 2.0 parser assignOperations', function () {
     const parser = new Wsdl20Parser(),
       fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServicesTag.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      xmlParser = new XMLParser(),
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -405,7 +361,8 @@ describe('WSDL 2.0 parser assignOperations', function () {
     const parser = new Wsdl20Parser(),
       fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsTags.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      xmlParser = new XMLParser(),
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -416,9 +373,10 @@ describe('WSDL 2.0 parser assignOperations', function () {
 
   it('should assign operations empty object when bindings operations are not in the file', function () {
     const parser = new Wsdl20Parser(),
+      xmlParser = new XMLParser(),
       fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsOperations.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -431,7 +389,8 @@ describe('WSDL 2.0 parser assignOperations', function () {
     const parser = new Wsdl20Parser(),
       fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServiceEndpoint.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      xmlParser = new XMLParser(),
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -453,8 +412,9 @@ describe('WSDL 2.0 parser assignOperations', function () {
 
 describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function () {
   it('should get the service endpoint when exists', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+    const parser = new Wsdl20Parser(),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(WSDL_SAMPLE),
       services = getServices(
         parsed,
         WSDL_ROOT
@@ -469,8 +429,9 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function (
   });
 
   it('should get the service endpoint when exists and called with WSDL_SAMPLE_AXIS', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS),
+    const parser = new Wsdl20Parser(),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(WSDL_SAMPLE_AXIS),
       services = getServices(
         parsed,
         WSDL_ROOT
@@ -539,8 +500,9 @@ describe('WSDL 2.0 parser getServiceAndServiceEndpointByBindingName', function (
 
 describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName', function () {
   it('should get interface operation by name', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE);
+    const parser = new Wsdl20Parser(),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(WSDL_SAMPLE);
     services = getServices(parsed, WSDL_ROOT);
     operation = parser.getInterfaceOperationByInterfaceNameAndOperationName('reservationInterface',
       'opCheckAvailability', parsed, '');
@@ -549,8 +511,9 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   });
 
   it('should get interface operation by name in WSDL_SAMPLE_AXIS', function () {
-    const parser = new Wsdl20Parser();
-    let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE_AXIS);
+    const parser = new Wsdl20Parser(),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(WSDL_SAMPLE_AXIS);
     services = getServices(parsed, WSDL_ROOT);
     operation = parser.getInterfaceOperationByInterfaceNameAndOperationName('ServiceInterface',
       'hi', parsed, 'wsdl2:');
@@ -671,10 +634,11 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
 
 describe('WSDL 2.0 parser assignSecurity', function () {
   it('Should return a wsdlObject with securityPolicyArray if file has security', function () {
-    const parser = new Wsdl20Parser();
-    fileContent = fs.readFileSync(validWSDLs20 + '/Axis2WSD20WithSecurity.wsdl', 'utf8');
+    const parser = new Wsdl20Parser(),
+      xmlParser = new XMLParser(),
+      fileContent = fs.readFileSync(validWSDLs20 + '/Axis2WSD20WithSecurity.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     wsdlObject = parser.assignSecurity(wsdlObject, parsed);
@@ -685,9 +649,10 @@ describe('WSDL 2.0 parser assignSecurity', function () {
 
 describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
   it('should throw an error when can not get protocol', function () {
-    const parser = new Wsdl20Parser();
+    const parser = new Wsdl20Parser(),
+      xmlParser = new XMLParser();
     try {
-      let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
+      let parsed = xmlParser.parseToObject(WSDL_SAMPLE),
         binding = getBindings(
           parsed,
           WSDL_ROOT
