@@ -1583,7 +1583,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from operation undefined or null object');
+      expect(error.message).to.equal('Can not get style info from binding operation undefined or null object');
     }
   });
 
@@ -1685,7 +1685,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from operation undefined or null object');
+      expect(error.message).to.equal('Can not get style info from binding operation undefined or null object');
     }
   });
 
@@ -1777,7 +1777,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from operation');
+      expect(error.message).to.equal('Can not get style info from binding operation');
     }
   });
 });

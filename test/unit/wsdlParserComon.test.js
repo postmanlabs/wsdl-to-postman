@@ -18,7 +18,8 @@ const expect = require('chai').expect,
     getAllNamespaces,
     getPrincipalPrefix,
     getBindingOperation,
-    getElementsFromWSDL
+    getElementsFromWSDL,
+    getDocumentationStringFromNode
   } = require('../../lib/WsdlParserCommon'),
   {
     Wsdl20Parser,
@@ -1586,7 +1587,7 @@ describe('WSDL parser common getBindingOperation', function () {
   });
 });
 
-describe('WSDL 2.0 parser getElementsFromWSDL', function () {
+describe('WSDL parser common getElementsFromWSDL', function () {
   it('should get an array object representing elements using default namespace', function () {
     const parser = new Wsdl20Parser();
     let parsed = parser.parseFromXmlToObject(WSDL_SAMPLE),
@@ -1638,6 +1639,20 @@ describe('WSDL 2.0 parser getElementsFromWSDL', function () {
 
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(2);
+  });
+});
+
+describe('WSDL parser common getDocumentationString', function () {
+  it('should get the same when is called with string', function () {
+    const documentation = getDocumentationStringFromNode('documentation');
+    expect(documentation).to.eq('documentation');
+  });
+
+  it('should get the property value when is called with a node', function () {
+    const documentationNode = {};
+    documentationNode['#text'] = 'documentation';
+    documentation = getDocumentationStringFromNode(documentationNode);
+    expect(documentation).to.eq('documentation');
   });
 });
 

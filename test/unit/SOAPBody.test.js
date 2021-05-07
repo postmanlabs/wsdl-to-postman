@@ -1,22 +1,22 @@
 const expect = require('chai').expect,
   {
-    SOAPParametersUtils
-  } = require('../../lib/utils/SOAPParametersUtils');
+    SOAPBody
+  } = require('../../lib/utils/SOAPBody');
 
 jsonError = {
   'error': 'Could not find element'
 };
 
-describe('ParametersUtils  constructor', function() {
-  it('should get an object for the factory with empty input', function() {
-    const parametersUtils = new SOAPParametersUtils();
+describe('ParametersUtils  constructor', function () {
+  it('should get an object for the factory with empty input', function () {
+    const parametersUtils = new SOAPBody();
     expect(parametersUtils).to.be.an('object');
   });
 });
 
-describe('ParametersUtils buildObjectParameters', function() {
-  it('should get an object correctly created', function() {
-    const parametersUtils = new SOAPParametersUtils(),
+describe('ParametersUtils buildObjectParameters', function () {
+  it('should get an object correctly created', function () {
+    const parametersUtils = new SOAPBody(),
       child = {
         children: [],
         name: 'ubiNum',
@@ -32,7 +32,7 @@ describe('ParametersUtils buildObjectParameters', function() {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = parametersUtils.buildObjectParameters(node);
+      jsonObjectMessage = parametersUtils.create(node);
     expect(jsonObjectMessage).to.be.an('object');
   });
 

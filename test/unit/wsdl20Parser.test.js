@@ -683,22 +683,6 @@ describe('WSDL 2.0 parser assignSecurity', function () {
   });
 });
 
-describe('WSDL 2.0 parser getDocumentationString', function () {
-  it('should get the same when is called with string', function () {
-    const parser = new Wsdl20Parser(),
-      documentation = parser.getDocumentationStringFromNode('documentation');
-    expect(documentation).to.eq('documentation');
-  });
-
-  it('should get the property value when is called with a node', function () {
-    const parser = new Wsdl20Parser(),
-      documentationNode = {};
-    documentationNode['#text'] = 'documentation';
-    documentation = parser.getDocumentationStringFromNode(documentationNode);
-    expect(documentation).to.eq('documentation');
-  });
-});
-
 describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
   it('should throw an error when can not get protocol', function () {
     const parser = new Wsdl20Parser();
