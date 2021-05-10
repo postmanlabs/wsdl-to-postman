@@ -38,14 +38,17 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   } = require('./../../lib/WSDLObject'),
   {
     TransactionValidator
-  } = require('./../../lib/TransactionValidator');
-
+  } = require('./../../lib/TransactionValidator'),
+  {
+    XMLParser
+  } = require('../../lib/XMLParser');
 
 describe('Transaction Validator validateTransaction function', function () {
   const emptyWsdlObject = new WsdlObject();
   it('Should validate correct number to words mock wsdl and collection items', function () {
     const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject);
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject,
+        new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -120,7 +123,7 @@ describe('Transaction Validator validateTransaction function', function () {
   it('Should return an error when transaction id is null', function () {
     const transactionValidator = new TransactionValidator();
     try {
-      transactionValidator.validateTransaction(notIdCollectionItems, emptyWsdlObject);
+      transactionValidator.validateTransaction(notIdCollectionItems, emptyWsdlObject, new XMLParser());
       assert.fail('Expected error');
     }
     catch (error) {
@@ -131,7 +134,7 @@ describe('Transaction Validator validateTransaction function', function () {
   it('Should return an error when transaction id is an empty string', function () {
     const transactionValidator = new TransactionValidator();
     try {
-      transactionValidator.validateTransaction(emptyIdCollectionItems, emptyWsdlObject);
+      transactionValidator.validateTransaction(emptyIdCollectionItems, emptyWsdlObject, new XMLParser());
       assert.fail('Expected error');
     }
     catch (error) {
@@ -142,7 +145,7 @@ describe('Transaction Validator validateTransaction function', function () {
   it('Should return an error when transaction request is null', function () {
     const transactionValidator = new TransactionValidator();
     try {
-      transactionValidator.validateTransaction(nullRequestCollectionItems, emptyWsdlObject);
+      transactionValidator.validateTransaction(nullRequestCollectionItems, emptyWsdlObject, new XMLParser());
       assert.fail('Expected error');
     }
     catch (error) {
@@ -153,7 +156,7 @@ describe('Transaction Validator validateTransaction function', function () {
   it('Should return an error when transaction request contains an empty WSDL Object', function () {
     const transactionValidator = new TransactionValidator();
     try {
-      transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject);
+      transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject, new XMLParser());
       assert.fail('Expected error');
     }
     catch (error) {
@@ -202,7 +205,7 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
   it('Should return empty endpoints when not matchs found in transaction', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItems,
-        numberToWordsNoOperationsWSDLObject);
+        numberToWordsNoOperationsWSDLObject, new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -229,7 +232,7 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
   it('Should return missing endpoints when the wsdl has operations not found in the collection', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsIncompleteItems,
-        numberToWordsWSDLObject);
+        numberToWordsWSDLObject, new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       missingEndpoints: [{
@@ -287,7 +290,7 @@ describe('Validate Headers', function () {
       },
       transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
-        numberToWordsWSDLObject, options);
+        numberToWordsWSDLObject, new XMLParser(), options);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
       requests: {
@@ -378,7 +381,7 @@ describe('Validate Headers', function () {
       },
       transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
-        numberToWordsWSDLObject, options);
+        numberToWordsWSDLObject, new XMLParser(), options);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
       requests: {
@@ -465,10 +468,10 @@ describe('Validate Headers', function () {
   });
 
   it('Should not return missing header when validateContentType option is not provided' +
-  ' and not content-type header is present', function () {
+    ' and not content-type header is present', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
-        numberToWordsWSDLObject);
+        numberToWordsWSDLObject, new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -544,7 +547,7 @@ describe('Validate Headers', function () {
     ' is not provided and content-type header is not text/xml', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
-        numberToWordsWSDLObject);
+        numberToWordsWSDLObject, new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -624,7 +627,7 @@ describe('Validate Headers', function () {
       },
       transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
-        numberToWordsWSDLObject, options);
+        numberToWordsWSDLObject, new XMLParser(), options);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -697,13 +700,13 @@ describe('Validate Headers', function () {
   });
 
   it('Should not return bad header mismatch when validateContentType option is set explicitly on false' +
-    ' and content-type header is not text/xml', function () {
+  ' and content-type header is not text/xml', function () {
     const options = {
         validateContentType: false
       },
       transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
-        numberToWordsWSDLObject, options);
+        numberToWordsWSDLObject, new XMLParser(), options);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -900,14 +903,15 @@ describe('validateBody method', function () {
     };
   it('Should return an object with no mismatches when request and response bodies are valid', function () {
     const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject);
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject,
+        new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
   it('Should have a mismatch when a request endpoint has a type error in body', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyWrongType,
-        numberToWordsWSDLObject
+        numberToWordsWSDLObject, new XMLParser()
       ),
       mismatchReason =
         'Element \'ubiNum\': \'WRONG TYPE\' is not a valid value of the atomic type \'xs:unsignedLong\'.\n',
@@ -924,7 +928,7 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyIncomplete,
-        numberToWordsWSDLObject
+        numberToWordsWSDLObject, new XMLParser()
       ),
       mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -940,7 +944,7 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
-        numberToWordsWSDLObject
+        numberToWordsWSDLObject, new XMLParser()
       ),
       mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -955,7 +959,8 @@ describe('validateBody method', function () {
 
   it('Should have a mismatch when a request endpoint has not body', function () {
     const transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsBodyLess, numberToWordsWSDLObject);
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsBodyLess,
+        numberToWordsWSDLObject, new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -1019,7 +1024,7 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyIncomplete,
-        numberToWordsWSDLObject
+        numberToWordsWSDLObject, new XMLParser()
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1106,7 +1111,7 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyMoreFields,
-        numberToWordsWSDLObject
+        numberToWordsWSDLObject, new XMLParser()
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1192,7 +1197,7 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyLess,
-        numberToWordsWSDLObject
+        numberToWordsWSDLObject, new XMLParser()
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1278,7 +1283,7 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         getMatchDetailsCollectionItems,
-        getMatchDetailsWSDLObject
+        getMatchDetailsWSDLObject, new XMLParser()
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1301,10 +1306,10 @@ describe('validateBody method', function () {
                       property: 'RESPONSE_BODY',
                       transactionJsonPath: '$.response.body',
                       schemaJsonPath: '//definitions//binding[@name="getMatchDetailsBinding"]' +
-                      '//operation[@name="getMatchDetails"]',
+                        '//operation[@name="getMatchDetails"]',
                       reasonCode: 'INVALID_RESPONSE_BODY',
                       reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
-                      ' because the content type is empty.\n'
+                        ' because the content type is empty.\n'
                     }
                   ]
                 }
@@ -1323,7 +1328,7 @@ describe('soapMethodValidation', function () {
   it('Should have a mismatch when item request has a different method than POST in a /soap12 request', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
-        numberToWordsWSDLObject);
+        numberToWordsWSDLObject, new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
       requests: {

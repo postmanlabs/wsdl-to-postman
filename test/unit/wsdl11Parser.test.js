@@ -12,17 +12,18 @@ const expect = require('chai').expect,
   {
     Wsdl11Parser,
     WSDL_NS_URL,
-    SOAP_NS_URL,
-    SOAP_12_NS_URL,
-    SCHEMA_NS_URL,
-    TARGETNAMESPACE_KEY,
-    TNS_NS_KEY,
     SOAP_PROTOCOL,
     SOAP12_PROTOCOL,
-    HTTP_PROTOCOL
+    HTTP_PROTOCOL,
+    WSDL_ROOT
   } = require('../../lib/Wsdl11Parser'),
   {
-    PARSER_ATRIBUTE_NAME_PLACE_HOLDER
+    XMLParser
+  } = require('../../lib/XMLParser'),
+  {
+    PARSER_ATRIBUTE_NAME_PLACE_HOLDER,
+    getBindings,
+    getServices
   } = require('../../lib/WsdlParserCommon'),
   fs = require('fs'),
   specialCasesWSDLs = 'test/data/specialCases',
@@ -317,814 +318,6 @@ describe('WSDL 1.1 parser constructor', function () {
 
 });
 
-describe('WSDL 1.1 parser parseFromXmlToObject', function () {
-
-  it('should get an object in memory representing xml object with valid input', function () {
-    const simpleInput = `<user is='great'>
-    <name>Tobias</name>
-    <familyName>Nickel</familyName>
-    <profession>Software Developer</profession>
-    <location>Shanghai / China</location>
-    </user>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    expect(parsed).to.be.an('object');
-    expect(parsed).to.have.own.property('user');
-    expect(parsed.user).to.have.own.property('name');
-    expect(parsed.user[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'is']).to.equal('great');
-
-  });
-  it('should throw an error when input is an empty string', function () {
-    parser = new Wsdl11Parser();
-    try {
-      parser.parseFromXmlToObject('');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
-    }
-  });
-  it('should throw an error when input is null', function () {
-    parser = new Wsdl11Parser();
-    try {
-      parser.parseFromXmlToObject(null);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
-    }
-  });
-  it('should throw an error when input is undefined', function () {
-    parser = new Wsdl11Parser();
-    try {
-      parser.parseFromXmlToObject(undefined);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
-    }
-  });
-  it('should throw an error when input is empty', function () {
-    parser = new Wsdl11Parser();
-    try {
-      parser.parseFromXmlToObject();
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
-    }
-  });
-  it('should throw an error when input is not xml', function () {
-    parser = new Wsdl11Parser();
-    try {
-      parser.parseFromXmlToObject('this is not an xml');
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Not xml file found in your document');
-    }
-  });
-});
-
-describe('WSDL 1.1 parser getNamespaceByURL', function () {
-
-  it('should get an object of wsdl namespace when is using wsdl as default <definitions>', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-    <types>
-      <xs:schema elementFormDefault="qualified" 
-      targetNamespace="http://www.dataaccess.com/webservicesserver/">
-        <xs:element name="NumberToDollars">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="dNum" type="xs:decimal"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="NumberToDollarsResponse">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="NumberToDollarsResult" type="xs:string"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:schema>
-    </types>
-    <message name="NumberToDollarsSoapRequest">
-      <part name="parameters" element="tns:NumberToDollars"/>
-    </message>
-    <message name="NumberToDollarsSoapResponse">
-      <part name="parameters" element="tns:NumberToDollarsResponse"/>
-    </message>
-    <portType name="NumberConversionSoapType">
-      <operation name="NumberToDollars">
-        <documentation>Returns the non-zero dollar amount of the passed number.</documentation>
-        <input message="tns:NumberToDollarsSoapRequest"/>
-        <output message="tns:NumberToDollarsSoapResponse"/>
-      </operation>
-    </portType>
-    <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
-      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-      <operation name="NumberToDollars">
-        <soap:operation soapAction="" style="document"/>
-        <input>
-          <soap:body use="literal"/>
-        </input>
-        <output>
-          <soap:body use="literal"/>
-        </output>
-      </operation>
-    </binding>
-    <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
-      <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-      <operation name="NumberToDollars">
-        <soap12:operation soapAction="" style="document"/>
-        <input>
-          <soap12:body use="literal"/>
-        </input>
-        <output>
-          <soap12:body use="literal"/>
-        </output>
-      </operation>
-    </binding>
-    <service name="NumberConversion">
-      <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
-       provides functions that convert numbers into words or dollar amounts.</documentation>
-      <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
-        <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-      </port>
-    </service>
-  </definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByURL(
-        parsed,
-        WSDL_NS_URL
-      );
-    expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('xmlns');
-    expect(wsdlnamespace.url).to.equal(WSDL_NS_URL);
-    expect(wsdlnamespace.isDefault).to.equal(true);
-
-  });
-
-  it('should get an object of wsdl namespace when is using wsdl as namespace <wsdl:definitions>', function () {
-    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-    xmlns:tns="http://tempuri.org/"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http"
-    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
-    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
-    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
-    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
-    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
-    <wsdl:types>
-        <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-            <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-            <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-            <xsd:element name="Test">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element minOccurs="0" maxOccurs="1" name="inputString" type="xsd:string" />
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="TestResponse">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element minOccurs="0" maxOccurs="1" name="TestResult" type="xsd:string" />
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </xsd:schema>
-    </wsdl:types>
-    <wsdl:message name="ISampleService_Test_InputMessage">
-        <wsdl:part name="parameters" element="tns:Test" />
-    </wsdl:message>
-    <wsdl:message name="ISampleService_Test_OutputMessage">
-        <wsdl:part name="parameters" element="tns:TestResponse" />
-    </wsdl:message>
-    <wsdl:portType name="ISampleService">
-        <wsdl:operation name="Test">
-            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
-            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
-        </wsdl:operation>
-    </wsdl:portType>
-    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
-        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-        <wsdl:operation name="Test">
-            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-    </wsdl:binding>
-    <wsdl:service name="ISampleService">
-        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
-            <soap:address location="https://localhost:5001/Service.asmx" />
-        </wsdl:port>
-    </wsdl:service>
-</wsdl:definitions>
-
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByURL(
-        parsed,
-        WSDL_NS_URL
-      );
-    expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('wsdl');
-    expect(wsdlnamespace.url).to.equal(WSDL_NS_URL);
-    expect(wsdlnamespace.isDefault).to.equal(false);
-
-  });
-
-  it('should get an object of soap namespace when is using wsdl as default <definitions>', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-    <service name="NumberConversion">
-      <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
-       provides functions that convert numbers into words or dollar amounts.</documentation>
-      <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
-        <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-      </port>
-    </service>
-  </definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByURL(
-        parsed,
-        SOAP_NS_URL
-      );
-    expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('soap');
-    expect(wsdlnamespace.url).to.equal(SOAP_NS_URL);
-    expect(wsdlnamespace.isDefault).to.equal(false);
-  });
-
-  it('should get an object of soap12 namespace when is using wsdl as default <definitions>', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-    <service name="NumberConversion">
-      <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
-       provides functions that convert numbers into words or dollar amounts.</documentation>
-      <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
-        <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-      </port>
-    </service>
-  </definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByURL(
-        parsed,
-        SOAP_12_NS_URL
-      );
-    expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('soap12');
-    expect(wsdlnamespace.url).to.equal(SOAP_12_NS_URL);
-    expect(wsdlnamespace.isDefault).to.equal(false);
-  });
-
-  it('should get an object of schema namespace when is using wsdl as default <definitions>', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-    <service name="NumberConversion">
-      <documentation>The Number Conversion Web Service, implemented with Visual DataFlex,
-       provides functions that convert numbers into words or dollar amounts.</documentation>
-      <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
-        <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-      </port>
-    </service>
-  </definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByURL(
-        parsed,
-        SCHEMA_NS_URL
-      );
-    expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('xs');
-    expect(wsdlnamespace.url).to.equal(SCHEMA_NS_URL);
-    expect(wsdlnamespace.isDefault).to.equal(false);
-  });
-
-  it('should throw an error when url input is an empty string', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
- </definitions>
-   `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    try {
-      parser.getNamespaceByURL(
-        parsed,
-        ''
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('URL must not be empty');
-    }
-  });
-
-  it('should throw an error when url input is undefined', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
- </definitions>
-   `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    try {
-      parser.getNamespaceByURL(
-        parsed,
-        undefined
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('URL must not be empty');
-    }
-  });
-
-  it('should throw an error when url input is null', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
- </definitions>
-   `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    try {
-      parser.getNamespaceByURL(
-        parsed,
-        null
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('URL must not be empty');
-    }
-  });
-
-  it('should throw an error when parsed is an empty string', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getNamespaceByURL(
-        '',
-        WSDL_NS_URL
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefined or null object');
-    }
-  });
-
-  it('should throw an error when parsed is undefined', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getNamespaceByURL(
-        undefined,
-        WSDL_NS_URL
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefined or null object');
-    }
-  });
-
-  it('should throw an error when parsed is null', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getNamespaceByURL(
-        null,
-        WSDL_NS_URL
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefined or null object');
-    }
-  });
-
-  it('should throw an error when parsed is object no expected properties', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getNamespaceByURL({},
-        WSDL_NS_URL
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespace from object');
-    }
-  });
-
-  it('should return null and not error when namespace not found', function () {
-    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-    xmlns:tns="http://tempuri.org/"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http"
-    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
-    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
-    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
-    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
-    targetNamespace="http://tempuri.org/" name="ISampleService">
-    <wsdl:service name="ISampleService">
-        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
-            <soap:address location="https://localhost:5001/Service.asmx" />
-        </wsdl:port>
-    </wsdl:service>
-</wsdl:definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByURL(
-        parsed,
-        WSDL_NS_URL
-      );
-    expect(wsdlnamespace).to.equal(null);
-  });
-
-
-});
-
-describe('WSDL 1.1 parser getPrincipalPrefix', function () {
-
-  it('should get empty string when called with <definitions>', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-  </definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      principalPrefix = parser.getPrincipalPrefix(
-        parsed
-      );
-    expect(principalPrefix).to.equal('');
-
-  });
-
-  it('should get "wsdl:" when called with <wsdl:definitions>', function () {
-    const simpleInput = `<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
- </wsdl:definitions>
-   `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      principalPrefix = parser.getPrincipalPrefix(
-        parsed
-      );
-    expect(principalPrefix).to.equal('wsdl:');
-
-  });
-
-  it('should throw error when called with null', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getPrincipalPrefix(
-        null
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get prefix from undefined or null object');
-    }
-  });
-
-  it('should throw error when called with undefined', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getPrincipalPrefix(
-        undefined
-      );
-      assert.fail('we expected an error');
-
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get prefix from undefined or null object');
-    }
-  });
-
-  it('should throw an error when called with object no expected properties', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getPrincipalPrefix({});
-      assert.fail('we expected an error');
-
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get prefix from object');
-    }
-  });
-
-});
-
-describe('WSDL 1.1 parser getNamespaceByKey', function () {
-
-  it('should get an object of targetNamespace namespace when is using wsdl as default <definitions>', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-  </definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByKey(
-        parsed,
-        TARGETNAMESPACE_KEY
-      );
-    expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('targetNamespace');
-    expect(wsdlnamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
-    expect(wsdlnamespace.isDefault).to.equal(false);
-  });
-
-  it('should get an object of tns namespace when is using wsdl as default <definitions>', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-  </definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByKey(
-        parsed,
-        TNS_NS_KEY
-      );
-    expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal('tns');
-    expect(wsdlnamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
-    expect(wsdlnamespace.isDefault).to.equal(false);
-  });
-
-  it('should get an object of targetNamespace ns when is using wsdl as ns <wsdl:definitions>', function () {
-    const simpleInput = `<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-  </wsdl:definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getNamespaceByKey(
-        parsed,
-        TARGETNAMESPACE_KEY
-      );
-    expect(wsdlnamespace).to.be.an('object');
-    expect(wsdlnamespace.key).to.equal(TARGETNAMESPACE_KEY);
-    expect(wsdlnamespace.url).to.equal('http://www.dataaccess.com/webservicesserver/');
-    expect(wsdlnamespace.isDefault).to.equal(false);
-  });
-
-  it('should throw an error when key input is an empty string', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
- </definitions>
-   `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    try {
-      parser.getNamespaceByKey(
-        parsed,
-        ''
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('key must not be empty');
-    }
-  });
-
-  it('should throw an error when key input is string null', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
- </definitions>
-   `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    try {
-      parser.getNamespaceByKey(
-        parsed,
-        null
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('key must not be empty');
-    }
-  });
-
-  it('should throw an error when key input is undefined', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
- </definitions>
-   `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    try {
-      parser.getNamespaceByKey(
-        parsed,
-        undefined
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('key must not be empty');
-    }
-  });
-
-  it('should throw an error when parsed is undefined', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getNamespaceByKey(
-        undefined,
-        TARGETNAMESPACE_KEY
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefined or null object');
-    }
-  });
-
-  it('should throw an error when parsed is null', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      parser.getNamespaceByKey({},
-        TARGETNAMESPACE_KEY
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespace from object');
-    }
-  });
-});
-
-describe('WSDL 1.1 parser getAllNamespaces', function () {
-
-  it('should get an array with all namespaces using wsdl as default <definitions>', function () {
-    const simpleInput = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-  </definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let xmlns = {},
-      parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getAllNamespaces(
-        parsed
-      );
-    expect(wsdlnamespace).to.be.an('array');
-    expect(wsdlnamespace.length).to.equal(6);
-    xmlns = wsdlnamespace.find((namespace) => {
-      return namespace.url === WSDL_NS_URL;
-    });
-    expect(xmlns.isDefault).to.equal(true);
-  });
-
-  it('should throw an error when parsed is undefined', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      let wsdlnamespace = parser.getAllNamespaces(
-        undefined
-      );
-      expect(wsdlnamespace).to.be.an('array');
-      expect(wsdlnamespace.length).to.equal(6);
-      wsdlnamespace.find((namespace) => {
-        return namespace.url === WSDL_NS_URL;
-      });
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
-    }
-  });
-
-  it('should throw an error when parsed is null', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      let wsdlnamespace = parser.getAllNamespaces(
-        null
-      );
-      expect(wsdlnamespace).to.be.an('array');
-      expect(wsdlnamespace.length).to.equal(6);
-      wsdlnamespace.find((namespace) => {
-        return namespace.url === WSDL_NS_URL;
-      });
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
-    }
-  });
-
-  it('should throw an error when parsed is an empty object', function () {
-    const parser = new Wsdl11Parser();
-    try {
-      let wsdlnamespace = parser.getAllNamespaces({});
-      expect(wsdlnamespace).to.be.an('array');
-      expect(wsdlnamespace.length).to.equal(6);
-      wsdlnamespace.find((namespace) => {
-        return namespace.url === WSDL_NS_URL;
-      });
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get namespaces from object');
-    }
-  });
-
-  it('should get an array with all namespaces using wsdl as namespace <wsdl:definitions>', function () {
-    const simpleInput = `<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-     xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-     name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-  </wsdl:definitions>
-    `,
-      parser = new Wsdl11Parser();
-    let xmlns = {},
-      parsed = parser.parseFromXmlToObject(simpleInput),
-      wsdlnamespace = parser.getAllNamespaces(
-        parsed
-      );
-    expect(wsdlnamespace).to.be.an('array');
-    expect(wsdlnamespace.length).to.equal(6);
-    xmlns = wsdlnamespace.find((namespace) => {
-      return namespace.url === WSDL_NS_URL;
-    });
-    expect(xmlns.isDefault).to.equal(true);
-  });
-
-});
-
 describe('WSDL 1.1 parser assignNamespaces', function () {
 
   it('should assign namespaces to wsdl object', function () {
@@ -1142,9 +335,10 @@ describe('WSDL 1.1 parser assignNamespaces', function () {
      </port>
    </service>
  </definitions>`,
-      parser = new Wsdl11Parser();
+      parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(simpleInput);
+      parsed = xmlParser.parseToObject(simpleInput);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
 
     expect(wsdlObject).to.have.all.keys('targetNamespace',
@@ -1168,10 +362,11 @@ describe('WSDL 1.1 parser assignNamespaces', function () {
 
 describe('WSDL 1.1 parser assignSecurity', function () {
   it('Should return a wsdlObject with securityPolicyArray if file has security', function () {
-    const parser = new Wsdl11Parser();
+    const parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     fileContent = fs.readFileSync(numberConvertionSecurity, 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     wsdlObject = parser.assignSecurity(wsdlObject, parsed);
@@ -1260,8 +455,9 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
         </port>
       </service>
     </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(simpleInput),
       portTypeOperations = parser.getPortTypeOperations(
         parsed
       );
@@ -1313,8 +509,9 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
         </port>
       </service>
     </definitions>`,
-        parser = new Wsdl11Parser();
-      let parsed = parser.parseFromXmlToObject(simpleInput),
+        parser = new Wsdl11Parser(),
+        xmlParser = new XMLParser();
+      let parsed = xmlParser.parseToObject(simpleInput),
         portTypeOperations = parser.getPortTypeOperations(
           parsed
         );
@@ -1362,8 +559,9 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
         </port>
       </service>
     </definitions>`,
-        parser = new Wsdl11Parser();
-      let parsed = parser.parseFromXmlToObject(simpleInput),
+        parser = new Wsdl11Parser(),
+        xmlParser = new XMLParser();
+      let parsed = xmlParser.parseToObject(simpleInput),
         portTypeOperations = parser.getPortTypeOperations(
           parsed
         );
@@ -1449,8 +647,9 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
     </wsdl:service>
 </wsdl:definitions>
 `,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
+      parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(simpleInput),
       portTypeOperations = parser.getPortTypeOperations(
         parsed
       );
@@ -1459,6 +658,7 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
   });
 
   it('should throw an error when call with null', function () {
+    const parser = new Wsdl11Parser();
     try {
       parser.getPortTypeOperations(
         null
@@ -1471,6 +671,7 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
   });
 
   it('should throw an error when call with undefined', function () {
+    const parser = new Wsdl11Parser();
     try {
       parser.getPortTypeOperations(
         undefined
@@ -1483,363 +684,13 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
   });
 
   it('should throw an error when call with an empty object', function () {
+    const parser = new Wsdl11Parser();
     try {
       parser.getPortTypeOperations({});
       assert.fail('we expected an error');
     }
     catch (error) {
       expect(error.message).to.equal('Can not get portypes from object');
-    }
-  });
-});
-
-describe('WSDL 1.1 parser getBindings', function () {
-  it('should get an array object representing bindings using default namespace', function () {
-    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
-    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-      <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="NumberToWords">
-          <soap:operation soapAction="" style="document"/>
-          <input>
-            <soap:body use="literal"/>
-          </input>
-          <output>
-            <soap:body use="literal"/>
-          </output>
-        </operation>
-        <operation name="NumberToDollars">
-          <soap:operation soapAction="" style="document"/>
-          <input>
-            <soap:body use="literal"/>
-          </input>
-          <output>
-            <soap:body use="literal"/>
-          </output>
-        </operation>
-      </binding>
-      <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
-        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="NumberToWords">
-          <soap12:operation soapAction="" style="document"/>
-          <input>
-            <soap12:body use="literal"/>
-          </input>
-          <output>
-            <soap12:body use="literal"/>
-          </output>
-        </operation>
-        <operation name="NumberToDollars">
-          <soap12:operation soapAction="" style="document"/>
-          <input>
-            <soap12:body use="literal"/>
-          </input>
-          <output>
-            <soap12:body use="literal"/>
-          </output>
-        </operation>
-      </binding>
-      <service name="NumberConversion">
-        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex, 
-        provides functions that convert numbers into words or dollar amounts.</documentation>
-        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
-          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-        </port>
-        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
-          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-        </port>
-      </service>
-    </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      bindings = parser.getBindings(
-        parsed
-      );
-    expect(bindings).to.be.an('array');
-    expect(bindings.length).to.equal(2);
-  });
-
-  it('should get an array object representing bindings using named namespace <wsdl:definitions>', function () {
-    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
-    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
-    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
-    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
-    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
-    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
-    <wsdl:portType name="ISampleService">
-        <wsdl:operation name="Test">
-            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
-            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
-        </wsdl:operation>
-        <wsdl:operation name="XmlMethod">
-            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
-            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
-        </wsdl:operation>
-        <wsdl:operation name="TestCustomModel">
-            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
-            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
-        </wsdl:operation>
-    </wsdl:portType>
-    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
-        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-        <wsdl:operation name="Test">
-            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="XmlMethod">
-            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="TestCustomModel">
-            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-    </wsdl:binding>
-    <wsdl:service name="ISampleService">
-        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
-            <soap:address location="https://localhost:5001/Service.asmx" />
-        </wsdl:port>
-    </wsdl:service>
-</wsdl:definitions>
-`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      bindings = parser.getBindings(
-        parsed
-      );
-    expect(bindings).to.be.an('array');
-    expect(bindings.length).to.equal(1);
-  });
-
-  it('should throw an error when call with null', function () {
-    try {
-      parser.getBindings(
-        null
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get bindings from undefined or null object');
-    }
-  });
-
-  it('should throw an error when call with undefined', function () {
-    try {
-      parser.getBindings(
-        undefined
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get bindings from undefined or null object');
-    }
-  });
-
-  it('should throw an error when call with an empty object', function () {
-    try {
-      parser.getBindings({});
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get bindings from object');
-    }
-  });
-});
-
-describe('WSDL 1.1 parser getServices', function () {
-  it('should get an array object representing services using default namespace', function () {
-    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
-    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
-    name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
-      <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="NumberToWords">
-          <soap:operation soapAction="" style="document"/>
-          <input>
-            <soap:body use="literal"/>
-          </input>
-          <output>
-            <soap:body use="literal"/>
-          </output>
-        </operation>
-        <operation name="NumberToDollars">
-          <soap:operation soapAction="" style="document"/>
-          <input>
-            <soap:body use="literal"/>
-          </input>
-          <output>
-            <soap:body use="literal"/>
-          </output>
-        </operation>
-      </binding>
-      <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
-        <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="NumberToWords">
-          <soap12:operation soapAction="" style="document"/>
-          <input>
-            <soap12:body use="literal"/>
-          </input>
-          <output>
-            <soap12:body use="literal"/>
-          </output>
-        </operation>
-        <operation name="NumberToDollars">
-          <soap12:operation soapAction="" style="document"/>
-          <input>
-            <soap12:body use="literal"/>
-          </input>
-          <output>
-            <soap12:body use="literal"/>
-          </output>
-        </operation>
-      </binding>
-      <service name="NumberConversion">
-        <documentation>The Number Conversion Web Service, implemented with Visual DataFlex, 
-        provides functions that convert numbers into words or dollar amounts.</documentation>
-        <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
-          <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-        </port>
-        <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
-          <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
-        </port>
-      </service>
-    </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      services = parser.getServices(
-        parsed
-      );
-    expect(services).to.be.an('array');
-    expect(services.length).to.equal(1);
-  });
-
-  it('should get an array object representing services using named namespace <wsdl:definitions>', function () {
-    const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
-    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
-    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
-    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
-    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
-    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
-    <wsdl:portType name="ISampleService">
-        <wsdl:operation name="Test">
-            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
-            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
-        </wsdl:operation>
-        <wsdl:operation name="XmlMethod">
-            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
-            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
-        </wsdl:operation>
-        <wsdl:operation name="TestCustomModel">
-            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
-            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
-        </wsdl:operation>
-    </wsdl:portType>
-    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
-        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-        <wsdl:operation name="Test">
-            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="XmlMethod">
-            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="TestCustomModel">
-            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-    </wsdl:binding>
-    <wsdl:service name="ISampleService">
-        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
-            <soap:address location="https://localhost:5001/Service.asmx" />
-        </wsdl:port>
-    </wsdl:service>
-    <wsdl:service name="ISampleService2">
-    <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
-        <soap:address location="https://localhost:5001/Service.asmx" />
-    </wsdl:port>
-  </wsdl:service>
-</wsdl:definitions>
-`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      services = parser.getServices(
-        parsed
-      );
-    expect(services).to.be.an('array');
-    expect(services.length).to.equal(2);
-  });
-
-  it('should throw an error when call with null', function () {
-    try {
-      parser.getServices(
-        null
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get services from undefined or null object');
-    }
-  });
-
-  it('should throw an error when call with undefined', function () {
-    try {
-      parser.getServices(
-        undefined
-      );
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get services from undefined or null object');
-    }
-  });
-
-  it('should throw an error when call with an empty object', function () {
-    try {
-      parser.getServices({});
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get services from object');
     }
   });
 });
@@ -1907,6 +758,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -1917,9 +769,10 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
     expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
@@ -1989,6 +842,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -1999,9 +853,10 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
     expect(bindingInfo.protocol).to.equal(SOAP12_PROTOCOL);
@@ -2057,6 +912,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -2072,9 +928,10 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace);
     expect(bindingInfo.protocol).to.equal(HTTP_PROTOCOL);
@@ -2211,11 +1068,13 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     </wsdl:service>
 </wsdl:definitions>
 `,
-      parser = new Wsdl11Parser();
+      parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     try {
-      let parsed = parser.parseFromXmlToObject(simpleInput),
-        binding = parser.getBindings(
-          parsed
+      let parsed = xmlParser.parseToObject(simpleInput),
+        binding = getBindings(
+          parsed,
+          WSDL_ROOT
         )[0];
       parser.getBindingInfoFromBindingTag(binding, undefined, undefined);
       assert.fail('we expected an error');
@@ -2287,14 +1146,16 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soapNamespace = {
         key: 'soap',
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, null);
     expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
@@ -2367,6 +1228,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -2377,9 +1239,10 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace),
       operation = {};
@@ -2451,6 +1314,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -2461,9 +1325,10 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace),
       operation = {};
@@ -2541,6 +1406,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -2556,9 +1422,10 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace),
       operation = {};
@@ -2636,6 +1503,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -2651,9 +1519,10 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace),
 
@@ -2666,7 +1535,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from operation undefined or null object');
+      expect(error.message).to.equal('Can not get style info from binding operation undefined or null object');
     }
   });
 
@@ -2737,6 +1606,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -2752,9 +1622,10 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace),
 
@@ -2767,7 +1638,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from operation undefined or null object');
+      expect(error.message).to.equal('Can not get style info from binding operation undefined or null object');
     }
   });
 
@@ -2833,6 +1704,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
 </wsdl:definitions>
 `,
       parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser(),
       soap12Namespace = {
         key: 'soap12',
         url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
@@ -2848,9 +1720,10 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
         url: 'http://schemas.xmlsoap.org/wsdl/soap/',
         isDefault: 'false'
       };
-    let parsed = parser.parseFromXmlToObject(simpleInput),
-      binding = parser.getBindings(
-        parsed
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        WSDL_ROOT
       )[0],
       bindingInfo = parser.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace, httpNamespace);
     try {
@@ -2858,16 +1731,17 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from operation');
+      expect(error.message).to.equal('Can not get style info from binding operation');
     }
   });
 });
 
 describe('WSDL 1.1 parser assignOperations', function () {
   it('should assign operations to wsdl object', function () {
-    const parser = new Wsdl11Parser();
+    const parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(NUMBERCONVERSION_INPUT);
+      parsed = xmlParser.parseToObject(NUMBERCONVERSION_INPUT);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -3063,9 +1937,10 @@ provides functions that convert numbers into words or dollar amounts.</documenta
 </service>
 </definitions>
 `,
-      parser = new Wsdl11Parser();
+      parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(inputFile);
+      parsed = xmlParser.parseToObject(inputFile);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -3127,9 +2002,10 @@ provides functions that convert numbers into words or dollar amounts.</documenta
   });
 
   it('should assign operations to wsdl object assignlocation correctly http', function () {
-    const parser = new Wsdl11Parser();
+    const parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(TEMPERATURE_CONVERTER);
+      parsed = xmlParser.parseToObject(TEMPERATURE_CONVERTER);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -3202,10 +2078,11 @@ provides functions that convert numbers into words or dollar amounts.</documenta
   });
 
   it('should assign operations to wsdl object when services is not in the file', function () {
-    const parser = new Wsdl11Parser();
+    const parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServicesTagNumberConvertion.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -3261,10 +2138,11 @@ provides functions that convert numbers into words or dollar amounts.</documenta
   });
 
   it('should assign operations empty object when bindings is not in the file', function () {
-    const parser = new Wsdl11Parser();
+    const parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsTag.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -3274,10 +2152,11 @@ provides functions that convert numbers into words or dollar amounts.</documenta
   });
 
   it('should assign operations empty object when bindings operations are not in the file', function () {
-    const parser = new Wsdl11Parser();
+    const parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     fileContent = fs.readFileSync(specialCasesWSDLs + '/NoBindingsOperations.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -3287,10 +2166,11 @@ provides functions that convert numbers into words or dollar amounts.</documenta
   });
 
   it('should assign operations to wsdl object when services ports are not in the file', function () {
-    const parser = new Wsdl11Parser();
+    const parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
     fileContent = fs.readFileSync(specialCasesWSDLs + '/NoServicesPortTag.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -3348,9 +2228,10 @@ provides functions that convert numbers into words or dollar amounts.</documenta
 
   it('should assign operations to wsdl object when schema is not in the file', function () {
     const parser = new Wsdl11Parser(),
-      fileContent = fs.readFileSync(specialCasesWSDLs + '/NoSchema.wsdl', 'utf8');
+      xmlParser = new XMLParser();
+    fileContent = fs.readFileSync(specialCasesWSDLs + '/NoSchema.wsdl', 'utf8');
     let wsdlObject = new WsdlObject(),
-      parsed = parser.parseFromXmlToObject(fileContent);
+      parsed = xmlParser.parseToObject(fileContent);
     wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
@@ -3482,9 +2363,10 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
         </port>
       </service>
     </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    services = parser.getServices(parsed);
+      parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(simpleInput);
+    services = getServices(parsed, WSDL_ROOT);
     service = parser.getServiceAndServicePortByBindingName('NumberConversionSoapBinding', services, '').service;
     expect(service).to.be.an('object');
     expect(service[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberConversion');
@@ -3492,6 +2374,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
 
 
   it('should throw an error when binding name is null', function () {
+    const parser = new Wsdl11Parser();
     try {
       parser.getServiceAndServicePortByBindingName(null, {}, '');
       assert.fail('we expected an error');
@@ -3501,6 +2384,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
     }
   });
   it('should throw an error when binding name is undefined', function () {
+    const parser = new Wsdl11Parser();
     try {
       parser.getServiceAndServicePortByBindingName(undefined, {}, '');
       assert.fail('we expected an error');
@@ -3510,6 +2394,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
     }
   });
   it('should throw an error when binding name is an empty string', function () {
+    const parser = new Wsdl11Parser();
     try {
       parser.getServiceAndServicePortByBindingName('', {}, '');
       assert.fail('we expected an error');
@@ -3520,6 +2405,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
   });
 
   it('should throw an error when PrincipalPrefix is undefined', function () {
+    const parser = new Wsdl11Parser();
     try {
       parser.getServiceAndServicePortByBindingName('somename', {}, undefined);
       assert.fail('we expected an error');
@@ -3529,6 +2415,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
     }
   });
   it('should throw an error when PrincipalPrefix is null', function () {
+    const parser = new Wsdl11Parser();
     try {
       parser.getServiceAndServicePortByBindingName('somename', {}, null);
       assert.fail('we expected an error');
@@ -3540,12 +2427,14 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
 
   it('should get undefined when services is null', function () {
     let wsdlObject = new WsdlObject(),
+      parser = new Wsdl11Parser(),
       service = parser.getServiceAndServicePortByBindingName('somename', null, 'principal prefix', wsdlObject);
     expect(service).to.equal(undefined);
   });
 
   it('should get undefined when services is undefined', function () {
     let wsdlObject = new WsdlObject(),
+      parser = new Wsdl11Parser(),
       service = parser.getServiceAndServicePortByBindingName('somename', undefined, 'principal prefix', wsdlObject);
     expect(service).to.equal(undefined);
 
@@ -3553,6 +2442,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
 
   it('should throw an error when services is an empty object', function () {
     let wsdlObject = new WsdlObject(),
+      parser = new Wsdl11Parser(),
       service = parser.getServiceAndServicePortByBindingName('somename', {}, 'principal prefix', wsdlObject);
     expect(service).to.equal(undefined);
   });
@@ -3635,9 +2525,10 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
         </port>
       </service>
     </definitions>`,
-      parser = new Wsdl11Parser();
-    let parsed = parser.parseFromXmlToObject(simpleInput);
-    services = parser.getServices(parsed);
+      parser = new Wsdl11Parser(),
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(simpleInput);
+    services = getServices(parsed, WSDL_ROOT);
     service = parser.getPortTypeOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
       'NumberToWords', parsed, '');
     expect(service).to.be.an('object');
@@ -3683,7 +2574,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
 
   it('should throw an error when portTypeName is null', function () {
     try {
-
+      const parser = new Wsdl11Parser();
       parser.getPortTypeOperationByPortTypeNameAndOperationName(null,
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
@@ -3760,7 +2651,7 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
   it('should get an object in memory representing wsdlObject validate all namespaces found',
     function () {
       const parser = new Wsdl11Parser();
-      let wsdlObject = parser.getWsdlObject(NUMBERCONVERSION_INPUT);
+      let wsdlObject = parser.getWsdlObject(NUMBERCONVERSION_INPUT, new XMLParser());
       expect(wsdlObject).to.be.an('object');
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
@@ -3841,30 +2732,6 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
     }
     catch (error) {
       expect(error.message).to.equal('xmlDocumentContent must have a value');
-    }
-  });
-});
-
-describe('WSDL 1.1 parser getBindingOperation', function () {
-  it('should throw an error when binding is null', function () {
-    try {
-      const parser = new Wsdl11Parser();
-      parser.getBindingOperation(null, '', {});
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get operations from undefined or null object');
-    }
-  });
-
-  it('should throw an error when binding is emptyObject', function () {
-    try {
-      const parser = new Wsdl11Parser();
-      parser.getBindingOperation({}, '', {});
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Can not get binding operations from object');
     }
   });
 });

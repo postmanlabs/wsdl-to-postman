@@ -3,8 +3,8 @@ const expect = require('chai').expect,
     SecurityAssertionsHelper
   } = require('../../lib/security/SecurityAssertionsHelper'),
   {
-    parseFromXmlToObject
-  } = require('../../lib/WsdlParserCommon'),
+    XMLParser
+  } = require('../../lib/XMLParser'),
   USERNAME_TOKEN = `<wsp:Policy><sp:SupportingTokens><wsp:Policy>
     <sp:UsernameToken 
       sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"
@@ -96,13 +96,13 @@ const expect = require('chai').expect,
            </sp:SignedSupportingTokens>
         </wsp:Policy>`;
 
-describe('SecurityAssertionsHelper getSecurityAssertions', function() {
+describe('SecurityAssertionsHelper getSecurityAssertions', function () {
   const securityNamespace = {
     prefixFilter: 'wsp:'
   };
-  it('should get an object indicating username password normal mode is used', function() {
+  it('should get an object indicating username password normal mode is used', function () {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
-      parsedXml = parseFromXmlToObject(USERNAME_TOKEN);
+      parsedXml = new XMLParser().parseToObject(USERNAME_TOKEN);
     securityAssertions = securityAssertionsHelper.getSecurityAssertions([parsedXml], securityNamespace);
     expect(securityAssertions).to.be.an('object');
     expect(securityAssertions[1]).to.be.an('array');
@@ -110,9 +110,9 @@ describe('SecurityAssertionsHelper getSecurityAssertions', function() {
     expect(securityAssertions[1][0].passwordType).to.equal('Normal');
   });
 
-  it('should get an object indicating username no password mode is used', function() {
+  it('should get an object indicating username no password mode is used', function () {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
-      parsedXml = parseFromXmlToObject(USERNAME_TOKEN_NO_PASSWORD);
+      parsedXml = new XMLParser().parseToObject(USERNAME_TOKEN_NO_PASSWORD);
     securityAssertions = securityAssertionsHelper.getSecurityAssertions([parsedXml], securityNamespace);
     expect(securityAssertions).to.be.an('object');
     expect(securityAssertions[1]).to.be.an('array');
@@ -122,9 +122,9 @@ describe('SecurityAssertionsHelper getSecurityAssertions', function() {
       .to.equal('http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient');
   });
 
-  it('should get an object indicating username hash password mode is used', function() {
+  it('should get an object indicating username hash password mode is used', function () {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
-      parsedXml = parseFromXmlToObject(USERNAME_TOKEN_HASH_PASSWORD);
+      parsedXml = new XMLParser().parseToObject(USERNAME_TOKEN_HASH_PASSWORD);
     securityAssertions = securityAssertionsHelper.getSecurityAssertions([parsedXml], securityNamespace);
     expect(securityAssertions).to.be.an('object');
     expect(securityAssertions[1]).to.be.an('array');
@@ -135,9 +135,9 @@ describe('SecurityAssertionsHelper getSecurityAssertions', function() {
 
   });
 
-  it('should get an object indicating username and ssl password mode is used', function() {
+  it('should get an object indicating username and ssl password mode is used', function () {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
-      parsedXml = parseFromXmlToObject(USERNAME_TOKEN_SSL);
+      parsedXml = new XMLParser().parseToObject(USERNAME_TOKEN_SSL);
     securityAssertions = securityAssertionsHelper.getSecurityAssertions([parsedXml], securityNamespace);
     expect(securityAssertions).to.be.an('object');
     expect(securityAssertions[1]).to.be.an('array');
@@ -151,9 +151,9 @@ describe('SecurityAssertionsHelper getSecurityAssertions', function() {
 
   });
 
-  it('should get an object indicating suporting saml token', function() {
+  it('should get an object indicating suporting saml token', function () {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
-      parsedXml = parseFromXmlToObject(SAML_TOKEN_SUPPORTING);
+      parsedXml = new XMLParser().parseToObject(SAML_TOKEN_SUPPORTING);
     securityAssertions = securityAssertionsHelper.getSecurityAssertions([parsedXml], securityNamespace);
     expect(securityAssertions).to.be.an('object');
     expect(securityAssertions[1]).to.be.an('array');
@@ -165,9 +165,9 @@ describe('SecurityAssertionsHelper getSecurityAssertions', function() {
 
   });
 
-  it('should get an object indicating username and ssl saml token', function() {
+  it('should get an object indicating username and ssl saml token', function () {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
-      parsedXml = parseFromXmlToObject(SAML_SSL_HTTPS_TOKEN_POLICY_REQUIRE_CLIENT_CERTIFICATE);
+      parsedXml = new XMLParser().parseToObject(SAML_SSL_HTTPS_TOKEN_POLICY_REQUIRE_CLIENT_CERTIFICATE);
     securityAssertions = securityAssertionsHelper.getSecurityAssertions([parsedXml], securityNamespace);
     expect(securityAssertions).to.be.an('object');
     expect(securityAssertions[1]).to.be.an('array');
@@ -180,7 +180,7 @@ describe('SecurityAssertionsHelper getSecurityAssertions', function() {
     expect(securityAssertions[1][1].mode).to.equal('sender-vouches');
   });
 
-  it('Should return an empty array when there are not any security content', function() {
+  it('Should return an empty array when there are not any security content', function () {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
       parsedXml = undefined;
     securityAssertions = securityAssertionsHelper.getSecurityAssertions(parsedXml, securityNamespace);

@@ -1,14 +1,14 @@
 const expect = require('chai').expect,
   {
-    BFSSoapParametersHelper
-  } = require('../../lib/utils/BFSSoapParametersHelper'),
+    SOAPMessageObject
+  } = require('../../lib/utils/SOAPMessageObject'),
   {
     ERROR_ELEMENT_IDENTIFIER
   } = require('../../lib/constants/processConstants');
 
-describe('BFSSoapParametersHelper convertFromNodeToJson', function () {
+describe('SOAPMessageObject create', function () {
   it('Should get a json object when NumberToWords->ubinum is sent', function () {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+    const bFSSoapParametersHelper = new SOAPMessageObject(),
       child = {
         children: [],
         name: 'ubiNum',
@@ -17,14 +17,14 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function () {
         maximum: 18446744073709,
         minimum: 0
       },
-      node = {
+      soapMessageParent = {
         children: [child],
         name: 'NumberToWords',
         isComplex: true,
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node);
+      jsonObjectMessage = bFSSoapParametersHelper.create(soapMessageParent);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.have.own.property('NumberToWords');
     expect(jsonObjectMessage.NumberToWords)
@@ -34,7 +34,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function () {
   });
 
   it('Should get a json object when TestCustomModel->inputmodel->id,name,email is sent', function () {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+    const bFSSoapParametersHelper = new SOAPMessageObject(),
       grandChild1 = {
         children: [],
         name: 'id',
@@ -61,14 +61,14 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function () {
         isComplex: true,
         type: 'MyCustomModel'
       },
-      node = {
+      soapMessageParent = {
         children: [child],
         name: 'TestCustomModel',
         isComplex: true,
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node);
+      jsonObjectMessage = bFSSoapParametersHelper.create(soapMessageParent);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.have.own.property('TestCustomModel');
     expect(jsonObjectMessage.TestCustomModel)
@@ -89,35 +89,35 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function () {
   });
 
   it('Should get an empty json object when null is sent', function () {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(null);
+    const bFSSoapParametersHelper = new SOAPMessageObject(),
+      jsonObjectMessage = bFSSoapParametersHelper.create(null);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.be.empty;
   });
 
   it('Should get an empty json object when undefined is sent', function () {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(undefined);
+    const bFSSoapParametersHelper = new SOAPMessageObject(),
+      jsonObjectMessage = bFSSoapParametersHelper.create(undefined);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.be.empty;
   });
 
   it('Should get a json object indicating the error', function () {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
-      node = {
+    const bFSSoapParametersHelper = new SOAPMessageObject(),
+      soapMessageParent = {
         children: [],
         name: ERROR_ELEMENT_IDENTIFIER,
         isComplex: false,
         type: ERROR_ELEMENT_IDENTIFIER,
         namespace: ''
       },
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node, 'soap');
+      jsonObjectMessage = bFSSoapParametersHelper.create(soapMessageParent, 'soap');
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.have.own.property(ERROR_ELEMENT_IDENTIFIER);
   });
 
   it('Should get a json object indicating the error from child', function () {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+    const bFSSoapParametersHelper = new SOAPMessageObject(),
 
       child = {
         children: [],
@@ -126,21 +126,21 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function () {
         type: ERROR_ELEMENT_IDENTIFIER,
         namespace: ''
       },
-      node = {
+      soapMessageParent = {
         children: [child],
         name: 'NumberToWords',
         isComplex: true,
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(node);
+      jsonObjectMessage = bFSSoapParametersHelper.create(soapMessageParent);
     expect(jsonObjectMessage).to.have.own.property('NumberToWords');
     expect(jsonObjectMessage.NumberToWords)
       .to.have.own.property(ERROR_ELEMENT_IDENTIFIER);
   });
 
   it('Should get a json object when has complex brothers with properties with the same name', function () {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper(),
+    const bFSSoapParametersHelper = new SOAPMessageObject(),
       Item1Concrete2 = {
         children: [],
         name: 'Item1Concrete2',
@@ -216,7 +216,7 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function () {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      jsonObjectMessage = bFSSoapParametersHelper.convertFromNodeToJson(root);
+      jsonObjectMessage = bFSSoapParametersHelper.create(root);
     expect(jsonObjectMessage).to.be.an('object').and.to.deep.include(
       {
         A: {
@@ -242,9 +242,9 @@ describe('BFSSoapParametersHelper convertFromNodeToJson', function () {
   });
 });
 
-describe('BFSSoapParametersHelper assignPropertyValue', function () {
+describe('SOAPMessageObject assignPropertyValue', function () {
   it('should assign the property "property" with "value" to object', function () {
-    const bFSSoapParametersHelper = new BFSSoapParametersHelper();
+    const bFSSoapParametersHelper = new SOAPMessageObject();
     let obj = {
       parent: {}
     };
@@ -254,30 +254,30 @@ describe('BFSSoapParametersHelper assignPropertyValue', function () {
   });
 });
 
-describe('BFSSoapParametersHelper BFSSoapParametersHelper', function () {
+describe('SOAPMessageObject SOAPMessageObject', function () {
   it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap is the protocol', function () {
-    const parametersUtils = new BFSSoapParametersHelper(),
+    const parametersUtils = new SOAPMessageObject(),
       url = parametersUtils.getSOAPNamespaceFromProtocol('soap');
     expect(url).to.be.an('string');
     expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
   });
 
   it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap12 is the protocol', function () {
-    const parametersUtils = new BFSSoapParametersHelper(),
+    const parametersUtils = new SOAPMessageObject(),
       url = parametersUtils.getSOAPNamespaceFromProtocol('soap12');
     expect(url).to.be.an('string');
     expect(url).to.equal('http://www.w3.org/2003/05/soap-envelope');
   });
 
   it('should get http://schemas.xmlsoap.org/soap/envelope/ when dummy is the protocol', function () {
-    const parametersUtils = new BFSSoapParametersHelper(),
+    const parametersUtils = new SOAPMessageObject(),
       url = parametersUtils.getSOAPNamespaceFromProtocol('dummy');
     expect(url).to.be.an('string');
     expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
 
   });
   it('should get http://schemas.xmlsoap.org/soap/envelope/ when null is the protocol', function () {
-    const parametersUtils = new BFSSoapParametersHelper(),
+    const parametersUtils = new SOAPMessageObject(),
       url = parametersUtils.getSOAPNamespaceFromProtocol(null);
     expect(url).to.be.an('string');
     expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
