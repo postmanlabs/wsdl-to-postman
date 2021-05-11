@@ -18,7 +18,8 @@ const expect = require('chai').expect,
     getPrincipalPrefix,
     getBindingOperation,
     getElementsFromWSDL,
-    getDocumentationStringFromNode
+    getDocumentationStringFromNode,
+    getWSDLDocumentation
   } = require('../../lib/WsdlParserCommon'),
   {
     WSDL_ROOT: WSDL_ROOT_2_0
@@ -142,7 +143,125 @@ whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
   binding="tns:SayHelloSoap12Binding" 
   address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap12Endpoint/" />
 </wsdl2:service>
-</wsdl2:description>`;
+</wsdl2:description>`,
+  WSDL_1_1 = `<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:tns="http://www.dataaccess.com/webservicesserver/" name="NumberConversion"
+  targetNamespace="http://www.dataaccess.com/webservicesserver/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <xs:element name="NumberToWords">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ubiNum" type="xs:unsignedLong"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NumberToWordsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="NumberToWordsResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NumberToDollars">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="dNum" type="xs:decimal"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NumberToDollarsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="NumberToDollarsResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <documentation>
+  This document describes number convertion service</documentation>
+  <message name="NumberToWordsSoapRequest">
+    <part name="parameters" element="tns:NumberToWords"/>
+  </message>
+  <message name="NumberToWordsSoapResponse">
+    <part name="parameters" element="tns:NumberToWordsResponse"/>
+  </message>
+  <message name="NumberToDollarsSoapRequest">
+    <part name="parameters" element="tns:NumberToDollars"/>
+  </message>
+  <message name="NumberToDollarsSoapResponse">
+    <part name="parameters" element="tns:NumberToDollarsResponse"/>
+  </message>
+  <portType name="NumberConversionSoapType">
+    <operation name="NumberToWords">
+      <documentation>Returns the word corresponding to the positive number passed as parameter.
+       Limited to quadrillions.</documentation>
+      <input message="tns:NumberToWordsSoapRequest"/>
+      <output message="tns:NumberToWordsSoapResponse"/>
+    </operation>
+    <operation name="NumberToDollars">
+      <documentation>Returns the non-zero dollar amount of the passed number.</documentation>
+      <input message="tns:NumberToDollarsSoapRequest"/>
+      <output message="tns:NumberToDollarsSoapResponse"/>
+    </operation>
+  </portType>
+  <binding name="NumberConversionSoapBinding" type="tns:NumberConversionSoapType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="NumberToWords">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="NumberToDollars">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="NumberConversionSoapBinding12" type="tns:NumberConversionSoapType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="NumberToWords">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="NumberToDollars">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="NumberConversion">
+    <documentation>The Number Conversion Web Service, implemented with Visual DataFlex, provides 
+    functions that convert numbers into words or dollar amounts.</documentation>
+    <port name="NumberConversionSoap" binding="tns:NumberConversionSoapBinding">
+      <soap:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+    </port>
+    <port name="NumberConversionSoap12" binding="tns:NumberConversionSoapBinding12">
+      <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
+    </port>
+  </service>
+</definitions>`;
 
 describe('WSDL parser common getNamespaceByKey', function () {
 
@@ -1657,3 +1776,58 @@ describe('WSDL parser common getDocumentationString', function () {
   });
 });
 
+describe('WSDL parser common getWSDLDocumentation', function () {
+  it('should get documentation text WSDL 1.1', function () {
+    const parser = new XMLParser();
+    let parsed = parser.parseToObject(WSDL_1_1),
+      documentation = getWSDLDocumentation(
+        parsed,
+        WSDL_ROOT_1_1
+      );
+    expect(documentation).to.equal('This document describes number convertion service');
+  });
+
+  it('should get an array object representing services using default WSDL_SAMPLE_AXIS WSDL 2.0', function () {
+    const parser = new XMLParser();
+    let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
+      documentation = getWSDLDocumentation(
+        parsed,
+        WSDL_ROOT_2_0
+      );
+    expect(documentation).to.equal('Please Type your service description here');
+  });
+
+  it('should throw an error when call with null WSDL', function () {
+    try {
+      getWSDLDocumentation(
+        null
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get documentation from undefined or null object');
+    }
+  });
+
+  it('should throw an error when call with undefined', function () {
+    try {
+      getWSDLDocumentation(
+        undefined
+      );
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get documentation from undefined or null object');
+    }
+  });
+
+  it('should throw an error when call with an empty object', function () {
+    try {
+      getWSDLDocumentation({});
+      assert.fail('we expected an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Can not get documentation from object');
+    }
+  });
+});
