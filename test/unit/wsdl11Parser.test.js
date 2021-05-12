@@ -344,7 +344,7 @@ describe('WSDL 1.1 parser assignNamespaces', function () {
     expect(wsdlObject).to.have.all.keys('targetNamespace',
       'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
       'SOAP12Namespace', 'schemaNamespace',
-      'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
+      'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'log',
       'operationsArray', 'securityPolicyArray',
       'securityPolicyNamespace', 'xmlParsed', 'version');
 
@@ -2656,7 +2656,7 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
         'SOAP12Namespace', 'schemaNamespace',
-        'tnsNamespace', 'allNameSpaces', 'fileName', 'log',
+        'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'log',
         'operationsArray', 'securityPolicyArray',
         'securityPolicyNamespace', 'xmlParsed', 'version');
 
