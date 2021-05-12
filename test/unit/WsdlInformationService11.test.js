@@ -1,10 +1,12 @@
 const { POST_METHOD } = require('../../lib/utils/httpUtils'),
   {
-    WsdlInformationService11,
-    WSDL_ROOT, SOAP_PROTOCOL,
+    WsdlInformationService11
+  } = require('../../lib/WsdlInformationService11'),
+  {
+    SOAP_PROTOCOL,
     HTTP_PROTOCOL,
     SOAP12_PROTOCOL
-  } = require('../../lib/WsdlInformationService11'),
+  } = require('../../lib/constants/processConstants'),
   {
     WsdlObject
   } = require('../../lib/WSDLObject'),
@@ -416,7 +418,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
     expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
@@ -500,7 +502,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
     expect(bindingInfo.protocol).to.equal(SOAP12_PROTOCOL);
@@ -575,7 +577,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -723,7 +725,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       let parsed = xmlParser.parseToObject(simpleInput),
         binding = getBindings(
           parsed,
-          WSDL_ROOT
+          informationService.getRootTagName()
         )[0];
       informationService.getBindingInfoFromBindingTag(binding, undefined, undefined);
       assert.fail('we expected an error');
@@ -804,7 +806,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, null);
     expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
@@ -813,7 +815,6 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
   });
 
 });
-
 describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
   it('should get style from binding operation when binding is soap', function () {
 
@@ -891,7 +892,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace),
       operation = {};
@@ -977,7 +978,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace),
       operation = {};
@@ -1074,7 +1075,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -1176,7 +1177,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -1284,7 +1285,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -1387,7 +1388,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -1405,7 +1406,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
   });
 });
 
-describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', function () {
+describe('WSDL 1.1 parser getServiceAndExpossedInfoByBindingName', function () {
   it('should get service by binding name', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -1484,8 +1485,8 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
       informationService = new WsdlInformationService11(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(simpleInput);
-    services = getServices(parsed, WSDL_ROOT);
-    service = informationService.getServiceAndServicePortEndpointByBindingName(
+    services = getServices(parsed, informationService.getRootTagName());
+    service = informationService.getServiceAndExpossedInfoByBindingName(
       'NumberConversionSoapBinding',
       services,
       '').service;
@@ -1497,7 +1498,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
   it('should throw an error when binding name is null', function () {
     informationService = new WsdlInformationService11();
     try {
-      informationService.getServiceAndServicePortEndpointByBindingName(null, {}, '');
+      informationService.getServiceAndExpossedInfoByBindingName(null, {}, '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -1507,7 +1508,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
   it('should throw an error when binding name is undefined', function () {
     informationService = new WsdlInformationService11();
     try {
-      informationService.getServiceAndServicePortEndpointByBindingName(undefined, {}, '');
+      informationService.getServiceAndExpossedInfoByBindingName(undefined, {}, '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -1517,7 +1518,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
   it('should throw an error when binding name is an empty string', function () {
     informationService = new WsdlInformationService11();
     try {
-      informationService.getServiceAndServicePortEndpointByBindingName('', {}, '');
+      informationService.getServiceAndExpossedInfoByBindingName('', {}, '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -1528,7 +1529,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
   it('should throw an error when PrincipalPrefix is undefined', function () {
     informationService = new WsdlInformationService11();
     try {
-      informationService.getServiceAndServicePortEndpointByBindingName('somename', {}, undefined);
+      informationService.getServiceAndExpossedInfoByBindingName('somename', {}, undefined);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -1538,7 +1539,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
   it('should throw an error when PrincipalPrefix is null', function () {
     informationService = new WsdlInformationService11();
     try {
-      informationService.getServiceAndServicePortEndpointByBindingName('somename', {}, null);
+      informationService.getServiceAndExpossedInfoByBindingName('somename', {}, null);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -1549,7 +1550,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
   it('should get undefined when services is null', function () {
     let wsdlObject = new WsdlObject(),
       informationService = new WsdlInformationService11(),
-      service = informationService.getServiceAndServicePortEndpointByBindingName(
+      service = informationService.getServiceAndExpossedInfoByBindingName(
         'somename',
         null,
         'principal prefix',
@@ -1561,7 +1562,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
   it('should get undefined when services is undefined', function () {
     let wsdlObject = new WsdlObject(),
       informationService = new WsdlInformationService11(),
-      service = informationService.getServiceAndServicePortEndpointByBindingName(
+      service = informationService.getServiceAndExpossedInfoByBindingName(
         'somename',
         undefined,
         'principal prefix',
@@ -1574,7 +1575,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
   it('should throw an error when services is an empty object', function () {
     let wsdlObject = new WsdlObject(),
       informationService = new WsdlInformationService11(),
-      service = informationService.getServiceAndServicePortEndpointByBindingName(
+      service = informationService.getServiceAndExpossedInfoByBindingName(
         'somename',
         {},
         'principal prefix',
@@ -1585,7 +1586,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortEndpointByBindingName', functi
 
 });
 
-describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperationName', function () {
+describe('WSDL 1.1 parser getAbstractOperationByName', function () {
   it('should get portType by name', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -1664,8 +1665,8 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
       informationService = new WsdlInformationService11(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(simpleInput);
-    services = getServices(parsed, WSDL_ROOT);
-    service = informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
+    services = getServices(parsed, informationService.getRootTagName());
+    service = informationService.getAbstractOperationByName('NumberConversionSoapType',
       'NumberToWords', parsed, '');
     expect(service).to.be.an('object');
     expect(service[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberToWords');
@@ -1674,7 +1675,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when parsedxml is null', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
+      informationService.getAbstractOperationByName('NumberConversionSoapType',
         'NumberToWords', null, '');
       assert.fail('we expected an error');
     }
@@ -1686,7 +1687,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when parsedxml is undefined', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
+      informationService.getAbstractOperationByName('NumberConversionSoapType',
         'NumberToWords', undefined, '');
       assert.fail('we expected an error');
     }
@@ -1698,7 +1699,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when parsedxml is an empty object', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
+      informationService.getAbstractOperationByName('NumberConversionSoapType',
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
     }
@@ -1711,7 +1712,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when portTypeName is null', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName(null,
+      informationService.getAbstractOperationByName(null,
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
     }
@@ -1723,7 +1724,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when portTypeName is undefined', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName(undefined,
+      informationService.getAbstractOperationByName(undefined,
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
     }
@@ -1735,7 +1736,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when portTypeName is an empty string', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName('',
+      informationService.getAbstractOperationByName('',
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
     }
@@ -1747,7 +1748,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when operationName is null', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName('some string',
+      informationService.getAbstractOperationByName('some string',
         null, {}, '');
       assert.fail('we expected an error');
     }
@@ -1759,7 +1760,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when operationName is undefined', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName('some string',
+      informationService.getAbstractOperationByName('some string',
         undefined, {}, '');
       assert.fail('we expected an error');
     }
@@ -1771,7 +1772,7 @@ describe('WSDL 1.1 parser getPortTypeInterfaceOperationByPortTypeNameAndOperatio
   it('should throw an error when operationName is an empty string', function () {
     try {
       const informationService = new WsdlInformationService11();
-      informationService.getPortTypeInterfaceOperationByPortTypeNameAndOperationName('ddd',
+      informationService.getAbstractOperationByName('ddd',
         '', {}, '');
       assert.fail('we expected an error');
     }

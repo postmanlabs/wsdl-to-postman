@@ -274,7 +274,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       wsdlnamespace = getNamespaceByKey(
         parsed,
         informationService.getTargetNamespaceKey(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('targetNamespace');
@@ -297,7 +297,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       wsdlnamespace = getNamespaceByKey(
         parsed,
         informationService.getTHISNamespaceKey(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('tns');
@@ -320,7 +320,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       wsdlnamespace = getNamespaceByKey(
         parsed,
         informationService.getTargetNamespaceKey(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal(informationService.getTargetNamespaceKey());
@@ -344,7 +344,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       getNamespaceByKey(
         parsed,
         '',
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
       assert.fail('we expected an error');
     }
@@ -369,7 +369,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       getNamespaceByKey(
         parsed,
         null,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
       assert.fail('we expected an error');
     }
@@ -394,7 +394,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       getNamespaceByKey(
         parsed,
         undefined,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
       assert.fail('we expected an error');
     }
@@ -409,7 +409,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       getNamespaceByKey(
         undefined,
         informationService.getTargetNamespaceKey(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
       assert.fail('we expected an error');
     }
@@ -423,7 +423,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
     try {
       getNamespaceByKey({},
         informationService.getTargetNamespaceKey(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
       assert.fail('we expected an error');
     }
@@ -451,7 +451,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       wsdlnamespace = getNamespaceByKey(
         parsed,
         'xmlns:tns',
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('tns');
@@ -479,7 +479,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       getNamespaceByKey(
         parsed,
         '',
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
       assert.fail('we expected an error');
     }
@@ -508,7 +508,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       getNamespaceByKey(
         parsed,
         null,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
       assert.fail('we expected an error');
     }
@@ -537,7 +537,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       getNamespaceByKey(
         parsed,
         undefined,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
       assert.fail('we expected an error');
     }
@@ -612,7 +612,7 @@ describe('WSDL parser common getServices', function () {
     let parsed = parser.parseToObject(simpleInput),
       services = getServices(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(services).to.be.an('array');
     expect(services.length).to.equal(1);
@@ -688,7 +688,7 @@ describe('WSDL parser common getServices', function () {
     let parsed = parser.parseToObject(simpleInput),
       services = getServices(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(services).to.be.an('array');
     expect(services.length).to.equal(2);
@@ -734,7 +734,7 @@ describe('WSDL parser common getServices', function () {
     let parsed = parser.parseToObject(WSDL_SAMPLE),
       services = getServices(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(services).to.be.an('array');
     expect(services.length).to.equal(1);
@@ -747,7 +747,7 @@ describe('WSDL parser common getServices', function () {
     let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
       services = getServices(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(services).to.be.an('array');
     expect(services.length).to.equal(1);
@@ -845,7 +845,7 @@ describe('WSDL parser common getBindings', function () {
     let parsed = parser.parseToObject(simpleInput),
       bindings = getBindings(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(bindings).to.be.an('array');
     expect(bindings.length).to.equal(2);
@@ -916,7 +916,7 @@ describe('WSDL parser common getBindings', function () {
     let parsed = parser.parseToObject(simpleInput),
       bindings = getBindings(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(bindings).to.be.an('array');
     expect(bindings.length).to.equal(1);
@@ -963,7 +963,7 @@ describe('WSDL parser common getBindings', function () {
     let parsed = parser.parseToObject(WSDL_SAMPLE),
       bindings = getBindings(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(bindings).to.be.an('array');
     expect(bindings.length).to.equal(1);
@@ -976,7 +976,7 @@ describe('WSDL parser common getBindings', function () {
     let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
       bindings = getBindings(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(bindings).to.be.an('array');
     expect(bindings.length).to.equal(3);
@@ -1086,7 +1086,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       wsdlnamespace = getNamespaceByURL(
         parsed,
         informationService.getWSDLNamespaceURL(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('xmlns');
@@ -1163,7 +1163,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       wsdlnamespace = getNamespaceByURL(
         parsed,
         informationService.getWSDLNamespaceURL(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('wsdl');
@@ -1194,7 +1194,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       wsdlnamespace = getNamespaceByURL(
         parsed,
         informationService.getSOAPNamespaceURL(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('soap');
@@ -1225,7 +1225,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       wsdlnamespace = getNamespaceByURL(
         parsed,
         informationService.getSOAP12NamespaceURL(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('soap12');
@@ -1256,7 +1256,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       wsdlnamespace = getNamespaceByURL(
         parsed,
         informationService.getSchemaNamespaceURL(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
 
       );
     expect(wsdlnamespace).to.be.an('object');
@@ -1416,7 +1416,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       wsdlnamespace = getNamespaceByURL(
         parsed,
         informationService.getWSDLNamespaceURL(),
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.equal(null);
   });
@@ -1440,7 +1440,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       wsdlnamespace = getNamespaceByURL(
         parsed,
         'http://www.w3.org/ns/wsdl/soap',
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('wsoap');
@@ -1468,7 +1468,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       wsdlnamespace = getNamespaceByURL(
         parsed,
         'http://www.w3.org/ns/wsdl',
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('object');
     expect(wsdlnamespace.key).to.equal('xmlns');
@@ -1497,7 +1497,7 @@ describe('WSDL parser common getAllNamespaces', function () {
       parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getAllNamespaces(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('array');
     expect(wsdlnamespace.length).to.equal(6);
@@ -1567,7 +1567,7 @@ describe('WSDL parser common getAllNamespaces', function () {
       parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getAllNamespaces(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('array');
     expect(wsdlnamespace.length).to.equal(6);
@@ -1598,7 +1598,7 @@ describe('WSDL parser common getAllNamespaces', function () {
     let parsed = parser.parseToObject(simpleInput),
       wsdlnamespace = getAllNamespaces(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(wsdlnamespace).to.be.an('array');
     expect(wsdlnamespace.length).to.equal(11);
@@ -1623,7 +1623,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
     let parsed = parser.parseToObject(simpleInput),
       principalPrefix = getPrincipalPrefix(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(principalPrefix).to.equal('');
 
@@ -1644,7 +1644,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
     let parsed = parser.parseToObject(simpleInput),
       principalPrefix = getPrincipalPrefix(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(principalPrefix).to.equal('wsdl:');
 
@@ -1703,7 +1703,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
     let parsed = parser.parseToObject(simpleInput),
       principalPrefix = getPrincipalPrefix(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(principalPrefix).to.equal('');
   });
@@ -1724,7 +1724,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
     let parsed = parser.parseToObject(simpleInput),
       principalPrefix = getPrincipalPrefix(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(principalPrefix).to.equal('wsdl2:');
   });
@@ -1774,7 +1774,7 @@ describe('WSDL parser common getElementsFromWSDL', function () {
       elements = getElementsFromWSDL(
         parsed,
         '',
-        informationService.getRootTag(),
+        informationService.getRootTagName(),
         schemaNameSpace,
         thisNameSpace
       );
@@ -1802,7 +1802,7 @@ describe('WSDL parser common getElementsFromWSDL', function () {
       elements = getElementsFromWSDL(
         parsed,
         'wsdl2:',
-        informationService.getRootTag(),
+        informationService.getRootTagName(),
         schemaNameSpace,
         thisNameSpace
       );
@@ -1833,7 +1833,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
     let parsed = parser.parseToObject(WSDL_1_1),
       documentation = getWSDLDocumentation(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(documentation).to.equal('This document describes number convertion service');
   });
@@ -1844,7 +1844,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
     let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
       documentation = getWSDLDocumentation(
         parsed,
-        informationService.getRootTag()
+        informationService.getRootTagName()
       );
     expect(documentation).to.equal('Please Type your service description here');
   });
