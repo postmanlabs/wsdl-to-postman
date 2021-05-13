@@ -42,34 +42,34 @@ const expect = require('chai').expect,
     'error': 'Could not find element'
   };
 
-describe('SOAPMessageHelper  constructor', function() {
-  it('should get an object for the factory with empty input', function() {
+describe('SOAPMessageHelper  constructor', function () {
+  it('should get an object for the factory with empty input', function () {
     const parametersUtils = new SOAPMessageHelper();
     expect(parametersUtils).to.be.an('object');
   });
 });
 
-describe('SOAPMessageHelper parseObjectToXML', function() {
-  it('should get an string representing the xml only body', function() {
+describe('SOAPMessageHelper parseObjectToXML', function () {
+  it('should get an string representing the xml only body', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlParameters = parametersUtils.parseObjectToXML(json);
     expect(xmlParameters).to.be.an('string');
   });
 
-  it('should get an string representing the xml with header', function() {
+  it('should get an string representing the xml with header', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlParameters = parametersUtils.parseObjectToXML(jsonWithHeader);
     expect(xmlParameters).to.be.an('string');
   });
 
-  it('should get an emtpy string when object is empty', function() {
+  it('should get an emtpy string when object is empty', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlParameters = parametersUtils.parseObjectToXML({});
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters).to.equal('');
   });
 
-  it('should throw an error when object is null', function() {
+  it('should throw an error when object is null', function () {
     try {
       const parametersUtils = new SOAPMessageHelper();
       parametersUtils.parseObjectToXML(null);
@@ -80,7 +80,7 @@ describe('SOAPMessageHelper parseObjectToXML', function() {
     }
   });
 
-  it('should throw an error when object is undefined', function() {
+  it('should throw an error when object is undefined', function () {
     try {
       const parametersUtils = new SOAPMessageHelper();
       parametersUtils.parseObjectToXML(undefined);
@@ -91,32 +91,32 @@ describe('SOAPMessageHelper parseObjectToXML', function() {
     }
   });
 
-  it('should get an string representing the xml with error', function() {
+  it('should get an string representing the xml with error', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlParameters = parametersUtils.parseObjectToXML(jsonError);
     expect(xmlParameters).to.be.an('string');
   });
 });
 
-describe('SOAPMessageHelper convertInputToMessage ', function() {
+describe('SOAPMessageHelper convertInputToMessage ', function () {
 
-  it('should get an string representing the xml of the corresponding nodes ex1', function() {
+  it('should get an string representing the xml of the corresponding nodes ex1', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
-      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
-      '<soap:Body>' +
-      '<NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">' +
-      '<ubiNum>18446744073709</ubiNum>' +
-      '</NumberToWords>' +
-      '</soap:Body>' +
-      '</soap:Envelope>',
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+        '<soap:Body>' +
+        '<NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">' +
+        '<ubiNum>10</ubiNum>' +
+        '</NumberToWords>' +
+        '</soap:Body>' +
+        '</soap:Envelope>',
       child = {
         children: [],
         name: 'ubiNum',
         isComplex: false,
         type: 'integer',
-        maximum: 18446744073709,
-        minimum: 0
+        maximum: 10,
+        minimum: 10
       },
       node = {
         children: [child],
@@ -131,28 +131,28 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
 
   });
 
-  it('should get an string representing the xml of the corresponding nodes ex2', function() {
+  it('should get an string representing the xml of the corresponding nodes ex2', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
-      '<soap:Envelope' +
-      'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
-      '<soap:Body>' +
-      '<TestCustomModel xmlns="http://tempuri.org/">' +
-      '<inputModel>' +
-      '<Id>-2147483648</Id>' +
-      '<Name>place your string value here</Name>' +
-      '<Email>place your string value here</Email>' +
-      '</inputModel>' +
-      '</TestCustomModel>' +
-      '</soap:Body>' +
-      '</soap:Envelope>',
+        '<soap:Envelope' +
+        'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+        '<soap:Body>' +
+        '<TestCustomModel xmlns="http://tempuri.org/">' +
+        '<inputModel>' +
+        '<Id>200</Id>' +
+        '<Name>place your string value here</Name>' +
+        '<Email>place your string value here</Email>' +
+        '</inputModel>' +
+        '</TestCustomModel>' +
+        '</soap:Body>' +
+        '</soap:Envelope>',
       grandChild1 = {
         children: [],
         name: 'Id',
         isComplex: false,
         type: 'integer',
-        maximum: 2147483647,
-        minimum: -2147483648
+        maximum: 200,
+        minimum: 200
       },
       grandChild2 = {
         children: [],
@@ -185,17 +185,17 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
 
   });
 
-  it('should get an string representing the xml of the corresponding nodes using enum', function() {
+  it('should get an string representing the xml of the corresponding nodes using enum', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
-      '<soap:Envelope' +
-      'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
-      '<soap:Body>' +
-      '<GeocodeAddressParsed xmlns="https://geoservices.tamu.edu/">' +
-      '<censusYear>Unknown</censusYear>' +
-      '</GeocodeAddressParsed>' +
-      '</soap:Body>' +
-      '</soap:Envelope>',
+        '<soap:Envelope' +
+        'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+        '<soap:Body>' +
+        '<GeocodeAddressParsed xmlns="https://geoservices.tamu.edu/">' +
+        '<censusYear>Unknown</censusYear>' +
+        '</GeocodeAddressParsed>' +
+        '</soap:Body>' +
+        '</soap:Envelope>',
       child = {
         children: [],
         name: 'censusYear',
@@ -221,17 +221,17 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
 
   });
 
-  it('should get an string representing the xml of the corresponding nodes using enum integer', function() {
+  it('should get an string representing the xml of the corresponding nodes using enum integer', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
-      '<soap:Envelope' +
-      'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
-      '<soap:Body>' +
-      '<foobar>' +
-      '1' +
-      '</foobar>' +
-      '</soap:Body>' +
-      '</soap:Envelope>',
+        '<soap:Envelope' +
+        'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+        '<soap:Body>' +
+        '<foobar>' +
+        '1' +
+        '</foobar>' +
+        '</soap:Body>' +
+        '</soap:Envelope>',
       node = {
         children: [],
         name: 'foobar',
@@ -249,7 +249,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function() {
 
   });
 
-  it('should get an string representing the security element for simple username password', function() {
+  it('should get an string representing the security element for simple username password', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
           <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -277,7 +277,7 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
 
   });
 
-  it('should get an string representing the security element for username password NoPassword', function() {
+  it('should get an string representing the security element for username password NoPassword', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
           <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -301,7 +301,7 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
 
   });
 
-  it('should get an string representing the security element for simple hash password', function() {
+  it('should get an string representing the security element for simple hash password', function () {
     const parametersUtils = new SOAPMessageHelper(),
       xmlOutput = `<?xml version="1.0" encoding="utf-8" ?> 
           <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
