@@ -64,25 +64,24 @@ describe('Tools from messageWithSchemaValidation', function () {
 
   describe('Test getBodyMessage function', function () {
     const nodeElementMock = {
-      children: [{
-        children: [],
+        children: [{
+          children: [],
+          minOccurs: '1',
+          maxOccurs: '1',
+          name: 'ubiNum',
+          type: 'integer',
+          isComplex: false,
+          namespace: undefined
+        }],
         minOccurs: '1',
         maxOccurs: '1',
-        name: 'ubiNum',
-        type: 'integer',
-        isComplex: false,
-        namespace: undefined
-      }],
-      minOccurs: '1',
-      maxOccurs: '1',
-      name: 'NumberToWords',
-      type: 'complex',
-      isComplex: true,
-      namespace: 'http://www.dataaccess.com/webservicesserver/'
-    },
-      cleanBodyMessage = `<NumberToWords><ubiNum>`,
-      cleanBodyMessage2 = `</ubiNum></NumberToWords>
-    `;
+        name: 'NumberToWords',
+        type: 'complex',
+        isComplex: true,
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      cleanBodyMessage = '<NumberToWords><ubiNum>',
+      cleanBodyMessage2 = '</ubiNum></NumberToWords>';
 
     it('Should return the clean body message from a provided nodeElement', function () {
       const generatedBodyMessage = getBodyMessage(nodeElementMock, 'soap'),
@@ -119,67 +118,67 @@ describe('Tools from messageWithSchemaValidation', function () {
 
   describe('Test getCleanSchema function', function () {
     const xmlParsedMock = {
-      definitions: {
-        '@_xmlns': 'http://schemas.xmlsoap.org/wsdl/',
-        '@_xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
-        '@_xmlns:soap': 'http://schemas.xmlsoap.org/wsdl/soap/',
-        '@_xmlns:soap12': 'http://schemas.xmlsoap.org/wsdl/soap12/',
-        '@_xmlns:tns': 'http://www.dataaccess.com/webservicesserver/',
-        '@_name': 'NumberConversion',
-        '@_targetNamespace': 'http://www.dataaccess.com/webservicesserver/',
-        types: {
-          'xs:schema': {
-            '@_elementFormDefault': 'qualified',
-            '@_targetNamespace': 'http://www.dataaccess.com/webservicesserver/',
-            'xs:element': [{
-              '@_name': 'NumberToWords',
-              'xs:complexType': {
-                'xs:sequence': {
-                  'xs:element': {
-                    '@_name': 'ubiNum',
-                    '@_type': 'xs:integer'
+        definitions: {
+          '@_xmlns': 'http://schemas.xmlsoap.org/wsdl/',
+          '@_xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
+          '@_xmlns:soap': 'http://schemas.xmlsoap.org/wsdl/soap/',
+          '@_xmlns:soap12': 'http://schemas.xmlsoap.org/wsdl/soap12/',
+          '@_xmlns:tns': 'http://www.dataaccess.com/webservicesserver/',
+          '@_name': 'NumberConversion',
+          '@_targetNamespace': 'http://www.dataaccess.com/webservicesserver/',
+          types: {
+            'xs:schema': {
+              '@_elementFormDefault': 'qualified',
+              '@_targetNamespace': 'http://www.dataaccess.com/webservicesserver/',
+              'xs:element': [{
+                '@_name': 'NumberToWords',
+                'xs:complexType': {
+                  'xs:sequence': {
+                    'xs:element': {
+                      '@_name': 'ubiNum',
+                      '@_type': 'xs:integer'
+                    }
+                  }
+                }
+              },
+              {
+                '@_name': 'NumberToWordsResponse',
+                'xs:complexType': {
+                  'xs:sequence': {
+                    'xs:element': {
+                      '@_name': 'NumberToWordsResult',
+                      '@_type': 'xs:string'
+                    }
+                  }
+                }
+              },
+              {
+                '@_name': 'NumberToDollars',
+                'xs:complexType': {
+                  'xs:sequence': {
+                    'xs:element': {
+                      '@_name': 'dNum',
+                      '@_type': 'xs:number'
+                    }
+                  }
+                }
+              },
+              {
+                '@_name': 'NumberToDollarsResponse',
+                'xs:complexType': {
+                  'xs:sequence': {
+                    'xs:element': {
+                      '@_name': 'NumberToDollarsResult',
+                      '@_type': 'xs:string'
+                    }
                   }
                 }
               }
-            },
-            {
-              '@_name': 'NumberToWordsResponse',
-              'xs:complexType': {
-                'xs:sequence': {
-                  'xs:element': {
-                    '@_name': 'NumberToWordsResult',
-                    '@_type': 'xs:string'
-                  }
-                }
-              }
-            },
-            {
-              '@_name': 'NumberToDollars',
-              'xs:complexType': {
-                'xs:sequence': {
-                  'xs:element': {
-                    '@_name': 'dNum',
-                    '@_type': 'xs:number'
-                  }
-                }
-              }
-            },
-            {
-              '@_name': 'NumberToDollarsResponse',
-              'xs:complexType': {
-                'xs:sequence': {
-                  'xs:element': {
-                    '@_name': 'NumberToDollarsResult',
-                    '@_type': 'xs:string'
-                  }
-                }
-              }
+              ]
             }
-            ]
           }
         }
-      }
-    },
+      },
       schemaNamespaceMock = {
         key: 'xs',
         url: 'http://www.w3.org/2001/XMLSchema',
@@ -241,234 +240,234 @@ describe('Tools from messageWithSchemaValidation', function () {
 
   describe('Test validateOperationsMessagesWithSchema function', function () {
     const wsdlObjectMock = {
-      'operationsArray': [{
-        'name': 'NumberToWords',
-        'description': `Returns the word corresponding to the positive number passed as parameter. 
-            Limited to quadrillions.`,
-        'style': 'document',
-        'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-        'input': {
-          'children': [{
-            'children': [],
-            'minOccurs': '1',
-            'maxOccurs': '1',
-            'name': 'ubiNum',
-            'type': 'integer',
-            'isComplex': false
-          }],
-          'minOccurs': '1',
-          'maxOccurs': '1',
+        'operationsArray': [{
           'name': 'NumberToWords',
-          'type': 'complex',
-          'isComplex': true,
-          'namespace': 'http://www.dataaccess.com/webservicesserver/'
-        },
-        'output': {
-          'children': [{
-            'children': [],
+          'description': `Returns the word corresponding to the positive number passed as parameter. 
+              Limited to quadrillions.`,
+          'style': 'document',
+          'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+          'input': {
+            'children': [{
+              'children': [],
+              'minOccurs': '1',
+              'maxOccurs': '1',
+              'name': 'ubiNum',
+              'type': 'integer',
+              'isComplex': false
+            }],
             'minOccurs': '1',
             'maxOccurs': '1',
-            'name': 'NumberToWordsResult',
-            'type': 'string',
-            'isComplex': false
-          }],
-          'minOccurs': '1',
-          'maxOccurs': '1',
-          'name': 'NumberToWordsResponse',
-          'type': 'complex',
-          'isComplex': true,
-          'namespace': 'http://www.dataaccess.com/webservicesserver/'
-        },
-        'fault': null,
-        'portName': 'NumberConversionSoap',
-        'serviceName': 'NumberConversion',
-        'method': 'POST',
-        'protocol': 'soap'
-      }, {
-        'name': 'NumberToDollars',
-        'description': 'Returns the non-zero dollar amount of the passed number.',
-        'style': 'document',
-        'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-        'input': {
-          'children': [{
-            'children': [],
+            'name': 'NumberToWords',
+            'type': 'complex',
+            'isComplex': true,
+            'namespace': 'http://www.dataaccess.com/webservicesserver/'
+          },
+          'output': {
+            'children': [{
+              'children': [],
+              'minOccurs': '1',
+              'maxOccurs': '1',
+              'name': 'NumberToWordsResult',
+              'type': 'string',
+              'isComplex': false
+            }],
             'minOccurs': '1',
             'maxOccurs': '1',
-            'name': 'dNum',
-            'type': 'number',
-            'isComplex': false
-          }],
-          'minOccurs': '1',
-          'maxOccurs': '1',
+            'name': 'NumberToWordsResponse',
+            'type': 'complex',
+            'isComplex': true,
+            'namespace': 'http://www.dataaccess.com/webservicesserver/'
+          },
+          'fault': null,
+          'portName': 'NumberConversionSoap',
+          'serviceName': 'NumberConversion',
+          'method': 'POST',
+          'protocol': 'soap'
+        }, {
           'name': 'NumberToDollars',
-          'type': 'complex',
-          'isComplex': true,
-          'namespace': 'http://www.dataaccess.com/webservicesserver/'
-        },
-        'output': {
-          'children': [{
-            'children': [],
+          'description': 'Returns the non-zero dollar amount of the passed number.',
+          'style': 'document',
+          'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+          'input': {
+            'children': [{
+              'children': [],
+              'minOccurs': '1',
+              'maxOccurs': '1',
+              'name': 'dNum',
+              'type': 'number',
+              'isComplex': false
+            }],
             'minOccurs': '1',
             'maxOccurs': '1',
-            'name': 'NumberToDollarsResult',
-            'type': 'string',
-            'isComplex': false
-          }],
-          'minOccurs': '1',
-          'maxOccurs': '1',
-          'name': 'NumberToDollarsResponse',
-          'type': 'complex',
-          'isComplex': true,
-          'namespace': 'http://www.dataaccess.com/webservicesserver/'
-        },
-        'fault': null,
-        'portName': 'NumberConversionSoap',
-        'serviceName': 'NumberConversion',
-        'method': 'POST',
-        'protocol': 'soap'
-      }, {
-        'name': 'NumberToWords',
-        'description': `Returns the word corresponding to the positive number passed as parameter. 
-            Limited to quadrillions.`,
-        'style': 'document',
-        'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-        'input': {
-          'children': [{
-            'children': [],
+            'name': 'NumberToDollars',
+            'type': 'complex',
+            'isComplex': true,
+            'namespace': 'http://www.dataaccess.com/webservicesserver/'
+          },
+          'output': {
+            'children': [{
+              'children': [],
+              'minOccurs': '1',
+              'maxOccurs': '1',
+              'name': 'NumberToDollarsResult',
+              'type': 'string',
+              'isComplex': false
+            }],
             'minOccurs': '1',
             'maxOccurs': '1',
-            'name': 'ubiNum',
-            'type': 'integer',
-            'isComplex': false
-          }],
-          'minOccurs': '1',
-          'maxOccurs': '1',
+            'name': 'NumberToDollarsResponse',
+            'type': 'complex',
+            'isComplex': true,
+            'namespace': 'http://www.dataaccess.com/webservicesserver/'
+          },
+          'fault': null,
+          'portName': 'NumberConversionSoap',
+          'serviceName': 'NumberConversion',
+          'method': 'POST',
+          'protocol': 'soap'
+        }, {
           'name': 'NumberToWords',
-          'type': 'complex',
-          'isComplex': true,
-          'namespace': 'http://www.dataaccess.com/webservicesserver/'
-        },
-        'output': {
-          'children': [{
-            'children': [],
+          'description': `Returns the word corresponding to the positive number passed as parameter. 
+              Limited to quadrillions.`,
+          'style': 'document',
+          'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+          'input': {
+            'children': [{
+              'children': [],
+              'minOccurs': '1',
+              'maxOccurs': '1',
+              'name': 'ubiNum',
+              'type': 'integer',
+              'isComplex': false
+            }],
             'minOccurs': '1',
             'maxOccurs': '1',
-            'name': 'NumberToWordsResult',
-            'type': 'string',
-            'isComplex': false
-          }],
-          'minOccurs': '1',
-          'maxOccurs': '1',
-          'name': 'NumberToWordsResponse',
-          'type': 'complex',
-          'isComplex': true,
-          'namespace': 'http://www.dataaccess.com/webservicesserver/'
-        },
-        'fault': null,
-        'portName': 'NumberConversionSoap12',
-        'serviceName': 'NumberConversion',
-        'method': 'POST',
-        'protocol': 'soap12'
-      }, {
-        'name': 'NumberToDollars',
-        'description': 'Returns the non-zero dollar amount of the passed number.',
-        'style': 'document',
-        'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-        'input': {
-          'children': [{
-            'children': [],
+            'name': 'NumberToWords',
+            'type': 'complex',
+            'isComplex': true,
+            'namespace': 'http://www.dataaccess.com/webservicesserver/'
+          },
+          'output': {
+            'children': [{
+              'children': [],
+              'minOccurs': '1',
+              'maxOccurs': '1',
+              'name': 'NumberToWordsResult',
+              'type': 'string',
+              'isComplex': false
+            }],
             'minOccurs': '1',
             'maxOccurs': '1',
-            'name': 'dNum',
-            'type': 'number',
-            'isComplex': false
-          }],
-          'minOccurs': '1',
-          'maxOccurs': '1',
+            'name': 'NumberToWordsResponse',
+            'type': 'complex',
+            'isComplex': true,
+            'namespace': 'http://www.dataaccess.com/webservicesserver/'
+          },
+          'fault': null,
+          'portName': 'NumberConversionSoap12',
+          'serviceName': 'NumberConversion',
+          'method': 'POST',
+          'protocol': 'soap12'
+        }, {
           'name': 'NumberToDollars',
-          'type': 'complex',
-          'isComplex': true,
-          'namespace': 'http://www.dataaccess.com/webservicesserver/'
-        },
-        'output': {
-          'children': [{
-            'children': [],
+          'description': 'Returns the non-zero dollar amount of the passed number.',
+          'style': 'document',
+          'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+          'input': {
+            'children': [{
+              'children': [],
+              'minOccurs': '1',
+              'maxOccurs': '1',
+              'name': 'dNum',
+              'type': 'number',
+              'isComplex': false
+            }],
             'minOccurs': '1',
             'maxOccurs': '1',
-            'name': 'NumberToDollarsResult',
-            'type': 'string',
-            'isComplex': false
-          }],
-          'minOccurs': '1',
-          'maxOccurs': '1',
-          'name': 'NumberToDollarsResponse',
-          'type': 'complex',
-          'isComplex': true,
-          'namespace': 'http://www.dataaccess.com/webservicesserver/'
+            'name': 'NumberToDollars',
+            'type': 'complex',
+            'isComplex': true,
+            'namespace': 'http://www.dataaccess.com/webservicesserver/'
+          },
+          'output': {
+            'children': [{
+              'children': [],
+              'minOccurs': '1',
+              'maxOccurs': '1',
+              'name': 'NumberToDollarsResult',
+              'type': 'string',
+              'isComplex': false
+            }],
+            'minOccurs': '1',
+            'maxOccurs': '1',
+            'name': 'NumberToDollarsResponse',
+            'type': 'complex',
+            'isComplex': true,
+            'namespace': 'http://www.dataaccess.com/webservicesserver/'
+          },
+          'fault': null,
+          'portName': 'NumberConversionSoap12',
+          'serviceName': 'NumberConversion',
+          'method': 'POST',
+          'protocol': 'soap12'
+        }],
+        'targetNamespace': {
+          'key': 'targetNamespace',
+          'url': 'http://www.dataaccess.com/webservicesserver/',
+          'isDefault': false
         },
-        'fault': null,
-        'portName': 'NumberConversionSoap12',
-        'serviceName': 'NumberConversion',
-        'method': 'POST',
-        'protocol': 'soap12'
-      }],
-      'targetNamespace': {
-        'key': 'targetNamespace',
-        'url': 'http://www.dataaccess.com/webservicesserver/',
-        'isDefault': false
+        'wsdlNamespace': {
+          'key': 'xmlns',
+          'url': 'http://schemas.xmlsoap.org/wsdl/',
+          'isDefault': true
+        },
+        'SOAPNamespace': {
+          'key': 'soap',
+          'url': 'http://schemas.xmlsoap.org/wsdl/soap/',
+          'isDefault': false
+        },
+        'SOAP12Namespace': {
+          'key': 'soap12',
+          'url': 'http://schemas.xmlsoap.org/wsdl/soap12/',
+          'isDefault': false
+        },
+        'HTTPNamespace': null,
+        'schemaNamespace': {
+          'key': 'xs',
+          'url': 'http://www.w3.org/2001/XMLSchema',
+          'isDefault': false
+        },
+        'tnsNamespace': {
+          'key': 'xmlns:tns',
+          'url': 'http://www.dataaccess.com/webservicesserver/',
+          'isDefault': false
+        },
+        'allNameSpaces': [{
+          'key': 'xmlns',
+          'url': 'http://schemas.xmlsoap.org/wsdl/',
+          'isDefault': true
+        }, {
+          'key': 'xmlns:xs',
+          'url': 'http://www.w3.org/2001/XMLSchema',
+          'isDefault': false
+        }, {
+          'key': 'xmlns:soap',
+          'url': 'http://schemas.xmlsoap.org/wsdl/soap/',
+          'isDefault': false
+        }, {
+          'key': 'xmlns:soap12',
+          'url': 'http://schemas.xmlsoap.org/wsdl/soap12/',
+          'isDefault': false
+        }, {
+          'key': 'xmlns:tns',
+          'url': 'http://www.dataaccess.com/webservicesserver/',
+          'isDefault': false
+        }, {
+          'key': 'targetNamespace',
+          'url': 'http://www.dataaccess.com/webservicesserver/',
+          'isDefault': false
+        }]
       },
-      'wsdlNamespace': {
-        'key': 'xmlns',
-        'url': 'http://schemas.xmlsoap.org/wsdl/',
-        'isDefault': true
-      },
-      'SOAPNamespace': {
-        'key': 'soap',
-        'url': 'http://schemas.xmlsoap.org/wsdl/soap/',
-        'isDefault': false
-      },
-      'SOAP12Namespace': {
-        'key': 'soap12',
-        'url': 'http://schemas.xmlsoap.org/wsdl/soap12/',
-        'isDefault': false
-      },
-      'HTTPNamespace': null,
-      'schemaNamespace': {
-        'key': 'xs',
-        'url': 'http://www.w3.org/2001/XMLSchema',
-        'isDefault': false
-      },
-      'tnsNamespace': {
-        'key': 'xmlns:tns',
-        'url': 'http://www.dataaccess.com/webservicesserver/',
-        'isDefault': false
-      },
-      'allNameSpaces': [{
-        'key': 'xmlns',
-        'url': 'http://schemas.xmlsoap.org/wsdl/',
-        'isDefault': true
-      }, {
-        'key': 'xmlns:xs',
-        'url': 'http://www.w3.org/2001/XMLSchema',
-        'isDefault': false
-      }, {
-        'key': 'xmlns:soap',
-        'url': 'http://schemas.xmlsoap.org/wsdl/soap/',
-        'isDefault': false
-      }, {
-        'key': 'xmlns:soap12',
-        'url': 'http://schemas.xmlsoap.org/wsdl/soap12/',
-        'isDefault': false
-      }, {
-        'key': 'xmlns:tns',
-        'url': 'http://www.dataaccess.com/webservicesserver/',
-        'isDefault': false
-      }, {
-        'key': 'targetNamespace',
-        'url': 'http://www.dataaccess.com/webservicesserver/',
-        'isDefault': false
-      }]
-    },
       schemaBaseMock = `<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="NumberToWords">
         <xs:complexType>
