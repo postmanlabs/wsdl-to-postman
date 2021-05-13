@@ -72,8 +72,8 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       }, {});
 
     schemaPack.convert((error, result) => {
-      expect(error.message).to.equal('Cannot convert undefined or null to object');
-      expect(result).to.equal(undefined);
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
     });
   });
 });
