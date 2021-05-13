@@ -90,9 +90,9 @@ describe('SOAPBody create', function () {
     assert.isAtLeast(jsonObjectMessage.TestCustomModel.inputModel.id, -2147483648);
     assert.isAtMost(jsonObjectMessage.TestCustomModel.inputModel.id, 2147483647);
     expect(jsonObjectMessage.TestCustomModel.inputModel.name)
-      .to.equal('place your string value here');
+      .to.equal('string');
     expect(jsonObjectMessage.TestCustomModel.inputModel.email)
-      .to.equal('place your string value here');
+      .to.equal('string');
   });
 
   it('Should get an empty json object when null is sent', function () {
