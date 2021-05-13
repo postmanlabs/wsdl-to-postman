@@ -4,8 +4,7 @@ const
     assert
   } = require('chai'),
   {
-    WsdlInformationService20,
-    WSDL_ROOT
+    WsdlInformationService20
   } = require('../../lib/WsdlInformationService20'),
   {
     WsdlObject
@@ -178,13 +177,13 @@ describe('WSDL 2.0 getElementFromInterfaceOperationInOut', function () {
   });
 });
 
-describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName', function () {
+describe('WSDL 2.0 parser getAbstractOperationByName', function () {
   it('should get interface operation by name', function () {
     const informationService = new WsdlInformationService20(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(WSDL_SAMPLE);
-    services = getServices(parsed, WSDL_ROOT);
-    operation = informationService.getInterfaceOperationByInterfaceNameAndOperationName('reservationInterface',
+    services = getServices(parsed, informationService.getRootTagName());
+    operation = informationService.getAbstractOperationByName('reservationInterface',
       'opCheckAvailability', parsed, '');
     expect(operation).to.be.an('object');
     expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('opCheckAvailability');
@@ -194,8 +193,8 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     const informationService = new WsdlInformationService20(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(WSDL_SAMPLE_AXIS);
-    services = getServices(parsed, WSDL_ROOT);
-    operation = informationService.getInterfaceOperationByInterfaceNameAndOperationName('ServiceInterface',
+    services = getServices(parsed, informationService.getRootTagName());
+    operation = informationService.getAbstractOperationByName('ServiceInterface',
       'hi', parsed, 'wsdl2:');
     expect(operation).to.be.an('object');
     expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('hi');
@@ -204,7 +203,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   it('should throw an error when parsedxml is null', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
+      informationService.getAbstractOperationByName('NumberConversionSoapType',
         'NumberToWords', null, '');
       assert.fail('we expected an error');
     }
@@ -216,7 +215,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   it('should throw an error when parsedxml is undefined', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
+      informationService.getAbstractOperationByName('NumberConversionSoapType',
         'NumberToWords', undefined, '');
       assert.fail('we expected an error');
     }
@@ -228,7 +227,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   it('should throw an error when parsedxml is an empty object', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName('NumberConversionSoapType',
+      informationService.getAbstractOperationByName('NumberConversionSoapType',
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
     }
@@ -242,7 +241,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
     try {
       const informationService = new WsdlInformationService20();
 
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName(null,
+      informationService.getAbstractOperationByName(null,
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
     }
@@ -254,7 +253,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   it('should throw an error when portTypeName is undefined', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName(undefined,
+      informationService.getAbstractOperationByName(undefined,
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
     }
@@ -266,7 +265,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   it('should throw an error when portTypeName is an empty string', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName('',
+      informationService.getAbstractOperationByName('',
         'NumberToWords', {}, '');
       assert.fail('we expected an error');
     }
@@ -278,7 +277,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   it('should throw an error when operationName is null', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName('some string',
+      informationService.getAbstractOperationByName('some string',
         null, {}, '');
       assert.fail('we expected an error');
     }
@@ -290,7 +289,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   it('should throw an error when operationName is undefined', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName('some string',
+      informationService.getAbstractOperationByName('some string',
         undefined, {}, '');
       assert.fail('we expected an error');
     }
@@ -302,7 +301,7 @@ describe('WSDL 2.0 parser getInterfaceOperationByInterfaceNameAndOperationName',
   it('should throw an error when operationName is an empty string', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getInterfaceOperationByInterfaceNameAndOperationName('ddd',
+      informationService.getAbstractOperationByName('ddd',
         '', {}, '');
       assert.fail('we expected an error');
     }
@@ -353,7 +352,7 @@ describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
       let parsed = xmlParser.parseToObject(WSDL_SAMPLE),
         binding = getBindings(
           parsed,
-          WSDL_ROOT
+          informationService.getRootTagName()
         )[0];
       informationService.getBindingInfoFromBindingTag(binding, undefined, undefined);
       assert.fail('we expected an error');
@@ -364,20 +363,20 @@ describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
   });
 });
 
-describe('WSDL 2.0 getServiceAndServiceEndpointByBindingName', function () {
+describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
   it('should get the service endpoint when exists', function () {
     const informationService = new WsdlInformationService20(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(WSDL_SAMPLE),
       services = getServices(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       ),
-      serviceEndpoint = informationService.getServiceAndServiceEndpointByBindingName(
+      serviceEndpoint = informationService.getServiceAndExpossedInfoByBindingName(
         'reservationSOAPBinding',
         services,
         ''
-      ).endpoint;
+      ).port;
     expect(serviceEndpoint).to.be.an('object');
     expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('reservationEndpoint');
   });
@@ -388,13 +387,13 @@ describe('WSDL 2.0 getServiceAndServiceEndpointByBindingName', function () {
     let parsed = xmlParser.parseToObject(WSDL_SAMPLE_AXIS),
       services = getServices(
         parsed,
-        WSDL_ROOT
+        informationService.getRootTagName()
       ),
-      serviceEndpoint = informationService.getServiceAndServiceEndpointByBindingName(
+      serviceEndpoint = informationService.getServiceAndExpossedInfoByBindingName(
         'SayHelloSoap11Binding',
         services,
         'wsdl2:'
-      ).endpoint;
+      ).port;
     expect(serviceEndpoint).to.be.an('object');
     expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('SayHelloHttpSoap11Endpoint');
   });
@@ -402,7 +401,7 @@ describe('WSDL 2.0 getServiceAndServiceEndpointByBindingName', function () {
   it('should throw an error when binding name is null', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getServiceAndServiceEndpointByBindingName(null, {}, '');
+      informationService.getServiceAndExpossedInfoByBindingName(null, {}, '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -413,7 +412,7 @@ describe('WSDL 2.0 getServiceAndServiceEndpointByBindingName', function () {
   it('should throw an error when principal prefix is null', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getServiceAndServiceEndpointByBindingName('bindingName', {}, null);
+      informationService.getServiceAndExpossedInfoByBindingName('bindingName', {}, null);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -425,7 +424,7 @@ describe('WSDL 2.0 getServiceAndServiceEndpointByBindingName', function () {
 
     const informationService = new WsdlInformationService20();
     let wsdlObject = new WsdlObject(),
-      serviceEndpoint = informationService.getServiceAndServiceEndpointByBindingName('bindingName', null,
+      serviceEndpoint = informationService.getServiceAndExpossedInfoByBindingName('bindingName', null,
         'principal prefix', wsdlObject);
     expect(serviceEndpoint).to.equal(undefined);
   });
@@ -433,7 +432,7 @@ describe('WSDL 2.0 getServiceAndServiceEndpointByBindingName', function () {
   it('should throw an error when service enpdoint is not found', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getServiceAndServiceEndpointByBindingName('bindingName', [], 'principal prefix');
+      informationService.getServiceAndExpossedInfoByBindingName('bindingName', [], 'principal prefix');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -443,7 +442,7 @@ describe('WSDL 2.0 getServiceAndServiceEndpointByBindingName', function () {
   it('should throw an error when service enpdoint is array of null not found', function () {
     try {
       const informationService = new WsdlInformationService20();
-      informationService.getServiceAndServiceEndpointByBindingName('bindingName', [null], 'principal prefix');
+      informationService.getServiceAndExpossedInfoByBindingName('bindingName', [null], 'principal prefix');
       assert.fail('we expected an error');
     }
     catch (error) {
