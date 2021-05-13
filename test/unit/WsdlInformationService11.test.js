@@ -10,7 +10,7 @@ const { POST_METHOD } = require('../../lib/utils/httpUtils'),
   } = require('../../lib/WSDLObject'),
   {
     getServices,
-    PARSER_ATRIBUTE_NAME_PLACE_HOLDER,
+    PARSER_ATTRIBUTE_NAME_PLACE_HOLDER,
     getBindings
   } = require('../../lib/WsdlParserCommon'),
   {
@@ -310,7 +310,7 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get portypes from undefined or null object');
+      expect(error.message).to.equal('Cannot get portypes from undefined or null object');
     }
   });
 
@@ -323,7 +323,7 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get portypes from undefined or null object');
+      expect(error.message).to.equal('Cannot get portypes from undefined or null object');
     }
   });
 
@@ -334,7 +334,7 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get portypes from object');
+      expect(error.message).to.equal('Cannot get portypes from object');
     }
   });
 });
@@ -607,7 +607,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       );
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get binding info from undefined or null object');
+      expect(error.message).to.equal('Cannot get binding info from undefined or null object');
     }
   });
 
@@ -630,7 +630,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       );
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get binding info from undefined or null object');
+      expect(error.message).to.equal('Cannot get binding info from undefined or null object');
     }
   });
 
@@ -653,11 +653,11 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get binding from object');
+      expect(error.message).to.equal('Cannot get binding from object');
     }
   });
 
-  it('should throw an error when can not get protocol', function () {
+  it('should throw an error when Cannot get protocol', function () {
     const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
     xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
     xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
@@ -729,7 +729,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not find protocol in those namespaces');
+      expect(error.message).to.equal('Cannot find protocol in those namespaces');
     }
   });
 
@@ -1194,7 +1194,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from binding operation undefined or null object');
+      expect(error.message).to.equal('Cannot get style info from binding operation undefined or null object');
     }
   });
 
@@ -1302,7 +1302,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from binding operation undefined or null object');
+      expect(error.message).to.equal('Cannot get style info from binding operation undefined or null object');
     }
   });
 
@@ -1400,7 +1400,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from binding operation');
+      expect(error.message).to.equal('Cannot get style info from binding operation');
     }
   });
 });
@@ -1490,7 +1490,7 @@ describe('WSDL 1.1 parser getServiceAndServicePortByBindingName', function () {
       services,
       '').service;
     expect(service).to.be.an('object');
-    expect(service[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberConversion');
+    expect(service[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberConversion');
   });
 
 
@@ -1668,7 +1668,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
     service = informationService.getPortTypeOperationByPortTypeNameAndOperationName('NumberConversionSoapType',
       'NumberToWords', parsed, '');
     expect(service).to.be.an('object');
-    expect(service[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberToWords');
+    expect(service[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberToWords');
   });
 
   it('should throw an error when parsedxml is null', function () {
@@ -1679,7 +1679,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get porttype from undefined or null object');
+      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
     }
   });
 
@@ -1691,7 +1691,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get porttype from undefined or null object');
+      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
     }
   });
 
@@ -1703,7 +1703,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type from object');
+      expect(error.message).to.equal('Cannot get port type from object');
     }
   });
 
@@ -1716,7 +1716,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter name');
+      expect(error.message).to.equal('Cannot get port type with no filter name');
     }
   });
 
@@ -1728,7 +1728,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter name');
+      expect(error.message).to.equal('Cannot get port type with no filter name');
     }
   });
 
@@ -1740,7 +1740,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter name');
+      expect(error.message).to.equal('Cannot get port type with no filter name');
     }
   });
 
@@ -1752,7 +1752,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get port type with no filter operationName');
     }
   });
 
@@ -1764,7 +1764,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get port type with no filter operationName');
     }
   });
 
@@ -1776,7 +1776,7 @@ describe('WSDL 1.1 parser getPortTypeOperationByPortTypeNameAndOperationName', f
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get port type with no filter operationName');
     }
   });
 

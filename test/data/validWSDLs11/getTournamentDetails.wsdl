@@ -106,7 +106,7 @@
                     <xsd:element name="tournament_registration_end_date" type="xsd:string" nillable="true"/>
                     <xsd:element name="tournament_overnight_registration_end_date" type="xsd:string" nillable="true"/>
                     <xsd:element name="tournament_player_registration_end_date" type="xsd:string" nillable="true"/>
-                    <xsd:element name="street_adress" type="xsd:string" nillable="true"/>
+                    <xsd:element name="street_address" type="xsd:string" nillable="true"/>
                     <xsd:element name="postal_code" type="xsd:string" nillable="true"/>
                     <xsd:element name="postal_town" type="xsd:string" nillable="true"/>
                     <xsd:element name="country_code" type="xsd:string" nillable="true"/>

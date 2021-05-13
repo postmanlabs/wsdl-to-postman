@@ -151,7 +151,7 @@ describe('SecurityAssertionsHelper getSecurityAssertions', function () {
 
   });
 
-  it('should get an object indicating suporting saml token', function () {
+  it('should get an object indicating support to saml token', function () {
     const securityAssertionsHelper = new SecurityAssertionsHelper(),
       parsedXml = new XMLParser().parseToObject(SAML_TOKEN_SUPPORTING);
     securityAssertions = securityAssertionsHelper.getSecurityAssertions([parsedXml], securityNamespace);

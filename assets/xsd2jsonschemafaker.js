@@ -7000,7 +7000,7 @@ function isIP(str) {
     }
 
     for (var i = 0; i < blocks.length; ++i) {
-      // test for a :: which can not be at the string start/end
+      // test for a :: which cannot be at the string start/end
       // since those cases have been handled above
       if (blocks[i] === '' && i > 0 && i < blocks.length - 1) {
         if (foundOmissionBlock) {
@@ -9883,7 +9883,7 @@ function importNode(doc,node,deep){
 	//cannot be imported.
 	//case ENTITY_NODE:
 	//case NOTATION_NODE：
-	//can not hit in level3
+	//cannot hit in level3
 	//default:throw e;
 	}
 	if(!node2){
@@ -10685,7 +10685,7 @@ function appendElement(el,domBuilder,currentNSMap){
 			prefix = null
 			nsPrefix = qName === 'xmlns' && ''
 		}
-		//can not set prefix,because prefix !== ''
+		//cannot set prefix,because prefix !== ''
 		a.localName = localName ;
 		//prefix == null for no ns prefix attribute 
 		if(nsPrefix !== false){//hack!!
@@ -18113,7 +18113,7 @@ class JsonSchemaFile extends PropertyDefinable {
 				this.targetNamespace = options.targetNamespace;
 				const filePath = path.parse(options.baseFilename);
 				const baseFilename = filePath.name;
-				// If available set the namespaceMode.  This is used when creating $ref values to suport subschemas.
+				// If available set the namespaceMode.  This is used when creating $ref values to support subschemas.
 				if (options.namespaceMode !== undefined) {
 					this.namespaceMode = options.namespaceMode;
 				}
@@ -19530,7 +19530,7 @@ module.exports = {
 	 */
 	NULL: 'null',
 	/**
-	 * Indicates a JSON Schema object type.
+	 * Indicates a JSON Scheman object type.
 	 */
 	OBJECT: 'object',
 	/**

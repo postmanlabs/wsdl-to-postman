@@ -413,7 +413,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefined or null object');
+      expect(error.message).to.equal('Cannot get namespace from undefined or null object');
     }
   });
 
@@ -426,7 +426,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from object');
+      expect(error.message).to.equal('Cannot get namespace from object');
     }
   });
 
@@ -690,7 +690,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get services from undefined or null object');
+      expect(error.message).to.equal('Cannot get services from undefined or null object');
     }
   });
 
@@ -702,7 +702,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get services from undefined or null object');
+      expect(error.message).to.equal('Cannot get services from undefined or null object');
     }
   });
 
@@ -712,7 +712,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get services from object');
+      expect(error.message).to.equal('Cannot get services from object');
     }
   });
   it('should get an array object representing services using default namespace WSDL 2.0', function () {
@@ -746,7 +746,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get services from undefined or null object');
+      expect(error.message).to.equal('Cannot get services from undefined or null object');
     }
   });
 
@@ -759,7 +759,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get services from undefined or null object');
+      expect(error.message).to.equal('Cannot get services from undefined or null object');
     }
   });
 });
@@ -912,7 +912,7 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get bindings from undefined or null object');
+      expect(error.message).to.equal('Cannot get bindings from undefined or null object');
     }
   });
 
@@ -924,7 +924,7 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get bindings from undefined or null object');
+      expect(error.message).to.equal('Cannot get bindings from undefined or null object');
     }
   });
 
@@ -934,7 +934,7 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get bindings from object');
+      expect(error.message).to.equal('Cannot get bindings from object');
     }
   });
 
@@ -969,7 +969,7 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get bindings from undefined or null object');
+      expect(error.message).to.equal('Cannot get bindings from undefined or null object');
     }
   });
 
@@ -979,7 +979,7 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get bindings from object');
+      expect(error.message).to.equal('Cannot get bindings from object');
     }
   });
 });
@@ -1317,7 +1317,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefined or null object');
+      expect(error.message).to.equal('Cannot get namespace from undefined or null object');
     }
   });
 
@@ -1331,7 +1331,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefined or null object');
+      expect(error.message).to.equal('Cannot get namespace from undefined or null object');
     }
   });
 
@@ -1345,7 +1345,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from undefined or null object');
+      expect(error.message).to.equal('Cannot get namespace from undefined or null object');
     }
   });
 
@@ -1358,7 +1358,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespace from object');
+      expect(error.message).to.equal('Cannot get namespace from object');
     }
   });
 
@@ -1482,7 +1482,7 @@ describe('WSDL parser common getAllNamespaces', function () {
       });
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
+      expect(error.message).to.equal('Cannot get namespaces from undefined or null object');
     }
   });
 
@@ -1499,7 +1499,7 @@ describe('WSDL parser common getAllNamespaces', function () {
       });
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespaces from undefined or null object');
+      expect(error.message).to.equal('Cannot get namespaces from undefined or null object');
     }
   });
 
@@ -1513,7 +1513,7 @@ describe('WSDL parser common getAllNamespaces', function () {
       });
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get namespaces from object');
+      expect(error.message).to.equal('Cannot get namespaces from object');
     }
   });
 
@@ -1617,7 +1617,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get prefix from undefined or null object');
+      expect(error.message).to.equal('Cannot get prefix from undefined or null object');
     }
   });
 
@@ -1631,7 +1631,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
 
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get prefix from undefined or null object');
+      expect(error.message).to.equal('Cannot get prefix from undefined or null object');
     }
   });
 
@@ -1641,7 +1641,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get prefix from object');
+      expect(error.message).to.equal('Cannot get prefix from object');
     }
   });
 
@@ -1692,7 +1692,7 @@ describe('WSDL parser common getBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get operations from undefined or null object');
+      expect(error.message).to.equal('Cannot get operations from undefined or null object');
     }
   });
 
@@ -1702,7 +1702,7 @@ describe('WSDL parser common getBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get binding operations from object');
+      expect(error.message).to.equal('Cannot get binding operations from object');
     }
   });
 });
@@ -1805,7 +1805,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get documentation from undefined or null object');
+      expect(error.message).to.equal('Cannot get documentation from undefined or null object');
     }
   });
 
@@ -1817,7 +1817,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get documentation from undefined or null object');
+      expect(error.message).to.equal('Cannot get documentation from undefined or null object');
     }
   });
 
@@ -1827,7 +1827,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get documentation from object');
+      expect(error.message).to.equal('Cannot get documentation from object');
     }
   });
 });
