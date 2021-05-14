@@ -1,6 +1,6 @@
 <definitions name="EndorsementSearch" targetNamespace="http://namespaces.snowboard-info.com"
-    xmlns:es="http://www.snowboard-info.com/EndorsementSearch.wsdl"
-    xmlns:esxsd="http://schemas.snowboard-info.com/EndorsementSearch.xsd"
+    xmlns:es="http://url/EndorsementSearch.wsdl"
+    xmlns:esxsd="http://sschemaurl/EndorsementSearch.xsd"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns="http://schemas.xmlsoap.org/wsdl/">
     <!-- omitted types section with content model schema info -->
@@ -20,22 +20,22 @@
     <binding name="EndorsementSearchSoapBinding" type="es:GetEndorsingBoarderPortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="GetEndorsingBoarder">
-            <soap:operation soapAction="http://www.snowboard-info.com/EndorsementSearch"/>
+            <soap:operation soapAction="http://url/EndorsementSearch"/>
             <input>
-                <soap:body use="literal" namespace="http://schemas.snowboard-info.com/EndorsementSearch.xsd"/>
+                <soap:body use="literal" namespace="http://sschemaurl/EndorsementSearch.xsd"/>
             </input>
             <output>
-                <soap:body use="literal" namespace="http://schemas.snowboard-info.com/EndorsementSearch.xsd"/>
+                <soap:body use="literal" namespace="http://sschemaurl/EndorsementSearch.xsd"/>
             </output>
             <fault>
-                <soap:body use="literal" namespace="http://schemas.snowboard-info.com/EndorsementSearch.xsd"/>
+                <soap:body use="literal" namespace="http://sschemaurl/EndorsementSearch.xsd"/>
             </fault>
         </operation>
     </binding>
     <service name="EndorsementSearchService">
         <documentation>snowboarding-info.com Endorsement Service</documentation>
         <port name="GetEndorsingBoarderPort" binding="es:EndorsementSearchSoapBinding">
-            <soap:address location="http://www.snowboard-info.com/EndorsementSearch"/>
+            <soap:address location="http://url/EndorsementSearch"/>
         </port>
     </service>
 </definitions>
