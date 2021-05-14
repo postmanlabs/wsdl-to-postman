@@ -3,7 +3,7 @@ const expect = require('chai').expect,
     XMLParser
   } = require('../../lib/XMLParser'),
   {
-    PARSER_ATRIBUTE_NAME_PLACE_HOLDER
+    PARSER_ATTRIBUTE_NAME_PLACE_HOLDER
   } = require('../../lib/WsdlParserCommon');
 
 describe('XMLparser parseToObject', function () {
@@ -20,7 +20,7 @@ describe('XMLparser parseToObject', function () {
     expect(parsed).to.be.an('object');
     expect(parsed).to.have.own.property('user');
     expect(parsed.user).to.have.own.property('name');
-    expect(parsed.user[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'is']).to.equal('great');
+    expect(parsed.user[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'is']).to.equal('great');
 
   });
 
