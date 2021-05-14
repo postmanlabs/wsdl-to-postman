@@ -310,7 +310,7 @@ describe('WsdlToPostmanCollectionMapper getUrlDataFromOperations', function () {
     let urlsData = mapper.getUrlDataFromOperations(wsdlMockObject.operationsArray);
     expect(urlsData).to.be.an('array');
     urlsData.forEach((urlData) => {
-      expect(urlData).to.be.an('object').to.include.all.keys('name', 'protocol', 'url');
+      expect(urlData).to.be.an('object').to.include.all.keys('portName', 'url');
     });
   });
 });
@@ -321,13 +321,11 @@ describe('WsdlToPostmanCollectionMapper getVariablesFromUrlDataList', function (
       urlsData = [
         {
           url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          protocol: 'Soap',
-          name: 'NumberToDollars'
+          portName: 'NumberConversionSoap'
         },
         {
           url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          protocol: 'Soap12',
-          name: 'NumberToDollars'
+          portName: 'NumberConversionSoap12'
         }
       ];
     let variables = mapper.getVariablesFromUrlDataList(urlsData);
@@ -336,8 +334,8 @@ describe('WsdlToPostmanCollectionMapper getVariablesFromUrlDataList', function (
       expect(variable).to.be.an('object')
         .to.include.all.keys('key', 'value');
     });
-    expect(variables[0].key).to.equal('NumberToDollarsSoapBaseUrl');
-    expect(variables[1].key).to.equal('NumberToDollarsSoap12BaseUrl');
+    expect(variables[0].key).to.equal('NumberConversionSoapBaseUrl');
+    expect(variables[1].key).to.equal('NumberConversionSoap12BaseUrl');
     expect(variables[0].value).to.equal('https://www.dataaccess.com');
     expect(variables[1].value).to.equal('https://www.dataaccess.com');
 

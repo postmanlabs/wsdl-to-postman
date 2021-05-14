@@ -16,25 +16,25 @@ const expect = require('chai').expect,
   urls = [
     {
       path: ['webservicesserver', 'NumberConversion.wso'],
-      host: ['{{NumberToWordsSoapBaseUrl}}'],
+      host: ['{{NumberConversionSoapBaseUrl}}'],
       query: [],
       variable: []
     },
     {
       path: ['webservicesserver', 'NumberConversion.wso'],
-      host: ['{{NumberToDollarsSoapBaseUrl}}'],
+      host: ['{{NumberConversionSoapBaseUrl}}'],
       query: [],
       variable: []
     },
     {
       path: ['webservicesserver', 'NumberConversion.wso'],
-      host: ['{{NumberToWordsSoap12BaseUrl}}'],
+      host: ['{{NumberConversionSoap12BaseUrl}}'],
       query: [],
       variable: []
     },
     {
       path: ['webservicesserver', 'NumberConversion.wso'],
-      host: ['{{NumberToDollarsSoap12BaseUrl}}'],
+      host: ['{{NumberConversionSoap12BaseUrl}}'],
       query: [],
       variable: []
     }
