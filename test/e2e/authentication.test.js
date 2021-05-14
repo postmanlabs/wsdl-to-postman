@@ -13,12 +13,32 @@ const expect = require('chai').expect,
     'Returns the non-zero dollar amount of the passed number.'
   ],
   descType = 'text/plain',
-  url = {
-    path: ['webservicesserver', 'NumberConversion.wso'],
-    host: ['{{baseUrl}}'],
-    query: [],
-    variable: []
-  },
+  urls = [
+    {
+      path: ['webservicesserver', 'NumberConversion.wso'],
+      host: ['{{NumberToWordsSoapBaseUrl}}'],
+      query: [],
+      variable: []
+    },
+    {
+      path: ['webservicesserver', 'NumberConversion.wso'],
+      host: ['{{NumberToDollarsSoapBaseUrl}}'],
+      query: [],
+      variable: []
+    },
+    {
+      path: ['webservicesserver', 'NumberConversion.wso'],
+      host: ['{{NumberToWordsSoap12BaseUrl}}'],
+      query: [],
+      variable: []
+    },
+    {
+      path: ['webservicesserver', 'NumberConversion.wso'],
+      host: ['{{NumberToDollarsSoap12BaseUrl}}'],
+      query: [],
+      variable: []
+    }
+  ],
   header = [{
     key: 'Content-Type',
     value: 'text/xml; charset=utf-8'
@@ -438,7 +458,7 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
               // Expects for Request
               expect(conversionResult.output[0].data.item[i].request)
                 .to.include.all.keys('url', 'header', 'method', 'body', 'description');
-              expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
+              expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(urls[i]);
               expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
               let fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].request.body.raw);
@@ -490,7 +510,7 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
             // Expects for Request
             expect(conversionResult.output[0].data.item[i].request)
               .to.include.all.keys('url', 'header', 'method', 'body', 'description');
-            expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
+            expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(urls[i]);
             expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
             expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
 
@@ -548,7 +568,7 @@ describe('Authenticacion with SAML11 Token', function () {
               // Expects for Request
               expect(conversionResult.output[0].data.item[i].request)
                 .to.include.all.keys('url', 'header', 'method', 'body', 'description');
-              expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
+              expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(urls[i]);
               expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
               let fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].request.body.raw);
