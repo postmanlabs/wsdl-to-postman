@@ -233,7 +233,7 @@ describe('Tools from messageWithSchemaValidation', function () {
         assert.fail('We expect an error');
       }
       catch (error) {
-        expect(error.message).to.be.equal('Can not get schema from undefined or null object');
+        expect(error.message).to.be.equal('Cannot get schema from undefined or null object');
       }
     });
   });

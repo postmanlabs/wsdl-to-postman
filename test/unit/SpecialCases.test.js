@@ -7,8 +7,8 @@ const expect = require('chai').expect,
   fs = require('fs'),
   {
     DOC_HAS_NO_SERVICE_MESSAGE,
-    DOC_HAS_NO_BINDIGS_MESSAGE,
-    DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,
+    DOC_HAS_NO_BINDINGS_MESSAGE,
+    DOC_HAS_NO_BINDINGS_OPERATIONS_MESSAGE,
     DOC_HAS_NO_SERVICE_PORT_MESSAGE,
     ELEMENT_NOT_FOUND
 
@@ -53,7 +53,7 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(0);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDINGS_MESSAGE))
         .to.equal(true);
     });
   });
@@ -74,7 +74,7 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(0);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDINGS_OPERATIONS_MESSAGE))
         .to.equal(true);
     });
   });
@@ -205,7 +205,7 @@ describe('SchemaPack convert special cases WSDL 2.0', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(0);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDINGS_MESSAGE))
         .to.equal(true);
     });
   });
@@ -226,7 +226,7 @@ describe('SchemaPack convert special cases WSDL 2.0', function() {
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
       expect(result.output[0].data.item.length).to.equal(0);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_BINDINGS_OPERATIONS_MESSAGE))
         .to.equal(true);
     });
   });

@@ -10,7 +10,7 @@ const
     WsdlObject
   } = require('../../lib/WSDLObject'),
   {
-    PARSER_ATRIBUTE_NAME_PLACE_HOLDER,
+    PARSER_ATTRIBUTE_NAME_PLACE_HOLDER,
     getServices,
     getBindings
   } = require('../../lib/WsdlParserCommon'),
@@ -143,7 +143,7 @@ describe('WSDL 2.0 parser getLocationFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get style info from operation undefined or null object');
+      expect(error.message).to.equal('Cannot get style info from operation undefined or null object');
     }
   });
 
@@ -154,7 +154,7 @@ describe('WSDL 2.0 parser getLocationFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get location info from operation');
+      expect(error.message).to.equal('Cannot get location info from operation');
     }
   });
 });
@@ -186,7 +186,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
     operation = informationService.getAbstractOperationByName('reservationInterface',
       'opCheckAvailability', parsed, '');
     expect(operation).to.be.an('object');
-    expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('opCheckAvailability');
+    expect(operation[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('opCheckAvailability');
   });
 
   it('should get interface operation by name in WSDL_SAMPLE_AXIS', function () {
@@ -197,7 +197,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
     operation = informationService.getAbstractOperationByName('ServiceInterface',
       'hi', parsed, 'wsdl2:');
     expect(operation).to.be.an('object');
-    expect(operation[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('hi');
+    expect(operation[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('hi');
   });
 
   it('should throw an error when parsedxml is null', function () {
@@ -208,7 +208,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get porttype from undefined or null object');
+      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
     }
   });
 
@@ -220,7 +220,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get porttype from undefined or null object');
+      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
     }
   });
 
@@ -232,7 +232,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type from object');
+      expect(error.message).to.equal('Cannot get port type from object');
     }
   });
 
@@ -246,7 +246,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter name');
+      expect(error.message).to.equal('Cannot get port type with no filter name');
     }
   });
 
@@ -258,7 +258,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter name');
+      expect(error.message).to.equal('Cannot get port type with no filter name');
     }
   });
 
@@ -270,7 +270,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter name');
+      expect(error.message).to.equal('Cannot get port type with no filter name');
     }
   });
 
@@ -282,7 +282,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get port type with no filter operationName');
     }
   });
 
@@ -294,7 +294,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get port type with no filter operationName');
     }
   });
 
@@ -306,7 +306,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get port type with no filter operationName');
     }
   });
 });
@@ -319,7 +319,7 @@ describe('WSDL 2.0 getInterfaceByInterfaceName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not interface from undefined or null object');
+      expect(error.message).to.equal('Cannot interface from undefined or null object');
     }
   });
   it('should get an error when called with empty name', function () {
@@ -329,7 +329,7 @@ describe('WSDL 2.0 getInterfaceByInterfaceName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get interface with no filter name');
+      expect(error.message).to.equal('Cannot get interface with no filter name');
     }
   });
   it('should get an error when called not found property', function () {
@@ -339,13 +339,13 @@ describe('WSDL 2.0 getInterfaceByInterfaceName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get interface from object');
+      expect(error.message).to.equal('Cannot get interface from object');
     }
   });
 });
 
 describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
-  it('should throw an error when can not get protocol', function () {
+  it('should throw an error when Cannot get protocol', function () {
     const informationService = new WsdlInformationService20(),
       xmlParser = new XMLParser();
     try {
@@ -358,7 +358,7 @@ describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not find protocol in those namespaces');
+      expect(error.message).to.equal('Cannot find protocol in those namespaces');
     }
   });
 });
@@ -378,7 +378,7 @@ describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
         ''
       ).port;
     expect(serviceEndpoint).to.be.an('object');
-    expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('reservationEndpoint');
+    expect(serviceEndpoint[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('reservationEndpoint');
   });
 
   it('should get the service endpoint when exists and called with WSDL_SAMPLE_AXIS', function () {
@@ -395,7 +395,7 @@ describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
         'wsdl2:'
       ).port;
     expect(serviceEndpoint).to.be.an('object');
-    expect(serviceEndpoint[PARSER_ATRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('SayHelloHttpSoap11Endpoint');
+    expect(serviceEndpoint[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('SayHelloHttpSoap11Endpoint');
   });
 
   it('should throw an error when binding name is null', function () {
@@ -436,7 +436,7 @@ describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get service endpoint from object');
+      expect(error.message).to.equal('Cannot get service endpoint from object');
     }
   });
   it('should throw an error when service enpdoint is array of null not found', function () {
@@ -446,7 +446,7 @@ describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Can not get service endpoint from object');
+      expect(error.message).to.equal('Cannot get service endpoint from object');
     }
   });
 });
