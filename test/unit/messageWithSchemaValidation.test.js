@@ -7,8 +7,8 @@ const expect = require('chai').expect,
     unwrapAndCleanBody
   } = require('./../../lib/utils/messageWithSchemaValidation');
 
-describe('Tools from messageWithSchemaValidation', function() {
-  describe('Test validateMessageWithSchema function', function() {
+describe('Tools from messageWithSchemaValidation', function () {
+  describe('Test validateMessageWithSchema function', function () {
     const schemaMock = `
       <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
         <xs:element name="NumberToWords">
@@ -51,18 +51,18 @@ describe('Tools from messageWithSchemaValidation', function() {
         <ubiNum></ubiNum>
       </NumberToWords>
     `;
-    it('should return an empty array when message matches with schema', function() {
+    it('should return an empty array when message matches with schema', function () {
       const validResult = validateMessageWithSchema(validBody, schemaMock);
       expect(validResult).to.be.an('array').with.length(0);
     });
 
-    it('should return an array when message does not match with schema', function() {
+    it('should return an array when message does not match with schema', function () {
       const invalidResult = validateMessageWithSchema(invalidBody, schemaMock);
       expect(invalidResult).to.be.an('array').with.length.greaterThan(0);
     });
   });
 
-  describe('Test getBodyMessage function', function() {
+  describe('Test getBodyMessage function', function () {
     const nodeElementMock = {
         children: [{
           children: [],
@@ -80,21 +80,20 @@ describe('Tools from messageWithSchemaValidation', function() {
         isComplex: true,
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      cleanBodyMessage = `
-        <NumberToWords >
-          <ubiNum>1</ubiNum>
-        </NumberToWords>
-      `;
+      cleanBodyMessage = '<NumberToWords><ubiNum>',
+      cleanBodyMessage2 = '</ubiNum></NumberToWords>';
 
-    it('Should return the clean body message from a provided nodeElement', function() {
+    it('Should return the clean body message from a provided nodeElement', function () {
       const generatedBodyMessage = getBodyMessage(nodeElementMock, 'soap'),
         cleanGenerated = generatedBodyMessage.replace(/\s/g, ''),
         cleanExpected = cleanBodyMessage.replace(/\s/g, '');
-      expect(cleanGenerated).to.be.equal(cleanExpected);
+      cleanExpected2 = cleanBodyMessage2.replace(/\s/g, '');
+      expect(cleanGenerated.includes(cleanExpected)).to.equal(true);
+      expect(cleanGenerated.includes(cleanExpected2)).to.equal(true);
     });
   });
 
-  describe('Test unwrapAndCleanBody function', function() {
+  describe('Test unwrapAndCleanBody function', function () {
     const dirtyMessage = `<?xml version="1.0" encoding="utf-8"?>
       <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
         <soap:Body>
@@ -109,7 +108,7 @@ describe('Tools from messageWithSchemaValidation', function() {
         </NumberToWords>
       `;
 
-    it('Should unwrap body and remove namespaces and attributes', function() {
+    it('Should unwrap body and remove namespaces and attributes', function () {
       const unwrappedMessage = unwrapAndCleanBody(dirtyMessage, 'NumberToWords'),
         generatedToCompare = unwrappedMessage.replace(/\s/g, ''),
         expectedToCompare = cleanBodyMessage.replace(/\s/g, '');
@@ -117,7 +116,7 @@ describe('Tools from messageWithSchemaValidation', function() {
     });
   });
 
-  describe('Test getCleanSchema function', function() {
+  describe('Test getCleanSchema function', function () {
     const xmlParsedMock = {
         definitions: {
           '@_xmlns': 'http://schemas.xmlsoap.org/wsdl/',
@@ -221,14 +220,14 @@ describe('Tools from messageWithSchemaValidation', function() {
 
     it(
       'Should return a schema with base namespace, removed tns and no complexType, tags empty',
-      function() {
+      function () {
         const generatedCleanSchema = getCleanSchema(xmlParsedMock, schemaNamespaceMock, wsdl_version),
           generatedCleanSchemaToCompare = generatedCleanSchema.replace(/\s/g, ''),
           expectedSchemaToCompare = expectedSchema.replace(/\s/g, '');
         expect(generatedCleanSchemaToCompare).to.be.equal(expectedSchemaToCompare);
       });
 
-    it('Should throw an error if parsedXml is not provided', function() {
+    it('Should throw an error if parsedXml is not provided', function () {
       try {
         getCleanSchema(null, schemaNamespaceMock, wsdl_version);
         assert.fail('We expect an error');
@@ -239,12 +238,12 @@ describe('Tools from messageWithSchemaValidation', function() {
     });
   });
 
-  describe('Test validateOperationsMessagesWithSchema function', function() {
+  describe('Test validateOperationsMessagesWithSchema function', function () {
     const wsdlObjectMock = {
         'operationsArray': [{
           'name': 'NumberToWords',
           'description': `Returns the word corresponding to the positive number passed as parameter. 
-            Limited to quadrillions.`,
+              Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
           'input': {
@@ -329,7 +328,7 @@ describe('Tools from messageWithSchemaValidation', function() {
         }, {
           'name': 'NumberToWords',
           'description': `Returns the word corresponding to the positive number passed as parameter. 
-            Limited to quadrillions.`,
+              Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
           'input': {
@@ -500,7 +499,7 @@ describe('Tools from messageWithSchemaValidation', function() {
       </xs:element>
     </xs:schema>`;
 
-    it('Should return an empty array if messages match with schema base', function() {
+    it('Should return an empty array if messages match with schema base', function () {
       const validationErrors = validateOperationMessagesWithSchema(wsdlObjectMock, schemaBaseMock);
       expect(validationErrors).to.be.an('array').with.length(0);
     });

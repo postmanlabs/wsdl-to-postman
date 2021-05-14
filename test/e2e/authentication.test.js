@@ -244,27 +244,27 @@ const expect = require('chai').expect,
     {
       mode: 'raw',
       raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-      '  <soap:Header>\n' +
-      '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
-      '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
-      '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
-      '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
-      '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
-      '        <saml2:Subject>\n' +
-      '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
-      'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
-      '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
-      '        </saml2:Subject>\n' +
-      '      </saml2:Assertion>\n' +
-      '    </wsse:Security>\n' +
-      '  </soap:Header>\n' +
-      '  <soap:Body>\n' +
-      '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-      '      <ubiNum>18446744073709</ubiNum>\n' +
-      '    </NumberToWords>\n' +
-      '  </soap:Body>\n' +
-      '</soap:Envelope>\n',
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Header>\n' +
+        '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+        '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+        '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+        '        <saml2:Subject>\n' +
+        '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+        'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+        '        </saml2:Subject>\n' +
+        '      </saml2:Assertion>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap:Header>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
       options: {
         raw: {
           language: 'xml'
@@ -274,27 +274,27 @@ const expect = require('chai').expect,
     {
       mode: 'raw',
       raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-      '  <soap:Header>\n' +
-      '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
-      '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
-      '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
-      '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
-      '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
-      '        <saml2:Subject>\n' +
-      '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
-      'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
-      '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
-      '        </saml2:Subject>\n' +
-      '      </saml2:Assertion>\n' +
-      '    </wsse:Security>\n' +
-      '  </soap:Header>\n' +
-      '  <soap:Body>\n' +
-      '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-      '      <dNum>1</dNum>\n' +
-      '    </NumberToDollars>\n' +
-      '  </soap:Body>\n' +
-      '</soap:Envelope>\n',
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Header>\n' +
+        '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+        '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+        '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+        '        <saml2:Subject>\n' +
+        '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+        'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+        '        </saml2:Subject>\n' +
+        '      </saml2:Assertion>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap:Header>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
       options: {
         raw: {
           language: 'xml'
@@ -304,27 +304,27 @@ const expect = require('chai').expect,
     {
       mode: 'raw',
       raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-      '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-      '  <soap12:Header>\n' +
-      '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
-      '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
-      '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
-      '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
-      '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
-      '        <saml2:Subject>\n' +
-      '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
-      'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
-      '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
-      '        </saml2:Subject>\n' +
-      '      </saml2:Assertion>\n' +
-      '    </wsse:Security>\n' +
-      '  </soap12:Header>\n' +
-      '  <soap12:Body>\n' +
-      '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-      '      <ubiNum>18446744073709</ubiNum>\n' +
-      '    </NumberToWords>\n' +
-      '  </soap12:Body>\n' +
-      '</soap12:Envelope>\n',
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Header>\n' +
+        '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+        '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+        '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+        '        <saml2:Subject>\n' +
+        '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+        'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+        '        </saml2:Subject>\n' +
+        '      </saml2:Assertion>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap12:Header>\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
       options: {
         raw: {
           language: 'xml'
@@ -334,27 +334,27 @@ const expect = require('chai').expect,
     {
       mode: 'raw',
       raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-      '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-      '  <soap12:Header>\n' +
-      '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
-      '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
-      '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
-      '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
-      '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
-      '        <saml2:Subject>\n' +
-      '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
-      'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
-      '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
-      '        </saml2:Subject>\n' +
-      '      </saml2:Assertion>\n' +
-      '    </wsse:Security>\n' +
-      '  </soap12:Header>\n' +
-      '  <soap12:Body>\n' +
-      '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-      '      <dNum>1</dNum>\n' +
-      '    </NumberToDollars>\n' +
-      '  </soap12:Body>\n' +
-      '</soap12:Envelope>\n',
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Header>\n' +
+        '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+        '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+        '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+        '        <saml2:Subject>\n' +
+        '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+        'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+        '        </saml2:Subject>\n' +
+        '      </saml2:Assertion>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap12:Header>\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
       options: {
         raw: {
           language: 'xml'
@@ -368,34 +368,34 @@ const expect = require('chai').expect,
     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
     '  <soap:Body>\n' +
     '    <NumberToWordsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-    '      <NumberToWordsResult>place your string value here</NumberToWordsResult>\n' +
+    '      <NumberToWordsResult>string</NumberToWordsResult>\n' +
     '    </NumberToWordsResponse>\n' +
     '  </soap:Body>\n' +
     '</soap:Envelope>\n',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-    '  <soap:Body>\n' +
-    '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-    '      <NumberToDollarsResult>place your string value here</NumberToDollarsResult>\n' +
-    '    </NumberToDollarsResponse>\n' +
-    '  </soap:Body>\n' +
-    '</soap:Envelope>\n',
+  '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+  '  <soap:Body>\n' +
+  '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+  '      <NumberToDollarsResult>string</NumberToDollarsResult>\n' +
+  '    </NumberToDollarsResponse>\n' +
+  '  </soap:Body>\n' +
+  '</soap:Envelope>\n',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-    '  <soap12:Body>\n' +
-    '    <NumberToWordsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-    '      <NumberToWordsResult>place your string value here</NumberToWordsResult>\n' +
-    '    </NumberToWordsResponse>\n' +
-    '  </soap12:Body>\n' +
-    '</soap12:Envelope>\n',
+  '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+  '  <soap12:Body>\n' +
+  '    <NumberToWordsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+  '      <NumberToWordsResult>string</NumberToWordsResult>\n' +
+  '    </NumberToWordsResponse>\n' +
+  '  </soap12:Body>\n' +
+  '</soap12:Envelope>\n',
   '<?xml version="1.0" encoding="utf-8"?>\n' +
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
-    '  <soap12:Body>\n' +
-    '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-    '      <NumberToDollarsResult>place your string value here</NumberToDollarsResult>\n' +
-    '    </NumberToDollarsResponse>\n' +
-    '  </soap12:Body>\n' +
-    '</soap12:Envelope>\n'
+  '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+  '  <soap12:Body>\n' +
+  '    <NumberToDollarsResponse xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+  '      <NumberToDollarsResult>string</NumberToDollarsResult>\n' +
+  '    </NumberToDollarsResponse>\n' +
+  '  </soap12:Body>\n' +
+  '</soap12:Envelope>\n'
   ],
   urlOR = {
     protocol: 'https',
@@ -404,6 +404,16 @@ const expect = require('chai').expect,
     query: [],
     variable: []
   };
+
+/**
+ * Replace the tag with random number to the expected one
+ * @param {string} bodyMessage the element for getting and example
+ * @returns {string} sanitized random value
+ */
+function fixBodyMessage(bodyMessage) {
+  return bodyMessage.replace(/<ubiNum>(.*?)<\/ubiNum>/g, '<ubiNum>18446744073709</ubiNum>')
+    .replace(/<dNum>(.*?)<\/dNum>/g, '<dNum>1</dNum>');
+}
 
 describe('Test the convertion of valid WSDL files with authetication mechanisms', function () {
   var authFolder = fs.readdirSync(usernameTokenExamples);
@@ -431,7 +441,8 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
               expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
               expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
-              expect(conversionResult.output[0].data.item[i].request.body).to.be.eql(reqBody[i]);
+              let fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].request.body.raw);
+              expect(fixedBody).to.be.eql(reqBody[i].raw);
               expect(conversionResult.output[0].data.item[i].request.description.content).to.be.eql(descArray[i]);
               expect(conversionResult.output[0].data.item[i].request.description.type).to.be.eql(descType);
               // Expects for Response
@@ -443,7 +454,8 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
               expect(conversionResult.output[0].data.item[i].response[0].originalRequest.url).to.be.eql(urlOR);
               expect(conversionResult.output[0].data.item[i].response[0].originalRequest.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].response[0].originalRequest.method).to.be.eql(defMethod);
-              expect(conversionResult.output[0].data.item[i].response[0].originalRequest.body).to.be.eql(reqBody[i]);
+              fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].response[0].originalRequest.body.raw);
+              expect(fixedBody).to.be.eql(reqBody[i].raw);
               expect(conversionResult.output[0].data.item[i].response[0].status).to.be.eql(status);
               expect(conversionResult.output[0].data.item[i].response[0].code).to.be.eql(code);
               expect(conversionResult.output[0].data.item[i].response[0].header).to.be.eql(header);
@@ -481,7 +493,10 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
             expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
             expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
             expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
-            expect(conversionResult.output[0].data.item[i].request.body).to.be.eql(reqBodySSL[i]);
+
+            let fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].request.body.raw);
+
+            expect(fixedBody).to.be.eql(reqBodySSL[i].raw);
             expect(conversionResult.output[0].data.item[i].request.description.content).to.be.eql(descArray[i]);
             expect(conversionResult.output[0].data.item[i].request.description.type).to.be.eql(descType);
             // Expects for Response
@@ -493,7 +508,9 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
             expect(conversionResult.output[0].data.item[i].response[0].originalRequest.url).to.be.eql(urlOR);
             expect(conversionResult.output[0].data.item[i].response[0].originalRequest.header).to.be.eql(header);
             expect(conversionResult.output[0].data.item[i].response[0].originalRequest.method).to.be.eql(defMethod);
-            expect(conversionResult.output[0].data.item[i].response[0].originalRequest.body).to.be.eql(reqBodySSL[i]);
+
+            fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].response[0].originalRequest.body.raw);
+            expect(fixedBody).to.be.eql(reqBodySSL[i].raw);
             expect(conversionResult.output[0].data.item[i].response[0].status).to.be.eql(status);
             expect(conversionResult.output[0].data.item[i].response[0].code).to.be.eql(code);
             expect(conversionResult.output[0].data.item[i].response[0].header).to.be.eql(header);
@@ -534,7 +551,8 @@ describe('Authenticacion with SAML11 Token', function () {
               expect(conversionResult.output[0].data.item[i].request.url).to.be.eql(url);
               expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
-              expect(conversionResult.output[0].data.item[i].request.body).to.be.eql(reqBodySAML[i]);
+              let fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].request.body.raw);
+              expect(fixedBody).to.be.eql(reqBodySAML[i].raw);
               expect(conversionResult.output[0].data.item[i].request.description.content).to.be.eql(descArray[i]);
               expect(conversionResult.output[0].data.item[i].request.description.type).to.be.eql(descType);
               // Expects for Response
@@ -546,8 +564,10 @@ describe('Authenticacion with SAML11 Token', function () {
               expect(conversionResult.output[0].data.item[i].response[0].originalRequest.url).to.be.eql(urlOR);
               expect(conversionResult.output[0].data.item[i].response[0].originalRequest.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].response[0].originalRequest.method).to.be.eql(defMethod);
-              expect(conversionResult.output[0].data.item[i].response[0]
-                .originalRequest.body).to.be.eql(reqBodySAML[i]);
+
+              fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].response[0]
+                .originalRequest.body.raw);
+              expect(fixedBody).to.be.eql(reqBodySAML[i].raw);
               expect(conversionResult.output[0].data.item[i].response[0].status).to.be.eql(status);
               expect(conversionResult.output[0].data.item[i].response[0].code).to.be.eql(code);
               expect(conversionResult.output[0].data.item[i].response[0].header).to.be.eql(header);

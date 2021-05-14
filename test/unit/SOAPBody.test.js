@@ -1,4 +1,5 @@
 const expect = require('chai').expect,
+  assert = require('chai').assert,
   {
     SOAPBody
   } = require('../../lib/utils/SOAPBody'),
@@ -36,8 +37,8 @@ describe('SOAPBody create', function () {
     expect(jsonObjectMessage).to.have.own.property('NumberToWords');
     expect(jsonObjectMessage.NumberToWords)
       .to.have.own.property('ubiNum');
-    expect(jsonObjectMessage.NumberToWords.ubiNum)
-      .to.equal(18446744073709);
+    assert.isAtLeast(jsonObjectMessage.NumberToWords.ubiNum, 2);
+    assert.isAtMost(jsonObjectMessage.NumberToWords.ubiNum, 18446744073709);
   });
 
   it('Should get a json object when TestCustomModel->inputmodel->id,name,email is sent', function () {
@@ -86,13 +87,12 @@ describe('SOAPBody create', function () {
       .to.have.own.property('name');
     expect(jsonObjectMessage.TestCustomModel.inputModel)
       .to.have.own.property('email');
-
-    expect(jsonObjectMessage.TestCustomModel.inputModel.id)
-      .to.equal(-2147483648);
+    assert.isAtLeast(jsonObjectMessage.TestCustomModel.inputModel.id, -2147483648);
+    assert.isAtMost(jsonObjectMessage.TestCustomModel.inputModel.id, 2147483647);
     expect(jsonObjectMessage.TestCustomModel.inputModel.name)
-      .to.equal('place your string value here');
+      .to.equal('string');
     expect(jsonObjectMessage.TestCustomModel.inputModel.email)
-      .to.equal('place your string value here');
+      .to.equal('string');
   });
 
   it('Should get an empty json object when null is sent', function () {
@@ -224,23 +224,27 @@ describe('SOAPBody create', function () {
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
       jsonObjectMessage = bodyCreator.create(root);
+    let valueB1 = jsonObjectMessage.A.B.B1,
+      valueitemConcrete1 = jsonObjectMessage.A.B.B2.item.Item1Concrete1,
+      valueC1 = jsonObjectMessage.A.C.C1,
+      valueitemConcrete2 = jsonObjectMessage.A.C.C2.item.Item1Concrete2;
     expect(jsonObjectMessage).to.be.an('object').and.to.deep.include(
       {
         A: {
           '@_xmlns': 'http://www.dataaccess.com/webservicesserver/',
           B: {
-            B1: -2147483648,
+            B1: valueB1,
             B2: {
               item: {
-                Item1Concrete1: -2147483648
+                Item1Concrete1: valueitemConcrete1
               }
             }
           },
           C: {
-            C1: 2147483647,
+            C1: valueC1,
             C2: {
               item: {
-                Item1Concrete2: -2147483648
+                Item1Concrete2: valueitemConcrete2
               }
             }
           }
