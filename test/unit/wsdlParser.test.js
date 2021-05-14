@@ -6,9 +6,9 @@ const { WsdlInformationService11 } = require('../../lib/WsdlInformationService11
   validWSDLs20 = 'test/data/validWSDLs20',
   specialCasesWSDLs_2_0 = 'test/data/specialCases/wsdl2',
   {
-    DOC_HAS_NO_BINDIGS_MESSAGE,
+    DOC_HAS_NO_BINDINGS_MESSAGE,
     DOC_HAS_NO_SERVICE_MESSAGE,
-    DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE,
+    DOC_HAS_NO_BINDINGS_OPERATIONS_MESSAGE,
     DOC_HAS_NO_SERVICE_PORT_MESSAGE
   } = require('../../lib/constants/messageConstants'),
   {
@@ -1209,7 +1209,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(0);
-    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_MESSAGE))
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDINGS_MESSAGE))
       .to.equal(true);
   });
 
@@ -1224,7 +1224,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
       wsdlObject = parser.assignOperations(wsdlObject, parsed);
       expect(wsdlObject.operationsArray).to.be.an('array');
       expect(wsdlObject.operationsArray.length).to.equal(0);
-      expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDIGS_OPERATIONS_MESSAGE))
+      expect(wsdlObject.log.errors.includes(DOC_HAS_NO_BINDINGS_OPERATIONS_MESSAGE))
         .to.equal(true);
     });
 

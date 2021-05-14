@@ -256,7 +256,7 @@ describe('Parser Factory getParser', function () {
     expect(concreteParser.informationService).to.be.an.instanceof(WsdlInformationService11);
   });
 
-  it('should get version an object of type Wsdl20Parser when the input contains description>', function () {
+  it('should get version an object of type WsdlInformationService20 when the input contains description>', function () {
     const factory = new ParserFactory(''),
       concreteParser = factory.getParser(`<?xml version="1.0" encoding="utf-8" ?>
       <description xmlns="http://www.w3.org/ns/wsdl>
