@@ -6,19 +6,19 @@ const expect = require('chai').expect,
     V20
   } = require('../../lib/ParserFactory'),
   {
-    Wsdl11Parser
-  } = require('../../lib/Wsdl11Parser'),
+    WsdlInformationService11
+  } = require('../../lib/WsdlInformationService11'),
   {
-    Wsdl20Parser
-  } = require('../../lib/Wsdl20Parser');
+    WsdlInformationService20
+  } = require('../../lib/WsdlInformationService20');
 
-describe('Parser Factory constructor', function() {
-  it('should get an object for the factory with empty input', function() {
+describe('Parser Factory constructor', function () {
+  it('should get an object for the factory with empty input', function () {
     const factory = new ParserFactory('');
     expect(factory).to.be.an('object');
   });
 
-  it('should get an object for the factory with xml input', function() {
+  it('should get an object for the factory with xml input', function () {
     const factory = new ParserFactory(`<user is='great'>
       <name>Tobias</name>
       <familyName>Nickel</familyName>
@@ -28,15 +28,15 @@ describe('Parser Factory constructor', function() {
     expect(factory).to.be.an('object');
   });
 
-  it('should get an object for the factory with no input', function() {
+  it('should get an object for the factory with no input', function () {
     const factory = new ParserFactory();
     expect(factory).to.be.an('object');
   });
 });
 
-describe('Parser Factory getWsdlVersion', function() {
+describe('Parser Factory getWsdlVersion', function () {
 
-  it('should get version 1.1 when the input contains definitions>', function() {
+  it('should get version 1.1 when the input contains definitions>', function () {
     const factory = new ParserFactory(''),
       version = factory.getWsdlVersion(`<?xml version="1.0" encoding="utf-8"?>
     <?xml-stylesheet type="text/xsl" href="http://tomi.vanek.sk/xml/wsdl-viewer.xsl"?>
@@ -95,7 +95,7 @@ describe('Parser Factory getWsdlVersion', function() {
     expect(version).to.equal(V11);
   });
 
-  it('should get version 2.0 when the input contains description>', function() {
+  it('should get version 2.0 when the input contains description>', function () {
     const factory = new ParserFactory(''),
       version = factory.getWsdlVersion(`<?xml version="1.0" encoding="utf-8" ?>
     <description xmlns="http://www.w3.org/ns/wsdl>
@@ -138,7 +138,7 @@ describe('Parser Factory getWsdlVersion', function() {
     expect(version).to.equal(V20);
   });
 
-  it('should throw an error when input is empty string', function() {
+  it('should throw an error when input is empty string', function () {
     const factory = new ParserFactory();
     try {
       factory.getWsdlVersion('');
@@ -148,7 +148,7 @@ describe('Parser Factory getWsdlVersion', function() {
     }
   });
 
-  it('should throw an error when input is empty', function() {
+  it('should throw an error when input is empty', function () {
     const factory = new ParserFactory();
     try {
       factory.getWsdlVersion();
@@ -158,7 +158,7 @@ describe('Parser Factory getWsdlVersion', function() {
     }
   });
 
-  it('should throw an error when input is null', function() {
+  it('should throw an error when input is null', function () {
     const factory = new ParserFactory();
     try {
       factory.getWsdlVersion(null);
@@ -168,7 +168,7 @@ describe('Parser Factory getWsdlVersion', function() {
     }
   });
 
-  it('should throw an error when input is undefined', function() {
+  it('should throw an error when input is undefined', function () {
     const factory = new ParserFactory();
     try {
       factory.getWsdlVersion(undefined);
@@ -178,7 +178,7 @@ describe('Parser Factory getWsdlVersion', function() {
     }
   });
 
-  it('should throw an error when input does not have any of the tags', function() {
+  it('should throw an error when input does not have any of the tags', function () {
     const factory = new ParserFactory();
     try {
       factory.getWsdlVersion(`<user is='great'>
@@ -195,9 +195,9 @@ describe('Parser Factory getWsdlVersion', function() {
 
 });
 
-describe('Parser Factory getParser', function() {
+describe('Parser Factory getParser', function () {
 
-  it('should get version an object of type Wsdl11Parser when the input contains definitions>', function() {
+  it('should get version an object of type Wsdl11Parser when the input contains definitions>', function () {
     const factory = new ParserFactory(''),
       concreteParser = factory.getParser(`<?xml version="1.0" encoding="utf-8"?>
         <?xml-stylesheet type="text/xsl" href="http://tomi.vanek.sk/xml/wsdl-viewer.xsl"?>
@@ -253,10 +253,10 @@ describe('Parser Factory getParser', function() {
         </wsdl:definitions>
         `);
     expect(concreteParser).to.be.an('object');
-    expect(concreteParser).to.be.an.instanceof(Wsdl11Parser);
+    expect(concreteParser.informationService).to.be.an.instanceof(WsdlInformationService11);
   });
 
-  it('should get version an object of type Wsdl20Parser when the input contains description>', function() {
+  it('should get version an object of type Wsdl20Parser when the input contains description>', function () {
     const factory = new ParserFactory(''),
       concreteParser = factory.getParser(`<?xml version="1.0" encoding="utf-8" ?>
       <description xmlns="http://www.w3.org/ns/wsdl>
@@ -296,11 +296,11 @@ describe('Parser Factory getParser', function() {
       </description>
         `);
     expect(concreteParser).to.be.an('object');
-    expect(concreteParser).to.be.an.instanceof(Wsdl20Parser);
+    expect(concreteParser.informationService).to.be.an.instanceof(WsdlInformationService20);
   });
 
 
-  it('should throw an error when input is empty string', function() {
+  it('should throw an error when input is empty string', function () {
     const factory = new ParserFactory();
     try {
       factory.getParser('');
@@ -310,7 +310,7 @@ describe('Parser Factory getParser', function() {
     }
   });
 
-  it('should throw an error when input is an empty string', function() {
+  it('should throw an error when input is an empty string', function () {
     const factory = new ParserFactory();
     try {
       factory.getParser();
@@ -320,7 +320,7 @@ describe('Parser Factory getParser', function() {
     }
   });
 
-  it('should throw an error when input is null', function() {
+  it('should throw an error when input is null', function () {
     const factory = new ParserFactory();
     try {
       factory.getParser(null);
@@ -331,7 +331,7 @@ describe('Parser Factory getParser', function() {
     }
   });
 
-  it('should throw an error when input is undefined', function() {
+  it('should throw an error when input is undefined', function () {
     const factory = new ParserFactory();
     try {
       factory.getParser(undefined);
@@ -342,7 +342,7 @@ describe('Parser Factory getParser', function() {
     }
   });
 
-  it('should throw an error when input does not have any of the tags', function() {
+  it('should throw an error when input does not have any of the tags', function () {
     const factory = new ParserFactory();
     try {
       factory.getParser(`<user is='great'>
