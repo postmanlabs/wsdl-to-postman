@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="url/soap/services/getClubLicenceKey.php"
+    xmlns:tns="http://{{url}}/soap/services/getClubLicenceKey.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getClubLicenceKey" targetNamespace="url/soap/services/getClubLicenceKey.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getClubLicenceKey" targetNamespace="http://{{url}}/soap/services/getClubLicenceKey.php">
     <types>
-        <xsd:schema targetNamespace="url/soap/services/getClubLicenceKey.php">
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getClubLicenceKey.php">
             <xsd:element name="getClubLicenceKey">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -41,7 +41,7 @@
     <binding name="getClubLicenceKeyBinding" type="tns:getClubLicenceKeyPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getClubLicenceKey">
-            <soap:operation soapAction="url/soap/services/getClubLicenceKey.php#getClubLicenceKey"/>
+            <soap:operation soapAction="http://{{url}}/soap/services/getClubLicenceKey.php#getClubLicenceKey"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -52,7 +52,7 @@
     </binding>
     <service name="getClubLicenceKeyService">
         <port name="getClubLicenceKeyPort" binding="tns:getClubLicenceKeyBinding">
-            <soap:address location="url/soap/services/getClubLicenceKey.php"/>
+            <soap:address location="http://{{url}}/soap/services/getClubLicenceKey.php"/>
         </port>
     </service>
     <message name="getClubLicenceKeyIn">

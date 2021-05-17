@@ -4,7 +4,46 @@ const expect = require('chai').expect,
   } = require('../../lib/XMLParser'),
   {
     PARSER_ATTRIBUTE_NAME_PLACE_HOLDER
-  } = require('../../lib/WsdlParserCommon');
+  } = require('../../lib/WsdlParserCommon'),
+  UNCLEAN_INPUT_XML = `This XML file does not appear to have any style information associated with it.
+  The document tree is shown below. this text should be ignored while parsing
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+xmlns:tns="http://www.oorsprong.org/websamples.countryinfo" 
+name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
+   <message name="LanguageISOCodeSoapResponse">
+       <part name="parameters" element="tns:LanguageISOCodeResponse" />
+   </message>
+   <portType name="CountryInfoServiceSoapType">
+       <operation name="LanguageISOCode">
+           <documentation>Find a language ISO code based on the passed language name</documentation>
+           <input message="tns:LanguageISOCodeSoapRequest" />
+           <output message="tns:LanguageISOCodeSoapResponse" />
+       </operation>
+   </portType>
+   <binding name="CountryInfoServiceSoapBinding" type="tns:CountryInfoServiceSoapType">
+       <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+       <operation name="LanguageISOCode">
+           <soap:operation soapAction="" style="document" />
+           <input>
+           <soap:body use="literal" />
+           </input>
+           <output>
+               <soap:body use="literal" />
+           </output>
+       </operation>
+   </binding>
+   <service name="CountryInfoService">
+       <documentation>This DataFlex Web Service opens up country information. 2 
+       letter ISO codes are used for Country code. There are functions to retrieve the used Currency,
+        Language, Capital City, Continent and Telephone code.</documentation>
+       <port name="CountryInfoServiceSoap" binding="tns:CountryInfoServiceSoapBinding">
+           <soap:address location="http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso" />
+       </port>
+   </service>
+</definitions>`;
 
 describe('XMLparser parseToObject', function () {
 
@@ -15,8 +54,8 @@ describe('XMLparser parseToObject', function () {
         <profession>Software Developer</profession>
         <location>Shanghai / China</location>
         </user>`,
-      parser = new XMLParser();
-    let parsed = parser.parseToObject(simpleInput);
+      xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(simpleInput);
     expect(parsed).to.be.an('object');
     expect(parsed).to.have.own.property('user');
     expect(parsed.user).to.have.own.property('name');
@@ -24,10 +63,17 @@ describe('XMLparser parseToObject', function () {
 
   });
 
+  it('should ignore extra data before xml tag', function () {
+    const xmlParser = new XMLParser();
+    let parsed = xmlParser.parseToObject(UNCLEAN_INPUT_XML);
+    expect(parsed).to.be.an('object');
+    expect(parsed).to.have.own.property('definitions');
+  });
+
   it('should throw an error when input is an empty string', function () {
-    parser = new XMLParser();
+    const xmlParser = new XMLParser();
     try {
-      parser.parseToObject('');
+      xmlParser.parseToObject('');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -36,9 +82,9 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should throw an error when input is null', function () {
-    parser = new XMLParser();
+    const xmlParser = new XMLParser();
     try {
-      parser.parseToObject(null);
+      xmlParser.parseToObject(null);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -47,9 +93,9 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should throw an error when input is undefined', function () {
-    parser = new XMLParser();
+    const xmlParser = new XMLParser();
     try {
-      parser.parseToObject(undefined);
+      xmlParser.parseToObject(undefined);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -58,9 +104,9 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should throw an error when input is empty', function () {
-    parser = new XMLParser();
+    const xmlParser = new XMLParser();
     try {
-      parser.parseToObject();
+      xmlParser.parseToObject();
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -69,9 +115,9 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should throw an error when input is not xml', function () {
-    parser = new XMLParser();
+    const xmlParser = new XMLParser();
     try {
-      parser.parseToObject('this is not an xml');
+      xmlParser.parseToObject('this is not an xml');
       assert.fail('we expected an error');
     }
     catch (error) {

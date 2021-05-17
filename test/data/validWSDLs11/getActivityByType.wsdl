@@ -1,12 +1,12 @@
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="url/soap/services/getActivityByType.php"
+    xmlns:tns="http://{{url}}/soap/services/getActivityByType.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getActivityByType" targetNamespace="url/soap/services/getActivityByType.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getActivityByType" targetNamespace="http://{{url}}/soap/services/getActivityByType.php">
     <types>
-        <xsd:schema targetNamespace="url/soap/services/getActivityByType.php">
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getActivityByType.php">
             <xsd:element name="getActivityByType">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -66,7 +66,7 @@
     <binding name="getActivityByTypeBinding" type="tns:getActivityByTypePort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getActivityByType">
-            <soap:operation soapAction="url/soap/services/getActivityByType.php#getActivityByType"/>
+            <soap:operation soapAction="http://{{url}}/soap/services/getActivityByType.php#getActivityByType"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -77,7 +77,7 @@
     </binding>
     <service name="getActivityByTypeService">
         <port name="getActivityByTypePort" binding="tns:getActivityByTypeBinding">
-            <soap:address location="url/soap/services/getActivityByType.php"/>
+            <soap:address location="http://{{url}}/soap/services/getActivityByType.php"/>
         </port>
     </service>
     <message name="getActivityByTypeIn">

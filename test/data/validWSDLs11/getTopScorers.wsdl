@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="url/soap/services/getTopScorers.php"
+    xmlns:tns="http://{{url}}/soap/services/getTopScorers.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTopScorers" targetNamespace="url/soap/services/getTopScorers.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTopScorers" targetNamespace="http://{{url}}/soap/services/getTopScorers.php">
     <types>
-        <xsd:schema targetNamespace="url/soap/services/getTopScorers.php">
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getTopScorers.php">
             <xsd:element name="getTopScorers">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -51,7 +51,7 @@
     <binding name="getTopScorersBinding" type="tns:getTopScorersPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getTopScorers">
-            <soap:operation soapAction="url/soap/services/getTopScorers.php#getTopScorers"/>
+            <soap:operation soapAction="http://{{url}}/soap/services/getTopScorers.php#getTopScorers"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -62,7 +62,7 @@
     </binding>
     <service name="getTopScorersService">
         <port name="getTopScorersPort" binding="tns:getTopScorersBinding">
-            <soap:address location="url/soap/services/getTopScorers.php"/>
+            <soap:address location="http://{{url}}/soap/services/getTopScorers.php"/>
         </port>
     </service>
     <message name="getTopScorersIn">
