@@ -1,4 +1,4 @@
-<xsd:schema targetNamespace="url/soap/services/getActivityByUser.php">
+<xsd:schema targetNamespace="http://{{url}}/soap/services/getActivityByUser.php">
     <xsd:element name="getActivityByUser">
         <xsd:complexType>
             <xsd:sequence>

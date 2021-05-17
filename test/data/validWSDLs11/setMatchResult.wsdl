@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="url/soap/services/setMatchResult.php"
+    xmlns:tns="http://{{url}}/soap/services/setMatchResult.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="setMatchResult" targetNamespace="url/soap/services/setMatchResult.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="setMatchResult" targetNamespace="http://{{url}}/soap/services/setMatchResult.php">
     <types>
-        <xsd:schema targetNamespace="url/soap/services/setMatchResult.php">
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/setMatchResult.php">
             <xsd:element name="setMatchResult">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -45,7 +45,7 @@
     <binding name="setMatchResultBinding" type="tns:setMatchResultPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="setMatchResult">
-            <soap:operation soapAction="url/soap/services/setMatchResult.php#setMatchResult"/>
+            <soap:operation soapAction="http://{{url}}/soap/services/setMatchResult.php#setMatchResult"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -56,7 +56,7 @@
     </binding>
     <service name="setMatchResultService">
         <port name="setMatchResultPort" binding="tns:setMatchResultBinding">
-            <soap:address location="url/soap/services/setMatchResult.php"/>
+            <soap:address location="http://{{url}}/soap/services/setMatchResult.php"/>
         </port>
     </service>
     <message name="setMatchResultIn">

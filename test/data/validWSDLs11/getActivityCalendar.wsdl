@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="url/soap/services/getActivityCalendar.php"
+    xmlns:tns="http://{{url}}/soap/services/getActivityCalendar.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getActivityCalendar" targetNamespace="url/soap/services/getActivityCalendar.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getActivityCalendar" targetNamespace="http://{{url}}/soap/services/getActivityCalendar.php">
     <types>
-        <xsd:schema targetNamespace="url/soap/services/getActivityCalendar.php">
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getActivityCalendar.php">
             <xsd:element name="getActivityCalendar">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -55,7 +55,7 @@
     <binding name="getActivityCalendarBinding" type="tns:getActivityCalendarPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getActivityCalendar">
-            <soap:operation soapAction="url/soap/services/getActivityCalendar.php#getActivityCalendar"/>
+            <soap:operation soapAction="http://{{url}}/soap/services/getActivityCalendar.php#getActivityCalendar"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -66,7 +66,7 @@
     </binding>
     <service name="getActivityCalendarService">
         <port name="getActivityCalendarPort" binding="tns:getActivityCalendarBinding">
-            <soap:address location="url/soap/services/getActivityCalendar.php"/>
+            <soap:address location="http://{{url}}/soap/services/getActivityCalendar.php"/>
         </port>
     </service>
     <message name="getActivityCalendarIn">

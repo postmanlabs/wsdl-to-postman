@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="url/soap/services/getUserAuthentication.php"
+    xmlns:tns="http://{{url}}/soap/services/getUserAuthentication.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getUserAuthentication" targetNamespace="url/soap/services/getUserAuthentication.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getUserAuthentication" targetNamespace="http://{{url}}/soap/services/getUserAuthentication.php">
     <types>
-        <xsd:schema targetNamespace="url/soap/services/getUserAuthentication.php">
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getUserAuthentication.php">
             <xsd:element name="getUserAuthentication">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -38,7 +38,7 @@
     <binding name="getUserAuthenticationBinding" type="tns:getUserAuthenticationPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getUserAuthentication">
-            <soap:operation soapAction="url/soap/services/getUserAuthentication.php#getUserAuthentication"/>
+            <soap:operation soapAction="http://{{url}}/soap/services/getUserAuthentication.php#getUserAuthentication"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -49,7 +49,7 @@
     </binding>
     <service name="getUserAuthenticationService">
         <port name="getUserAuthenticationPort" binding="tns:getUserAuthenticationBinding">
-            <soap:address location="url/soap/services/getUserAuthentication.php"/>
+            <soap:address location="http://{{url}}/soap/services/getUserAuthentication.php"/>
         </port>
     </service>
     <message name="getUserAuthenticationIn">

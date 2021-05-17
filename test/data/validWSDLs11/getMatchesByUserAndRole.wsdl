@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:tns="url/soap/services/getMatchesByUserAndRole.php"
+    xmlns:tns="http://{{url}}/soap/services/getMatchesByUserAndRole.php"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
-    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchesByUserAndRole" targetNamespace="url/soap/services/getMatchesByUserAndRole.php">
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchesByUserAndRole" targetNamespace="http://{{url}}/soap/services/getMatchesByUserAndRole.php">
     <types>
-        <xsd:schema targetNamespace="url/soap/services/getMatchesByUserAndRole.php">
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getMatchesByUserAndRole.php">
             <xsd:element name="getMatchesByUserAndRole">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -113,7 +113,7 @@
     <binding name="getMatchesByUserAndRoleBinding" type="tns:getMatchesByUserAndRolePort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="getMatchesByUserAndRole">
-            <soap:operation soapAction="url/soap/services/getMatchesByUserAndRole.php#getMatchesByUserAndRole"/>
+            <soap:operation soapAction="http://{{url}}/soap/services/getMatchesByUserAndRole.php#getMatchesByUserAndRole"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -124,7 +124,7 @@
     </binding>
     <service name="getMatchesByUserAndRoleService">
         <port name="getMatchesByUserAndRolePort" binding="tns:getMatchesByUserAndRoleBinding">
-            <soap:address location="url/soap/services/getMatchesByUserAndRole.php"/>
+            <soap:address location="http://{{url}}/soap/services/getMatchesByUserAndRole.php"/>
         </port>
     </service>
     <message name="getMatchesByUserAndRoleIn">

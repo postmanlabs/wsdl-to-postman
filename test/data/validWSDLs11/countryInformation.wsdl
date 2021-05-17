@@ -1,14 +1,10 @@
-This XML file does not appear to have any style information associated with it.
-   The document tree is shown below.
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
-xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-xmlns:tns="http://www.oorsprong.org/websamples.countryinfo" 
-name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:tns="http://www.oorsprong.org/websamples.countryinfo" name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
     <types>
-        <xs:schema elementFormDefault="qualified" 
-        targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://www.oorsprong.org/websamples.countryinfo">
             <xs:complexType name="tContinent">
                 <xs:sequence>
                     <xs:element name="sCode" type="xs:string" />
@@ -53,39 +49,32 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
             </xs:complexType>
             <xs:complexType name="ArrayOftCountryCodeAndName">
                 <xs:sequence>
-                    <xs:element name="tCountryCodeAndName" 
-                    type="tns:tCountryCodeAndName" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tCountryCodeAndName" type="tns:tCountryCodeAndName" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftLanguage">
                 <xs:sequence>
-                    <xs:element name="tLanguage" 
-                    type="tns:tLanguage" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tLanguage" type="tns:tLanguage" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftContinent">
                 <xs:sequence>
-                    <xs:element name="tContinent" 
-                    type="tns:tContinent" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tContinent" type="tns:tContinent" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftCurrency">
                 <xs:sequence>
-                    <xs:element name="tCurrency" 
-                    type="tns:tCurrency" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tCurrency" type="tns:tCurrency" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftCountryCodeAndNameGroupedByContinent">
                 <xs:sequence>
-                    <xs:element name="tCountryCodeAndNameGroupedByContinent" 
-                    type="tns:tCountryCodeAndNameGroupedByContinent" 
-                    minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tCountryCodeAndNameGroupedByContinent" type="tns:tCountryCodeAndNameGroupedByContinent" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="ArrayOftCountryInfo">
                 <xs:sequence>
-                    <xs:element name="tCountryInfo" type="tns:tCountryInfo" 
-                    minOccurs="0" maxOccurs="unbounded" nillable="true" />
+                    <xs:element name="tCountryInfo" type="tns:tCountryInfo" minOccurs="0" maxOccurs="unbounded" nillable="true" />
                 </xs:sequence>
             </xs:complexType>
             <xs:element name="ListOfContinentsByName">
@@ -182,8 +171,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
             <xs:element name="ListOfCountryNamesGroupedByContinentResponse">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="ListOfCountryNamesGroupedByContinentResult" 
-                        type="tns:ArrayOftCountryCodeAndNameGroupedByContinent" />
+                        <xs:element name="ListOfCountryNamesGroupedByContinentResult" type="tns:ArrayOftCountryCodeAndNameGroupedByContinent" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -606,7 +594,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfContinentsByName">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -615,7 +603,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfContinentsByCode">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -624,7 +612,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCurrenciesByName">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -633,7 +621,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCurrenciesByCode">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -642,7 +630,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CurrencyName">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -651,7 +639,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCountryNamesByCode">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -660,7 +648,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCountryNamesByName">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -669,7 +657,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCountryNamesGroupedByContinent">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -678,7 +666,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryName">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -687,7 +675,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryISOCode">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -696,7 +684,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CapitalCity">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -705,7 +693,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryCurrency">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -714,7 +702,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryFlag">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -723,7 +711,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryIntPhoneCode">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -732,7 +720,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="FullCountryInfo">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -741,7 +729,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="FullCountryInfoAllCountries">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -750,7 +738,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountriesUsingCurrency">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -759,7 +747,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfLanguagesByName">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -768,7 +756,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfLanguagesByCode">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -777,7 +765,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="LanguageName">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -786,7 +774,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="LanguageISOCode">
             <soap:operation soapAction="" style="document" />
             <input>
-            <soap:body use="literal" />
+                <soap:body use="literal" />
             </input>
             <output>
                 <soap:body use="literal" />
@@ -798,7 +786,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfContinentsByName">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -807,7 +795,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfContinentsByCode">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -816,7 +804,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCurrenciesByName">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -825,7 +813,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCurrenciesByCode">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -834,7 +822,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CurrencyName">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -843,7 +831,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCountryNamesByCode">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -852,7 +840,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCountryNamesByName">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -861,7 +849,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfCountryNamesGroupedByContinent">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -870,7 +858,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryName">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -879,7 +867,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryISOCode">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -888,7 +876,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CapitalCity">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -897,7 +885,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryCurrency">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -906,7 +894,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryFlag">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -915,7 +903,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountryIntPhoneCode">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -924,7 +912,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="FullCountryInfo">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -933,7 +921,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="FullCountryInfoAllCountries">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -942,7 +930,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="CountriesUsingCurrency">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -951,7 +939,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfLanguagesByName">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -960,7 +948,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="ListOfLanguagesByCode">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -969,7 +957,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="LanguageName">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
@@ -978,7 +966,7 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
         <operation name="LanguageISOCode">
             <soap12:operation soapAction="" style="document" />
             <input>
-            <soap12:body use="literal" />
+                <soap12:body use="literal" />
             </input>
             <output>
                 <soap12:body use="literal" />
