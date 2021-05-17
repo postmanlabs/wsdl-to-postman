@@ -288,8 +288,8 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function () {
 describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function () {
   it('Should return postmanCollection items definition from wsdlObject.operationsArray', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
-    let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray),
-      urlVariables = mapper.getVariablesFromUrlList(urls),
+    let urls = mapper.getUrlDataFromOperations(wsdlMockObject.operationsArray),
+      urlVariables = mapper.getVariablesFromUrlDataList(urls),
       items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray, urlVariables),
       requests;
     expect(items).to.be.an('array');
@@ -304,31 +304,41 @@ describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function () 
   });
 });
 
-describe('WsdlToPostmanCollectionMapper getUrlFromOperations', function () {
+describe('WsdlToPostmanCollectionMapper getUrlDataFromOperations', function () {
   it('Should an array of urls', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
-    let urls = mapper.getUrlFromOperations(wsdlMockObject.operationsArray);
-    expect(urls).to.be.an('array');
+    let urlsData = mapper.getUrlDataFromOperations(wsdlMockObject.operationsArray);
+    expect(urlsData).to.be.an('array');
+    urlsData.forEach((urlData) => {
+      expect(urlData).to.be.an('object').to.include.all.keys('portName', 'url');
+    });
   });
 });
 
-describe('WsdlToPostmanCollectionMapper getVariablesFromUrlList', function () {
+describe('WsdlToPostmanCollectionMapper getVariablesFromUrlDataList', function () {
   it('Should return an array of objects with format {key, value}', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
-      urls = [
-        'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-        'https://app.flowkey.com/browse/category/rock',
-        'https://heasarc.gsfc.nasa.gov/lheasoft/download.html'
+      urlsData = [
+        {
+          url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+          portName: 'NumberConversionSoap'
+        },
+        {
+          url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
+          portName: 'NumberConversionSoap12'
+        }
       ];
-    let variables = mapper.getVariablesFromUrlList(urls);
+    let variables = mapper.getVariablesFromUrlDataList(urlsData);
     expect(variables).to.be.an('array');
     variables.forEach((variable) => {
       expect(variable).to.be.an('object')
         .to.include.all.keys('key', 'value');
     });
+    expect(variables[0].key).to.equal('NumberConversionSoapBaseUrl');
+    expect(variables[1].key).to.equal('NumberConversionSoap12BaseUrl');
     expect(variables[0].value).to.equal('https://www.dataaccess.com');
-    expect(variables[1].value).to.equal('https://app.flowkey.com');
-    expect(variables[2].value).to.equal('https://heasarc.gsfc.nasa.gov');
+    expect(variables[1].value).to.equal('https://www.dataaccess.com');
+
   });
 });
 
