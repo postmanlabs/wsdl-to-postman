@@ -1194,7 +1194,7 @@ describe('validateBody method', function () {
     });
   });
 
-  it('Should have a mismatch when a response endpoint has empty body', function () {
+  it('Should have a mismatch when an endpoint response\'s  has empty body', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyLess,
@@ -1358,7 +1358,7 @@ describe('validateBody method', function () {
   });
 
   it('Shouldn\'t have a mismatch when called with empty tag with spaces between' +
-  ' and option validationPropertiesToIgnore has "BODY"', function () {
+  ' and option validationPropertiesToIgnore has "RESPONSE_BODY"', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         getMatchDetailsCollectionItems,
@@ -1390,6 +1390,243 @@ describe('validateBody method', function () {
       },
       missingEndpoints: [
       ]
+    });
+  });
+
+  it('Shouldn\'t have a mismatch when a response endpoint has not an required field in body' +
+    ' and option validationPropertiesToIgnore has "RESPONSE_BODY"', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsResponseBodyIncomplete,
+        numberToWordsWSDLObject, new XMLParser(),
+        { validationPropertiesToIgnore: ['RESPONSE_BODY'] }
+      );
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: true,
+      requests: {
+        '18403328-4213-4c3e-b0e9-b21a636697c3': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToDollars',
+            mismatches: [],
+            responses: {
+              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+        },
+        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToWords',
+            mismatches: [],
+            responses: {
+              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+        },
+        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToDollars',
+            mismatches: [],
+            responses: {
+              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+        },
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToWords',
+            mismatches: [],
+            responses: {
+              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+        }
+      }
+    });
+  });
+
+  it('Shouldn\'t have a mismatch when a response endpoint has more fields than schema' +
+  ' and option validationPropertiesToIgnore has "RESPONSE_BODY"', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsResponseBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        { validationPropertiesToIgnore: ['RESPONSE_BODY'] }
+      );
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: true,
+      requests: {
+        '18403328-4213-4c3e-b0e9-b21a636697c3': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToDollars',
+            mismatches: [],
+            responses: {
+              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+        },
+        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToWords',
+            mismatches: [],
+            responses: {
+              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+        },
+        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToDollars',
+            mismatches: [],
+            responses: {
+              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+        },
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToWords',
+            mismatches: [],
+            responses: {
+              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+        }
+      }
+    });
+  });
+
+  it('Should have a mismatch when an endpoint response\'s  has empty body' +
+  ' and option validationPropertiesToIgnore has "RESPONSE_BODY"', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsResponseBodyLess,
+        numberToWordsWSDLObject, new XMLParser(),
+        { validationPropertiesToIgnore: ['RESPONSE_BODY'] }
+      );
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: true,
+      requests: {
+        '18403328-4213-4c3e-b0e9-b21a636697c3': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToDollars',
+            mismatches: [],
+            responses: {
+              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+        },
+        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToWords',
+            mismatches: [],
+            responses: {
+              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+        },
+        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToDollars',
+            mismatches: [],
+            responses: {
+              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+        },
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToWords',
+            mismatches: [],
+            responses: {
+              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+        }
+      }
     });
   });
 });
@@ -1492,6 +1729,83 @@ describe('soapMethodValidation', function () {
                 'transactionJsonPath': '$.request.method'
               }
             ],
+            responses: {
+              'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
+                id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+        }
+      }
+    });
+  });
+
+  it('Shouldn\'t  have a mismatch when item request has a different method than POST in a /soap12 request' +
+  ' and option validationPropertiesToIgnore has "HTTP_METHOD"', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
+        numberToWordsWSDLObject, new XMLParser(),
+        { validationPropertiesToIgnore: ['SOAP_METHOD'] });
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: true,
+      requests: {
+        '18403328-4213-4c3e-b0e9-b21a636697c3': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToDollars',
+            mismatches: [],
+            responses: {
+              '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
+                id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+        },
+        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap12 NumberToWords',
+            mismatches: [],
+            responses: {
+              'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
+                id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+        },
+        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToDollars',
+            mismatches: [],
+            responses: {
+              '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
+                id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
+                matched: true,
+                mismatches: []
+              }
+            }
+          }],
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+        },
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap NumberToWords',
+            mismatches: [],
             responses: {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
                 id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
