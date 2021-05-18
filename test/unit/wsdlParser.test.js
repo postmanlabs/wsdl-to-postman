@@ -1271,7 +1271,7 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
       expect(wsdlObject.allNameSpaces).to.be.an('array');
       expect(wsdlObject.allNameSpaces.length).to.equal(6);
       xmlns = wsdlObject.allNameSpaces.find((namespace) => {
-        return namespace.url === parser.informationService.getWSDLNamespaceURL();
+        return namespace.url === parser.informationService.WSDLNamespaceURL;
       });
       expect(xmlns.isDefault).to.equal(true);
       // asserts on namespaces
@@ -1348,7 +1348,7 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
       expect(wsdlObject.allNameSpaces).to.be.an('array');
       expect(wsdlObject.allNameSpaces.length).to.equal(7);
       xmlns = wsdlObject.allNameSpaces.find((namespace) => {
-        return namespace.url === informationService.getWSDLNamespaceURL();
+        return namespace.url === informationService.WSDLNamespaceURL;
       });
       expect(xmlns.isDefault).to.equal(true);
       // asserts on namespaces

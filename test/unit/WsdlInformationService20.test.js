@@ -182,7 +182,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
     const informationService = new WsdlInformationService20(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(WSDL_SAMPLE);
-    services = getServices(parsed, informationService.getRootTagName());
+    services = getServices(parsed, informationService.RootTagName);
     operation = informationService.getAbstractOperationByName('reservationInterface',
       'opCheckAvailability', parsed, '');
     expect(operation).to.be.an('object');
@@ -193,7 +193,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
     const informationService = new WsdlInformationService20(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(WSDL_SAMPLE_AXIS);
-    services = getServices(parsed, informationService.getRootTagName());
+    services = getServices(parsed, informationService.RootTagName);
     operation = informationService.getAbstractOperationByName('ServiceInterface',
       'hi', parsed, 'wsdl2:');
     expect(operation).to.be.an('object');
@@ -352,7 +352,7 @@ describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
       let parsed = xmlParser.parseToObject(WSDL_SAMPLE),
         binding = getBindings(
           parsed,
-          informationService.getRootTagName()
+          informationService.RootTagName
         )[0];
       informationService.getBindingInfoFromBindingTag(binding, undefined, undefined);
       assert.fail('we expected an error');
@@ -370,7 +370,7 @@ describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
     let parsed = xmlParser.parseToObject(WSDL_SAMPLE),
       services = getServices(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       ),
       serviceEndpoint = informationService.getServiceAndExpossedInfoByBindingName(
         'reservationSOAPBinding',
@@ -387,7 +387,7 @@ describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
     let parsed = xmlParser.parseToObject(WSDL_SAMPLE_AXIS),
       services = getServices(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       ),
       serviceEndpoint = informationService.getServiceAndExpossedInfoByBindingName(
         'SayHelloSoap11Binding',
