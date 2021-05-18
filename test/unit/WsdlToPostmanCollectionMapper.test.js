@@ -226,6 +226,7 @@ describe('WsdlToPostmanCollectionMapper constructor', function () {
       let mapper = new WsdlToPostmanCollectionMapper(nullWsdl);
       assert.fail('We expect an error');
       return mapper;
+
     }
     catch (error) {
       expect(error.message).to.equal(expectedMessage);

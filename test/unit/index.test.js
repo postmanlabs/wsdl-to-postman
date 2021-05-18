@@ -13,7 +13,7 @@ describe('Index getOptions', function () {
   it('Should return external options when called without parameters', function () {
     const options = getOptions();
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(2);
+    expect(options).to.not.be.empty;
   });
 });
 

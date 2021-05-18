@@ -700,7 +700,7 @@ describe('Validate Headers', function () {
   });
 
   it('Should not return bad header mismatch when validateContentType option is set explicitly on false' +
-  ' and content-type header is not text/xml', function () {
+    ' and content-type header is not text/xml', function () {
     const options = {
         validateContentType: false
       },
@@ -819,7 +819,7 @@ describe('validateBody method', function () {
       return newMismatch;
     },
     getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch, type = 'request') => {
-      let newExpected = Object.assign({}, expectedBase);
+      let newExpected = JSON.parse(JSON.stringify(expectedBase));
       if (type === 'request') {
         newExpected.matched = false;
         newExpected.requests[itemId].endpoints[0].mismatches = [mismatch];
@@ -907,6 +907,7 @@ describe('validateBody method', function () {
         new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
+
   it('Should have a mismatch when a request endpoint has a type error in body', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -1279,7 +1280,7 @@ describe('validateBody method', function () {
     });
   });
 
-  it('Should have a mismatch sdfdsfdfdf', function () {
+  it('Should have a mismatch when called with empty tag with spaces between', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         getMatchDetailsCollectionItems,
@@ -1312,6 +1313,75 @@ describe('validateBody method', function () {
                         ' because the content type is empty.\n'
                     }
                   ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      missingEndpoints: [
+      ]
+    });
+  });
+
+  it('Shouldn\'t have a mismatch when is a type error in body and option validationPropertiesToIgnore has "BODY"',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          numberToWordsCollectionItemsBodyWrongType,
+          numberToWordsWSDLObject, new XMLParser(),
+          { validationPropertiesToIgnore: ['BODY'] }
+        );
+      expect(result).to.be.an('object').and.to.deep.include(expectedBase);
+    });
+
+  it('Shouldn\'t have a mismatch when a request endpoint body has not complete all required fields' +
+    ' and option validationPropertiesToIgnore has "BODY"', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyIncomplete,
+        numberToWordsWSDLObject, new XMLParser(),
+        { validationPropertiesToIgnore: ['BODY'] }
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expectedBase);
+  });
+
+  it('Shouldn\'t have a mismatch when a request endpoint body has more fields than expected' +
+    ' and option validationPropertiesToIgnore has "BODY"', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        { validationPropertiesToIgnore: ['BODY'] }
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expectedBase);
+  });
+
+  it('Shouldn\'t have a mismatch when called with empty tag with spaces between' +
+  ' and option validationPropertiesToIgnore has "BODY"', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        getMatchDetailsCollectionItems,
+        getMatchDetailsWSDLObject, new XMLParser(),
+        { validationPropertiesToIgnore: ['RESPONSE_BODY'] }
+      );
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: true,
+      requests: {
+        '1a8221fe-3d87-4a7f-8667-483b75b809e0': {
+          requestId: '1a8221fe-3d87-4a7f-8667-483b75b809e0',
+          endpoints: [
+            {
+              matched: true,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap getMatchDetails',
+              mismatches: [
+              ],
+              responses: {
+                '5bd6970c-5011-4fb6-941e-fc534057be74': {
+                  id: '5bd6970c-5011-4fb6-941e-fc534057be74',
+                  matched: true,
+                  mismatches: []
                 }
               }
             }
