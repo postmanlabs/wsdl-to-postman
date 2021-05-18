@@ -6,7 +6,12 @@ const expect = require('chai').expect,
   validWSDLs20 = 'test/data/validWSDLs20',
   fs = require('fs'),
   getAllTransactions = require('../../lib/utils/getAllTransactions').getAllTransactions,
-  async = require('async');
+  async = require('async'),
+  optionIds = [
+    'folderStrategy',
+    'validateHeader',
+    'validationPropertiesToIgnore'
+  ];
 
 describe('SchemaPack convert unit test WSDL 1.1', function () {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
@@ -168,16 +173,27 @@ describe('SchemaPack convert unit test WSDL 2.0', function () {
 
 describe('SchemaPack getOptions', function () {
 
-  it('Should return external options when called without parameters', function () {
+  it('must have a valid structure', function () {
     const options = SchemaPack.getOptions();
-    expect(options).to.be.an('array');
-    expect(options.length).to.eq(2);
+    options.forEach((option) => {
+      expect(option).to.have.property('name');
+      expect(option).to.have.property('id');
+      expect(option).to.have.property('type');
+      expect(option).to.have.property('default');
+      expect(option).to.have.property('description');
+    });
+  });
+
+  it('Should return external options when called without parameters', function () {
+    SchemaPack.getOptions().forEach((option) => {
+      expect(option.id).to.be.oneOf(optionIds);
+    });
   });
 
   it('Should return external options when called with mode = document', function () {
     const options = SchemaPack.getOptions('document');
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(2);
+    expect(options.length).to.eq(3);
   });
 
   it('Should return external options when called with mode = use', function () {
@@ -188,19 +204,21 @@ describe('SchemaPack getOptions', function () {
   });
 
   it('Should return external options when called with criteria usage conversion', function () {
-    const options = SchemaPack.getOptions({
+    SchemaPack.getOptions({
       usage: ['CONVERSION']
+    }).forEach((option) => {
+      expect(option.id).to.be.oneOf(optionIds);
+      expect(option.usage).to.include('CONVERSION');
     });
-    expect(options).to.be.an('array');
-    expect(options.length).to.eq(1);
   });
 
   it('Should return external options when called with criteria usage validation', function () {
-    const options = SchemaPack.getOptions({
+    SchemaPack.getOptions({
       usage: ['VALIDATION']
+    }).forEach((option) => {
+      expect(option.id).to.be.oneOf(optionIds);
+      expect(option.usage).to.include('VALIDATION');
     });
-    expect(options).to.be.an('array');
-    expect(options.length).to.eq(1);
   });
 
   it('Should return external options when called with mode use and usage conversion', function () {
@@ -223,7 +241,16 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode document and usage not an object', function () {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(2);
+    expect(options.length).to.eq(3);
+  });
+
+  it('Should return default empty array in validationPropertiesToIgnore', function () {
+    const options = SchemaPack.getOptions('use', {
+      usage: ['VALIDATION']
+    });
+    expect(options).to.be.an('object');
+    expect(options).to.haveOwnProperty('validationPropertiesToIgnore');
+    expect(options.validationPropertiesToIgnore).to.be.empty;
   });
 
 });

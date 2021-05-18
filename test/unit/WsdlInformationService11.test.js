@@ -418,7 +418,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
     expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
@@ -502,7 +502,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
     expect(bindingInfo.protocol).to.equal(SOAP12_PROTOCOL);
@@ -577,7 +577,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -725,7 +725,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       let parsed = xmlParser.parseToObject(simpleInput),
         binding = getBindings(
           parsed,
-          informationService.getRootTagName()
+          informationService.RootTagName
         )[0];
       informationService.getBindingInfoFromBindingTag(binding, undefined, undefined);
       assert.fail('we expected an error');
@@ -806,7 +806,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, null);
     expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
@@ -892,7 +892,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace),
       operation = {};
@@ -978,7 +978,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace),
       operation = {};
@@ -1075,7 +1075,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -1177,7 +1177,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -1285,7 +1285,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -1388,7 +1388,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     let parsed = xmlParser.parseToObject(simpleInput),
       binding = getBindings(
         parsed,
-        informationService.getRootTagName()
+        informationService.RootTagName
       )[0],
       bindingInfo = informationService.getBindingInfoFromBindingTag(
         binding,
@@ -1485,7 +1485,7 @@ describe('WSDL 1.1 parser getServiceAndExpossedInfoByBindingName', function () {
       informationService = new WsdlInformationService11(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(simpleInput);
-    services = getServices(parsed, informationService.getRootTagName());
+    services = getServices(parsed, informationService.RootTagName);
     service = informationService.getServiceAndExpossedInfoByBindingName(
       'NumberConversionSoapBinding',
       services,
@@ -1665,7 +1665,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       informationService = new WsdlInformationService11(),
       xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(simpleInput);
-    services = getServices(parsed, informationService.getRootTagName());
+    services = getServices(parsed, informationService.RootTagName);
     service = informationService.getAbstractOperationByName('NumberConversionSoapType',
       'NumberToWords', parsed, '');
     expect(service).to.be.an('object');
