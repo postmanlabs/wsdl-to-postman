@@ -47,6 +47,9 @@
     "mocha": "8.2.0",
     "nyc": "15.1.0"
   },
+  "engines": {
+    "node": ">=8"
+  },
   "dependencies": {
     "ajv": "8.1.0",
     "browserify-fs": "1.0.0",
