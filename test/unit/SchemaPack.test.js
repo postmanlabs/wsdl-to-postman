@@ -255,7 +255,7 @@ describe('SchemaPack getOptions', function () {
 
 });
 
-describe('validateTransactions method', function () {
+describe('validateTransaction method', function () {
   const notIdCollectionItems = require('./../data/transactionsValidation/notIdCollectionItems.json');
   it('Should return an error when transactions id is null', function () {
     const
@@ -264,7 +264,7 @@ describe('validateTransactions method', function () {
         type: 'file',
         data: VALID_WSDL_PATH
       }, {});
-    schemaPack.validateTransactions(notIdCollectionItems, (error) => {
+    schemaPack.validateTransaction(notIdCollectionItems, (error) => {
       expect(error.message).to.equal('Invalid syntax provided for requestList');
     });
   });
@@ -289,7 +289,7 @@ describe('validateTransactions method', function () {
         historyRequest.request.url.host = 'http://www.dneonline.com';
       });
 
-      schemaPack.validateTransactions(historyRequests, (error, result) => {
+      schemaPack.validateTransaction(historyRequests, (error, result) => {
         expect(error).to.be.null;
         expect(result).to.be.an('object');
       });

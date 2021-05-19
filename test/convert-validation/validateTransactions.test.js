@@ -22,32 +22,32 @@ describe('Test validate Transactions method in SchemaPack', function () {
   }, options);
 
   it('Should return an error when the Requests are null in the Collection', function () {
-    schemaPack.validateTransactions(nullRequestCollectionItems, (error) => {
+    schemaPack.validateTransaction(nullRequestCollectionItems, (error) => {
       expect(error.message).to.equal('Invalid syntax provided for requestList');
     });
   });
 
   it('Should return an error when there is not Id Collection', function () {
-    schemaPack.validateTransactions(notIdCollectionItems, (error) => {
+    schemaPack.validateTransaction(notIdCollectionItems, (error) => {
       expect(error.message).to.equal('Required field is null, empty or undefined');
     });
   });
 
   it('Should return an error when the Requests are empty in the Collection', function () {
-    schemaPack.validateTransactions(emptyRequestCollectionItems, (error) => {
+    schemaPack.validateTransaction(emptyRequestCollectionItems, (error) => {
       expect(error.message).to.equal('Required field is null, empty or undefined');
     });
   });
 
   it('Should validate when validateContentType option is true ' +
-    'and Header Content-Type was not found in the transaction', function() {
+    'and Header Content-Type was not found in the transaction', function () {
     const options = {
         validateContentType: true
       },
       schemaPackWithOptions = new SchemaPack({
         type: 'string', data: fileContent
       }, options);
-    schemaPackWithOptions.validateTransactions(numberToWordsCollectionItemsNoCTHeader, (error, result) => {
+    schemaPackWithOptions.validateTransaction(numberToWordsCollectionItemsNoCTHeader, (error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object').and.to.deep.include({
         matched: false,
@@ -134,14 +134,14 @@ describe('Test validate Transactions method in SchemaPack', function () {
   });
 
   it('Should validate when validateContentType option is true' +
-    ' and Header is other than text/xml', function() {
+    ' and Header is other than text/xml', function () {
     const options = {
         validateContentType: true
       },
       schemaPackWithOptions = new SchemaPack({
         type: 'string', data: fileContent
       }, options);
-    schemaPackWithOptions.validateTransactions(numberToWordsCollectionItemsCTHeaderNXML, (error, result) => {
+    schemaPackWithOptions.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML, (error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object').and.to.deep.include({
         matched: false,
@@ -230,8 +230,8 @@ describe('Test validate Transactions method in SchemaPack', function () {
   });
 
   it('Should not validate header when validateContentType option is not provided (false by default) ' +
-    'and Header Content-Type was not found in the transaction', function() {
-    schemaPack.validateTransactions(numberToWordsCollectionItemsNoCTHeader, (error, result) => {
+    'and Header Content-Type was not found in the transaction', function () {
+    schemaPack.validateTransaction(numberToWordsCollectionItemsNoCTHeader, (error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object').and.to.deep.include({
         matched: true,
@@ -306,8 +306,8 @@ describe('Test validate Transactions method in SchemaPack', function () {
   });
 
   it('Should not validate header when validateContentType option is not provided (false by default) ' +
-    ' and Header is other than text/xml', function() {
-    schemaPack.validateTransactions(numberToWordsCollectionItemsCTHeaderNXML, (error, result) => {
+    ' and Header is other than text/xml', function () {
+    schemaPack.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML, (error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object').and.to.deep.include({
         matched: true,
@@ -386,7 +386,7 @@ describe('Test validate Transactions method in SchemaPack', function () {
       expect(error).to.be.null;
       expect(result).to.be.an('object');
 
-      schemaPack.validateTransactions(numberToWordsCollectionItems, (error, result) => {
+      schemaPack.validateTransaction(numberToWordsCollectionItems, (error, result) => {
         expect(error).to.be.null;
         expect(result).to.be.an('object');
       });
