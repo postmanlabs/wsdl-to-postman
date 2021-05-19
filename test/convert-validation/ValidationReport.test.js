@@ -39,7 +39,7 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
           historyRequest.request.url.host = collectionResult.output[0].data.variable[0].value;
         });
 
-        schemaPack.validateTransactions(historyRequests, (error, result) => {
+        schemaPack.validateTransaction(historyRequests, (error, result) => {
           if (error) {
             console.error(`Test Failed ${file}`);
             fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify(error));
