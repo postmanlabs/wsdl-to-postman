@@ -15,7 +15,7 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
   } = require('../../lib/XMLParser');
 
 
-describe('validateBody method', function () {
+describe('validateBody method with options', function () {
   const bodyMismatchMockWithReason = (reason, schemaJsonPath) => {
       let newMismatch = Object.assign(
         {},
