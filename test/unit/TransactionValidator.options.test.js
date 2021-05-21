@@ -4,6 +4,8 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
     require('./../data/transactionsValidation/numberToWordsCollectionItemsPMVariable.json'),
   calculatorCollectionItemsPMVariable =
     require('./../data/transactionsValidation/calculatorCollectionItemsPMVariable.json'),
+  numberToWordsCollectionItemsBodyMoreFields =
+    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyMoreFields.json'),
   {
     expect
   } = require('chai'),
@@ -15,8 +17,6 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
   } = require('../../lib/XMLParser'),
   numberToWordsCollectionItemsCTHeaderPMVariable =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsCTHeaderPMVariable.json'),
-
-
   expectedBase = {
     matched: true,
     requests: {
@@ -360,6 +360,53 @@ describe('validateBody method with options', function () {
           { ignoreUnresolvedVariables: true }
         );
       expect(result).to.be.an('object').and.to.deep.include(expectedCalculatorBase);
+    });
+
+  it('Should have a mismatch when a request msg has more than expected fields and ' +
+  'showMissingSchemaErrors is not sent', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        {}
+      ),
+      mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+          '//operation[@name="NumberToWords"]')
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Shouldn\'t have a mismatch when a request msg has more than expected fields and showMissingSchemaErrors is false',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          numberToWordsCollectionItemsBodyMoreFields,
+          numberToWordsWSDLObject, new XMLParser(),
+          { showMissingSchemaErrors: false }
+        );
+      expect(result).to.be.an('object').and.to.deep.include(expectedBase);
+    });
+
+  it('Should have a mismatch when a request msg has more than expected fields and showMissingSchemaErrors is true',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          numberToWordsCollectionItemsBodyMoreFields,
+          numberToWordsWSDLObject, new XMLParser(),
+          {}
+        ),
+        mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+        expected = getExpectedWithMismatchInEndpoint(
+          expectedBase,
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+          bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToWords"]')
+        );
+      expect(result).to.be.an('object').and.to.deep.include(expected);
     });
 
 });
