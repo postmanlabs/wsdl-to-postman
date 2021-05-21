@@ -10,7 +10,8 @@ const expect = require('chai').expect,
   optionIds = [
     'folderStrategy',
     'validateHeader',
-    'validationPropertiesToIgnore'
+    'validationPropertiesToIgnore',
+    'ignoreUnresolvedVariables'
   ];
 
 describe('SchemaPack convert unit test WSDL 1.1', function () {
@@ -193,7 +194,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode = document', function () {
     const options = SchemaPack.getOptions('document');
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(3);
+    expect(options.length).to.eq(4);
   });
 
   it('Should return external options when called with mode = use', function () {
@@ -241,7 +242,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode document and usage not an object', function () {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(3);
+    expect(options.length).to.eq(4);
   });
 
   it('Should return default empty array in validationPropertiesToIgnore', function () {
@@ -250,6 +251,7 @@ describe('SchemaPack getOptions', function () {
     });
     expect(options).to.be.an('object');
     expect(options).to.haveOwnProperty('validationPropertiesToIgnore');
+    expect(options).to.haveOwnProperty('ignoreUnresolvedVariables');
     expect(options.validationPropertiesToIgnore).to.be.empty;
   });
 
