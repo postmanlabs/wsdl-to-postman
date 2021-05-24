@@ -1759,13 +1759,13 @@ describe('WSDL parser common getElementsFromWSDL', function () {
       informationService = new WsdlInformationService20();
 
     let parsed = parser.parseToObject(WSDL_SAMPLE),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://greath.example.com/2004/wsdl/resSvc',
@@ -1775,8 +1775,10 @@ describe('WSDL parser common getElementsFromWSDL', function () {
         parsed,
         '',
         informationService.RootTagName,
-        schemaNameSpace,
-        thisNameSpace
+        {
+          schemaNamespace,
+          tnsNamespace
+        }
       );
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(3);
@@ -1787,13 +1789,13 @@ describe('WSDL parser common getElementsFromWSDL', function () {
       informationService = new WsdlInformationService20();
 
     let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://axis2.org',
@@ -1803,8 +1805,10 @@ describe('WSDL parser common getElementsFromWSDL', function () {
         parsed,
         'wsdl2:',
         informationService.RootTagName,
-        schemaNameSpace,
-        thisNameSpace
+        {
+          schemaNamespace,
+          tnsNamespace
+        }
       );
 
     expect(elements).to.be.an('array');

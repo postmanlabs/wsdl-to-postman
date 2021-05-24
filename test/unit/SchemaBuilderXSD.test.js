@@ -33,13 +33,13 @@ describe('SchemaBuilderXSD getElements', function () {
   it('should get schema elements', function () {
     const builder = new SchemaBuilderXSD(),
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://tempuri.org/',
@@ -47,8 +47,10 @@ describe('SchemaBuilderXSD getElements', function () {
       },
       fileContent = fs.readFileSync(validSchemaFolder + '/coreFileInput.wsdl', 'utf8'),
       parsedXml = parser.parseToObject(fileContent),
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace,
-        thisNameSpace, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      }, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.a('array');
     expect(elements.length).to.eq(6);
 
@@ -106,13 +108,13 @@ describe('SchemaBuilderXSD getElements', function () {
       </types>
     </definitions>`,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://tempuri.org/',
@@ -120,8 +122,10 @@ describe('SchemaBuilderXSD getElements', function () {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace,
-        thisNameSpace, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      }, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
     expect(elements).to.be.empty;
   });
@@ -148,13 +152,13 @@ describe('SchemaBuilderXSD getElements', function () {
         </types>
       </definitions>`,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://www.dataaccess.com/webservicesserver/',
@@ -163,8 +167,10 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      }, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -205,13 +211,13 @@ describe('SchemaBuilderXSD getElements', function () {
   it('should get an array of types with 4 root and 1 child per root', function () {
     const simpleInput = fs.readFileSync(validSchemaFolder + '/4Root1ChildPerRoot.wsdl', 'utf8'),
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://www.dataaccess.com/webservicesserver/',
@@ -219,8 +225,10 @@ describe('SchemaBuilderXSD getElements', function () {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      }, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -292,13 +300,13 @@ describe('SchemaBuilderXSD getElements', function () {
   it('should get an array of types with 1 root and 1 complex type', function () {
     const simpleInput = fs.readFileSync(validSchemaFolder + '/1Root1Complextype.wsdl', 'utf8'),
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://tempuri.org/',
@@ -306,8 +314,11 @@ describe('SchemaBuilderXSD getElements', function () {
       },
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
     expect(elements[1].name).to.equal('TestCustomModel');
@@ -383,13 +394,13 @@ describe('SchemaBuilderXSD getElements', function () {
      </types>
   </definitions>`,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://www.oorsprong.org/websamples.countryinfo',
@@ -397,8 +408,11 @@ describe('SchemaBuilderXSD getElements', function () {
       },
       builder = new SchemaBuilderXSD();
     let parsed = parser.parseToObject(simpleInput),
-      elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsed, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
     expect(elements[0].name).to.equal('ListOfCurrenciesByCodeResponse');
@@ -485,13 +499,13 @@ describe('SchemaBuilderXSD getElements', function () {
     </types>
   </definitions>`,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'url/soap/services/getMatchClassesForTournament.php',
@@ -499,8 +513,11 @@ describe('SchemaBuilderXSD getElements', function () {
       },
       builder = new SchemaBuilderXSD();
     let parsed = parser.parseToObject(simpleInput),
-      elements = builder.getElements(parsed, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsed, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
     expect(elements[1].name).to.equal('getMatchClassesForTournamentResponse');
@@ -528,13 +545,13 @@ describe('SchemaBuilderXSD getElements', function () {
   });
 
   it('should throw an error when parsed is undefined', function () {
-    const schemaNameSpace = {
+    const schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://www.oorsprong.org/websamples.countryinfo',
@@ -542,8 +559,11 @@ describe('SchemaBuilderXSD getElements', function () {
       },
       builder = new SchemaBuilderXSD();
     try {
-      builder.getElements(undefined, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      builder.getElements(undefined, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -552,13 +572,13 @@ describe('SchemaBuilderXSD getElements', function () {
   });
 
   it('should throw an error when parsed is null', function () {
-    const schemaNameSpace = {
+    const schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://www.oorsprong.org/websamples.countryinfo',
@@ -566,8 +586,11 @@ describe('SchemaBuilderXSD getElements', function () {
       },
       builder = new SchemaBuilderXSD();
     try {
-      builder.getElements(null, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      builder.getElements(null, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -608,13 +631,13 @@ describe('SchemaBuilderXSD getElements', function () {
         </types>
       </definitions>`,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://www.dataaccess.com/webservicesserver/',
@@ -623,8 +646,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -682,13 +708,13 @@ describe('SchemaBuilderXSD getElements', function () {
         </types>
       </definitions>`,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://www.dataaccess.com/webservicesserver/',
@@ -697,8 +723,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -751,13 +780,13 @@ describe('SchemaBuilderXSD getElements', function () {
         </types> 
         </definitions > `,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 's',
         prefixFilter: 's:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'https://geoservices.tamu.edu/',
@@ -766,8 +795,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -817,13 +849,13 @@ describe('SchemaBuilderXSD getElements', function () {
         </types> 
         </definitions > `,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 's',
         prefixFilter: 's:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'https://geoservices.tamu.edu/',
@@ -832,8 +864,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -901,13 +936,13 @@ describe('SchemaBuilderXSD getElements', function () {
     </wsdl:message>
         </wsdl:definitions > `,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 's',
         prefixFilter: 's:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'https://geoservices.tamu.edu/',
@@ -916,8 +951,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
 
@@ -978,13 +1016,13 @@ describe('SchemaBuilderXSD getElements', function () {
     </wsdl:message>
         </wsdl:definitions > `,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 's',
         prefixFilter: 's:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'https://geoservices.tamu.edu/',
@@ -993,8 +1031,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
     expect(elements).to.be.an('array');
 
     expect(elements[0].name).to.equal('foobar');
@@ -1051,13 +1092,13 @@ describe('SchemaBuilderXSD getElements', function () {
 </definitions>
 `,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://tempuri.org/',
@@ -1066,8 +1107,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
     expect(elements[0].name).to.equal('TestElement');
@@ -1118,13 +1162,13 @@ describe('SchemaBuilderXSD getElements', function () {
 </definitions>
 `,
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xsd',
         prefixFilter: 'xsd:',
         url: 'http://www.w3.org/2001/XMLSchema',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://tempuri.org/',
@@ -1133,8 +1177,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(simpleInput),
 
-      elements = builder.getElements(parsedXml, '', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
     expect(elements[0].name).to.equal('PO');
@@ -1149,13 +1196,13 @@ describe('SchemaBuilderXSD getElements', function () {
     const
       fileContent = fs.readFileSync(validSchemaFolder + '/elementsDependOnElements.wsdl', 'utf8'),
       parser = new XMLParser(),
-      schemaNameSpace = {
+      schemaNamespace = {
         key: 'xs',
         prefixFilter: 'xs:',
         url: 'http://queue.amazonaws.com/doc/2009-02-01/',
         isDefault: false
       },
-      thisNameSpace = {
+      tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
         url: 'http://queue.amazonaws.com/doc/2009-02-01/',
@@ -1164,8 +1211,11 @@ describe('SchemaBuilderXSD getElements', function () {
       builder = new SchemaBuilderXSD();
     let parsedXml = parser.parseToObject(fileContent),
 
-      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', schemaNameSpace, thisNameSpace,
-        PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
 
     expect(elements).to.be.an('array');
     expect(elements[0].name).to.equal('CreateQueueResult');
@@ -1248,7 +1298,7 @@ describe('SchemaBuilderXSD getTypes', function () {
 describe('replaceTagInSchema', function () {
   const
     fileContent = fs.readFileSync(validSchemaFolder + '/replaceAllToSequence.wsdl', 'utf8'),
-    schemaNameSpace = {
+    schemaNamespace = {
       key: 'xsd',
       prefixFilter: 'xsd:',
       url: 'http://www.w3.org/2001/XMLSchema',
@@ -1257,7 +1307,7 @@ describe('replaceTagInSchema', function () {
 
   it('Should switch all tags in document with sequence tags', function () {
     const schemaBuilder = new SchemaBuilderXSD(),
-      result = schemaBuilder.replaceTagInSchema(fileContent, schemaNameSpace, 'all', 'sequence');
+      result = schemaBuilder.replaceTagInSchema(fileContent, schemaNamespace, 'all', 'sequence');
     expect(result.includes('<xsd:all>')).to.equal(false);
   });
 });

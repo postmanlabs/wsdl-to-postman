@@ -461,7 +461,7 @@ describe('WSDLParser assignNamespaces', function () {
     expect(wsdlObject).to.have.all.keys('targetNamespace',
       'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
       'SOAP12Namespace', 'schemaNamespace',
-      'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'log',
+      'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'localSchemaNamespaces', 'log',
       'operationsArray', 'securityPolicyArray',
       'securityPolicyNamespace', 'xmlParsed', 'version');
 
@@ -499,7 +499,7 @@ describe('WSDLParser assignNamespaces', function () {
     expect(wsdlObject).to.have.all.keys('targetNamespace',
       'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
       'SOAP12Namespace', 'schemaNamespace',
-      'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'log',
+      'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'localSchemaNamespaces', 'log',
       'operationsArray', 'securityPolicyArray',
       'securityPolicyNamespace', 'xmlParsed', 'version');
 
@@ -1264,7 +1264,7 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
         'SOAP12Namespace', 'schemaNamespace',
-        'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'log',
+        'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'localSchemaNamespaces', 'log',
         'operationsArray', 'securityPolicyArray',
         'securityPolicyNamespace', 'xmlParsed', 'version');
 
@@ -1341,7 +1341,7 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
         'SOAP12Namespace', 'schemaNamespace',
-        'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'log',
+        'tnsNamespace', 'allNameSpaces', 'documentation', 'fileName', 'localSchemaNamespaces', 'log',
         'operationsArray', 'securityPolicyArray',
         'securityPolicyNamespace', 'xmlParsed', 'version');
 
