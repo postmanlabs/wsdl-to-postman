@@ -336,7 +336,7 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get portypes from object');
+      expect(error.message).to.equal('Cannot get portypes from WSDL');
     }
   });
 });
@@ -655,7 +655,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get binding from object');
+      expect(error.message).to.equal('Cannot get binding from WSDL');
     }
   });
 
@@ -1704,7 +1704,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type from object');
+      expect(error.message).to.equal('Cannot get port type from WSDL');
     }
   });
 

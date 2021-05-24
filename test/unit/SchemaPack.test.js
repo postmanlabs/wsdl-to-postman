@@ -25,11 +25,14 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       }, {});
 
       schemaPack.convert((error, result) => {
-        expect(error).to.be.null;
+        expect(error, error ? error.stack : '').to.be.null;
         expect(result).to.be.an('object');
         expect(result.output).to.be.an('array');
         expect(result.output[0].data).to.be.an('object');
         expect(result.output[0].type).to.equal('collection');
+        if (file === 'failing.wsdl') {
+          fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
+        }
       });
     });
   });
@@ -162,7 +165,7 @@ describe('SchemaPack convert unit test WSDL 2.0', function () {
       }, {});
 
       schemaPack.convert((error, result) => {
-        expect(error).to.be.null;
+        expect(error, error ? error.stack : '').to.be.null;
         expect(result).to.be.an('object');
         expect(result.output).to.be.an('array');
         expect(result.output[0].data).to.be.an('object');

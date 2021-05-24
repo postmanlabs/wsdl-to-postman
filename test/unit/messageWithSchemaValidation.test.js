@@ -221,7 +221,8 @@ describe('Tools from messageWithSchemaValidation', function () {
     it(
       'Should return a schema with base namespace, removed tns and no complexType, tags empty',
       function () {
-        const generatedCleanSchema = getCleanSchema(xmlParsedMock, schemaNamespaceMock, wsdl_version),
+        const generatedCleanSchema = getCleanSchema(xmlParsedMock, { schemaNamespace: schemaNamespaceMock },
+            wsdl_version),
           generatedCleanSchemaToCompare = generatedCleanSchema.replace(/\s/g, ''),
           expectedSchemaToCompare = expectedSchema.replace(/\s/g, '');
         expect(generatedCleanSchemaToCompare).to.be.equal(expectedSchemaToCompare);
@@ -229,7 +230,7 @@ describe('Tools from messageWithSchemaValidation', function () {
 
     it('Should throw an error if parsedXml is not provided', function () {
       try {
-        getCleanSchema(null, schemaNamespaceMock, wsdl_version);
+        getCleanSchema(null, { schemaNamespace: schemaNamespaceMock }, wsdl_version);
         assert.fail('We expect an error');
       }
       catch (error) {
@@ -243,7 +244,7 @@ describe('Tools from messageWithSchemaValidation', function () {
         'operationsArray': [{
           'name': 'NumberToWords',
           'description': `Returns the word corresponding to the positive number passed as parameter. 
-              Limited to quadrillions.`,
+                Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
           'input': {
@@ -328,7 +329,7 @@ describe('Tools from messageWithSchemaValidation', function () {
         }, {
           'name': 'NumberToWords',
           'description': `Returns the word corresponding to the positive number passed as parameter. 
-              Limited to quadrillions.`,
+                Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
           'input': {
