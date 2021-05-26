@@ -912,7 +912,8 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyWrongType,
-        numberToWordsWSDLObject, new XMLParser()
+        numberToWordsWSDLObject, new XMLParser(),
+        {detailedBlobValidation: true}
       ),
       mismatchReason =
         'Element \'ubiNum\': \'WRONG TYPE\' is not a valid value of the atomic type \'xs:unsignedLong\'.\n',
@@ -929,7 +930,8 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyIncomplete,
-        numberToWordsWSDLObject, new XMLParser()
+        numberToWordsWSDLObject, new XMLParser(),
+        {detailedBlobValidation: true}
       ),
       mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -945,7 +947,8 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
-        numberToWordsWSDLObject, new XMLParser()
+        numberToWordsWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true }
       ),
       mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -1025,7 +1028,8 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyIncomplete,
-        numberToWordsWSDLObject, new XMLParser()
+        numberToWordsWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1112,7 +1116,8 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyMoreFields,
-        numberToWordsWSDLObject, new XMLParser()
+        numberToWordsWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1284,7 +1289,8 @@ describe('validateBody method', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         getMatchDetailsCollectionItems,
-        getMatchDetailsWSDLObject, new XMLParser()
+        getMatchDetailsWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
