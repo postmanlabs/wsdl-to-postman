@@ -25,7 +25,7 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
         xmlParsed = xmlParser.parseToObject(xmlDocumentContent),
         schemaToValidate = getCleanSchema(xmlParsed, wsdlObject, version);
 
-      let errors = validateOperationMessagesWithSchema(wsdlObject, schemaToValidate);
+      let errors = validateOperationMessagesWithSchema(wsdlObject, schemaToValidate.cleanSchema);
       expect(errors).to.be.an('array');
       expect(errors.length).to.be.equal(0);
     });
