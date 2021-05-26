@@ -1261,13 +1261,8 @@ describe('SchemaBuilderXSD parseObjectToXML', function () {
 describe('SchemaBuilderXSD getElementsFromType', function () {
   it('should get an error when the object sent is undefined', function () {
     const builder = new SchemaBuilderXSD();
-    try {
-      builder.getElementsFromType('', null, '', '', PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Cannot get elements from undefined or null object');
-    }
+    let elements = builder.getElementsFromType('', null, '', '', PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+    expect(elements.elements.length).to.equal(0);
   });
 });
 
