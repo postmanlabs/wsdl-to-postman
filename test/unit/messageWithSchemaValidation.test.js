@@ -222,7 +222,7 @@ describe('Tools from messageWithSchemaValidation', function () {
       'Should return a schema with base namespace, removed tns and no complexType, tags empty',
       function () {
         const generatedCleanSchema = getCleanSchema(xmlParsedMock, { schemaNamespace: schemaNamespaceMock },
-            wsdl_version),
+            wsdl_version).cleanSchema,
           generatedCleanSchemaToCompare = generatedCleanSchema.replace(/\s/g, ''),
           expectedSchemaToCompare = expectedSchema.replace(/\s/g, '');
         expect(generatedCleanSchemaToCompare).to.be.equal(expectedSchemaToCompare);
