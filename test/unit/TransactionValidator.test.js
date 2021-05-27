@@ -913,7 +913,7 @@ describe('validateBody method', function () {
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyWrongType,
         numberToWordsWSDLObject, new XMLParser(),
-        {detailedBlobValidation: true}
+        { detailedBlobValidation: true }
       ),
       mismatchReason =
         'Element \'ubiNum\': \'WRONG TYPE\' is not a valid value of the atomic type \'xs:unsignedLong\'.\n',
@@ -926,12 +926,13 @@ describe('validateBody method', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Should have a mismatch when a request endpoint body has not complete all required fields', function () {
+  it('Should have a mismatch when a request endpoint body has not complete all required fields ' +
+    'showMissingSchemaErrors option by default (true)', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyIncomplete,
         numberToWordsWSDLObject, new XMLParser(),
-        {detailedBlobValidation: true}
+        { detailedBlobValidation: true }
       ),
       mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -943,12 +944,31 @@ describe('validateBody method', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Should have a mismatch when a request endpoint body has more fields than expected', function () {
+  it('Should have a mismatch when a request endpoint body has not complete all required fields ' +
+    'showMissingSchemaErrors option set as false', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyIncomplete,
+        numberToWordsWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true, showMissingSchemaErrors: false }
+      ),
+      mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+          '//operation[@name="NumberToWords"]')
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a request endpoint body has more fields than expected ' +
+    'and showMissingSchemaErrors is set as default (true)', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        { detailedBlobValidation: true }
       ),
       mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -959,6 +979,17 @@ describe('validateBody method', function () {
           '//operation[@name="NumberToWords"]')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should not have any mismatch when a request endpoint body has more fields than expected ' +
+    'and showMissingSchemaErrors is set in false', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true, showMissingSchemaErrors: false }
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
   it('Should have a mismatch when a request endpoint has not body', function () {
@@ -1029,7 +1060,7 @@ describe('validateBody method', function () {
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyIncomplete,
         numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        { detailedBlobValidation: true }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1117,7 +1148,7 @@ describe('validateBody method', function () {
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        { detailedBlobValidation: true }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1290,7 +1321,7 @@ describe('validateBody method', function () {
       result = transactionValidator.validateTransaction(
         getMatchDetailsCollectionItems,
         getMatchDetailsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        { detailedBlobValidation: true }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
