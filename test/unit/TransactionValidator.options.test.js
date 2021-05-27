@@ -6,6 +6,10 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
     require('./../data/transactionsValidation/calculatorCollectionItemsPMVariable.json'),
   numberToWordsCollectionItemsBodyMoreFields =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyMoreFields.json'),
+  numberToWordsCollectionItemsBodyIncomplete =
+    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyIncomplete.json'),
+  numberToWordsCollectionItemsBodyWrongType =
+    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyWrongType.json'),
   {
     expect
   } = require('chai'),
@@ -255,14 +259,14 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
   };
 
 describe('validateBody method with options', function () {
-  const bodyMismatchMockWithReason = (reason, schemaJsonPath) => {
+  const bodyMismatchMockWithReason = (reason, schemaJsonPath, reasonCode = 'INVALID_BODY') => {
       let newMismatch = Object.assign(
         {},
         {
           property: 'BODY',
           transactionJsonPath: '$.request.body',
           schemaJsonPath: schemaJsonPath,
-          reasonCode: 'INVALID_BODY',
+          reasonCode,
           reason: reason
         }
       );
@@ -292,7 +296,7 @@ describe('validateBody method with options', function () {
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsPMVariable,
         numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        { detailedBlobValidation: true }
       ),
       mismatchReason =
         'Element \'ubiNum\': \'{{pmVariable}}\' is not a valid value of the atomic type \'xs:unsignedLong\'.\n',
@@ -331,7 +335,7 @@ describe('validateBody method with options', function () {
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsPMVariable,
         numberToWordsWSDLObject, new XMLParser(),
-        { ignoreUnresolvedVariables: true}
+        { ignoreUnresolvedVariables: true }
       );
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
@@ -375,7 +379,7 @@ describe('validateBody method with options', function () {
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
-        {detailedBlobValidation: true}
+        { detailedBlobValidation: true }
       ),
       mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -387,16 +391,17 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Shouldn\'t have any mismatch when a request msg has more than expected fields and showMissingSchemaErrors is false',
-    function () {
-      const transactionValidator = new TransactionValidator(),
-        result = transactionValidator.validateTransaction(
-          numberToWordsCollectionItemsBodyMoreFields,
-          numberToWordsWSDLObject, new XMLParser(),
-          { showMissingSchemaErrors: false }
-        );
-      expect(result).to.be.an('object').and.to.deep.include(expectedBase);
-    });
+  it('Shouldn\'t have any mismatch when a request msg has more than expected fields' +
+  ' and showMissingSchemaErrors is false',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        { showMissingSchemaErrors: false }
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expectedBase);
+  });
 
   it('Should have a mismatch when a request msg has more than expected fields and showMissingSchemaErrors is true',
     function () {
@@ -404,7 +409,7 @@ describe('validateBody method with options', function () {
         result = transactionValidator.validateTransaction(
           numberToWordsCollectionItemsBodyMoreFields,
           numberToWordsWSDLObject, new XMLParser(),
-          {detailedBlobValidation: true}
+          { detailedBlobValidation: true }
         ),
         mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
         expected = getExpectedWithMismatchInEndpoint(
@@ -417,30 +422,138 @@ describe('validateBody method with options', function () {
     });
 
   it('Should have a mismatch when a request msg has more than expected fields, showMissingSchemaErrors is true' +
-    ' and suggestAvaulableFixes is true',
-    function () {
-      const transactionValidator = new TransactionValidator(),
-        result = transactionValidator.validateTransaction(
-          numberToWordsCollectionItemsBodyMoreFields,
-          numberToWordsWSDLObject, new XMLParser(),
-          { showMissingSchemaErrors: true, suggestAvailableFixes: true }
-        ),
-        mismatchReason = 'The request body didn\'t match the specified schema',
-        expected = getExpectedWithMismatchInEndpoint(
-          expectedBase,
-          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
-          withSuggestedFix(
-            bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-            '//operation[@name="NumberToWords"]'),
-            {
-              key: 'key',
-              actualValue: 'actual',
-              suggestedValue: 'suggested'
-            }
-          )
-        );
-      expect(result).to.be.an('object').and.to.deep.include(expected);
-    }); 
+  ' and suggestAvaulableFixes is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        { showMissingSchemaErrors: true, suggestAvailableFixes: true }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+          '//operation[@name="NumberToWords"]'),
+          {
+            key: 'body',
+            actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
+              ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
+              '    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n' +
+              '      <ubiNum>18446744073709</ubiNum>\n <WORNGFIELD>WRONG</WORNGFIELD>\n' +
+              '    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n',
+            suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
+              ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
+              '    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n' +
+              '      <ubiNum>100</ubiNum>\n    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n'
+          }
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a request msg has more than expected fields, showMissingSchemaErrors is true,' +
+  ' suggestAvaulableFixes is true and detailedBlobValidation is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          showMissingSchemaErrors: true,
+          suggestAvailableFixes: true,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToWords"]',
+            'MISSING_IN_SCHEMA'
+          ),
+          {
+            key: 'WORNGFIELD',
+            actualValue: ' <WORNGFIELD>WRONG</WORNGFIELD>',
+            suggestedValue: ''
+          }
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a request msg has less than expected fields,' +
+  ' suggestAvaulableFixes is true and detailedBlobValidation is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyIncomplete,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToWords"]',
+            'MISSING_IN_REQUEST'
+          ),
+          {
+            key: 'NumberToWords',
+            actualValue: '',
+            suggestedValue: '      <ubiNum>100</ubiNum>'
+          }
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a request msg has a different type than expected in field,' +
+  ' suggestAvaulableFixes is true and detailedBlobValidation is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyWrongType,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'ubiNum\': \'WRONG TYPE\' is not a valid' +
+        ' value of the atomic type \'xs:unsignedLong\'.\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToWords"]',
+            'INVALID_TYPE'
+          ),
+          {
+            key: 'ubiNum',
+            actualValue: '      <ubiNum>WRONG TYPE</ubiNum>',
+            suggestedValue: '      <ubiNum>100</ubiNum>'
+          }
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
 
 });
 
