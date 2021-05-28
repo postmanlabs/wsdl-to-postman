@@ -304,7 +304,8 @@ describe('validateBody method with options', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]')
+          '//operation[@name="NumberToWords"]', 'INVALID_TYPE')
+
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -323,7 +324,7 @@ describe('validateBody method with options', function () {
           expectedBase,
           'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
           bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-            '//operation[@name="NumberToWords"]')
+            '//operation[@name="NumberToWords"]', 'INVALID_TYPE')
         );
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
@@ -352,9 +353,9 @@ describe('validateBody method with options', function () {
       mismatchReason2 =
         'Element \'intB\': \'{{}}\' is not a valid value of the atomic type \'xs:int\'.\n',
       mock1 = bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="CalculatorSoap"]' +
-        '//operation[@name="Subtract"]'),
+        '//operation[@name="Subtract"]', 'INVALID_TYPE'),
       mock2 = bodyMismatchMockWithReason(mismatchReason2, '//definitions//binding[@name="CalculatorSoap"]' +
-        '//operation[@name="Subtract"]'),
+        '//operation[@name="Subtract"]', 'INVALID_TYPE'),
       expected = getExpectedWithMismatchInEndpoint(
         expectedCalculatorBase,
         '96552d2b-2877-4cf1-ac6d-33846c17abd2',
@@ -386,7 +387,7 @@ describe('validateBody method with options', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]')
+          '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -416,7 +417,7 @@ describe('validateBody method with options', function () {
           expectedBase,
           'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
           bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-            '//operation[@name="NumberToWords"]')
+            '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
         );
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
@@ -480,7 +481,7 @@ describe('validateBody method with options', function () {
           ),
           {
             key: 'WORNGFIELD',
-            actualValue: ' <WORNGFIELD>WRONG</WORNGFIELD>',
+            actualValue: '<WORNGFIELD>WRONG</WORNGFIELD>',
             suggestedValue: ''
           }
         )
@@ -514,7 +515,7 @@ describe('validateBody method with options', function () {
           {
             key: 'NumberToWords',
             actualValue: '',
-            suggestedValue: '      <ubiNum>100</ubiNum>'
+            suggestedValue: '<ubiNum>100</ubiNum>'
           }
         )
       );
@@ -522,7 +523,7 @@ describe('validateBody method with options', function () {
   });
 
   it('Should have a mismatch when a request msg has a different type than expected in field,' +
-  ' suggestAvaulableFixes is true and detailedBlobValidation is true',
+  ' suggestAvailableFixes is true and detailedBlobValidation is true',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -547,8 +548,8 @@ describe('validateBody method with options', function () {
           ),
           {
             key: 'ubiNum',
-            actualValue: '      <ubiNum>WRONG TYPE</ubiNum>',
-            suggestedValue: '      <ubiNum>100</ubiNum>'
+            actualValue: '<ubiNum>WRONG TYPE</ubiNum>',
+            suggestedValue: '<ubiNum>100</ubiNum>'
           }
         )
       );
