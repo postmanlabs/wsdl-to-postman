@@ -805,14 +805,14 @@ describe('get Raw URL', function () {
 });
 
 describe('validateBody method', function () {
-  const bodyMismatchMockWithReason = (reason, schemaJsonPath) => {
+  const bodyMismatchMockWithReason = (reason, schemaJsonPath, reasonCode = 'INVALID_BODY') => {
       let newMismatch = Object.assign(
         {},
         {
           property: 'BODY',
           transactionJsonPath: '$.request.body',
           schemaJsonPath: schemaJsonPath,
-          reasonCode: 'INVALID_BODY',
+          reasonCode,
           reason: reason
         }
       );
@@ -921,7 +921,7 @@ describe('validateBody method', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]')
+          '//operation[@name="NumberToWords"]', 'INVALID_TYPE')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -939,7 +939,7 @@ describe('validateBody method', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]')
+          '//operation[@name="NumberToWords"]', 'MISSING_IN_REQUEST')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -957,7 +957,7 @@ describe('validateBody method', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]')
+          '//operation[@name="NumberToWords"]', 'MISSING_IN_REQUEST')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -976,7 +976,7 @@ describe('validateBody method', function () {
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason,
           '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]')
+          '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -1129,7 +1129,7 @@ describe('validateBody method', function () {
                     transactionJsonPath: '$.response.body',
                     schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
                       '//operation[@name="NumberToWords"]',
-                    reasonCode: 'INVALID_RESPONSE_BODY',
+                    reasonCode: 'MISSING_IN_REQUEST',
                     reason: 'Element \'NumberToWordsResponse\': Missing child element(s).' +
                       ' Expected is ( NumberToWordsResult ).\n'
                   }
@@ -1217,7 +1217,7 @@ describe('validateBody method', function () {
                     transactionJsonPath: '$.response.body',
                     schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
                       '//operation[@name="NumberToWords"]',
-                    reasonCode: 'INVALID_RESPONSE_BODY',
+                    reasonCode: 'MISSING_IN_SCHEMA',
                     reason: 'Element \'WRONGFIELD\': This element is not expected.\n'
                   }
                 ]
@@ -1348,6 +1348,57 @@ describe('validateBody method', function () {
                       reasonCode: 'INVALID_RESPONSE_BODY',
                       reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
                         ' because the content type is empty.\n'
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      missingEndpoints: [
+      ]
+    });
+  });
+
+  it('Should have a mismatch when called with empty tag with spaces between, ' +
+  'suggestAvailableFixes is true and detailedBlobValidation is true', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        getMatchDetailsCollectionItems,
+        getMatchDetailsWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true, suggestAvailableFixes: true }
+      );
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: false,
+      requests: {
+        '1a8221fe-3d87-4a7f-8667-483b75b809e0': {
+          requestId: '1a8221fe-3d87-4a7f-8667-483b75b809e0',
+          endpoints: [
+            {
+              matched: false,
+              endpointMatchScore: 1,
+              endpoint: 'POST soap getMatchDetails',
+              mismatches: [
+              ],
+              responses: {
+                '5bd6970c-5011-4fb6-941e-fc534057be74': {
+                  id: '5bd6970c-5011-4fb6-941e-fc534057be74',
+                  matched: false,
+                  mismatches: [
+                    {
+                      property: 'RESPONSE_BODY',
+                      transactionJsonPath: '$.response.body',
+                      schemaJsonPath: '//definitions//binding[@name="getMatchDetailsBinding"]' +
+                        '//operation[@name="getMatchDetails"]',
+                      reasonCode: 'INVALID_RESPONSE_BODY',
+                      reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
+                        ' because the content type is empty.\n',
+                      suggestedFix: {
+                        actualValue: '<UpdateTimeStamp>\n        </UpdateTimeStamp>',
+                        key: 'UpdateTimeStamp',
+                        suggestedValue: '<UpdateTimeStamp/>'
+                      }
                     }
                   ]
                 }
