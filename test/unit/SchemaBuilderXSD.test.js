@@ -557,7 +557,7 @@ describe('SchemaBuilderXSD getElements', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get elements from undefined or null object');
+      expect(error.message).to.equal('Cannot get elements from undefined or null wsdl');
     }
   });
 
@@ -584,7 +584,7 @@ describe('SchemaBuilderXSD getElements', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get elements from undefined or null object');
+      expect(error.message).to.equal('Cannot get elements from undefined or null wsdl');
     }
   });
 
