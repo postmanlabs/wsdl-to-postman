@@ -341,25 +341,80 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
-  it('Should have a mismatch when a request msg has 2 unresolved PM variable no option sent', function () {
+  it('Should have two mismatch when a request msg has 2 unresolved PM variable no option sent' +
+  ', detailedBlobValidation is true and suggestAvailableFixes is true', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         calculatorCollectionItemsPMVariable,
         calculatorWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        { detailedBlobValidation: true, suggestAvailableFixes: true }
       ),
       mismatchReason =
         'Element \'intA\': \'{{}}\' is not a valid value of the atomic type \'xs:int\'.\n',
       mismatchReason2 =
         'Element \'intB\': \'{{}}\' is not a valid value of the atomic type \'xs:int\'.\n',
-      mock1 = bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="CalculatorSoap"]' +
-        '//operation[@name="Subtract"]', 'INVALID_TYPE'),
-      mock2 = bodyMismatchMockWithReason(mismatchReason2, '//definitions//binding[@name="CalculatorSoap"]' +
-        '//operation[@name="Subtract"]', 'INVALID_TYPE'),
+      mock1 = withSuggestedFix(
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name="CalculatorSoap"]//operation[@name="Subtract"]',
+          'INVALID_TYPE'
+        ),
+        {
+          key: 'intA',
+          actualValue: '<intA>{{}}</intA>',
+          suggestedValue: '<intA>100</intA>'
+        }
+      ),
+      mock2 = withSuggestedFix(
+        bodyMismatchMockWithReason(
+          mismatchReason2,
+          '//definitions//binding[@name="CalculatorSoap"]//operation[@name="Subtract"]',
+          'INVALID_TYPE'
+        ),
+        {
+          key: 'intB',
+          actualValue: '<intB>{{}}</intB>',
+          suggestedValue: '<intB>100</intB>'
+        }
+      ),
       expected = getExpectedWithMismatchInEndpoint(
         expectedCalculatorBase,
         '96552d2b-2877-4cf1-ac6d-33846c17abd2',
         [mock1, mock2]);
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have one mismatch when a request msg has 2 unresolved PM variable no option sent' +
+  ', detaledBlobValidation is false and suggestAvailableFixes is true', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        calculatorCollectionItemsPMVariable,
+        calculatorWSDLObject, new XMLParser(),
+        { detailedBlobValidation: false, suggestAvailableFixes: true }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      mock = withSuggestedFix(
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name="CalculatorSoap"]//operation[@name="Subtract"]',
+          'INVALID_BODY'
+        ),
+        {
+          key: 'body',
+          actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
+            ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
+            '    <Subtract xmlns=\"http://tempuri.org/\">\n      <intA>{{}}</intA>\n    ' +
+            '  <intB>{{}}</intB>\n    </Subtract>\n  </soap:Body>\n</soap:Envelope>\n',
+          suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
+            ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
+            '    <Subtract xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n    ' +
+            '  <intB>100</intB>\n    </Subtract>\n  </soap:Body>\n</soap:Envelope>\n'
+        }
+      ),
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedCalculatorBase,
+        '96552d2b-2877-4cf1-ac6d-33846c17abd2',
+        mock);
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
