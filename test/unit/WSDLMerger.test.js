@@ -1,7 +1,7 @@
 const expect = require('chai').expect,
   SEPARATED_FILES = 'test/data/separatedFiles',
   {
-    merge
+    WSDLMerger
   } = require('../../lib/utils/WSDLMerger'),
   fs = require('fs'),
   {
@@ -11,12 +11,12 @@ const expect = require('chai').expect,
     removeLineBreakTabsSpaces
   } = require('../../lib/utils/textUtils');
 
-describe('WSDLMerger merge', function() {
+describe('WSDLMerger merge', function () {
 
-  it('Should create collection from folder having one root file for browser', function() {
+  it('Should create collection from folder having one root file for browser', function () {
     const processedInput = {
         '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquote.xsd':
-         `<?xml version="1.0"?><schema targetNamespace="http://example.com/stockquote/schemas"
+        `<?xml version="1.0"?><schema targetNamespace="http://example.com/stockquote/schemas"
                     xmlns="http://www.w3.org/2000/10/XMLSchema"> 
                 <element name="TradePriceRequest">
                 <complexType>
@@ -33,12 +33,13 @@ describe('WSDLMerger merge', function() {
                     </complexType>
                     </element></schema>`,
         '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquote.wsdl':
-         `<?xml version="1.0"?><definitions name="StockQuote" targetNamespace="http://example.com/stockquote/definitions"
+        `<?xml version="1.0"?><definitions name="StockQuote" targetNamespace="http://example.com/stockquote/definitions"
                 xmlns:tns="http://example.com/stockquote/definitions"
                 xmlns:xsd1="http://example.com/stockquote/schemas"
                 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"  
                   xmlns="http://schemas.xmlsoap.org/wsdl/">
-                  <import namespace="http://example.com/stockquote/schemas" location="http://example.com/stockquote/stockquote.xsd"/>
+                  <import namespace="http://example.com/stockquote/schemas" 
+                  location="http://example.com/stockquote/stockquote.xsd"/>
                   <message name="GetLastTradePriceInput">        <part name="body" element="xsd1:TradePriceRequest"/>
                   </message>
                   <message name="GetLastTradePriceOutput">
@@ -50,10 +51,11 @@ describe('WSDLMerger merge', function() {
                   </operation>
                 </portType></definitions>`,
         '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquoteservice.wsdl':
-         `<?xml version="1.0"?><definitions name="StockQuote" targetNamespace="http://example.com/stockquote/service"
+        `<?xml version="1.0"?><definitions name="StockQuote" targetNamespace="http://example.com/stockquote/service"
                 xmlns:tns="http://example.com/stockquote/service"    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                 xmlns:defs="http://example.com/stockquote/definitions"    xmlns="http://schemas.xmlsoap.org/wsdl/">
-                <import namespace="http://example.com/stockquote/definitions" location="http://example.com/stockquote/stockquote.wsdl"/>
+                <import namespace="http://example.com/stockquote/definitions" 
+                location="http://example.com/stockquote/stockquote.wsdl"/>
                 <binding name="StockQuoteSoapBinding" type="defs:StockQuotePortType">
                 <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
                 <operation name="GetLastTradePrice">
@@ -63,35 +65,37 @@ describe('WSDLMerger merge', function() {
                 </input>
                 <output>
                 <soap:body use="literal"/>
-                </output>        </operation>    </binding>    <service name="StockQuoteService">        <documentation>My first service</documentation>
-                <port name="StockQuotePort" binding="tns:StockQuoteBinding">            <soap:address location="http://example.com/stockquote"/>
+                </output></operation></binding><service name="StockQuoteService"><documentation>
+                My first service</documentation>
+                <port name="StockQuotePort" binding="tns:StockQuoteBinding"><soap:address 
+                location="http://example.com/stockquote"/>
         </port></service></definitions>"`
       },
       folderPath = SEPARATED_FILES + '/W3Example',
       expectedOutput = fs.readFileSync(folderPath + '/output.wsdl', 'utf8');
     let files = [],
+      merged,
       array = [{
         fileName: folderPath + '/stockquote.xsd'
-      },{
-          fileName: folderPath + '/stockquote.wsdl'
-        },
-        {
-          fileName: folderPath + '/stockquoteservice.wsdl'
-        }
-      ];
+      }, {
+        fileName: folderPath + '/stockquote.wsdl'
+      },
+      {
+        fileName: folderPath + '/stockquoteservice.wsdl'
+      }
+      ],
+      merger = new WSDLMerger();
     array.forEach((item) => {
       files.push({
         content: fs.readFileSync(item.fileName, 'utf8'),
         fileName: item.fileName
       });
     });
-    let merged = merge(files, processedInput, new XMLParser());
+    merged = merger.merge(files, processedInput, new XMLParser());
     expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
   });
 
 });
-
-
 
 // it('Should create collection from folder having one root file for browser', function (done) {
 //     let folderPath = path.join(SEPARATED_FILES, '/W3Example'),
