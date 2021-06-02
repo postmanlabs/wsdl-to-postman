@@ -1,22 +1,22 @@
 const expect = require('chai').expect,
-    SEPARATED_FILES = 'test/data/separatedFiles',
-    {
-        merge
-    } = require('../../lib/utils/WSDLMerger'),
-    fs = require('fs'),
-    {
-        XMLParser,
-    } = require('../../lib/XMLParser'),
-    {
-        removeLineBreakTabsSpaces
-    } = require('../../lib/utils/textUtils');
+  SEPARATED_FILES = 'test/data/separatedFiles',
+  {
+    merge
+  } = require('../../lib/utils/WSDLMerger'),
+  fs = require('fs'),
+  {
+    XMLParser
+  } = require('../../lib/XMLParser'),
+  {
+    removeLineBreakTabsSpaces
+  } = require('../../lib/utils/textUtils');
 
-describe('WSDLMerger merge', function () {
+describe('WSDLMerger merge', function() {
 
-    it('Should create collection from folder having one root file for browser', function () {
-        const processedInput = {
-            '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquote.xsd':
-                `<?xml version="1.0"?><schema targetNamespace="http://example.com/stockquote/schemas"
+  it('Should create collection from folder having one root file for browser', function() {
+    const processedInput = {
+        '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquote.xsd':
+         `<?xml version="1.0"?><schema targetNamespace="http://example.com/stockquote/schemas"
                     xmlns="http://www.w3.org/2000/10/XMLSchema"> 
                 <element name="TradePriceRequest">
                 <complexType>
@@ -32,8 +32,8 @@ describe('WSDLMerger merge', function () {
                     </all>
                     </complexType>
                     </element></schema>`,
-            '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquote.wsdl':
-                `<?xml version="1.0"?><definitions name="StockQuote" targetNamespace="http://example.com/stockquote/definitions"
+        '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquote.wsdl':
+         `<?xml version="1.0"?><definitions name="StockQuote" targetNamespace="http://example.com/stockquote/definitions"
                 xmlns:tns="http://example.com/stockquote/definitions"
                 xmlns:xsd1="http://example.com/stockquote/schemas"
                 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"  
@@ -49,8 +49,8 @@ describe('WSDLMerger merge', function () {
                    <output message="tns:GetLastTradePriceOutput"/>
                   </operation>
                 </portType></definitions>`,
-            '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquoteservice.wsdl':
-                `<?xml version="1.0"?><definitions name="StockQuote" targetNamespace="http://example.com/stockquote/service"
+        '/Users/luis.tejeda/Documents/Source/GitHub/postmanlabs/wsdl-to-postman/test/data/separatedFiles/W3Example/stockquoteservice.wsdl':
+         `<?xml version="1.0"?><definitions name="StockQuote" targetNamespace="http://example.com/stockquote/service"
                 xmlns:tns="http://example.com/stockquote/service"    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                 xmlns:defs="http://example.com/stockquote/definitions"    xmlns="http://schemas.xmlsoap.org/wsdl/">
                 <import namespace="http://example.com/stockquote/definitions" location="http://example.com/stockquote/stockquote.wsdl"/>
@@ -65,25 +65,29 @@ describe('WSDLMerger merge', function () {
                 <soap:body use="literal"/>
                 </output>        </operation>    </binding>    <service name="StockQuoteService">        <documentation>My first service</documentation>
                 <port name="StockQuotePort" binding="tns:StockQuoteBinding">            <soap:address location="http://example.com/stockquote"/>
-                </port>    </service></definitions>"`
+        </port></service></definitions>"`
+      },
+      folderPath = SEPARATED_FILES + '/W3Example',
+      expectedOutput = fs.readFileSync(folderPath + '/output.wsdl', 'utf8');
+    let files = [],
+      array = [{
+        fileName: folderPath + '/stockquote.xsd'
+      },{
+          fileName: folderPath + '/stockquote.wsdl'
         },
-            folderPath = SEPARATED_FILES + '/W3Example',
-            expectedOutput = fs.readFileSync(folderPath + '/output.wsdl', 'utf8');
-        let files = [],
-            array = [
-                { fileName: folderPath + '/stockquote.xsd' },
-                { fileName: folderPath + '/stockquote.wsdl' },
-                { fileName: folderPath + '/stockquoteservice.wsdl' }
-            ];
-        array.forEach((item) => {
-            files.push({
-                content: fs.readFileSync(item.fileName, 'utf8'),
-                fileName: item.fileName
-            });
-        });
-        let merged = merge(files, processedInput, new XMLParser());
-        expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+        {
+          fileName: folderPath + '/stockquoteservice.wsdl'
+        }
+      ];
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
     });
+    let merged = merge(files, processedInput, new XMLParser());
+    expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+  });
 
 });
 
