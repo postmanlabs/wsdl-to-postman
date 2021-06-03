@@ -16,7 +16,6 @@ const expect = require('chai').expect,
 describe('WSDLMerger merge', function() {
 
   it('Should create collection from folder having one root file for browser 1.1', function() {
-
     const folderPath = path.join(__dirname, SEPARATED_FILES_W3_Example),
       outputDir = path.join(__dirname, SEPARATED_FILES_W3_Example + '/output.wsdl'),
       folderPathService = path.join(__dirname, SEPARATED_FILES_W3_Example + '/stockquoteservice.wsdl'),
