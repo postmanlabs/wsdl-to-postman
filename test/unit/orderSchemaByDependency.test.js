@@ -35,7 +35,7 @@ describe('orderSchemasAccordingToDependencies method', function () {
       };
     });
 
-    ordered = orderSchemasAccordingToDependencies(mapped);
+    ordered = orderSchemasAccordingToDependencies(mapped, parser.attributePlaceHolder);
 
     expect(ordered).to.be.a('Array');
     expect(ordered.length).to.equal(2);
@@ -69,7 +69,7 @@ describe('orderSchemasAccordingToDependencies method', function () {
       };
     });
 
-    ordered = orderSchemasAccordingToDependencies(mapped);
+    ordered = orderSchemasAccordingToDependencies(mapped, parser.attributePlaceHolder);
 
     expect(ordered).to.be.a('Array');
     expect(ordered.length).to.equal(2);
