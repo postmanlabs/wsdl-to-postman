@@ -24,7 +24,7 @@ describe('WSDLMerger merge', function() {
       folderPathDefinitions = path.join(__dirname, SEPARATED_FILES_W3_Example + '/stockquote.wsdl'),
       processedInputFiles = [
         `<?xml version="1.0"?><schema targetNamespace="http://example.com/stockquote/schemas"
-                     xmlns="http://www.w3.org/2000/10/XMLSchema"> 
+                     xmlns="http://www.w3.org/2001/XMLSchema"> 
                  <element name="TradePriceRequest">
                  <complexType>
                  <all>            

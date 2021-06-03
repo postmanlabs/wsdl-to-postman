@@ -5,7 +5,7 @@
     xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xsd1="http://example.com/stockquote/schemas">
     <import namespace="http://example.com/stockquote/definitions" location="http://example.com/stockquote/stockquote.wsdl" />
-    <binding name="StockQuoteSoapBinding" type="defs:StockQuotePortType">
+    <binding name="StockQuoteBinding" type="defs:StockQuotePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
         <operation name="GetLastTradePrice">
             <soap:operation soapAction="http://example.com/GetLastTradePrice" />
@@ -37,7 +37,7 @@
     </portType>
     <types>
         <schema targetNamespace="http://example.com/stockquote/schemas"
-            xmlns="http://www.w3.org/2000/10/XMLSchema">
+            xmlns="http://www.w3.org/2001/XMLSchema">
             <element name="TradePriceRequest">
                 <complexType>
                     <all>
