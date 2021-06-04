@@ -71,7 +71,7 @@ describe('readInput utility', function () {
         expect(result).to.be.an('object')
           .and.to.include({
             result: false,
-            reason: 'Invalid input type (notvalid). Type must be file/string.'
+            reason: 'Invalid input type (notvalid). Type must be file/string/folder.'
           });
       });
     });

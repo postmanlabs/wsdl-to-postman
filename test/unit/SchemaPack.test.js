@@ -6,7 +6,7 @@ const expect = require('chai').expect,
   validWSDLs20 = 'test/data/validWSDLs20',
   SEPARATED_FILES = '../data/separatedFiles',
   fs = require('fs'),
-  getAllTransactions = require('../../lib/utils/getAllTransactions').getAllTransactions,
+  getAllTransactionsFromCollection = require('../../lib/utils/getAllTransactions').getAllTransactionsFromCollection,
   async = require('async'),
   path = require('path'),
   optionIds = [
@@ -286,7 +286,7 @@ describe('validateTransaction method', function () {
       expect(result).to.be.an('object');
 
       let historyRequests = [];
-      getAllTransactions(result.output[0].data, historyRequests);
+      getAllTransactionsFromCollection(result.output[0].data, historyRequests);
 
       // postman application should substitute variables
       historyRequests.forEach((historyRequest) => {

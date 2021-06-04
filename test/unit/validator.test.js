@@ -112,7 +112,7 @@ string`, function () {
     expect(validator.validate(input).valResult).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: `Invalid input type (${input.type}). Type must be file/string.`
+        reason: `Invalid input type (${input.type}). Type must be file/string/folder.`
       });
   });
 
