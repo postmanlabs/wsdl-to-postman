@@ -4,6 +4,7 @@ const {
   {
     Collection
   } = require('postman-collection'),
+  { XMLParser } = require('../../lib/XMLParser'),
   {
     WsdlToPostmanCollectionMapper,
     DEFAULT_COLLECTION_NAME
@@ -237,7 +238,7 @@ describe('WsdlToPostmanCollectionMapper constructor', function () {
 describe('WsdlToPostmanCollectionMapper getPostmanCollection', function () {
   it('Should return a PostmanCollection object', function () {
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
-    let postmanCollection = mapper.getPostmanCollection('collection name');
+    let postmanCollection = mapper.getPostmanCollection('collection name', new XMLParser());
     expect(postmanCollection instanceof Collection).to.be.true;
   });
 
@@ -246,7 +247,7 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function () {
     function () {
       const providedName = 'provided name',
         mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
-        postmanCollection = mapper.getPostmanCollection({}, providedName);
+        postmanCollection = mapper.getPostmanCollection({}, new XMLParser(), providedName);
       expect(postmanCollection.name).to.be.equal(providedName);
     }
   );
@@ -258,7 +259,7 @@ describe('WsdlToPostmanCollectionMapper getPostmanCollection', function () {
       const providedEmptyStringName = '',
         expectedName = wsdlMockObject.targetNamespace.url,
         mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
-        postmanCollection = mapper.getPostmanCollection(providedEmptyStringName);
+        postmanCollection = mapper.getPostmanCollection({}, new XMLParser(), providedEmptyStringName);
       expect(postmanCollection.name).to.be.equal(expectedName);
     }
   );
@@ -291,7 +292,8 @@ describe('WsdlToPostmanCollectionMapper createItemsFromOperations', function () 
     const mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject);
     let urls = mapper.getUrlDataFromOperations(wsdlMockObject.operationsArray),
       urlVariables = mapper.getVariablesFromUrlDataList(urls),
-      items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray, urlVariables),
+      items = mapper.createItemsFromOperations(wsdlMockObject.operationsArray, urlVariables, undefined,
+        new XMLParser()),
       requests;
     expect(items).to.be.an('array');
     requests = items.map((item) => {
@@ -347,7 +349,7 @@ describe('generateMappingObject method', function () {
   it('Should return a mappingObject with provided name', function () {
     const expectedName = 'providedName',
       mapper = new WsdlToPostmanCollectionMapper(wsdlMockObject),
-      mappingObject = mapper.generateMappingObject(wsdlMockObject, {}, expectedName);
+      mappingObject = mapper.generateMappingObject(wsdlMockObject, {}, expectedName, new XMLParser());
     expect(mappingObject.info.name).to.be.equal(expectedName);
   });
 });

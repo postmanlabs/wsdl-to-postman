@@ -23,7 +23,7 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
         parser = factory.getParser(xmlDocumentContent),
         wsdlObject = parser.getWsdlObject(xmlDocumentContent, xmlParser),
         xmlParsed = xmlParser.parseToObject(xmlDocumentContent),
-        schemaToValidate = getCleanSchema(xmlParsed, wsdlObject, version);
+        schemaToValidate = getCleanSchema(xmlParsed, wsdlObject, version, xmlParser);
 
       let errors = validateOperationMessagesWithSchema(wsdlObject, schemaToValidate.cleanSchema,
         schemaToValidate.isSchemaXSDDefault);

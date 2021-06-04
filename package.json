@@ -57,6 +57,7 @@
     "libxmljs": "0.19.7",
     "postman-collection": "3.6.9",
     "randexp": "0.5.3",
-    "traverse": "0.6.6"
+    "traverse": "0.6.6",
+    "path-browserify": "1.0.1"
   }
 }
