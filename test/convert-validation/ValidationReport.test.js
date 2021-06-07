@@ -5,7 +5,7 @@ const expect = require('chai').expect,
   validWSDLs = 'test/data/validWSDLs11',
   outputDirectory = 'test/convert-validation/output/',
   fs = require('fs'),
-  getAllTransactions = require('../../lib/utils/getAllTransactions').getAllTransactions,
+  getAllTransactionsFromCollection = require('../../lib/utils/getAllTransactions').getAllTransactionsFromCollection,
   async = require('async');
 
 describe('SchemaPack convert and validate report missmatches WSDL 1.1', function () {
@@ -32,7 +32,7 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
         expect(collectionResult.output[0].type).to.equal('collection');
 
         let historyRequests = [];
-        getAllTransactions(collectionResult.output[0].data, historyRequests);
+        getAllTransactionsFromCollection(collectionResult.output[0].data, historyRequests);
 
         // postman application should substitute variables
         historyRequests.forEach((historyRequest) => {

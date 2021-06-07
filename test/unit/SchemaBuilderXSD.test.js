@@ -19,16 +19,6 @@ describe('SchemaBuilderXSD Constructor', function () {
 
 });
 
-describe('SchemaBuilderXSD parseSchema', function () {
-  it('should get an object of the schema parsed', function () {
-    const builder = new SchemaBuilderXSD(),
-      fileContent = fs.readFileSync(validSchemaFolder + '/coreSchema.wsdl', 'utf8'),
-      parsedSchema = builder.parseSchema(fileContent);
-    expect(parsedSchema).to.be.a('object');
-  });
-
-});
-
 describe('SchemaBuilderXSD getElements', function () {
   it('should get schema elements', function () {
     const builder = new SchemaBuilderXSD(),
@@ -567,7 +557,7 @@ describe('SchemaBuilderXSD getElements', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get elements from undefined or null object');
+      expect(error.message).to.equal('Cannot get elements from undefined or null wsdl');
     }
   });
 
@@ -594,7 +584,7 @@ describe('SchemaBuilderXSD getElements', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get elements from undefined or null object');
+      expect(error.message).to.equal('Cannot get elements from undefined or null wsdl');
     }
   });
 
@@ -1233,6 +1223,36 @@ describe('SchemaBuilderXSD getElements', function () {
 
   });
 
+  it('should get an array of elements when schemas have import', function () {
+    const
+      fileContent = fs.readFileSync(validSchemaFolder + '/importSchemaSelfFile.wsdl', 'utf8'),
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://queue.amazonaws.com/doc/2009-02-01/',
+        isDefault: false
+      },
+      tnsNamespace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://queue.amazonaws.com/doc/2009-02-01/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseToObject(fileContent),
+
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+
+    expect(elements).to.be.an('array');
+    expect(elements.length).to.equal(1);
+
+  });
+
 });
 
 describe('SchemaBuilderXSD parseObjectToXML', function () {
@@ -1258,10 +1278,10 @@ describe('SchemaBuilderXSD parseObjectToXML', function () {
   });
 });
 
-describe('SchemaBuilderXSD getElementsFromType', function () {
+describe('SchemaBuilderXSD getWSDLElementsFromJsonSchema', function () {
   it('should get an error when the object sent is undefined', function () {
     const builder = new SchemaBuilderXSD();
-    let elements = builder.getElementsFromType('', null, '', '', PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+    let elements = builder.getWSDLElementsFromJsonSchema(null, '', '', PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
     expect(elements.elements.length).to.equal(0);
   });
 });

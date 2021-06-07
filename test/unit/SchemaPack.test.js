@@ -4,9 +4,11 @@ const expect = require('chai').expect,
   } = require('../../lib/SchemaPack'),
   validWSDLs = 'test/data/validWSDLs11',
   validWSDLs20 = 'test/data/validWSDLs20',
+  SEPARATED_FILES = '../data/separatedFiles',
   fs = require('fs'),
-  getAllTransactions = require('../../lib/utils/getAllTransactions').getAllTransactions,
+  getAllTransactionsFromCollection = require('../../lib/utils/getAllTransactions').getAllTransactionsFromCollection,
   async = require('async'),
+  path = require('path'),
   optionIds = [
     'folderStrategy',
     'validateHeader',
@@ -25,7 +27,7 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       }, {});
 
       schemaPack.convert((error, result) => {
-        expect(error, error ? error.stack : '').to.be.null;
+        expect(error).to.be.null;
         expect(result).to.be.an('object');
         expect(result.output).to.be.an('array');
         expect(result.output[0].data).to.be.an('object');
@@ -284,7 +286,7 @@ describe('validateTransaction method', function () {
       expect(result).to.be.an('object');
 
       let historyRequests = [];
-      getAllTransactions(result.output[0].data, historyRequests);
+      getAllTransactionsFromCollection(result.output[0].data, historyRequests);
 
       // postman application should substitute variables
       historyRequests.forEach((historyRequest) => {
@@ -334,6 +336,191 @@ describe('getMetaData method', function () {
     schemaPack.getMetaData(function (error, result) {
       expect(error).to.eq(null);
       expect(result.reason).to.eq('Input not provided');
+    });
+  });
+});
+
+describe('merge and validate', function () {
+
+  it('Should create collection from folder having one root file for browser', function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
+      files = [],
+      array = [
+        { fileName: folderPath + '/stockquote.xsd' },
+        { fileName: folderPath + '/stockquote.wsdl' },
+        { fileName: folderPath + '/stockquoteservice.wsdl' }
+      ];
+
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+
+    const schemaPack = new SchemaPack({ type: 'folder', data: files }, {});
+
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      if (status.result) {
+        schemaPack.convert((error, result) => {
+          if (error) {
+            expect.fail(null, null, err);
+          }
+          expect(result.result).to.equal(true);
+          expect(result.output.length).to.equal(1);
+          expect(result.output[0].type).to.have.equal('collection');
+          expect(result.output[0].data).to.have.property('info');
+          expect(result.output[0].data).to.have.property('item');
+        });
+      }
+      else {
+        expect.fail(null, null, status.reason);
+      }
+    });
+  });
+
+  it('Should create collection from folder having one root file for browser ex 2', function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/counting'),
+      files = [],
+      array = [
+        { fileName: folderPath + '/CountingCategoryData.xsd' },
+        { fileName: folderPath + '/CountingCategoryService.wsdl' }
+      ];
+
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+
+    const schemaPack = new SchemaPack({ type: 'folder', data: files }, {});
+
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      if (status.result) {
+        schemaPack.convert((error, result) => {
+          if (error) {
+            expect.fail(null, null, err);
+          }
+          expect(result.result).to.equal(true);
+          expect(result.output.length).to.equal(1);
+          expect(result.output[0].type).to.have.equal('collection');
+          expect(result.output[0].data).to.have.property('info');
+          expect(result.output[0].data).to.have.property('item');
+        });
+      }
+      else {
+        expect.fail(null, null, status.reason);
+      }
+    });
+  });
+
+  it('Should create collection from folder having only one file for browser', function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
+      files = [],
+      array = [
+        { fileName: folderPath + '/output.wsdl' }
+      ];
+
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+
+    const schemaPack = new SchemaPack({ type: 'folder', data: files }, {});
+
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      if (status.result) {
+        schemaPack.convert((error, result) => {
+          if (error) {
+            expect.fail(null, null, err);
+          }
+          expect(result.result).to.equal(true);
+          expect(result.output.length).to.equal(1);
+          expect(result.output[0].type).to.have.equal('collection');
+          expect(result.output[0].data).to.have.property('info');
+          expect(result.output[0].data).to.have.property('item');
+        });
+      }
+      else {
+        expect.fail(null, null, status.reason);
+      }
+    });
+  });
+
+  it('Should create collection from folder having only one file no imports for browser', function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
+      files = [],
+      array = [
+        { fileName: folderPath + '/outputNoImports.wsdl' }
+      ];
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+    const schemaPack = new SchemaPack({ type: 'folder', data: files }, {});
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      if (status.result) {
+        schemaPack.convert((error, result) => {
+          if (error) {
+            expect.fail(null, null, err);
+          }
+          expect(result.result).to.equal(true);
+          expect(result.output.length).to.equal(1);
+          expect(result.output[0].type).to.have.equal('collection');
+          expect(result.output[0].data).to.have.property('info');
+          expect(result.output[0].data).to.have.property('item');
+        });
+      }
+      else {
+        expect.fail(null, null, status.reason);
+      }
+    });
+  });
+
+  it('Should create collection from folder send only file info', function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
+      array = [
+        { fileName: folderPath + '/stockquote.xsd' },
+        { fileName: folderPath + '/stockquote.wsdl' },
+        { fileName: folderPath + '/stockquoteservice.wsdl' }
+      ];
+    const schemaPack = new SchemaPack({ type: 'folder', data: array }, {});
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      if (status.result) {
+        schemaPack.convert((error, result) => {
+          if (error) {
+            expect.fail(null, null, err);
+          }
+          expect(result.result).to.equal(true);
+          expect(result.output.length).to.equal(1);
+          expect(result.output[0].type).to.have.equal('collection');
+          expect(result.output[0].data).to.have.property('info');
+          expect(result.output[0].data).to.have.property('item');
+        });
+      }
+      else {
+        expect.fail(null, null, status.reason);
+      }
     });
   });
 });

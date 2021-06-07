@@ -5,7 +5,8 @@ const expect = require('chai').expect,
     validateMessageWithSchema,
     getBodyMessage,
     unwrapAndCleanBody
-  } = require('./../../lib/utils/messageWithSchemaValidation');
+  } = require('./../../lib/utils/messageWithSchemaValidation'),
+  { XMLParser } = require('../../lib/XMLParser');
 
 describe('Tools from messageWithSchemaValidation', function () {
   describe('Test validateMessageWithSchema function', function () {
@@ -222,7 +223,7 @@ describe('Tools from messageWithSchemaValidation', function () {
       'Should return a schema with base namespace, removed tns and no complexType, tags empty',
       function () {
         const generatedCleanSchema = getCleanSchema(xmlParsedMock, { schemaNamespace: schemaNamespaceMock },
-            wsdl_version).cleanSchema,
+            wsdl_version, new XMLParser()).cleanSchema,
           generatedCleanSchemaToCompare = generatedCleanSchema.replace(/\s/g, ''),
           expectedSchemaToCompare = expectedSchema.replace(/\s/g, '');
         expect(generatedCleanSchemaToCompare).to.be.equal(expectedSchemaToCompare);
@@ -244,7 +245,7 @@ describe('Tools from messageWithSchemaValidation', function () {
         'operationsArray': [{
           'name': 'NumberToWords',
           'description': `Returns the word corresponding to the positive number passed as parameter. 
-                Limited to quadrillions.`,
+                  Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
           'input': {
@@ -329,7 +330,7 @@ describe('Tools from messageWithSchemaValidation', function () {
         }, {
           'name': 'NumberToWords',
           'description': `Returns the word corresponding to the positive number passed as parameter. 
-                Limited to quadrillions.`,
+                  Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
           'input': {

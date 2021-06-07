@@ -5,27 +5,27 @@ const {
 } = require('./lib/SchemaPack.js');
 
 module.exports = {
-  convert: function(input, options, cb) {
+  convert: function (input, options, cb) {
     const schema = new SchemaPack(input, options);
     return schema.convert(cb);
   },
 
-  validate: function(input) {
+  validate: function (input) {
     const schema = new SchemaPack(input);
-    return schema.validate();
+    return schema.validationResult;
   },
 
-  getMetaData: function(input, cb) {
+  getMetaData: function (input, cb) {
     const schema = new SchemaPack(input);
     schema.getMetaData(cb);
   },
 
-  mergeAndValidate: function(input, cb) {
+  mergeAndValidate: function (input, cb) {
     const schema = new SchemaPack(input);
     schema.mergeAndValidate(cb);
   },
 
-  getOptions: function(mode, criteria) {
+  getOptions: function (mode, criteria) {
     return SchemaPack.getOptions(mode, criteria);
   },
 
