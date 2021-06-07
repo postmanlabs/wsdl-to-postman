@@ -79,7 +79,6 @@ describe('WSDLMerger merge', function() {
 
     let processedInput = {},
       files = [],
-      merged,
       array = [{
         fileName: folderPath + '/stockquote.xsd'
       }, {
@@ -101,8 +100,10 @@ describe('WSDLMerger merge', function() {
     processedInput[folderPathDefinitions] = processedInputFiles[1];
     processedInput[folderPathService] = processedInputFiles[2];
 
-    merged = merger.merge(files, processedInput, new XMLParser());
-    expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+    merger.merge(files, processedInput, new XMLParser())
+      .then((merged) => {
+        expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      });
   });
 
   it('Should create collection from folder having one root file for browser 1.1 no prefix', function() {
@@ -360,7 +361,6 @@ describe('WSDLMerger merge', function() {
       expectedOutput = fs.readFileSync(outputDir, 'utf8');
     let processedInput = {},
       files = [],
-      merged,
       array = [{
         fileName: folderPath + '/CountingCategoryData.xsd'
       },
@@ -378,8 +378,10 @@ describe('WSDLMerger merge', function() {
     processedInput[folderPathSchema] = processedInputFiles[0];
     processedInput[folderPathService] = processedInputFiles[1];
 
-    merged = merger.merge(files, processedInput, new XMLParser());
-    expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+    merger.merge(files, processedInput, new XMLParser())
+      .then((merged) => {
+        expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      });
   });
 
 });
