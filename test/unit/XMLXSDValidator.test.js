@@ -98,7 +98,71 @@ describe('XMLLintFacade constructor', function () {
   });
 });
 
-describe('validate', function () {
+
+describe('validate xmllint', function () {
+  it('should get no errors on correct input option set to xmllint', function () {
+    const validator = new XMLXSDValidator('xmllint');
+    let res = validator.validate(XML_VALID, XSD);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(0);
+  });
+
+  it('should get one error incorrect type option set to xmllint', function () {
+    const validator = new XMLXSDValidator('xmllint'),
+      expected = 'Element \'message\': \'sme message\' is not a valid value of the atomic type \'xs:int\'.\n';
+    let res = validator.validate(XML_INVALID_1, XSD);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(1);
+    expect(res[0].code).to.equal(1824);
+    expect(res[0].str1).to.equal('sme message');
+    expect(res[0].message).to.equal(expected);
+
+  });
+
+  it('should get one error incorrect type option set to xmllint pm variable', function () {
+    const validator = new XMLXSDValidator('xmllint');
+    let res = validator.validate(XML_INVALID_PM_VAR, XSD);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(1);
+    expect(res[0].code).to.equal(1824);
+    expect(res[0].str1).to.equal('{{var}}');
+    expect(res[0].message).to.equal('Element \'message\': \'{{var}}\' is not a valid' +
+    ' value of the atomic type \'xs:int\'.\n');
+  });
+
+  it('should get one error extra field option set to xmllint', function () {
+    const validator = new XMLXSDValidator('xmllint');
+    let res = validator.validate(XML_INVALID_MISS_SCHEMA, XSD);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(1);
+    expect(res[0].code).to.equal(1871);
+    expect(res[0].str1).to.equal(undefined);
+    expect(res[0].message).to.equal('Element \'WRONGFIELD\': This element is not expected. Expected is ( subject ).\n');
+  });
+
+  it('should get one error missing field option set to xmllint', function () {
+    const validator = new XMLXSDValidator('xmllint');
+    let res = validator.validate(XML_INVALID_MISS_IN_MESSAGE, XSD);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(1);
+    expect(res[0].code).to.equal(1871);
+    expect(res[0].str1).to.equal(undefined);
+    expect(res[0].message).to.equal('Element \'from\': This element is not expected. Expected is ( to ).\n');
+  });
+
+  it('should get one error content not allowed option set to xmllint', function () {
+    const validator = new XMLXSDValidator('xmllint');
+    let res = validator.validate(XML_XSD2_INVALID_CONTENT, XSD_2);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(1);
+    expect(res[0].code).to.equal(1841);
+    expect(res[0].str1).to.equal(undefined);
+    expect(res[0].message).to.equal('Element \'UpdateTimeStamp\':' +
+    ' Character content is not allowed, because the content type is empty.\n');
+  });
+});
+
+describe('validate libxmljs', function () {
   it('should get no errors on correct input default option', function () {
     const validator = new XMLXSDValidator();
     let res = validator.validate(XML_VALID, XSD);
@@ -108,13 +172,6 @@ describe('validate', function () {
 
   it('should get no errors on correct input option set to libxmljs', function () {
     const validator = new XMLXSDValidator('libxmljs');
-    let res = validator.validate(XML_VALID, XSD);
-    expect(res).to.be.an('Array');
-    expect(res.length).to.equal(0);
-  });
-
-  it('should get no errors on correct input option set to xmllint', function () {
-    const validator = new XMLXSDValidator('xmllint');
     let res = validator.validate(XML_VALID, XSD);
     expect(res).to.be.an('Array');
     expect(res.length).to.equal(0);
@@ -174,41 +231,52 @@ describe('validate', function () {
     ' because the content type is empty.\n');
   });
 
-  it('should get one error incorrect type option set to xmllint', function () {
-    const validator = new XMLXSDValidator('xmllint'),
-      expected = 'Element \'message\': \'sme message\' is not a valid value of the atomic type \'xs:int\'.\n';
+});
+
+
+describe('validate libxmljs2', function () {
+  it('should get no errors on correct input option set to libxmljs2', function () {
+    const validator = new XMLXSDValidator('libxmljs2');
+    let res = validator.validate(XML_VALID, XSD);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(0);
+  });
+
+  it('should get one error incorrect type option set to libxmljs2', function () {
+    const validator = new XMLXSDValidator('libxmljs2');
     let res = validator.validate(XML_INVALID_1, XSD);
     expect(res).to.be.an('Array');
     expect(res.length).to.equal(1);
     expect(res[0].code).to.equal(1824);
     expect(res[0].str1).to.equal('sme message');
-    expect(res[0].message).to.equal(expected);
-
+    expect(res[0].message).to.equal('Element \'message\': \'sme message\' is not a valid' +
+    ' value of the atomic type \'xs:int\'.\n');
   });
 
-  it('should get one error incorrect type option set to xmllint pm variable', function () {
-    const validator = new XMLXSDValidator('xmllint');
+  it('should get one error incorrect type option set to libxmljs2 pm variable', function () {
+    const validator = new XMLXSDValidator('libxmljs2');
     let res = validator.validate(XML_INVALID_PM_VAR, XSD);
     expect(res).to.be.an('Array');
     expect(res.length).to.equal(1);
     expect(res[0].code).to.equal(1824);
     expect(res[0].str1).to.equal('{{var}}');
-    expect(res[0].message).to.equal('Element \'message\': \'{{var}}\' is not a valid' +
-    ' value of the atomic type \'xs:int\'.\n');
+    expect(res[0].message).to.equal('Element \'message\': \'{{var}}\' ' +
+    'is not a valid value of the atomic type \'xs:int\'.\n');
   });
 
-  it('should get one error extra field option set to xmllint', function () {
-    const validator = new XMLXSDValidator('xmllint');
+  it('should get one error extra field option set to libxmljs2', function () {
+    const validator = new XMLXSDValidator('libxmljs2');
     let res = validator.validate(XML_INVALID_MISS_SCHEMA, XSD);
     expect(res).to.be.an('Array');
     expect(res.length).to.equal(1);
     expect(res[0].code).to.equal(1871);
     expect(res[0].str1).to.equal(undefined);
-    expect(res[0].message).to.equal('Element \'WRONGFIELD\': This element is not expected. Expected is ( subject ).\n');
+    expect(res[0].message).to.equal('Element \'WRONGFIELD\': This element is not expected.' +
+    ' Expected is ( subject ).\n');
   });
 
-  it('should get one error missing field option set to xmllint', function () {
-    const validator = new XMLXSDValidator('xmllint');
+  it('should get one error missing field option set to libxmljs2', function () {
+    const validator = new XMLXSDValidator('libxmljs2');
     let res = validator.validate(XML_INVALID_MISS_IN_MESSAGE, XSD);
     expect(res).to.be.an('Array');
     expect(res.length).to.equal(1);
@@ -217,15 +285,15 @@ describe('validate', function () {
     expect(res[0].message).to.equal('Element \'from\': This element is not expected. Expected is ( to ).\n');
   });
 
-  it('should get one error content not allowed option set to xmllint', function () {
-    const validator = new XMLXSDValidator('xmllint');
+  it('should get one error content not allowed option set to libxmljs2', function () {
+    const validator = new XMLXSDValidator('libxmljs2');
     let res = validator.validate(XML_XSD2_INVALID_CONTENT, XSD_2);
     expect(res).to.be.an('Array');
     expect(res.length).to.equal(1);
     expect(res[0].code).to.equal(1841);
     expect(res[0].str1).to.equal(undefined);
-    expect(res[0].message).to.equal('Element \'UpdateTimeStamp\':' +
-    ' Character content is not allowed, because the content type is empty.\n');
+    expect(res[0].message).to.equal('Element \'UpdateTimeStamp\': Character content is not allowed,' +
+    ' because the content type is empty.\n');
   });
 
 });
