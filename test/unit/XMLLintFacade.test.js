@@ -23,7 +23,7 @@ elementFormDefault="qualified">
  <subject>A Message to my readers</subject>
  <message>1</message>
 </beginnersbook>`,
-XML_INVALID_1 = `<?xml version="1.0"?>  
+  XML_INVALID_1 = `<?xml version="1.0"?>  
 <beginnersbook>
  <to>My Readers</to>
  <from>Chaitanya</from>
@@ -43,13 +43,13 @@ describe('validate', function () {
     const validator = new XMLLintFacade();
     let res = validator.validate(XML_VALID, XSD);
     expect(res).to.be.an('object');
-    expect(res.errors).to.equal(null)
+    expect(res.errors).to.equal(null);
   });
 
   it('should get one errors on incorrect input', function () {
     const validator = new XMLLintFacade();
     let res = validator.validate(XML_INVALID_1, XSD);
     expect(res).to.be.an('object');
-    expect(res.errors.length).to.equal(1)
+    expect(res.errors.length).to.equal(1);
   });
 });
