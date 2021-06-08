@@ -1,0 +1,67 @@
+[{
+  "id": "1a8221fe-3d87-4a7f-8667-483b75b809e0",
+  "name": "getMatchDetails",
+  "description": {
+    "content": "Returns the details - including results - that belong to a match.",
+    "type": "text/plain"
+  },
+  "request": {
+    "url": {
+      "path": ["soap", "services", "getMatchDetails.php"],
+      "host": ["{{baseUrl}}"],
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <getMatchDetails xmlns=\"url/soap/services/getMatchDetails.php\">\n      <application_key>place your string value here</application_key>\n      <matchId>place your string value here</matchId>\n    </getMatchDetails>\n  </soap:Body>\n</soap:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "5bd6970c-5011-4fb6-941e-fc534057be74",
+    "name": "getMatchDetails response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["soap", "services", "getMatchDetails.php"],
+        "host": ["www", "url", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <getMatchDetails xmlns=\"url/soap/services/getMatchDetails.php\">\n      <application_key>place your string value here</application_key>\n      <matchId>place your string value here</matchId>\n    </getMatchDetails>\n  </soap:Body>\n</soap:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <getMatchDetailsResponse xmlns=\"url/soap/services/getMatchDetails.php\">\n      <getMatchDetailsResult>\n        <item>\n          <id>hola</id>\n          <hometeamid>-2147483648</hometeamid>\n          <hometeamidname>place your string value here</hometeamidname>\n          <guestteamid>-2147483648</guestteamid>\n          <guestteamname>place your string value here</guestteamname>\n          <matchdate>2021-05-05Z</matchdate>\n          <homegoal>-2147483648</homegoal>\n          <guestgoal>-2147483648</guestgoal>\n          <status>-2147483648</status>\n     <UpdateTimeStamp>\n        </UpdateTimeStamp>\n        </item>\n      </getMatchDetailsResult>\n    </getMatchDetailsResponse>\n  </soap:Body>\n</soap:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}]

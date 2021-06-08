@@ -1,5 +1,6 @@
 const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
   calculatorWSDLObject = require('./../data/transactionsValidation/wsdlObjects/calculator'),
+  getPlayedMatchesWSDLObject = require('./../data/transactionsValidation/wsdlObjects/getPlayedMatches'),
   numberToWordsCollectionItemsPMVariable =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsPMVariable.json'),
   calculatorCollectionItemsPMVariable =
@@ -10,6 +11,8 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
     require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyIncomplete.json'),
   numberToWordsCollectionItemsBodyWrongType =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyWrongType.json'),
+  getPlayedMatchesCollectionItems = 
+    require('./../data/transactionsValidation/getPlayedMatchesCollectionItems.json'),
   {
     expect
   } = require('chai'),
@@ -256,6 +259,33 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
     },
     missingEndpoints: [
     ]
+  },
+  expectedGetPlayedMatches = {
+    matched: true,
+    requests: {
+      "cfae0d0e-d10c-4a15-8ba6-c80ee6e45879": {
+        requestId: "cfae0d0e-d10c-4a15-8ba6-c80ee6e45879",
+        endpoints: [
+          {
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: "POST soap getPlayedMatches",
+            mismatches: [
+            ],
+            responses: {
+              "47c90016-9b32-4612-aefc-f2128d79cd3c": {
+                id: "47c90016-9b32-4612-aefc-f2128d79cd3c",
+                matched: true,
+                mismatches: [
+                ],
+              },
+            },
+          },
+        ],
+      },
+    },
+    missingEndpoints: [
+    ],
   };
 
 describe('validateBody method with options', function () {
@@ -272,7 +302,7 @@ describe('validateBody method with options', function () {
       );
       return newMismatch;
     },
-    getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch, type = 'request') => {
+    getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch, type = 'request', responseId = '') => {
       let newExpected = JSON.parse(JSON.stringify(expectedBase));
       if (type === 'request') {
         newExpected.matched = false;
@@ -281,8 +311,10 @@ describe('validateBody method with options', function () {
       }
       else if (type === 'response') {
         newExpected.matched = false;
-        newExpected.requests[itemId].endpoints[0].mismatches = Array.isArray(mismatch) ? mismatch : [mismatch];
         newExpected.requests[itemId].endpoints[0].matched = false;
+        newExpected.requests[itemId].endpoints[0].responses[responseId].mismatches = 
+          Array.isArray(mismatch) ? mismatch : [mismatch];
+        newExpected.requests[itemId].endpoints[0].responses[responseId].matched = false;
       }
       return newExpected;
     },
@@ -360,7 +392,7 @@ describe('validateBody method with options', function () {
           'INVALID_TYPE'
         ),
         {
-          key: 'intA',
+          key: '//intA[1]',
           actualValue: '<intA>{{}}</intA>',
           suggestedValue: '<intA>100</intA>'
         }
@@ -372,7 +404,7 @@ describe('validateBody method with options', function () {
           'INVALID_TYPE'
         ),
         {
-          key: 'intB',
+          key: '//intB[1]',
           actualValue: '<intB>{{}}</intB>',
           suggestedValue: '<intB>100</intB>'
         }
@@ -437,7 +469,7 @@ describe('validateBody method with options', function () {
         numberToWordsWSDLObject, new XMLParser(),
         { detailedBlobValidation: true }
       ),
-      mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+      mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
@@ -467,7 +499,7 @@ describe('validateBody method with options', function () {
           numberToWordsWSDLObject, new XMLParser(),
           { detailedBlobValidation: true }
         ),
-        mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+        mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
         expected = getExpectedWithMismatchInEndpoint(
           expectedBase,
           'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
@@ -498,7 +530,7 @@ describe('validateBody method with options', function () {
             actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
               ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
               '    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n' +
-              '      <ubiNum>18446744073709</ubiNum>\n <WORNGFIELD>WRONG</WORNGFIELD>\n' +
+              '      <ubiNum>18446744073709</ubiNum>\n <WRONGFIELD>WRONG</WRONGFIELD>\n' +
               '    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n',
             suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
               ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
@@ -523,7 +555,7 @@ describe('validateBody method with options', function () {
           detailedBlobValidation: true
         }
       ),
-      mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+      mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
@@ -535,9 +567,9 @@ describe('validateBody method with options', function () {
             'MISSING_IN_SCHEMA'
           ),
           {
-            key: 'WORNGFIELD',
-            actualValue: '<WORNGFIELD>WRONG</WORNGFIELD>',
-            suggestedValue: ''
+            key: '/NumberToWords',
+            actualValue: '<NumberToWords>\n      <ubiNum>18446744073709</ubiNum>\n <WRONGFIELD>WRONG</WRONGFIELD>\n    </NumberToWords>',
+            suggestedValue: '<NumberToWords>\n      <ubiNum>100</ubiNum>\n    </NumberToWords>'
           }
         )
       );
@@ -568,9 +600,9 @@ describe('validateBody method with options', function () {
             'MISSING_IN_REQUEST'
           ),
           {
-            key: 'NumberToWords',
-            actualValue: '',
-            suggestedValue: '<ubiNum>100</ubiNum>'
+            key: '/NumberToWords',
+            actualValue: '<NumberToWords>\n        </NumberToWords>',
+            suggestedValue: '<NumberToWords>\n      <ubiNum>100</ubiNum>\n    </NumberToWords>'
           }
         )
       );
@@ -602,7 +634,7 @@ describe('validateBody method with options', function () {
             'INVALID_TYPE'
           ),
           {
-            key: 'ubiNum',
+            key: '//ubiNum[1]',
             actualValue: '<ubiNum>WRONG TYPE</ubiNum>',
             suggestedValue: '<ubiNum>100</ubiNum>'
           }
@@ -610,7 +642,6 @@ describe('validateBody method with options', function () {
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
-
 });
 
 describe('Validate Headers with options', function () {
