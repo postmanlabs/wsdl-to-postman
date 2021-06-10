@@ -392,9 +392,9 @@ describe('validateBody method with options', function () {
           'INVALID_TYPE'
         ),
         {
-          key: '//intA[1]',
-          actualValue: '<intA>{{}}</intA>',
-          suggestedValue: '<intA>100</intA>'
+          key: '/Subtract/intA',
+          actualValue: '{{}}',
+          suggestedValue: '100'
         }
       ),
       mock2 = withSuggestedFix(
@@ -404,9 +404,9 @@ describe('validateBody method with options', function () {
           'INVALID_TYPE'
         ),
         {
-          key: '//intB[1]',
-          actualValue: '<intB>{{}}</intB>',
-          suggestedValue: '<intB>100</intB>'
+          key: '/Subtract/intB',
+          actualValue: '{{}}',
+          suggestedValue: '100'
         }
       ),
       expected = getExpectedWithMismatchInEndpoint(
@@ -568,8 +568,8 @@ describe('validateBody method with options', function () {
           ),
           {
             key: '/NumberToWords',
-            actualValue: '<NumberToWords>\n      <ubiNum>18446744073709</ubiNum>\n <WRONGFIELD>WRONG</WRONGFIELD>\n    </NumberToWords>',
-            suggestedValue: '<NumberToWords>\n      <ubiNum>100</ubiNum>\n    </NumberToWords>'
+            actualValue: '<ubiNum>18446744073709</ubiNum>\n<WRONGFIELD>WRONG</WRONGFIELD>',
+            suggestedValue: '<ubiNum>100</ubiNum>'
           }
         )
       );
@@ -601,8 +601,8 @@ describe('validateBody method with options', function () {
           ),
           {
             key: '/NumberToWords',
-            actualValue: '<NumberToWords>\n        </NumberToWords>',
-            suggestedValue: '<NumberToWords>\n      <ubiNum>100</ubiNum>\n    </NumberToWords>'
+            actualValue: '',
+            suggestedValue: '<ubiNum>100</ubiNum>'
           }
         )
       );
@@ -634,9 +634,9 @@ describe('validateBody method with options', function () {
             'INVALID_TYPE'
           ),
           {
-            key: '//ubiNum[1]',
-            actualValue: '<ubiNum>WRONG TYPE</ubiNum>',
-            suggestedValue: '<ubiNum>100</ubiNum>'
+            key: '/NumberToWords/ubiNum',
+            actualValue: 'WRONG TYPE',
+            suggestedValue: '100'
           }
         )
       );

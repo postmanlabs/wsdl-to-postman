@@ -1395,9 +1395,9 @@ describe('validateBody method', function () {
                       reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
                         ' because the content type is empty.\n',
                       suggestedFix: {
-                        actualValue: '<UpdateTimeStamp>\n        </UpdateTimeStamp>',
-                        key: '//UpdateTimeStamp',
-                        suggestedValue: '<UpdateTimeStamp/>'
+                        actualValue: '\n        ',
+                        key: '/getMatchDetailsResponse/getMatchDetailsResult/item/UpdateTimeStamp',
+                        suggestedValue: ''
                       }
                     }
                   ]
