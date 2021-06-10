@@ -3,6 +3,9 @@ const expect = require('chai').expect,
     SOAPHeader
   } = require('../../lib/utils/SOAPHeader'),
   {
+    XMLParser
+  } = require('../../lib/XMLParser'),
+  {
     UsernameTokenInput
   } = require('../../lib/security/schemas/inputs/tokens/UsernameTokenInput'),
   {
@@ -14,14 +17,14 @@ const expect = require('chai').expect,
 
 describe('SOAPHeader  constructor', function () {
   it('should get an object for the factory with empty input', function () {
-    const parametersUtils = new SOAPHeader();
+    const parametersUtils = new SOAPHeader(new XMLParser());
     expect(parametersUtils).to.be.an('object');
   });
 });
 
 describe('SOAPHeader create', function () {
   it('should get an object correctly created username normal token', function () {
-    const parametersUtils = new SOAPHeader(),
+    const parametersUtils = new SOAPHeader(new XMLParser()),
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
@@ -46,7 +49,7 @@ describe('SOAPHeader create', function () {
   });
 
   it('should get an object correctly created username no password token', function () {
-    const parametersUtils = new SOAPHeader(),
+    const parametersUtils = new SOAPHeader(new XMLParser()),
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
@@ -65,7 +68,7 @@ describe('SOAPHeader create', function () {
   });
 
   it('should get an object correctly created hashed password', function () {
-    const parametersUtils = new SOAPHeader(),
+    const parametersUtils = new SOAPHeader(new XMLParser()),
       usernameTokenInput = new UsernameTokenInput();
     usernameTokenInput.includeToken =
       'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient';
@@ -85,7 +88,7 @@ describe('SOAPHeader create', function () {
   });
 
   it('should get an object correctly created normal password and ssl', function () {
-    const parametersUtils = new SOAPHeader(),
+    const parametersUtils = new SOAPHeader(new XMLParser()),
       usernameTokenInput = new UsernameTokenInput(),
       transportBindingAssertion = new TransportBindingInput();
 
@@ -117,7 +120,7 @@ describe('SOAPHeader create', function () {
   });
 
   it('should get an object correctly created sender vouches saml', function () {
-    const parametersUtils = new SOAPHeader(),
+    const parametersUtils = new SOAPHeader(new XMLParser()),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'sender-vouches';
     jsonObjectMessage = parametersUtils.create(
@@ -149,7 +152,7 @@ describe('SOAPHeader create', function () {
   });
 
   it('should get an object correctly created holder of key saml', function () {
-    const parametersUtils = new SOAPHeader(),
+    const parametersUtils = new SOAPHeader(new XMLParser()),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'holder-of-key';
     jsonObjectMessage = parametersUtils.create(
@@ -182,7 +185,7 @@ describe('SOAPHeader create', function () {
 
 
   it('should get an object correctly created bearer saml', function () {
-    const parametersUtils = new SOAPHeader(),
+    const parametersUtils = new SOAPHeader(new XMLParser()),
       sAMLTokenInput = new SAMLTokenInput();
     sAMLTokenInput.mode = 'bearer';
     jsonObjectMessage = parametersUtils.create(

@@ -44,7 +44,7 @@ describe('Test validate function in SchemaPack through Index', function() {
     expect(result).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Invalid input type (other). Type must be file/string.'
+        reason: 'Invalid input type (other). Type must be file/string/folder.'
       });
   });
 
@@ -53,7 +53,7 @@ describe('Test validate function in SchemaPack through Index', function() {
     expect(result).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Invalid input type (undefined). Type must be file/string.'
+        reason: 'Invalid input type (undefined). Type must be file/string/folder.'
       });
   });
 

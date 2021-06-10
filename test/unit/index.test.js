@@ -7,7 +7,8 @@ const expect = require('chai').expect,
     mergeAndValidate
   } = require('../../index'),
   validWSDLs = 'test/data/validWSDLs11',
-  fs = require('fs');
+  fs = require('fs'),
+  path = require('path');
 
 describe('Index getOptions', function () {
   it('Should return external options when called without parameters', function () {
@@ -84,19 +85,27 @@ describe('validate', function () {
   });
 });
 
-
 describe('merge and validate', function () {
   it('Should send error', function () {
-    const
-      VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl';
-    mergeAndValidate({
-      type: 'file',
-      data: VALID_WSDL_PATH
-    }, (error, result) => {
+    let folderPath = path.join(__dirname, '../data/separatedFiles/W3Example'),
+      files = [],
+      array = [
+        { fileName: folderPath + '/stockquote.xsd' },
+        { fileName: folderPath + '/stockquote.wsdl' },
+        { fileName: folderPath + '/stockquoteservice.wsdl' }
+      ];
+
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+
+    mergeAndValidate({ type: 'folder', data: files }, (error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object');
-      expect(result.result).to.equal(false);
-      expect(result.reason).to.equal('not implemented');
+      expect(result.result).to.equal(true);
     });
 
   });
