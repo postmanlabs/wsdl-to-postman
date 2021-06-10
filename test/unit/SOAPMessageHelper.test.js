@@ -2,6 +2,7 @@ const expect = require('chai').expect,
   {
     SOAPMessageHelper
   } = require('../../lib/utils/SOAPMessageHelper'),
+  { XMLParser } = require('../../lib/XMLParser'),
   {
     UsernameTokenInput
   } = require('../../lib/security/schemas/inputs/tokens/UsernameTokenInput'),
@@ -52,19 +53,19 @@ describe('SOAPMessageHelper  constructor', function () {
 describe('SOAPMessageHelper parseObjectToXML', function () {
   it('should get an string representing the xml only body', function () {
     const parametersUtils = new SOAPMessageHelper(),
-      xmlParameters = parametersUtils.parseObjectToXML(json);
+      xmlParameters = parametersUtils.parseObjectToXML(json, new XMLParser());
     expect(xmlParameters).to.be.an('string');
   });
 
   it('should get an string representing the xml with header', function () {
     const parametersUtils = new SOAPMessageHelper(),
-      xmlParameters = parametersUtils.parseObjectToXML(jsonWithHeader);
+      xmlParameters = parametersUtils.parseObjectToXML(jsonWithHeader, new XMLParser());
     expect(xmlParameters).to.be.an('string');
   });
 
   it('should get an emtpy string when object is empty', function () {
     const parametersUtils = new SOAPMessageHelper(),
-      xmlParameters = parametersUtils.parseObjectToXML({});
+      xmlParameters = parametersUtils.parseObjectToXML({}, new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters).to.equal('');
   });
@@ -93,7 +94,7 @@ describe('SOAPMessageHelper parseObjectToXML', function () {
 
   it('should get an string representing the xml with error', function () {
     const parametersUtils = new SOAPMessageHelper(),
-      xmlParameters = parametersUtils.parseObjectToXML(jsonError);
+      xmlParameters = parametersUtils.parseObjectToXML(jsonError, new XMLParser());
     expect(xmlParameters).to.be.an('string');
   });
 });
@@ -125,7 +126,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function () {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
-      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap');
+      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap', new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -179,7 +180,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function () {
         type: 'complex',
         namespace: 'http://tempuri.org/'
       },
-      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap');
+      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap', new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -215,7 +216,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function () {
         type: 'complex',
         namespace: 'https://geoservices.tamu.edu/'
       },
-      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap');
+      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap', new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -243,7 +244,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function () {
           '1032'
         ]
       };
-    xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap');
+    xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap', new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -271,7 +272,7 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
     usernameTokenInput.passwordType = 'Normal';
     xmlParameters = parametersUtils.convertInputToMessage(undefined, {
       1: [usernameTokenInput]
-    }, 'soap');
+    }, 'soap', new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -295,7 +296,7 @@ oasis-200401-wss-username-token-profile-1.0#PasswordText">place password here</w
     usernameTokenInput.passwordType = 'NoPassword';
     xmlParameters = parametersUtils.convertInputToMessage(undefined, {
       1: [usernameTokenInput]
-    }, 'soap');
+    }, 'soap', new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 
@@ -323,7 +324,7 @@ oasis-200401-wss-username-token-profile-1.0#PasswordDigest">place hashed passwor
     usernameTokenInput.passwordType = 'HashPassword';
     xmlParameters = parametersUtils.convertInputToMessage(undefined, {
       1: [usernameTokenInput]
-    }, 'soap');
+    }, 'soap', new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
 

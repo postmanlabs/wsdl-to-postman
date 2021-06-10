@@ -970,7 +970,7 @@ describe('validateBody method', function () {
         numberToWordsWSDLObject, new XMLParser(),
         { detailedBlobValidation: true }
       ),
-      mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+      mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
@@ -1396,7 +1396,7 @@ describe('validateBody method', function () {
                         ' because the content type is empty.\n',
                       suggestedFix: {
                         actualValue: '<UpdateTimeStamp>\n        </UpdateTimeStamp>',
-                        key: 'UpdateTimeStamp',
+                        key: '//UpdateTimeStamp',
                         suggestedValue: '<UpdateTimeStamp/>'
                       }
                     }
