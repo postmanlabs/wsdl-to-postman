@@ -1,0 +1,67 @@
+[{
+  "id": "cfae0d0e-d10c-4a15-8ba6-c80ee6e45879",
+  "name": "getPlayedMatches",
+  "request": {
+    "description": {
+      "content": "Returns the matches in a tournament/league which has result registered..",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["soap", "services", "getPlayedMatches.php"],
+      "host": ["{{getPlayedMatchesPortBaseUrl}}"],
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <getPlayedMatches xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      <application_key>string</application_key>\n      <competitionId>string</competitionId>\n    </getPlayedMatches>\n  </soap:Body>\n</soap:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "47c90016-9b32-4612-aefc-f2128d79cd3c",
+    "name": "getPlayedMatches response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["soap", "services", "getPlayedMatches.php"],
+        "host": ["{{url}}"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <getPlayedMatches xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      <application_key>string</application_key>\n      <competitionId>string</competitionId>\n    </getPlayedMatches>\n  </soap:Body>\n</soap:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <getPlayedMatchesResponse xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      <getPlayedMatchesResult>\n        <item>\n          <MatchId>WRONGVALUE</MatchId>\n          <GameRound>100</GameRound>\n          <Arena>string</Arena>\n          <Field>string</Field>\n          <MatchTimeDateTime>string</MatchTimeDateTime>\n          <Time>string</Time>\n          <Team1Id>100</Team1Id>\n          <Team1GlobalId>100</Team1GlobalId>\n          <Team1Name>string</Team1Name>\n          <Team2Id>100</Team2Id>\n          <Team2GlobalId>100</Team2GlobalId>\n          <Team2Name>string</Team2Name>\n          <Team1Score>100</Team1Score>\n          <Team2Score>100</Team2Score>\n          <GameResult>string</GameResult>\n          <GameStatus>100</GameStatus>\n          <UpdateTimeStamp>string</UpdateTimeStamp>\n          <MatchName>string</MatchName>\n          <Team1ClubId>string</Team1ClubId>\n          <Team1ClubGlobalId>string</Team1ClubGlobalId>\n          <Team2ClubId>string</Team2ClubId>\n          <Team2ClubGlobalId>string</Team2ClubGlobalId>\n          <Winner>string</Winner>\n          <SortOrder1>string</SortOrder1>\n          <SortOrder2>string</SortOrder2>\n          <MatchGroupId>100</MatchGroupId>\n          <MatchClassId>100</MatchClassId>\n          <PersonalResultRegistration>100</PersonalResultRegistration>\n          <FieldId>string</FieldId>\n          <ArenaId>string</ArenaId>\n          <FieldGlobalId>string</FieldGlobalId>\n          <ArenaGlobalId>string</ArenaGlobalId>\n          <Sets>string</Sets>\n          <RefereesAssignments>\n            <item>\n              <id>string</id>\n              <PersonGlobalId>string</PersonGlobalId>\n              <RefereeNumber>string</RefereeNumber>\n              <Person>\n                <item>\n                  <id>100</id>\n                  <last_name>string</last_name>\n                  <first_name>string</first_name>\n                  <gender>string</gender>\n                  <birth_year>string</birth_year>\n                  <birth_date>2021-06-04Z</birth_date>\n                  <phone>string</phone>\n                  <email>string</email>\n                </item>\n              </Person>\n            </item>\n          </RefereesAssignments>\n        </item>\n      </getPlayedMatchesResult>\n    </getPlayedMatchesResponse>\n  </soap:Body>\n</soap:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}]

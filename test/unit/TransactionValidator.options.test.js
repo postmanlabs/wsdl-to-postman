@@ -1,11 +1,18 @@
 const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
   calculatorWSDLObject = require('./../data/transactionsValidation/wsdlObjects/calculator'),
+  getPlayedMatchesWSDLObject = require('./../data/transactionsValidation/wsdlObjects/getPlayedMatches'),
   numberToWordsCollectionItemsPMVariable =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsPMVariable.json'),
   calculatorCollectionItemsPMVariable =
     require('./../data/transactionsValidation/calculatorCollectionItemsPMVariable.json'),
   numberToWordsCollectionItemsBodyMoreFields =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyMoreFields.json'),
+  numberToWordsCollectionItemsBodyIncomplete =
+    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyIncomplete.json'),
+  numberToWordsCollectionItemsBodyWrongType =
+    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyWrongType.json'),
+  getPlayedMatchesCollectionItemsWrongType =
+    require('./../data/transactionsValidation/getPlayedMatchesCollectionItemsWrongType.json'),
   {
     expect
   } = require('chai'),
@@ -252,23 +259,50 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
     },
     missingEndpoints: [
     ]
+  },
+  expectedGetPlayedMatchesBase = {
+    matched: true,
+    requests: {
+      'cfae0d0e-d10c-4a15-8ba6-c80ee6e45879': {
+        requestId: 'cfae0d0e-d10c-4a15-8ba6-c80ee6e45879',
+        endpoints: [
+          {
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap getPlayedMatches',
+            mismatches: [
+            ],
+            responses: {
+              '47c90016-9b32-4612-aefc-f2128d79cd3c': {
+                id: '47c90016-9b32-4612-aefc-f2128d79cd3c',
+                matched: true,
+                mismatches: [
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    missingEndpoints: [
+    ]
   };
 
 describe('validateBody method with options', function () {
-  const bodyMismatchMockWithReason = (reason, schemaJsonPath) => {
+  const bodyMismatchMockWithReason = (reason, schemaJsonPath, reasonCode = 'INVALID_BODY') => {
       let newMismatch = Object.assign(
         {},
         {
           property: 'BODY',
           transactionJsonPath: '$.request.body',
           schemaJsonPath: schemaJsonPath,
-          reasonCode: 'INVALID_BODY',
+          reasonCode,
           reason: reason
         }
       );
       return newMismatch;
     },
-    getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch, type = 'request') => {
+    getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch, type = 'request', responseId = '') => {
       let newExpected = JSON.parse(JSON.stringify(expectedBase));
       if (type === 'request') {
         newExpected.matched = false;
@@ -276,17 +310,27 @@ describe('validateBody method with options', function () {
         newExpected.requests[itemId].endpoints[0].matched = false;
       }
       else if (type === 'response') {
+        mismatch.property = 'RESPONSE_BODY';
+        mismatch.transactionJsonPath = '$.response.body';
         newExpected.matched = false;
-        newExpected.requests[itemId].endpoints[0].mismatches = Array.isArray(mismatch) ? mismatch : [mismatch];
         newExpected.requests[itemId].endpoints[0].matched = false;
+        newExpected.requests[itemId].endpoints[0].responses[responseId].mismatches =
+          Array.isArray(mismatch) ? mismatch : [mismatch];
+        newExpected.requests[itemId].endpoints[0].responses[responseId].matched = false;
       }
       return newExpected;
+    },
+    withSuggestedFix = (mismatch, suggestedObject) => {
+      let newMismatch = JSON.parse(JSON.stringify(mismatch));
+      newMismatch.suggestedFix = suggestedObject;
+      return newMismatch;
     };
   it('Should have a mismatch when a request msg has an unresolved PM variable no option sent', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsPMVariable,
-        numberToWordsWSDLObject, new XMLParser()
+        numberToWordsWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true }
       ),
       mismatchReason =
         'Element \'ubiNum\': \'{{pmVariable}}\' is not a valid value of the atomic type \'xs:unsignedLong\'.\n',
@@ -294,7 +338,8 @@ describe('validateBody method with options', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]')
+          '//operation[@name="NumberToWords"]', 'INVALID_TYPE')
+
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
@@ -305,7 +350,7 @@ describe('validateBody method with options', function () {
         result = transactionValidator.validateTransaction(
           numberToWordsCollectionItemsPMVariable,
           numberToWordsWSDLObject, new XMLParser(),
-          { ignoreUnresolvedVariables: false }
+          { ignoreUnresolvedVariables: false, detailedBlobValidation: true }
         ),
         mismatchReason =
           'Element \'ubiNum\': \'{{pmVariable}}\' is not a valid value of the atomic type \'xs:unsignedLong\'.\n',
@@ -313,7 +358,7 @@ describe('validateBody method with options', function () {
           expectedBase,
           'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
           bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-            '//operation[@name="NumberToWords"]')
+            '//operation[@name="NumberToWords"]', 'INVALID_TYPE')
         );
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
@@ -330,24 +375,80 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
-  it('Should have a mismatch when a request msg has 2 unresolved PM variable no option sent', function () {
+  it('Should have two mismatch when a request msg has 2 unresolved PM variable no option sent' +
+  ', detailedBlobValidation is true and suggestAvailableFixes is true', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         calculatorCollectionItemsPMVariable,
-        calculatorWSDLObject, new XMLParser()
+        calculatorWSDLObject, new XMLParser(),
+        { detailedBlobValidation: true, suggestAvailableFixes: true }
       ),
       mismatchReason =
         'Element \'intA\': \'{{}}\' is not a valid value of the atomic type \'xs:int\'.\n',
       mismatchReason2 =
         'Element \'intB\': \'{{}}\' is not a valid value of the atomic type \'xs:int\'.\n',
-      mock1 = bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="CalculatorSoap"]' +
-        '//operation[@name="Subtract"]'),
-      mock2 = bodyMismatchMockWithReason(mismatchReason2, '//definitions//binding[@name="CalculatorSoap"]' +
-        '//operation[@name="Subtract"]'),
+      mock1 = withSuggestedFix(
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name="CalculatorSoap"]//operation[@name="Subtract"]',
+          'INVALID_TYPE'
+        ),
+        {
+          key: '/Subtract/intA',
+          actualValue: '{{}}',
+          suggestedValue: '100'
+        }
+      ),
+      mock2 = withSuggestedFix(
+        bodyMismatchMockWithReason(
+          mismatchReason2,
+          '//definitions//binding[@name="CalculatorSoap"]//operation[@name="Subtract"]',
+          'INVALID_TYPE'
+        ),
+        {
+          key: '/Subtract/intB',
+          actualValue: '{{}}',
+          suggestedValue: '100'
+        }
+      ),
       expected = getExpectedWithMismatchInEndpoint(
         expectedCalculatorBase,
         '96552d2b-2877-4cf1-ac6d-33846c17abd2',
         [mock1, mock2]);
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have one mismatch when a request msg has 2 unresolved PM variable no option sent' +
+  ', detaledBlobValidation is false and suggestAvailableFixes is true', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        calculatorCollectionItemsPMVariable,
+        calculatorWSDLObject, new XMLParser(),
+        { detailedBlobValidation: false, suggestAvailableFixes: true }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      mock = withSuggestedFix(
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name="CalculatorSoap"]//operation[@name="Subtract"]',
+          'INVALID_BODY'
+        ),
+        {
+          key: 'body',
+          actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
+            ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
+            '    <Subtract xmlns=\"http://tempuri.org/\">\n      <intA>{{}}</intA>\n    ' +
+            '  <intB>{{}}</intB>\n    </Subtract>\n  </soap:Body>\n</soap:Envelope>\n',
+          suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
+            ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
+            '    <Subtract xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n    ' +
+            '  <intB>100</intB>\n    </Subtract>\n  </soap:Body>\n</soap:Envelope>\n'
+        }
+      ),
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedCalculatorBase,
+        '96552d2b-2877-4cf1-ac6d-33846c17abd2',
+        mock);
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
@@ -368,28 +469,29 @@ describe('validateBody method with options', function () {
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
-        {}
+        { detailedBlobValidation: true }
       ),
-      mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+      mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]')
+          '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Shouldn\'t have a mismatch when a request msg has more than expected fields and showMissingSchemaErrors is false',
-    function () {
-      const transactionValidator = new TransactionValidator(),
-        result = transactionValidator.validateTransaction(
-          numberToWordsCollectionItemsBodyMoreFields,
-          numberToWordsWSDLObject, new XMLParser(),
-          { showMissingSchemaErrors: false }
-        );
-      expect(result).to.be.an('object').and.to.deep.include(expectedBase);
-    });
+  it('Shouldn\'t have any mismatch when a request msg has more than expected fields' +
+  ' and showMissingSchemaErrors is false',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        { showMissingSchemaErrors: false }
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expectedBase);
+  });
 
   it('Should have a mismatch when a request msg has more than expected fields and showMissingSchemaErrors is true',
     function () {
@@ -397,18 +499,341 @@ describe('validateBody method with options', function () {
         result = transactionValidator.validateTransaction(
           numberToWordsCollectionItemsBodyMoreFields,
           numberToWordsWSDLObject, new XMLParser(),
-          {}
+          { detailedBlobValidation: true }
         ),
-        mismatchReason = 'Element \'WORNGFIELD\': This element is not expected.\n',
+        mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
         expected = getExpectedWithMismatchInEndpoint(
           expectedBase,
           'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
           bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-            '//operation[@name="NumberToWords"]')
+            '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
         );
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
 
+  it('Should have a mismatch when a request msg has more than expected fields, showMissingSchemaErrors is true' +
+  ' and suggestAvaulableFixes is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        { showMissingSchemaErrors: true, suggestAvailableFixes: true }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+          '//operation[@name="NumberToWords"]'),
+          {
+            key: 'body',
+            actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
+              ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
+              '    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n' +
+              '      <ubiNum>18446744073709</ubiNum>\n <WRONGFIELD>WRONG</WRONGFIELD>\n' +
+              '    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n',
+            suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
+              ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
+              '    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n' +
+              '      <ubiNum>100</ubiNum>\n    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>\n'
+          }
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a request msg has more than expected fields, showMissingSchemaErrors is true,' +
+  ' suggestAvaulableFixes is true and detailedBlobValidation is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyMoreFields,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          showMissingSchemaErrors: true,
+          suggestAvailableFixes: true,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToWords"]',
+            'MISSING_IN_SCHEMA'
+          ),
+          {
+            key: '/NumberToWords',
+            actualValue: '<ubiNum>18446744073709</ubiNum>\n<WRONGFIELD>WRONG</WRONGFIELD>',
+            suggestedValue: '<ubiNum>100</ubiNum>'
+          }
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a request msg has less than expected fields,' +
+  ' suggestAvaulableFixes is true and detailedBlobValidation is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyIncomplete,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToWords"]',
+            'MISSING_IN_REQUEST'
+          ),
+          {
+            key: '/NumberToWords',
+            actualValue: '',
+            suggestedValue: '<ubiNum>100</ubiNum>'
+          }
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a request msg has a different type than expected in field,' +
+  ' suggestAvailableFixes is true and detailedBlobValidation is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsBodyWrongType,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'ubiNum\': \'WRONG TYPE\' is not a valid' +
+        ' value of the atomic type \'xs:unsignedLong\'.\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+            '//operation[@name="NumberToWords"]',
+            'INVALID_TYPE'
+          ),
+          {
+            key: '/NumberToWords/ubiNum',
+            actualValue: 'WRONG TYPE',
+            suggestedValue: '100'
+          }
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a response msg has a different type than expected in field,' +
+  ' and there are multiple elements with the same name than its parent in different levels' +
+  'suggestAvailableFixes is true and detailedBlobValidation is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        getPlayedMatchesCollectionItemsWrongType,
+        getPlayedMatchesWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'MatchId\': \'WRONGVALUE\' is not a valid value of the atomic type \'xs:int\'.\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedGetPlayedMatchesBase,
+        'cfae0d0e-d10c-4a15-8ba6-c80ee6e45879',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name=\"getPlayedMatchesBinding\"]//operation[@name=\"getPlayedMatches\"]',
+            'INVALID_TYPE'
+          ),
+          {
+            key: '/getPlayedMatchesResponse/getPlayedMatchesResult/item/MatchId',
+            actualValue: 'WRONGVALUE',
+            suggestedValue: '100'
+          }
+        ),
+        'response',
+        '47c90016-9b32-4612-aefc-f2128d79cd3c'
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a response msg has a different type than expected in field,' +
+  ' and there are multiple elements with the same name than its parent in different levels' +
+  'suggestAvailableFixes is true and detailedBlobValidation is false',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        getPlayedMatchesCollectionItemsWrongType,
+        getPlayedMatchesWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true,
+          detailedBlobValidation: false
+        }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedGetPlayedMatchesBase,
+        'cfae0d0e-d10c-4a15-8ba6-c80ee6e45879',
+        withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name=\"getPlayedMatchesBinding\"]//operation[@name=\"getPlayedMatches\"]',
+            'INVALID_RESPONSE_BODY'
+          ),
+          {
+            key: 'body',
+            actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
+            '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  ' +
+            '<soap:Body>\n    ' +
+            '<getPlayedMatchesResponse xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      ' +
+            '<getPlayedMatchesResult>\n        <item>\n          <MatchId>WRONGVALUE</MatchId>\n          ' +
+            '<GameRound>100</GameRound>\n          <Arena>string</Arena>\n          <Field>string</Field>\n          ' +
+            '<MatchTimeDateTime>string</MatchTimeDateTime>\n          <Time>string</Time>\n          ' +
+            '<Team1Id>100</Team1Id>\n          <Team1GlobalId>100</Team1GlobalId>\n          ' +
+            '<Team1Name>string</Team1Name>\n          <Team2Id>100</Team2Id>\n          ' +
+            '<Team2GlobalId>100</Team2GlobalId>\n          <Team2Name>string</Team2Name>\n          ' +
+            '<Team1Score>100</Team1Score>\n          <Team2Score>100</Team2Score>\n          ' +
+            '<GameResult>string</GameResult>\n          <GameStatus>100</GameStatus>\n          ' +
+            '<UpdateTimeStamp>string</UpdateTimeStamp>\n          <MatchName>string</MatchName>\n          ' +
+            '<Team1ClubId>string</Team1ClubId>\n          <Team1ClubGlobalId>string</Team1ClubGlobalId>\n          ' +
+            '<Team2ClubId>string</Team2ClubId>\n          <Team2ClubGlobalId>string</Team2ClubGlobalId>\n          ' +
+            '<Winner>string</Winner>\n          <SortOrder1>string</SortOrder1>\n          ' +
+            '<SortOrder2>string</SortOrder2>\n          <MatchGroupId>100</MatchGroupId>\n          ' +
+            '<MatchClassId>100</MatchClassId>\n          ' +
+            '<PersonalResultRegistration>100</PersonalResultRegistration>\n          ' +
+            '<FieldId>string</FieldId>\n          <ArenaId>string</ArenaId>\n          ' +
+            '<FieldGlobalId>string</FieldGlobalId>\n          <ArenaGlobalId>string</ArenaGlobalId>\n          ' +
+            '<Sets>string</Sets>\n          <RefereesAssignments>\n            <item>\n              ' +
+            '<id>string</id>\n              <PersonGlobalId>string</PersonGlobalId>\n              ' +
+            '<RefereeNumber>string</RefereeNumber>\n              <Person>\n                ' +
+            '<item>\n                  <id>100</id>\n                  ' +
+            '<last_name>string</last_name>\n                  ' +
+            '<first_name>string</first_name>\n                  <gender>string</gender>\n                  ' +
+            '<birth_year>string</birth_year>\n                  ' +
+            '<birth_date>2021-06-04Z</birth_date>\n                  ' +
+            '<phone>string</phone>\n                  <email>string</email>\n                </item>\n              ' +
+            '</Person>\n            </item>\n          </RefereesAssignments>\n        </item>\n      ' +
+            '</getPlayedMatchesResult>\n    </getPlayedMatchesResponse>\n  </soap:Body>\n</soap:Envelope>\n',
+            suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
+            '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  ' +
+            '<soap:Body>\n    ' +
+            '<getPlayedMatchesResponse xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      ' +
+            '<getPlayedMatchesResult>\n        <item>\n          <MatchId>100</MatchId>\n          ' +
+            '<GameRound>100</GameRound>\n          <Arena>string</Arena>\n          ' +
+            '<Field>string</Field>\n          <MatchTimeDateTime>string</MatchTimeDateTime>\n          ' +
+            '<Time>string</Time>\n          <Team1Id>100</Team1Id>\n          ' +
+            '<Team1GlobalId>100</Team1GlobalId>\n          <Team1Name>string</Team1Name>\n          ' +
+            '<Team2Id>100</Team2Id>\n          <Team2GlobalId>100</Team2GlobalId>\n          ' +
+            '<Team2Name>string</Team2Name>\n          <Team1Score>100</Team1Score>\n          ' +
+            '<Team2Score>100</Team2Score>\n          <GameResult>string</GameResult>\n          ' +
+            '<GameStatus>100</GameStatus>\n          <UpdateTimeStamp>string</UpdateTimeStamp>\n          ' +
+            '<MatchName>string</MatchName>\n          <Team1ClubId>string</Team1ClubId>\n          ' +
+            '<Team1ClubGlobalId>string</Team1ClubGlobalId>\n          ' +
+            '<Team2ClubId>string</Team2ClubId>\n          ' +
+            '<Team2ClubGlobalId>string</Team2ClubGlobalId>\n          <Winner>string</Winner>\n          ' +
+            '<SortOrder1>string</SortOrder1>\n          <SortOrder2>string</SortOrder2>\n          ' +
+            '<MatchGroupId>100</MatchGroupId>\n          <MatchClassId>100</MatchClassId>\n          ' +
+            '<PersonalResultRegistration>100</PersonalResultRegistration>\n          ' +
+            '<FieldId>string</FieldId>\n          ' +
+            '<ArenaId>string</ArenaId>\n          <FieldGlobalId>string</FieldGlobalId>\n          ' +
+            '<ArenaGlobalId>string</ArenaGlobalId>\n          <Sets>string</Sets>\n          ' +
+            '<RefereesAssignments>\n            <item>\n              <id>string</id>\n              ' +
+            '<PersonGlobalId>string</PersonGlobalId>\n              ' +
+            '<RefereeNumber>string</RefereeNumber>\n              ' +
+            '<Person>\n                <item>\n                  <id>100</id>\n                  ' +
+            '<last_name>string</last_name>\n                  <first_name>string</first_name>\n                  ' +
+            '<gender>string</gender>\n                  <birth_year>string</birth_year>\n                  ' +
+            '<birth_date>2021-06-11Z</birth_date>\n                  <phone>string</phone>\n                  ' +
+            '<email>string</email>\n                </item>\n              </Person>\n            </item>\n          ' +
+            '</RefereesAssignments>\n        </item>\n      ' +
+            '</getPlayedMatchesResult>\n    </getPlayedMatchesResponse>\n  ' +
+            '</soap:Body>\n</soap:Envelope>\n'
+          }
+        ),
+        'response',
+        '47c90016-9b32-4612-aefc-f2128d79cd3c'
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a response msg has a different type than expected in field,' +
+  ' and there are multiple elements with the same name than its parent in different levels' +
+  'suggestAvailableFixes is false and detailedBlobValidation is false',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        getPlayedMatchesCollectionItemsWrongType,
+        getPlayedMatchesWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: false,
+          detailedBlobValidation: false
+        }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedGetPlayedMatchesBase,
+        'cfae0d0e-d10c-4a15-8ba6-c80ee6e45879',
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name=\"getPlayedMatchesBinding\"]//operation[@name=\"getPlayedMatches\"]',
+          'INVALID_RESPONSE_BODY'
+        ),
+        'response',
+        '47c90016-9b32-4612-aefc-f2128d79cd3c'
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should have a mismatch when a response msg has a different type than expected in field,' +
+  ' and there are multiple elements with the same name than its parent in different levels' +
+  'suggestAvailableFixes is false and detailedBlobValidation is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        getPlayedMatchesCollectionItemsWrongType,
+        getPlayedMatchesWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: false,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'MatchId\': \'WRONGVALUE\' is not a valid value of the atomic type \'xs:int\'.\n',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedGetPlayedMatchesBase,
+        'cfae0d0e-d10c-4a15-8ba6-c80ee6e45879',
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name=\"getPlayedMatchesBinding\"]//operation[@name=\"getPlayedMatches\"]',
+          'INVALID_TYPE'
+        ),
+        'response',
+        '47c90016-9b32-4612-aefc-f2128d79cd3c'
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
 });
 
 describe('Validate Headers with options', function () {
