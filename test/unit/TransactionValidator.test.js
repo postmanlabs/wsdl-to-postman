@@ -5,30 +5,32 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/numberToWords'),
   getMatchDetailsWSDLObject = require('./../data/transactionsValidation/wsdlObjects/getMatchDetails'),
   numberToWordsNoOperationsWSDLObject =
-    require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
+  require('./../data/transactionsValidation/wsdlObjects/numberToWordsNoOperations'),
   numberToWordsCollectionItems = require('./../data/transactionsValidation/numberToWordsCollectionItems.json'),
   numberToWordsCollectionItemsBodyWrongType =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyWrongType.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyWrongType.json'),
   numberToWordsCollectionItemsBodyIncomplete =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyIncomplete.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyIncomplete.json'),
   numberToWordsCollectionItemsBodyMoreFields =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyMoreFields.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyMoreFields.json'),
   numberToWordsCollectionItemsBodyLess =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyLess.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyLess.json'),
   numberToWordsCollectionItemsResponseBodyIncomplete =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsResponseBodyIncomplete.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsResponseBodyIncomplete.json'),
   numberToWordsCollectionItemsResponseBodyMoreFields =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsResponseBodyMoreFields.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsResponseBodyMoreFields.json'),
   numberToWordsCollectionItemsResponseBodyLess =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsResponseBodyLess.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsResponseBodyLess.json'),
   numberToWordsCollectionItemsNoCTHeader =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsNoCTHeader.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsNoCTHeader.json'),
   numberToWordsCollectionItemsCTHeaderNXML =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsCTHeaderNXML.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsCTHeaderNXML.json'),
   numberToWordsCollectionItemsGET = require('./../data/transactionsValidation/numberToWordsCollectionItemsGET.json'),
   numberToWordsCollectionItemsIncompleteItems =
-    require('./../data/transactionsValidation/numberToWordsCollectionItemsIncompleteItems.json'),
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsIncompleteItems.json'),
   getMatchDetailsCollectionItems = require('./../data/transactionsValidation/getMatchDetailsCollectionItems.json'),
+  numberToWordsCollectionItemsOneMissingItem =
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsOneMissingItem.json'),
   {
     assert,
     expect
@@ -43,9 +45,9 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
     XMLParser
   } = require('../../lib/XMLParser');
 
-describe('Transaction Validator validateTransaction function', function () {
+describe('Transaction Validator validateTransaction function', function() {
   const emptyWsdlObject = new WsdlObject();
-  it('Should validate correct number to words mock wsdl and collection items', function () {
+  it('Should validate correct number to words mock wsdl and collection items', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject,
         new XMLParser());
@@ -120,7 +122,7 @@ describe('Transaction Validator validateTransaction function', function () {
     });
   });
 
-  it('Should return an error when transaction id is null', function () {
+  it('Should return an error when transaction id is null', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(notIdCollectionItems, emptyWsdlObject, new XMLParser());
@@ -131,7 +133,7 @@ describe('Transaction Validator validateTransaction function', function () {
     }
   });
 
-  it('Should return an error when transaction id is an empty string', function () {
+  it('Should return an error when transaction id is an empty string', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyIdCollectionItems, emptyWsdlObject, new XMLParser());
@@ -142,7 +144,7 @@ describe('Transaction Validator validateTransaction function', function () {
     }
   });
 
-  it('Should return an error when transaction request is null', function () {
+  it('Should return an error when transaction request is null', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(nullRequestCollectionItems, emptyWsdlObject, new XMLParser());
@@ -153,7 +155,7 @@ describe('Transaction Validator validateTransaction function', function () {
     }
   });
 
-  it('Should return an error when transaction request contains an empty WSDL Object', function () {
+  it('Should return an error when transaction request contains an empty WSDL Object', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyRequestCollectionItems, emptyWsdlObject, new XMLParser());
@@ -164,7 +166,7 @@ describe('Transaction Validator validateTransaction function', function () {
     }
   });
 
-  it('Should return an error when wsdlObject is not provided', function () {
+  it('Should return an error when wsdlObject is not provided', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateTransaction(emptyRequestCollectionItems);
@@ -176,8 +178,8 @@ describe('Transaction Validator validateTransaction function', function () {
   });
 });
 
-describe('TransactionValidator validateRequiredFields function', function () {
-  it('Should return an error when id is not in any item', function () {
+describe('TransactionValidator validateRequiredFields function', function() {
+  it('Should return an error when id is not in any item', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateRequiredFields(notIdCollectionItems);
@@ -188,7 +190,7 @@ describe('TransactionValidator validateRequiredFields function', function () {
     }
   });
 
-  it('Should return an error when request is not in any item', function () {
+  it('Should return an error when request is not in any item', function() {
     const transactionValidator = new TransactionValidator();
     try {
       transactionValidator.validateRequiredFields(emptyRequestCollectionItems);
@@ -200,9 +202,9 @@ describe('TransactionValidator validateRequiredFields function', function () {
   });
 });
 
-describe('Validate method and url found item in wsdl and operation wsdl in collection', function () {
+describe('Validate method and url found item in wsdl and operation wsdl in collection', function() {
 
-  it('Should return empty endpoints when not matchs found in transaction', function () {
+  it('Should return empty endpoints when not matchs found in transaction', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItems,
         numberToWordsNoOperationsWSDLObject, new XMLParser());
@@ -229,7 +231,7 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
     });
   });
 
-  it('Should return missing endpoints when the wsdl has operations not found in the collection', function () {
+  it('Should return missing endpoints when the wsdl has operations not found in the collection', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsIncompleteItems,
         numberToWordsWSDLObject, new XMLParser());
@@ -280,11 +282,40 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
       }
     });
   });
+
+  it('Should return one missing endpoint when the wsdl has one operation not found in the collection', function() {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsOneMissingItem,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true
+        });
+    expect(result).to.be.an('object');
+    expect(result.missingEndpoints.length).to.equal(1);
+    expect(result.missingEndpoints[0].endpoint).to.equal('POST soap12 NumberToDollars');
+    expect(result.missingEndpoints[0].reason)
+      .to.equal('The endpoint "POST soap12 NumberToDollars" is missing in collection');
+    expect(result.missingEndpoints[0].suggestedFix).to.be.an('object');
+    expect(result.missingEndpoints[0].suggestedFix.suggestedValue).to.be.an('object');
+    expect(result.missingEndpoints[0].suggestedFix.suggestedValue.request).to.be.an('object');
+    expect(result.missingEndpoints[0].suggestedFix.suggestedValue.variables.length).to.equal(2);
+
+    let suggestedRequestWrapper = result.missingEndpoints[0].suggestedFix.suggestedValue.request,
+      suggestedRequest = suggestedRequestWrapper.request,
+      suggestedResponses = suggestedRequestWrapper.response;
+    expect(suggestedRequestWrapper).to.be.an('object');
+    expect(suggestedRequestWrapper.name).to.equal('NumberToDollars');
+
+    expect(suggestedRequest.description.content).to.equal('Returns the non-zero dollar amount of the passed number.');
+    expect(suggestedResponses.length).to.equal(1);
+    expect(suggestedResponses[0].name).to.equal('NumberToDollars response');
+  });
 });
 
-describe('Validate Headers', function () {
+describe('Validate Headers', function() {
   it('Should return missing header when validateContentType option is on true' +
-    ' and not content-type header is present', function () {
+    ' and not content-type header is present',
+  function() {
     const options = {
         validateContentType: true
       },
@@ -375,7 +406,8 @@ describe('Validate Headers', function () {
   });
 
   it('Should return bad header mismatch when validateContentType option' +
-    ' is true and content-type header is not text/xml', function () {
+    ' is true and content-type header is not text/xml',
+  function() {
     const options = {
         validateContentType: true
       },
@@ -468,7 +500,8 @@ describe('Validate Headers', function () {
   });
 
   it('Should not return missing header when validateContentType option is not provided' +
-    ' and not content-type header is present', function () {
+    ' and not content-type header is present',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
         numberToWordsWSDLObject, new XMLParser());
@@ -544,7 +577,8 @@ describe('Validate Headers', function () {
   });
 
   it('Should not return bad header mismatch when validateContentType option' +
-    ' is not provided and content-type header is not text/xml', function () {
+    ' is not provided and content-type header is not text/xml',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
         numberToWordsWSDLObject, new XMLParser());
@@ -621,7 +655,8 @@ describe('Validate Headers', function () {
 
 
   it('Should not return missing header when validateContentType option is set explicitly on false' +
-    ' and not content-type header is present', function () {
+    ' and not content-type header is present',
+  function() {
     const options = {
         validateContentType: false
       },
@@ -700,7 +735,8 @@ describe('Validate Headers', function () {
   });
 
   it('Should not return bad header mismatch when validateContentType option is set explicitly on false' +
-    ' and content-type header is not text/xml', function () {
+    ' and content-type header is not text/xml',
+  function() {
     const options = {
         validateContentType: false
       },
@@ -780,14 +816,14 @@ describe('Validate Headers', function () {
 });
 
 
-describe('get Raw URL', function () {
-  it('Should return the same url when it is a string', function () {
+describe('get Raw URL', function() {
+  it('Should return the same url when it is a string', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.getUrlPath('http://url.com');
     expect(result).to.be.equal('http://url.com');
   });
 
-  it('Should return empty string when url does not have path', function () {
+  it('Should return empty string when url does not have path', function() {
     const transactionValidator = new TransactionValidator(),
       url = {
         'raw': 'url',
@@ -804,18 +840,15 @@ describe('get Raw URL', function () {
   });
 });
 
-describe('validateBody method', function () {
+describe('validateBody method', function() {
   const bodyMismatchMockWithReason = (reason, schemaJsonPath, reasonCode = 'INVALID_BODY') => {
-      let newMismatch = Object.assign(
-        {},
-        {
-          property: 'BODY',
-          transactionJsonPath: '$.request.body',
-          schemaJsonPath: schemaJsonPath,
-          reasonCode,
-          reason: reason
-        }
-      );
+      let newMismatch = Object.assign({}, {
+        property: 'BODY',
+        transactionJsonPath: '$.request.body',
+        schemaJsonPath: schemaJsonPath,
+        reasonCode,
+        reason: reason
+      });
       return newMismatch;
     },
     getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch, type = 'request') => {
@@ -901,22 +934,23 @@ describe('validateBody method', function () {
         }
       }
     };
-  it('Should return an object with no mismatches when request and response bodies are valid', function () {
+  it('Should return an object with no mismatches when request and response bodies are valid', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItems, numberToWordsWSDLObject,
         new XMLParser());
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
-  it('Should have a mismatch when a request endpoint has a type error in body', function () {
+  it('Should have a mismatch when a request endpoint has a type error in body', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyWrongType,
-        numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        numberToWordsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true
+        }
       ),
       mismatchReason =
-        'Element \'ubiNum\': \'WRONG TYPE\' is not a valid value of the atomic type \'xs:unsignedLong\'.\n',
+      'Element \'ubiNum\': \'WRONG TYPE\' is not a valid value of the atomic type \'xs:unsignedLong\'.\n',
       expected = getExpectedWithMismatchInEndpoint(
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
@@ -927,12 +961,14 @@ describe('validateBody method', function () {
   });
 
   it('Should have a mismatch when a request endpoint body has not complete all required fields ' +
-    'showMissingSchemaErrors option by default (true)', function () {
+    'showMissingSchemaErrors option by default (true)',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyIncomplete,
-        numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        numberToWordsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true
+        }
       ),
       mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -945,12 +981,15 @@ describe('validateBody method', function () {
   });
 
   it('Should have a mismatch when a request endpoint body has not complete all required fields ' +
-    'showMissingSchemaErrors option set as false', function () {
+    'showMissingSchemaErrors option set as false',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyIncomplete,
-        numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true, showMissingSchemaErrors: false }
+        numberToWordsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true,
+          showMissingSchemaErrors: false
+        }
       ),
       mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -963,12 +1002,14 @@ describe('validateBody method', function () {
   });
 
   it('Should have a mismatch when a request endpoint body has more fields than expected ' +
-    'and showMissingSchemaErrors is set as default (true)', function () {
+  'and showMissingSchemaErrors is set as default (true)',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
-        numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        numberToWordsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true
+        }
       ),
       mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
       expected = getExpectedWithMismatchInEndpoint(
@@ -982,17 +1023,20 @@ describe('validateBody method', function () {
   });
 
   it('Should not have any mismatch when a request endpoint body has more fields than expected ' +
-    'and showMissingSchemaErrors is set in false', function () {
+    'and showMissingSchemaErrors is set in false',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
-        numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true, showMissingSchemaErrors: false }
+        numberToWordsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true,
+          showMissingSchemaErrors: false
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
-  it('Should have a mismatch when a request endpoint has not body', function () {
+  it('Should have a mismatch when a request endpoint has not body', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsBodyLess,
         numberToWordsWSDLObject, new XMLParser());
@@ -1055,12 +1099,13 @@ describe('validateBody method', function () {
     });
   });
 
-  it('Should have a mismatch when a response endpoint has not an required field in body', function () {
+  it('Should have a mismatch when a response endpoint has not an required field in body', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyIncomplete,
-        numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        numberToWordsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1123,17 +1168,15 @@ describe('validateBody method', function () {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
                 id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
                 matched: false,
-                mismatches: [
-                  {
-                    property: 'RESPONSE_BODY',
-                    transactionJsonPath: '$.response.body',
-                    schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-                      '//operation[@name="NumberToWords"]',
-                    reasonCode: 'MISSING_IN_REQUEST',
-                    reason: 'Element \'NumberToWordsResponse\': Missing child element(s).' +
-                      ' Expected is ( NumberToWordsResult ).\n'
-                  }
-                ]
+                mismatches: [{
+                  property: 'RESPONSE_BODY',
+                  transactionJsonPath: '$.response.body',
+                  schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+                    '//operation[@name="NumberToWords"]',
+                  reasonCode: 'MISSING_IN_REQUEST',
+                  reason: 'Element \'NumberToWordsResponse\': Missing child element(s).' +
+                    ' Expected is ( NumberToWordsResult ).\n'
+                }]
               }
             }
           }],
@@ -1143,12 +1186,13 @@ describe('validateBody method', function () {
     });
   });
 
-  it('Should have a mismatch when a response endpoint has more fields than schema', function () {
+  it('Should have a mismatch when a response endpoint has more fields than schema', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyMoreFields,
-        numberToWordsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        numberToWordsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
@@ -1211,16 +1255,14 @@ describe('validateBody method', function () {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
                 id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
                 matched: false,
-                mismatches: [
-                  {
-                    property: 'RESPONSE_BODY',
-                    transactionJsonPath: '$.response.body',
-                    schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-                      '//operation[@name="NumberToWords"]',
-                    reasonCode: 'MISSING_IN_SCHEMA',
-                    reason: 'Element \'WRONGFIELD\': This element is not expected.\n'
-                  }
-                ]
+                mismatches: [{
+                  property: 'RESPONSE_BODY',
+                  transactionJsonPath: '$.response.body',
+                  schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+                    '//operation[@name="NumberToWords"]',
+                  reasonCode: 'MISSING_IN_SCHEMA',
+                  reason: 'Element \'WRONGFIELD\': This element is not expected.\n'
+                }]
               }
             }
           }],
@@ -1230,7 +1272,7 @@ describe('validateBody method', function () {
     });
   });
 
-  it('Should have a mismatch when an endpoint response\'s  has empty body', function () {
+  it('Should have a mismatch when an endpoint response\'s  has empty body', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyLess,
@@ -1297,16 +1339,14 @@ describe('validateBody method', function () {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
                 id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
                 matched: false,
-                mismatches: [
-                  {
-                    property: 'RESPONSE_BODY',
-                    transactionJsonPath: '$.response.body',
-                    schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-                      '//operation[@name="NumberToWords"]',
-                    reasonCode: 'INVALID_RESPONSE_BODY',
-                    reason: 'Response body not provided'
-                  }
-                ]
+                mismatches: [{
+                  property: 'RESPONSE_BODY',
+                  transactionJsonPath: '$.response.body',
+                  schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
+                    '//operation[@name="NumberToWords"]',
+                  reasonCode: 'INVALID_RESPONSE_BODY',
+                  reason: 'Response body not provided'
+                }]
               }
             }
           }],
@@ -1316,178 +1356,175 @@ describe('validateBody method', function () {
     });
   });
 
-  it('Should have a mismatch when called with empty tag with spaces between', function () {
+  it('Should have a mismatch when called with empty tag with spaces between', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         getMatchDetailsCollectionItems,
-        getMatchDetailsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true }
+        getMatchDetailsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
       requests: {
         '1a8221fe-3d87-4a7f-8667-483b75b809e0': {
           requestId: '1a8221fe-3d87-4a7f-8667-483b75b809e0',
-          endpoints: [
-            {
-              matched: false,
-              endpointMatchScore: 1,
-              endpoint: 'POST soap getMatchDetails',
-              mismatches: [
-              ],
-              responses: {
-                '5bd6970c-5011-4fb6-941e-fc534057be74': {
-                  id: '5bd6970c-5011-4fb6-941e-fc534057be74',
-                  matched: false,
-                  mismatches: [
-                    {
-                      property: 'RESPONSE_BODY',
-                      transactionJsonPath: '$.response.body',
-                      schemaJsonPath: '//definitions//binding[@name="getMatchDetailsBinding"]' +
-                        '//operation[@name="getMatchDetails"]',
-                      reasonCode: 'INVALID_RESPONSE_BODY',
-                      reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
-                        ' because the content type is empty.\n'
-                    }
-                  ]
-                }
+          endpoints: [{
+            matched: false,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap getMatchDetails',
+            mismatches: [],
+            responses: {
+              '5bd6970c-5011-4fb6-941e-fc534057be74': {
+                id: '5bd6970c-5011-4fb6-941e-fc534057be74',
+                matched: false,
+                mismatches: [{
+                  property: 'RESPONSE_BODY',
+                  transactionJsonPath: '$.response.body',
+                  schemaJsonPath: '//definitions//binding[@name="getMatchDetailsBinding"]' +
+                    '//operation[@name="getMatchDetails"]',
+                  reasonCode: 'INVALID_RESPONSE_BODY',
+                  reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
+                    ' because the content type is empty.\n'
+                }]
               }
             }
-          ]
+          }]
         }
       },
-      missingEndpoints: [
-      ]
+      missingEndpoints: []
     });
   });
 
   it('Should have a mismatch when called with empty tag with spaces between, ' +
-  'suggestAvailableFixes is true and detailedBlobValidation is true', function () {
+    'suggestAvailableFixes is true and detailedBlobValidation is true',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         getMatchDetailsCollectionItems,
-        getMatchDetailsWSDLObject, new XMLParser(),
-        { detailedBlobValidation: true, suggestAvailableFixes: true }
+        getMatchDetailsWSDLObject, new XMLParser(), {
+          detailedBlobValidation: true,
+          suggestAvailableFixes: true
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
       requests: {
         '1a8221fe-3d87-4a7f-8667-483b75b809e0': {
           requestId: '1a8221fe-3d87-4a7f-8667-483b75b809e0',
-          endpoints: [
-            {
-              matched: false,
-              endpointMatchScore: 1,
-              endpoint: 'POST soap getMatchDetails',
-              mismatches: [
-              ],
-              responses: {
-                '5bd6970c-5011-4fb6-941e-fc534057be74': {
-                  id: '5bd6970c-5011-4fb6-941e-fc534057be74',
-                  matched: false,
-                  mismatches: [
-                    {
-                      property: 'RESPONSE_BODY',
-                      transactionJsonPath: '$.response.body',
-                      schemaJsonPath: '//definitions//binding[@name="getMatchDetailsBinding"]' +
-                        '//operation[@name="getMatchDetails"]',
-                      reasonCode: 'INVALID_RESPONSE_BODY',
-                      reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
-                        ' because the content type is empty.\n',
-                      suggestedFix: {
-                        actualValue: '\n        ',
-                        key: '/getMatchDetailsResponse/getMatchDetailsResult/item/UpdateTimeStamp',
-                        suggestedValue: ''
-                      }
-                    }
-                  ]
-                }
+          endpoints: [{
+            matched: false,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap getMatchDetails',
+            mismatches: [],
+            responses: {
+              '5bd6970c-5011-4fb6-941e-fc534057be74': {
+                id: '5bd6970c-5011-4fb6-941e-fc534057be74',
+                matched: false,
+                mismatches: [{
+                  property: 'RESPONSE_BODY',
+                  transactionJsonPath: '$.response.body',
+                  schemaJsonPath: '//definitions//binding[@name="getMatchDetailsBinding"]' +
+                    '//operation[@name="getMatchDetails"]',
+                  reasonCode: 'INVALID_RESPONSE_BODY',
+                  reason: 'Element \'UpdateTimeStamp\': Character content is not allowed,' +
+                    ' because the content type is empty.\n',
+                  suggestedFix: {
+                    actualValue: '\n        ',
+                    key: '/getMatchDetailsResponse/getMatchDetailsResult/item/UpdateTimeStamp',
+                    suggestedValue: ''
+                  }
+                }]
               }
             }
-          ]
+          }]
         }
       },
-      missingEndpoints: [
-      ]
+      missingEndpoints: []
     });
   });
 
   it('Shouldn\'t have a mismatch when is a type error in body and option validationPropertiesToIgnore has "BODY"',
-    function () {
+    function() {
       const transactionValidator = new TransactionValidator(),
         result = transactionValidator.validateTransaction(
           numberToWordsCollectionItemsBodyWrongType,
-          numberToWordsWSDLObject, new XMLParser(),
-          { validationPropertiesToIgnore: ['BODY'] }
+          numberToWordsWSDLObject, new XMLParser(), {
+            validationPropertiesToIgnore: ['BODY']
+          }
         );
       expect(result).to.be.an('object').and.to.deep.include(expectedBase);
     });
 
   it('Shouldn\'t have a mismatch when a request endpoint body has not complete all required fields' +
-    ' and option validationPropertiesToIgnore has "BODY"', function () {
+    ' and option validationPropertiesToIgnore has "BODY"',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyIncomplete,
-        numberToWordsWSDLObject, new XMLParser(),
-        { validationPropertiesToIgnore: ['BODY'] }
+        numberToWordsWSDLObject, new XMLParser(), {
+          validationPropertiesToIgnore: ['BODY']
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
   it('Shouldn\'t have a mismatch when a request endpoint body has more fields than expected' +
-    ' and option validationPropertiesToIgnore has "BODY"', function () {
+    ' and option validationPropertiesToIgnore has "BODY"',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
-        numberToWordsWSDLObject, new XMLParser(),
-        { validationPropertiesToIgnore: ['BODY'] }
+        numberToWordsWSDLObject, new XMLParser(), {
+          validationPropertiesToIgnore: ['BODY']
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
   it('Shouldn\'t have a mismatch when called with empty tag with spaces between' +
-  ' and option validationPropertiesToIgnore has "RESPONSE_BODY"', function () {
+    ' and option validationPropertiesToIgnore has "RESPONSE_BODY"',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         getMatchDetailsCollectionItems,
-        getMatchDetailsWSDLObject, new XMLParser(),
-        { validationPropertiesToIgnore: ['RESPONSE_BODY'] }
+        getMatchDetailsWSDLObject, new XMLParser(), {
+          validationPropertiesToIgnore: ['RESPONSE_BODY']
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
         '1a8221fe-3d87-4a7f-8667-483b75b809e0': {
           requestId: '1a8221fe-3d87-4a7f-8667-483b75b809e0',
-          endpoints: [
-            {
-              matched: true,
-              endpointMatchScore: 1,
-              endpoint: 'POST soap getMatchDetails',
-              mismatches: [
-              ],
-              responses: {
-                '5bd6970c-5011-4fb6-941e-fc534057be74': {
-                  id: '5bd6970c-5011-4fb6-941e-fc534057be74',
-                  matched: true,
-                  mismatches: []
-                }
+          endpoints: [{
+            matched: true,
+            endpointMatchScore: 1,
+            endpoint: 'POST soap getMatchDetails',
+            mismatches: [],
+            responses: {
+              '5bd6970c-5011-4fb6-941e-fc534057be74': {
+                id: '5bd6970c-5011-4fb6-941e-fc534057be74',
+                matched: true,
+                mismatches: []
               }
             }
-          ]
+          }]
         }
       },
-      missingEndpoints: [
-      ]
+      missingEndpoints: []
     });
   });
 
   it('Shouldn\'t have a mismatch when a response endpoint has not an required field in body' +
-    ' and option validationPropertiesToIgnore has "RESPONSE_BODY"', function () {
+    ' and option validationPropertiesToIgnore has "RESPONSE_BODY"',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyIncomplete,
-        numberToWordsWSDLObject, new XMLParser(),
-        { validationPropertiesToIgnore: ['RESPONSE_BODY'] }
+        numberToWordsWSDLObject, new XMLParser(), {
+          validationPropertiesToIgnore: ['RESPONSE_BODY']
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
@@ -1561,12 +1598,14 @@ describe('validateBody method', function () {
   });
 
   it('Shouldn\'t have a mismatch when a response endpoint has more fields than schema' +
-  ' and option validationPropertiesToIgnore has "RESPONSE_BODY"', function () {
+    ' and option validationPropertiesToIgnore has "RESPONSE_BODY"',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyMoreFields,
-        numberToWordsWSDLObject, new XMLParser(),
-        { validationPropertiesToIgnore: ['RESPONSE_BODY'] }
+        numberToWordsWSDLObject, new XMLParser(), {
+          validationPropertiesToIgnore: ['RESPONSE_BODY']
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
@@ -1640,12 +1679,14 @@ describe('validateBody method', function () {
   });
 
   it('Should have a mismatch when an endpoint response\'s  has empty body' +
-  ' and option validationPropertiesToIgnore has "RESPONSE_BODY"', function () {
+    ' and option validationPropertiesToIgnore has "RESPONSE_BODY"',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsResponseBodyLess,
-        numberToWordsWSDLObject, new XMLParser(),
-        { validationPropertiesToIgnore: ['RESPONSE_BODY'] }
+        numberToWordsWSDLObject, new XMLParser(), {
+          validationPropertiesToIgnore: ['RESPONSE_BODY']
+        }
       );
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
@@ -1719,8 +1760,8 @@ describe('validateBody method', function () {
   });
 });
 
-describe('soapMethodValidation', function () {
-  it('Should have a mismatch when item request has a different method than POST in a /soap12 request', function () {
+describe('soapMethodValidation', function() {
+  it('Should have a mismatch when item request has a different method than POST in a /soap12 request', function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
         numberToWordsWSDLObject, new XMLParser());
@@ -1732,16 +1773,14 @@ describe('soapMethodValidation', function () {
             matched: false,
             endpointMatchScore: 1,
             endpoint: 'POST soap12 NumberToDollars',
-            mismatches: [
-              {
-                'property': 'SOAP_METHOD',
-                'reason': 'Soap requests must use POST method.',
-                'reasonCode': 'INVALID_SOAP_METHOD',
-                'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding12\"]' +
-                  '//operation[@name=\"NumberToDollars\"]',
-                'transactionJsonPath': '$.request.method'
-              }
-            ],
+            mismatches: [{
+              'property': 'SOAP_METHOD',
+              'reason': 'Soap requests must use POST method.',
+              'reasonCode': 'INVALID_SOAP_METHOD',
+              'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding12\"]' +
+                '//operation[@name=\"NumberToDollars\"]',
+              'transactionJsonPath': '$.request.method'
+            }],
             responses: {
               '1763f0b2-9f34-4796-a390-b94ee5c37c7c': {
                 id: '1763f0b2-9f34-4796-a390-b94ee5c37c7c',
@@ -1757,16 +1796,14 @@ describe('soapMethodValidation', function () {
             matched: false,
             endpointMatchScore: 1,
             endpoint: 'POST soap12 NumberToWords',
-            mismatches: [
-              {
-                'property': 'SOAP_METHOD',
-                'reason': 'Soap requests must use POST method.',
-                'reasonCode': 'INVALID_SOAP_METHOD',
-                'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding12\"]' +
-                  '//operation[@name=\"NumberToWords\"]',
-                'transactionJsonPath': '$.request.method'
-              }
-            ],
+            mismatches: [{
+              'property': 'SOAP_METHOD',
+              'reason': 'Soap requests must use POST method.',
+              'reasonCode': 'INVALID_SOAP_METHOD',
+              'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding12\"]' +
+                '//operation[@name=\"NumberToWords\"]',
+              'transactionJsonPath': '$.request.method'
+            }],
             responses: {
               'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4': {
                 id: 'c8a892b6-4b2e-4523-9cc3-fc3e08c835c4',
@@ -1782,16 +1819,14 @@ describe('soapMethodValidation', function () {
             matched: false,
             endpointMatchScore: 1,
             endpoint: 'POST soap NumberToDollars',
-            mismatches: [
-              {
-                'property': 'SOAP_METHOD',
-                'reason': 'Soap requests must use POST method.',
-                'reasonCode': 'INVALID_SOAP_METHOD',
-                'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding\"]' +
-                  '//operation[@name=\"NumberToDollars\"]',
-                'transactionJsonPath': '$.request.method'
-              }
-            ],
+            mismatches: [{
+              'property': 'SOAP_METHOD',
+              'reason': 'Soap requests must use POST method.',
+              'reasonCode': 'INVALID_SOAP_METHOD',
+              'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding\"]' +
+                '//operation[@name=\"NumberToDollars\"]',
+              'transactionJsonPath': '$.request.method'
+            }],
             responses: {
               '8a0c6532-84f9-45c7-838a-f4bf1a6de002': {
                 id: '8a0c6532-84f9-45c7-838a-f4bf1a6de002',
@@ -1807,16 +1842,14 @@ describe('soapMethodValidation', function () {
             matched: false,
             endpointMatchScore: 1,
             endpoint: 'POST soap NumberToWords',
-            mismatches: [
-              {
-                'property': 'SOAP_METHOD',
-                'reason': 'Soap requests must use POST method.',
-                'reasonCode': 'INVALID_SOAP_METHOD',
-                'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding\"]' +
-                  '//operation[@name=\"NumberToWords\"]',
-                'transactionJsonPath': '$.request.method'
-              }
-            ],
+            mismatches: [{
+              'property': 'SOAP_METHOD',
+              'reason': 'Soap requests must use POST method.',
+              'reasonCode': 'INVALID_SOAP_METHOD',
+              'schemaJsonPath': '//definitions//binding[@name=\"NumberConversionSoapBinding\"]' +
+                '//operation[@name=\"NumberToWords\"]',
+              'transactionJsonPath': '$.request.method'
+            }],
             responses: {
               'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
                 id: 'd36c56cf-0cf6-4273-a34d-973e842bf80f',
@@ -1832,11 +1865,13 @@ describe('soapMethodValidation', function () {
   });
 
   it('Shouldn\'t  have a mismatch when item request has a different method than POST in a /soap12 request' +
-  ' and option validationPropertiesToIgnore has "HTTP_METHOD"', function () {
+    ' and option validationPropertiesToIgnore has "HTTP_METHOD"',
+  function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGET,
-        numberToWordsWSDLObject, new XMLParser(),
-        { validationPropertiesToIgnore: ['SOAP_METHOD'] });
+        numberToWordsWSDLObject, new XMLParser(), {
+          validationPropertiesToIgnore: ['SOAP_METHOD']
+        });
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
