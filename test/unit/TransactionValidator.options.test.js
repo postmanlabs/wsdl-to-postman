@@ -705,8 +705,72 @@ describe('validateBody method with options', function () {
           ),
           {
             key: 'body',
-            actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <getPlayedMatchesResponse xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      <getPlayedMatchesResult>\n        <item>\n          <MatchId>WRONGVALUE</MatchId>\n          <GameRound>100</GameRound>\n          <Arena>string</Arena>\n          <Field>string</Field>\n          <MatchTimeDateTime>string</MatchTimeDateTime>\n          <Time>string</Time>\n          <Team1Id>100</Team1Id>\n          <Team1GlobalId>100</Team1GlobalId>\n          <Team1Name>string</Team1Name>\n          <Team2Id>100</Team2Id>\n          <Team2GlobalId>100</Team2GlobalId>\n          <Team2Name>string</Team2Name>\n          <Team1Score>100</Team1Score>\n          <Team2Score>100</Team2Score>\n          <GameResult>string</GameResult>\n          <GameStatus>100</GameStatus>\n          <UpdateTimeStamp>string</UpdateTimeStamp>\n          <MatchName>string</MatchName>\n          <Team1ClubId>string</Team1ClubId>\n          <Team1ClubGlobalId>string</Team1ClubGlobalId>\n          <Team2ClubId>string</Team2ClubId>\n          <Team2ClubGlobalId>string</Team2ClubGlobalId>\n          <Winner>string</Winner>\n          <SortOrder1>string</SortOrder1>\n          <SortOrder2>string</SortOrder2>\n          <MatchGroupId>100</MatchGroupId>\n          <MatchClassId>100</MatchClassId>\n          <PersonalResultRegistration>100</PersonalResultRegistration>\n          <FieldId>string</FieldId>\n          <ArenaId>string</ArenaId>\n          <FieldGlobalId>string</FieldGlobalId>\n          <ArenaGlobalId>string</ArenaGlobalId>\n          <Sets>string</Sets>\n          <RefereesAssignments>\n            <item>\n              <id>string</id>\n              <PersonGlobalId>string</PersonGlobalId>\n              <RefereeNumber>string</RefereeNumber>\n              <Person>\n                <item>\n                  <id>100</id>\n                  <last_name>string</last_name>\n                  <first_name>string</first_name>\n                  <gender>string</gender>\n                  <birth_year>string</birth_year>\n                  <birth_date>2021-06-04Z</birth_date>\n                  <phone>string</phone>\n                  <email>string</email>\n                </item>\n              </Person>\n            </item>\n          </RefereesAssignments>\n        </item>\n      </getPlayedMatchesResult>\n    </getPlayedMatchesResponse>\n  </soap:Body>\n</soap:Envelope>\n',
-            suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <getPlayedMatchesResponse xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      <getPlayedMatchesResult>\n        <item>\n          <MatchId>100</MatchId>\n          <GameRound>100</GameRound>\n          <Arena>string</Arena>\n          <Field>string</Field>\n          <MatchTimeDateTime>string</MatchTimeDateTime>\n          <Time>string</Time>\n          <Team1Id>100</Team1Id>\n          <Team1GlobalId>100</Team1GlobalId>\n          <Team1Name>string</Team1Name>\n          <Team2Id>100</Team2Id>\n          <Team2GlobalId>100</Team2GlobalId>\n          <Team2Name>string</Team2Name>\n          <Team1Score>100</Team1Score>\n          <Team2Score>100</Team2Score>\n          <GameResult>string</GameResult>\n          <GameStatus>100</GameStatus>\n          <UpdateTimeStamp>string</UpdateTimeStamp>\n          <MatchName>string</MatchName>\n          <Team1ClubId>string</Team1ClubId>\n          <Team1ClubGlobalId>string</Team1ClubGlobalId>\n          <Team2ClubId>string</Team2ClubId>\n          <Team2ClubGlobalId>string</Team2ClubGlobalId>\n          <Winner>string</Winner>\n          <SortOrder1>string</SortOrder1>\n          <SortOrder2>string</SortOrder2>\n          <MatchGroupId>100</MatchGroupId>\n          <MatchClassId>100</MatchClassId>\n          <PersonalResultRegistration>100</PersonalResultRegistration>\n          <FieldId>string</FieldId>\n          <ArenaId>string</ArenaId>\n          <FieldGlobalId>string</FieldGlobalId>\n          <ArenaGlobalId>string</ArenaGlobalId>\n          <Sets>string</Sets>\n          <RefereesAssignments>\n            <item>\n              <id>string</id>\n              <PersonGlobalId>string</PersonGlobalId>\n              <RefereeNumber>string</RefereeNumber>\n              <Person>\n                <item>\n                  <id>100</id>\n                  <last_name>string</last_name>\n                  <first_name>string</first_name>\n                  <gender>string</gender>\n                  <birth_year>string</birth_year>\n                  <birth_date>2021-06-11Z</birth_date>\n                  <phone>string</phone>\n                  <email>string</email>\n                </item>\n              </Person>\n            </item>\n          </RefereesAssignments>\n        </item>\n      </getPlayedMatchesResult>\n    </getPlayedMatchesResponse>\n  </soap:Body>\n</soap:Envelope>\n'
+            actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
+            '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  ' +
+            '<soap:Body>\n    ' +
+            '<getPlayedMatchesResponse xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      ' +
+            '<getPlayedMatchesResult>\n        <item>\n          <MatchId>WRONGVALUE</MatchId>\n          ' +
+            '<GameRound>100</GameRound>\n          <Arena>string</Arena>\n          <Field>string</Field>\n          ' +
+            '<MatchTimeDateTime>string</MatchTimeDateTime>\n          <Time>string</Time>\n          ' +
+            '<Team1Id>100</Team1Id>\n          <Team1GlobalId>100</Team1GlobalId>\n          ' +
+            '<Team1Name>string</Team1Name>\n          <Team2Id>100</Team2Id>\n          ' +
+            '<Team2GlobalId>100</Team2GlobalId>\n          <Team2Name>string</Team2Name>\n          ' +
+            '<Team1Score>100</Team1Score>\n          <Team2Score>100</Team2Score>\n          ' +
+            '<GameResult>string</GameResult>\n          <GameStatus>100</GameStatus>\n          ' +
+            '<UpdateTimeStamp>string</UpdateTimeStamp>\n          <MatchName>string</MatchName>\n          ' +
+            '<Team1ClubId>string</Team1ClubId>\n          <Team1ClubGlobalId>string</Team1ClubGlobalId>\n          ' +
+            '<Team2ClubId>string</Team2ClubId>\n          <Team2ClubGlobalId>string</Team2ClubGlobalId>\n          ' +
+            '<Winner>string</Winner>\n          <SortOrder1>string</SortOrder1>\n          ' +
+            '<SortOrder2>string</SortOrder2>\n          <MatchGroupId>100</MatchGroupId>\n          ' +
+            '<MatchClassId>100</MatchClassId>\n          ' +
+            '<PersonalResultRegistration>100</PersonalResultRegistration>\n          ' +
+            '<FieldId>string</FieldId>\n          <ArenaId>string</ArenaId>\n          ' +
+            '<FieldGlobalId>string</FieldGlobalId>\n          <ArenaGlobalId>string</ArenaGlobalId>\n          ' +
+            '<Sets>string</Sets>\n          <RefereesAssignments>\n            <item>\n              ' +
+            '<id>string</id>\n              <PersonGlobalId>string</PersonGlobalId>\n              ' +
+            '<RefereeNumber>string</RefereeNumber>\n              <Person>\n                ' +
+            '<item>\n                  <id>100</id>\n                  ' +
+            '<last_name>string</last_name>\n                  ' +
+            '<first_name>string</first_name>\n                  <gender>string</gender>\n                  ' +
+            '<birth_year>string</birth_year>\n                  ' +
+            '<birth_date>2021-06-04Z</birth_date>\n                  ' +
+            '<phone>string</phone>\n                  <email>string</email>\n                </item>\n              ' +
+            '</Person>\n            </item>\n          </RefereesAssignments>\n        </item>\n      ' +
+            '</getPlayedMatchesResult>\n    </getPlayedMatchesResponse>\n  </soap:Body>\n</soap:Envelope>\n',
+            suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
+            '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  ' +
+            '<soap:Body>\n    ' +
+            '<getPlayedMatchesResponse xmlns=\"http://{{url}}/soap/services/getPlayedMatches.php\">\n      ' +
+            '<getPlayedMatchesResult>\n        <item>\n          <MatchId>100</MatchId>\n          ' +
+            '<GameRound>100</GameRound>\n          <Arena>string</Arena>\n          ' +
+            '<Field>string</Field>\n          <MatchTimeDateTime>string</MatchTimeDateTime>\n          ' +
+            '<Time>string</Time>\n          <Team1Id>100</Team1Id>\n          ' +
+            '<Team1GlobalId>100</Team1GlobalId>\n          <Team1Name>string</Team1Name>\n          ' +
+            '<Team2Id>100</Team2Id>\n          <Team2GlobalId>100</Team2GlobalId>\n          ' +
+            '<Team2Name>string</Team2Name>\n          <Team1Score>100</Team1Score>\n          ' +
+            '<Team2Score>100</Team2Score>\n          <GameResult>string</GameResult>\n          ' +
+            '<GameStatus>100</GameStatus>\n          <UpdateTimeStamp>string</UpdateTimeStamp>\n          ' +
+            '<MatchName>string</MatchName>\n          <Team1ClubId>string</Team1ClubId>\n          ' +
+            '<Team1ClubGlobalId>string</Team1ClubGlobalId>\n          ' +
+            '<Team2ClubId>string</Team2ClubId>\n          ' +
+            '<Team2ClubGlobalId>string</Team2ClubGlobalId>\n          <Winner>string</Winner>\n          ' +
+            '<SortOrder1>string</SortOrder1>\n          <SortOrder2>string</SortOrder2>\n          ' +
+            '<MatchGroupId>100</MatchGroupId>\n          <MatchClassId>100</MatchClassId>\n          ' +
+            '<PersonalResultRegistration>100</PersonalResultRegistration>\n          ' +
+            '<FieldId>string</FieldId>\n          ' +
+            '<ArenaId>string</ArenaId>\n          <FieldGlobalId>string</FieldGlobalId>\n          ' +
+            '<ArenaGlobalId>string</ArenaGlobalId>\n          <Sets>string</Sets>\n          ' +
+            '<RefereesAssignments>\n            <item>\n              <id>string</id>\n              ' +
+            '<PersonGlobalId>string</PersonGlobalId>\n              ' +
+            '<RefereeNumber>string</RefereeNumber>\n              ' +
+            '<Person>\n                <item>\n                  <id>100</id>\n                  ' +
+            '<last_name>string</last_name>\n                  <first_name>string</first_name>\n                  ' +
+            '<gender>string</gender>\n                  <birth_year>string</birth_year>\n                  ' +
+            '<birth_date>2021-06-11Z</birth_date>\n                  <phone>string</phone>\n                  ' +
+            '<email>string</email>\n                </item>\n              </Person>\n            </item>\n          ' +
+            '</RefereesAssignments>\n        </item>\n      ' +
+            '</getPlayedMatchesResult>\n    </getPlayedMatchesResponse>\n  ' +
+            '</soap:Body>\n</soap:Envelope>\n'
           }
         ),
         'response',
