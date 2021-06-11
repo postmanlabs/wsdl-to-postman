@@ -560,7 +560,9 @@ describe('Tools from messageWithSchemaValidation', function () {
         </item>
       </shiporder>`,
       validResult = validateMessageWithSchema(message, schema);
-      expect(validResult).to.be.an('array').with.length(1);
-      expect(validResult[0].message).to.be.equal('Element \'price\': This element is not expected. Expected is one of ( note, quantity ).\n')
-  })
+    expect(validResult).to.be.an('array').with.length(1);
+    expect(validResult[0].message).to.be.equal(
+      'Element \'price\': This element is not expected. Expected is one of ( note, quantity ).\n'
+    );
+  });
 });

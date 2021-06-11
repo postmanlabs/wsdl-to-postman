@@ -60,6 +60,8 @@
     "postman-collection": "3.6.9",
     "randexp": "0.5.3",
     "traverse": "0.6.6",
-    "xmllint": "0.1.1"
+    "xmldom": "^0.6.0",
+    "xmllint": "0.1.1",
+    "xpath": "0.0.32"
   }
 }
