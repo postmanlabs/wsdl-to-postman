@@ -16,7 +16,8 @@ const expect = require('chai').expect,
   {
     MULTIPLE_ROOT_FILES,
     NOT_WSDL_IN_FOLDER,
-    WSDL_DIFF_VERSION
+    WSDL_DIFF_VERSION,
+    MISSING_XML_PARSER
   } = require('../../lib/constants/messageConstants');
 
 describe('WSDLMerger merge', function() {
@@ -390,7 +391,7 @@ describe('WSDLMerger merge', function() {
       });
   });
 
-  it('Should throw an error when parse is undefined', function() {
+  it('Should throw an error when xml parser is undefined', function() {
 
     const folderPath = path.join(__dirname, SEPARATED_FILES_COUNTING),
       outputDir = path.join(__dirname, SEPARATED_FILES_COUNTING + '/output.wsdl'),
@@ -667,7 +668,7 @@ describe('WSDLMerger merge', function() {
         expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
       })
       .catch((err) => {
-        expect(err.message).to.equal('Cannot read property \'parseToObject\' of undefined');
+        expect(err.message).to.equal(MISSING_XML_PARSER);
       });
   });
 
@@ -942,138 +943,11 @@ describe('WSDLMerger merge', function() {
         <schema xmlns="http://www.w3.org/2001/XMLSchema" 
         targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1/data"
           xmlns:tns="http://www.example.com/interfaces/parking/operatorServices/v1/data" elementFormDefault="qualified">
-            <element name="SetCountingCategoryMode">
-                <complexType >
-                    <sequence>
-                        <element name="facilityId" type="long"/>
-                        <element name="carParkNumber" type="int"/>
-                        <element name="countingCategoryType" type="tns:countingCategoryType"/>
-                        <element name="trafficSignalMode" type="tns:trafficSignalMode"/>
-                    </sequence>
-                </complexType>
-            </element>
-        
-            <element name="SetCountingCategoryModeOut">
-                <complexType>
-                    <sequence>
-                        <element name="SetCountingCategoryModeResponse" type="tns:SetCountingCategoryModeResponse">
-                        </element>
-                    </sequence>
-                </complexType>
-            </element>
-            <complexType name="SetCountingCategoryModeResponse">
-                <sequence/>
-            </complexType>
-        
-        
-            <element name="SetCountingCategoryLevel">
-                <complexType >
-                    <sequence>
-                        <element name="facilityId" type="long"/>
-                        <element name="carParkNumber" type="int"/>
-                        <element name="countingCategoryType" type="tns:countingCategoryType"/>
-                        <element name="currentLevel" type="int"/>
-                    </sequence>
-                </complexType>
-            </element>
-        
-            <element name="SetCountingCategoryLevelOut">
-                <complexType>
-                    <sequence>
-                        <element name="SetCountingCategoryLevelResponse" type="tns:SetCountingCategoryLevelResponse">
-                        </element>
-                    </sequence>
-                </complexType>
-            </element>
-            <complexType name="SetCountingCategoryLevelResponse">
-                <sequence/>
-            </complexType>
-        
-            <element name="SetExternalCountingMode">
-                <complexType >
-                    <sequence>
-                        <element name="facilityId" type="long"/>
-                    </sequence>
-                </complexType>
-            </element>
-        
-            <element name="SetExternalCountingModeOut">
-                <complexType>
-                    <sequence>
-                        <element name="SetExternalCountingModeResponse" type="tns:SetExternalCountingModeResponse">
-                        </element>
-                    </sequence>
-                </complexType>
-            </element>
-            <complexType name="SetExternalCountingModeResponse">
-                <sequence/>
-            </complexType>
-        
-        
             <simpleType name="trafficSignalMode">
                 <restriction base="string">
                     <enumeration value="AUTOMATIC"/>
                     <enumeration value="MANUAL_GREEN_FREE"/>
                     <enumeration value="MANUAL_RED_FULL"/>
-                </restriction>
-            </simpleType>
-        
-            <simpleType name="countingCategoryType">
-                <restriction base="string">
-                    <enumeration value="DEFAULT_COUNTING_CATEGORY_00"/>
-                    <enumeration value="SHORT_TERM_PARKER_01"/>
-                    <enumeration value="CONTRACT_PARKER_02"/>
-                    <enumeration value="TOTAL_03"/>
-                    <enumeration value="USER_DEFINED_04"/>
-                    <enumeration value="USER_DEFINED_05"/>
-                    <enumeration value="USER_DEFINED_06"/>
-                    <enumeration value="USER_DEFINED_07"/>
-                    <enumeration value="USER_DEFINED_08"/>
-                    <enumeration value="USER_DEFINED_09"/>
-                    <enumeration value="USER_DEFINED_10"/>
-                    <enumeration value="USER_DEFINED_11"/>
-                    <enumeration value="USER_DEFINED_12"/>
-                    <enumeration value="USER_DEFINED_13"/>
-                    <enumeration value="USER_DEFINED_14"/>
-                    <enumeration value="USER_DEFINED_15"/>
-                    <enumeration value="USER_DEFINED_16"/>
-                    <enumeration value="USER_DEFINED_17"/>
-                    <enumeration value="USER_DEFINED_18"/>
-                    <enumeration value="USER_DEFINED_19"/>
-                    <enumeration value="USER_DEFINED_20"/>
-                    <enumeration value="USER_DEFINED_21"/>
-                    <enumeration value="USER_DEFINED_22"/>
-                    <enumeration value="USER_DEFINED_23"/>
-                    <enumeration value="USER_DEFINED_24"/>
-                    <enumeration value="USER_DEFINED_25"/>
-                    <enumeration value="USER_DEFINED_26"/>
-                    <enumeration value="USER_DEFINED_27"/>
-                    <enumeration value="USER_DEFINED_28"/>
-                    <enumeration value="USER_DEFINED_29"/>
-                    <enumeration value="USER_DEFINED_30"/>
-                    <enumeration value="USER_DEFINED_31"/>
-                    <enumeration value="USER_DEFINED_32"/>
-                    <enumeration value="USER_DEFINED_33"/>
-                    <enumeration value="USER_DEFINED_34"/>
-                    <enumeration value="USER_DEFINED_35"/>
-                    <enumeration value="USER_DEFINED_36"/>
-                    <enumeration value="USER_DEFINED_37"/>
-                    <enumeration value="USER_DEFINED_38"/>
-                    <enumeration value="USER_DEFINED_39"/>
-                    <enumeration value="USER_DEFINED_40"/>
-                    <enumeration value="USER_DEFINED_41"/>
-                    <enumeration value="USER_DEFINED_42"/>
-                    <enumeration value="USER_DEFINED_43"/>
-                    <enumeration value="USER_DEFINED_44"/>
-                    <enumeration value="USER_DEFINED_45"/>
-                    <enumeration value="USER_DEFINED_46"/>
-                    <enumeration value="USER_DEFINED_47"/>
-                    <enumeration value="USER_DEFINED_48"/>
-                    <enumeration value="USER_DEFINED_49"/>
-                    <enumeration value="USER_DEFINED_50"/>
-                    <enumeration value="USER_DEFINED_51"/>
-                    <enumeration value="USER_DEFINED_52"/>
-                    <enumeration value="USER_DEFINED_53"/>
                 </restriction>
             </simpleType>
         </schema>`,
