@@ -694,6 +694,8 @@ describe('validateBody method with options', function () {
         }
       ),
       mismatchReason = 'The request body didn\'t match the specified schema',
+      date = new Date(),
+      dateMock = `${date.toISOString().split('T')[0]}Z`,
       expected = getExpectedWithMismatchInEndpoint(
         expectedGetPlayedMatchesBase,
         'cfae0d0e-d10c-4a15-8ba6-c80ee6e45879',
@@ -766,7 +768,7 @@ describe('validateBody method with options', function () {
             '<Person>\n                <item>\n                  <id>100</id>\n                  ' +
             '<last_name>string</last_name>\n                  <first_name>string</first_name>\n                  ' +
             '<gender>string</gender>\n                  <birth_year>string</birth_year>\n                  ' +
-            '<birth_date>2021-06-11Z</birth_date>\n                  <phone>string</phone>\n                  ' +
+            '<birth_date>' + dateMock + '</birth_date>\n                  <phone>string</phone>\n                  ' +
             '<email>string</email>\n                </item>\n              </Person>\n            </item>\n          ' +
             '</RefereesAssignments>\n        </item>\n      ' +
             '</getPlayedMatchesResult>\n    </getPlayedMatchesResponse>\n  ' +

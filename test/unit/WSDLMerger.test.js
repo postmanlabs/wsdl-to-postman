@@ -1,6 +1,7 @@
 const expect = require('chai').expect,
   SEPARATED_FILES_W3_Example = '../data/separatedFiles/W3Example',
   SEPARATED_FILES_COUNTING = '../data/separatedFiles/counting',
+  SEPARATED_FILES_MULTIPLE_ROOT = '../data/separatedFiles/multipleRoot',
   {
     WSDLMerger
   } = require('../../lib/utils/WSDLMerger'),
@@ -11,7 +12,13 @@ const expect = require('chai').expect,
   {
     removeLineBreakTabsSpaces
   } = require('../../lib/utils/textUtils'),
-  path = require('path');
+  path = require('path'),
+  {
+    MULTIPLE_ROOT_FILES,
+    NOT_WSDL_IN_FOLDER,
+    WSDL_DIFF_VERSION,
+    MISSING_XML_PARSER
+  } = require('../../lib/constants/messageConstants');
 
 describe('WSDLMerger merge', function() {
 
@@ -384,7 +391,7 @@ describe('WSDLMerger merge', function() {
       });
   });
 
-  it('Should throw an error when parse is undefined', function() {
+  it('Should throw an error when xml parser is undefined', function() {
 
     const folderPath = path.join(__dirname, SEPARATED_FILES_COUNTING),
       outputDir = path.join(__dirname, SEPARATED_FILES_COUNTING + '/output.wsdl'),
@@ -661,15 +668,13 @@ describe('WSDLMerger merge', function() {
         expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
       })
       .catch((err) => {
-        expect(err.message).to.equal('Cannot read property \'parseToObject\' of undefined');
+        expect(err.message).to.equal(MISSING_XML_PARSER);
       });
   });
 
   it('Should throw an error when input has not wsdl', function() {
 
     const folderPath = path.join(__dirname, SEPARATED_FILES_COUNTING),
-      outputDir = path.join(__dirname, SEPARATED_FILES_COUNTING + '/output.wsdl'),
-      folderPathService = path.join(__dirname, SEPARATED_FILES_COUNTING + '/CountingCategoryService.wsdl'),
       folderPathSchema = path.join(__dirname, SEPARATED_FILES_COUNTING + '/CountingCategoryData.xsd'),
       processedInputFiles = [
         `<?xml version="1.0" encoding="UTF-8"?>
@@ -811,8 +816,7 @@ describe('WSDLMerger merge', function() {
                 </restriction>
             </simpleType>
         </schema>`
-      ],
-      expectedOutput = fs.readFileSync(outputDir, 'utf8');
+      ];
     let processedInput = {},
       files = [],
       array = [{
@@ -827,20 +831,18 @@ describe('WSDLMerger merge', function() {
       });
     });
     processedInput[folderPathSchema] = processedInputFiles[0];
-    processedInput[folderPathService] = processedInputFiles[1];
 
     merger.merge(files, processedInput, new XMLParser())
-      .then((merged) => {
-        expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      .then(() => {
+        expect.fail(null, null, status.reason);
       })
       .catch((err) => {
-        expect(err.message).to.equal('There was not WSDL file in folder');
+        expect(err.message).to.equal(NOT_WSDL_IN_FOLDER);
       });
   });
 
   it('Should throw an error when input has different wsdl version', function() {
     const folderPath = path.join(__dirname, SEPARATED_FILES_W3_Example),
-      outputDir = path.join(__dirname, SEPARATED_FILES_W3_Example + '/output.wsdl'),
       folderPathService = path.join(__dirname, SEPARATED_FILES_W3_Example + '/stockquoteservice.wsdl'),
       folderPathSchema = path.join(__dirname, SEPARATED_FILES_W3_Example + '/stockquote.xsd'),
       folderPathDefinitions = path.join(__dirname, SEPARATED_FILES_W3_Example + '/stockquote.wsdl'),
@@ -897,8 +899,7 @@ describe('WSDLMerger merge', function() {
                  <port name="StockQuotePort" binding="tns:StockQuoteBinding"><soap:address 
                  location="http://example.com/stockquote"/>
          </port></service></description>"`
-      ],
-      expectedOutput = fs.readFileSync(outputDir, 'utf8');
+      ];
 
     let processedInput = {},
       files = [],
@@ -924,11 +925,272 @@ describe('WSDLMerger merge', function() {
     processedInput[folderPathService] = processedInputFiles[2];
 
     merger.merge(files, processedInput, new XMLParser())
-      .then((merged) => {
-        expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      .then(() => {
+        expect.fail(null, null, status.reason);
       })
       .catch((err) => {
-        expect(err.message).to.equal('All WSDL must be the same version');
+        expect(err.message).to.equal(WSDL_DIFF_VERSION);
+      });
+  });
+
+  it('Should throw an error when input has more than one root file (services)', function() {
+    const folderPath = path.join(__dirname, SEPARATED_FILES_MULTIPLE_ROOT),
+      folderPathService = path.join(__dirname, SEPARATED_FILES_MULTIPLE_ROOT + '/CountingCategoryService.wsdl'),
+      folderPathServiceCopy = path.join(__dirname, SEPARATED_FILES_MULTIPLE_ROOT + '/CountingCategoryServiceCopy.wsdl'),
+      folderPathSchema = path.join(__dirname, SEPARATED_FILES_MULTIPLE_ROOT + '/CountingCategoryData.xsd'),
+      processedInputFiles = [
+        `<?xml version="1.0" encoding="UTF-8"?>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1/data"
+          xmlns:tns="http://www.example.com/interfaces/parking/operatorServices/v1/data" elementFormDefault="qualified">
+            <simpleType name="trafficSignalMode">
+                <restriction base="string">
+                    <enumeration value="AUTOMATIC"/>
+                    <enumeration value="MANUAL_GREEN_FREE"/>
+                    <enumeration value="MANUAL_RED_FULL"/>
+                </restriction>
+            </simpleType>
+        </schema>`,
+        `<?xml version="1.0" encoding="utf-8"?>
+        <wsdl:definitions name="CountingCategoryService"
+         targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1"
+            xmlns:tns="http://www.example.com/interfaces/parking/operatorServices/v1"
+            xmlns:countingCategoryData="http://www.example.com/interfaces/parking/operatorServices/v1/data"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:types>
+                <xsd:schema elementFormDefault="qualified" 
+                targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1">
+                    <xsd:import namespace="http://www.example.com/interfaces/parking/operatorServices/v1/data" 
+                    schemaLocation="CountingCategoryData.xsd"/>
+                    <xsd:import schemaLocation="../../../common/v1/CommonData.xsd" 
+                    namespace="http://www.example.com/interfaces/common/v1/data"/>
+                </xsd:schema>
+            </wsdl:types>
+        
+            <wsdl:message name="SetCountingCategoryMode">
+                <wsdl:part name="SetCountingCategoryModeRequest" 
+                element="countingCategoryData:SetCountingCategoryMode"/>
+            </wsdl:message>
+            <wsdl:message name="SetCountingCategoryModeResponse">
+                <wsdl:part name="SetCountingCategoryModeResponse" 
+                element="countingCategoryData:SetCountingCategoryModeOut"/>
+            </wsdl:message>
+            <wsdl:message name="SetCountingCategoryLevel">
+                <wsdl:part name="SetCountingCategoryLevel" 
+                element="countingCategoryData:SetCountingCategoryLevel"/>
+            </wsdl:message>
+            <wsdl:message name="SetCountingCategoryLevelResponse">
+                <wsdl:part name="SetCountingCategoryLevelResponse" 
+                element="countingCategoryData:SetCountingCategoryLevelOut"/>
+            </wsdl:message>
+            <wsdl:message name="SetExternalCountingMode">
+                <wsdl:part name="SetExternalCountingMode" element="countingCategoryData:SetExternalCountingMode"/>
+            </wsdl:message>
+            <wsdl:message name="SetExternalCountingModeResponse">
+                <wsdl:part name="SetExternalCountingModeResponse" 
+                element="countingCategoryData:SetExternalCountingModeOut"/>
+            </wsdl:message>
+        
+        
+            <wsdl:portType name="CountingCategoryServiceInterface">
+                <wsdl:operation name="SetCountingCategoryMode">
+                    <wsdl:input name="SetCountingCategoryModeRequest" message="tns:SetCountingCategoryMode"/>
+                    <wsdl:output name="SetCountingCategoryModeResponse" message="tns:SetCountingCategoryModeResponse"/>
+                </wsdl:operation>
+                <wsdl:operation name="SetCountingCategoryLevel">
+                    <wsdl:input name="SetCountingCategoryLevelRequest" message="tns:SetCountingCategoryLevel"/>
+                    <wsdl:output name="SetCountingCategoryLevelResponse" 
+                    message="tns:SetCountingCategoryLevelResponse"/>
+                </wsdl:operation>
+                <wsdl:operation name="SetExternalCountingMode">
+                    <wsdl:input name="SetExternalCountingModeRequest" message="tns:SetExternalCountingMode"/>
+                    <wsdl:output name="SetExternalCountingModeResponse" message="tns:SetExternalCountingModeResponse"/>
+                </wsdl:operation>
+            </wsdl:portType>
+        
+            <wsdl:binding name="example.CountingCategoryServiceBinding" type="tns:CountingCategoryServiceInterface">
+                <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+                <wsdl:operation name="SetCountingCategoryMode">
+                    <soap:operation 
+                    soapAction="http://www.example.com/interfaces/parking/operatorServices/v1/SetCountingCategoryMode" 
+                    style="document"/>
+                    <wsdl:input name="SetCountingCategoryModeRequest">
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                    <wsdl:output name="SetCountingCategoryModeResponse">
+                        <soap:body use="literal"/>
+                    </wsdl:output>
+                </wsdl:operation>
+                <wsdl:operation name="SetCountingCategoryLevel">
+                    <soap:operation 
+                    soapAction="http://www.example.com/interfaces/parking/operatorServices/v1/SetCountingCategoryLevel" 
+                    style="document"/>
+                    <wsdl:input name="SetCountingCategoryLevelRequest">
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                    <wsdl:output name="SetCountingCategoryLevelResponse">
+                        <soap:body use="literal"/>
+                    </wsdl:output>
+                </wsdl:operation>
+                <wsdl:operation name="SetExternalCountingMode">
+                    <soap:operation 
+                    soapAction="http://www.example.com/interfaces/parking/operatorServices/v1/SetExternalCountingMode"
+                     style="document"/>
+                    <wsdl:input name="SetExternalCountingModeRequest">
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                    <wsdl:output name="SetExternalCountingModeResponse">
+                        <soap:body use="literal"/>
+                    </wsdl:output>
+                </wsdl:operation>
+            </wsdl:binding>
+        
+            <wsdl:service name="example.CountingCategoryService">
+                <wsdl:port name="example.CountingCategoryServicePort" 
+                binding="tns:example.CountingCategoryServiceBinding">
+                    <soap:address 
+                    location="http://www.example.com/interfaces/parking/operatorServices/v1/CountingCategoryService"/>
+                </wsdl:port>
+            </wsdl:service>
+        </wsdl:definitions>`,
+        `<?xml version="1.0" encoding="utf-8"?>
+        <wsdl:definitions name="CountingCategoryService"
+         targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1"
+            xmlns:tns="http://www.example.com/interfaces/parking/operatorServices/v1"
+            xmlns:countingCategoryData="http://www.example.com/interfaces/parking/operatorServices/v1/data"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:types>
+                <xsd:schema elementFormDefault="qualified" 
+                targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1">
+                    <xsd:import namespace="http://www.example.com/interfaces/parking/operatorServices/v1/data" 
+                    schemaLocation="CountingCategoryData.xsd"/>
+                    <xsd:import schemaLocation="../../../common/v1/CommonData.xsd" 
+                    namespace="http://www.example.com/interfaces/common/v1/data"/>
+                </xsd:schema>
+            </wsdl:types>
+        
+            <wsdl:message name="SetCountingCategoryMode">
+                <wsdl:part name="SetCountingCategoryModeRequest" 
+                element="countingCategoryData:SetCountingCategoryMode"/>
+            </wsdl:message>
+            <wsdl:message name="SetCountingCategoryModeResponse">
+                <wsdl:part name="SetCountingCategoryModeResponse" 
+                element="countingCategoryData:SetCountingCategoryModeOut"/>
+            </wsdl:message>
+            <wsdl:message name="SetCountingCategoryLevel">
+                <wsdl:part name="SetCountingCategoryLevel" 
+                element="countingCategoryData:SetCountingCategoryLevel"/>
+            </wsdl:message>
+            <wsdl:message name="SetCountingCategoryLevelResponse">
+                <wsdl:part name="SetCountingCategoryLevelResponse" 
+                element="countingCategoryData:SetCountingCategoryLevelOut"/>
+            </wsdl:message>
+            <wsdl:message name="SetExternalCountingMode">
+                <wsdl:part name="SetExternalCountingMode" element="countingCategoryData:SetExternalCountingMode"/>
+            </wsdl:message>
+            <wsdl:message name="SetExternalCountingModeResponse">
+                <wsdl:part name="SetExternalCountingModeResponse" 
+                element="countingCategoryData:SetExternalCountingModeOut"/>
+            </wsdl:message>
+        
+        
+            <wsdl:portType name="CountingCategoryServiceInterface">
+                <wsdl:operation name="SetCountingCategoryMode">
+                    <wsdl:input name="SetCountingCategoryModeRequest" message="tns:SetCountingCategoryMode"/>
+                    <wsdl:output name="SetCountingCategoryModeResponse" message="tns:SetCountingCategoryModeResponse"/>
+                </wsdl:operation>
+                <wsdl:operation name="SetCountingCategoryLevel">
+                    <wsdl:input name="SetCountingCategoryLevelRequest" message="tns:SetCountingCategoryLevel"/>
+                    <wsdl:output name="SetCountingCategoryLevelResponse" 
+                    message="tns:SetCountingCategoryLevelResponse"/>
+                </wsdl:operation>
+                <wsdl:operation name="SetExternalCountingMode">
+                    <wsdl:input name="SetExternalCountingModeRequest" message="tns:SetExternalCountingMode"/>
+                    <wsdl:output name="SetExternalCountingModeResponse" message="tns:SetExternalCountingModeResponse"/>
+                </wsdl:operation>
+            </wsdl:portType>
+        
+            <wsdl:binding name="example.CountingCategoryServiceBinding" type="tns:CountingCategoryServiceInterface">
+                <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+                <wsdl:operation name="SetCountingCategoryMode">
+                    <soap:operation 
+                    soapAction="http://www.example.com/interfaces/parking/operatorServices/v1/SetCountingCategoryMode" 
+                    style="document"/>
+                    <wsdl:input name="SetCountingCategoryModeRequest">
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                    <wsdl:output name="SetCountingCategoryModeResponse">
+                        <soap:body use="literal"/>
+                    </wsdl:output>
+                </wsdl:operation>
+                <wsdl:operation name="SetCountingCategoryLevel">
+                    <soap:operation 
+                    soapAction="http://www.example.com/interfaces/parking/operatorServices/v1/SetCountingCategoryLevel" 
+                    style="document"/>
+                    <wsdl:input name="SetCountingCategoryLevelRequest">
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                    <wsdl:output name="SetCountingCategoryLevelResponse">
+                        <soap:body use="literal"/>
+                    </wsdl:output>
+                </wsdl:operation>
+                <wsdl:operation name="SetExternalCountingMode">
+                    <soap:operation 
+                    soapAction="http://www.example.com/interfaces/parking/operatorServices/v1/SetExternalCountingMode"
+                     style="document"/>
+                    <wsdl:input name="SetExternalCountingModeRequest">
+                        <soap:body use="literal"/>
+                    </wsdl:input>
+                    <wsdl:output name="SetExternalCountingModeResponse">
+                        <soap:body use="literal"/>
+                    </wsdl:output>
+                </wsdl:operation>
+            </wsdl:binding>
+        
+            <wsdl:service name="example.CountingCategoryService">
+                <wsdl:port name="example.CountingCategoryServicePort" 
+                binding="tns:example.CountingCategoryServiceBinding">
+                    <soap:address 
+                    location="http://www.example.com/interfaces/parking/operatorServices/v1/CountingCategoryService"/>
+                </wsdl:port>
+            </wsdl:service>
+        </wsdl:definitions>`
+      ];
+
+    let processedInput = {},
+      files = [],
+      array = [{
+        fileName: folderPath + '/CountingCategoryData.xsd'
+      }, {
+        fileName: folderPath + '/CountingCategoryService.wsdl'
+      },
+      {
+        fileName: folderPath + '/CountingCategoryServiceCopy.wsdl'
+      }
+      ],
+      merger = new WSDLMerger();
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+
+    processedInput[folderPathSchema] = processedInputFiles[0];
+    processedInput[folderPathService] = processedInputFiles[1];
+    processedInput[folderPathServiceCopy] = processedInputFiles[2];
+    merger.merge(files, processedInput, new XMLParser())
+      .then(() => {
+        expect.fail(null, null, status.reason);
+      })
+      .catch((err) => {
+        expect(err.message).to.equal(MULTIPLE_ROOT_FILES);
       });
   });
 
