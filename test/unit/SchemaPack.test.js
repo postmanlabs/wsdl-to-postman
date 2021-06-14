@@ -9,6 +9,9 @@ const expect = require('chai').expect,
   getAllTransactionsFromCollection = require('../../lib/utils/getAllTransactions').getAllTransactionsFromCollection,
   async = require('async'),
   path = require('path'),
+  {
+    MULTIPLE_ROOT_FILES
+  } = require('../../lib/constants/messageConstants'),
   optionIds = [
     'folderStrategy',
     'validateHeader',
@@ -522,6 +525,30 @@ describe('merge and validate', function () {
       else {
         expect.fail(null, null, status.reason);
       }
+    });
+  });
+
+  it('Should throw an error when input has more than one root file (services)', function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/multipleRoot'),
+      files = [],
+      array = [
+        { fileName: folderPath + '/CountingCategoryData.xsd' },
+        { fileName: folderPath + '/CountingCategoryService.wsdl' },
+        { fileName: folderPath + '/CountingCategoryServiceCopy.wsdl' }
+      ];
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+    const schemaPack = new SchemaPack({ type: 'folder', data: files }, {});
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      expect(status.result).to.equal(false);
+      expect(status.reason).to.equal(MULTIPLE_ROOT_FILES);
     });
   });
 });
