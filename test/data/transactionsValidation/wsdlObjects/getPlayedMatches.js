@@ -922,7 +922,7 @@ module.exports = {
     url: "http://www.w3.org/2001/XMLSchema",
     prefixFilter: "xsd:",
     isDefault: false,
-    tnsDefinitionURL: undefined,
+    tnsDefinitionURL: "http://{{url}}/soap/services/getPlayedMatches.php",
   },
   tnsNamespace: {
     key: "tns",

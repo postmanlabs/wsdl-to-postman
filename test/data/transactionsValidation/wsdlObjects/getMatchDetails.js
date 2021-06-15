@@ -303,6 +303,7 @@ module.exports = {
         key: "xsd",
         url: "http://www.w3.org/2001/XMLSchema",
         prefixFilter: "xsd:",
+        tnsDefinitionURL: "url/soap/services/getMatchDetails.php",
         isDefault: false,
     },
     tnsNamespace: {

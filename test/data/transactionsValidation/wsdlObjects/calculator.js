@@ -811,6 +811,7 @@ module.exports = {
     key: "s",
     url: "http://www.w3.org/2001/XMLSchema",
     prefixFilter: "s:",
+    tnsDefinitionURL: "http://tempuri.org/",
     isDefault: false,
   },
   tnsNamespace: {
