@@ -199,6 +199,7 @@ module.exports = {
   schemaNamespace: {
     key: 'xs',
     url: 'http://www.w3.org/2001/XMLSchema',
+    tnsDefinitionURL: 'http://www.dataaccess.com/webservicesserver/',
     isDefault: false
   },
   tnsNamespace: {
