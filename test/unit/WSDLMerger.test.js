@@ -107,7 +107,7 @@ describe('WSDLMerger merge', function() {
     processedInput[folderPathDefinitions] = processedInputFiles[1];
     processedInput[folderPathService] = processedInputFiles[2];
 
-    merger.merge(files, processedInput, new XMLParser())
+    merger.merge({ data: files, xmlFiles: processedInput}, new XMLParser())
       .then((merged) => {
         expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
       });
@@ -385,7 +385,7 @@ describe('WSDLMerger merge', function() {
     processedInput[folderPathSchema] = processedInputFiles[0];
     processedInput[folderPathService] = processedInputFiles[1];
 
-    merger.merge(files, processedInput, new XMLParser())
+    merger.merge({ data: files, xmlFiles: processedInput}, new XMLParser())
       .then((merged) => {
         expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
       });
@@ -663,7 +663,7 @@ describe('WSDLMerger merge', function() {
     processedInput[folderPathSchema] = processedInputFiles[0];
     processedInput[folderPathService] = processedInputFiles[1];
 
-    merger.merge(files, processedInput, undefined)
+    merger.merge({ data: files, xmlFiles: processedInput}, undefined)
       .then((merged) => {
         expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
       })
@@ -832,7 +832,7 @@ describe('WSDLMerger merge', function() {
     });
     processedInput[folderPathSchema] = processedInputFiles[0];
 
-    merger.merge(files, processedInput, new XMLParser())
+    merger.merge({ data: files, xmlFiles: processedInput}, new XMLParser())
       .then(() => {
         expect.fail(null, null, status.reason);
       })
@@ -924,7 +924,7 @@ describe('WSDLMerger merge', function() {
     processedInput[folderPathDefinitions] = processedInputFiles[1];
     processedInput[folderPathService] = processedInputFiles[2];
 
-    merger.merge(files, processedInput, new XMLParser())
+    merger.merge({ data: files, xmlFiles: processedInput}, new XMLParser())
       .then(() => {
         expect.fail(null, null, status.reason);
       })
@@ -1185,7 +1185,7 @@ describe('WSDLMerger merge', function() {
     processedInput[folderPathSchema] = processedInputFiles[0];
     processedInput[folderPathService] = processedInputFiles[1];
     processedInput[folderPathServiceCopy] = processedInputFiles[2];
-    merger.merge(files, processedInput, new XMLParser())
+    merger.merge({ data: files, xmlFiles: processedInput}, new XMLParser())
       .then(() => {
         expect.fail(null, null, status.reason);
       })
