@@ -3,7 +3,8 @@ const { expect } = require('chai'),
     getElementFromMissingInRequestBySiblingsXpath,
     getElementFromMissingInRequestByPath,
     getElementFromMissingInSchemaByXpath,
-    handleInvalidTypeAndGetXpath
+    handleInvalidTypeAndGetXpath,
+    handleMissingInRequestAndGetXpath
   } = require('../../lib/utils/mismatchUtils');
 
 describe('testing mismatchUtils getXpathFromMissingInRequestByPath', function() {
@@ -250,5 +251,123 @@ describe('mismatchUtils getElementFromInvalidTypeByXpath', function() {
       wrongElementXpath = handleInvalidTypeAndGetXpath(reason, currentBody),
       expected = '/Substract/objB/targetElement[3]';
     expect(wrongElementXpath).to.be.equal(expected);
+  });
+});
+
+describe('handleMissingInRequestAndGetXpath method', function() {
+  it('Should return the missingElement\'s parent xpath', function() {
+    const reason = 'Element \'objC\': Missing child element(s). Expected is ( intA ).\n',
+      currentBody = `<Substract>
+        <intA>200</intA>
+        <objB>
+          <intA>test</intA>
+        </objB>
+        <objC>
+          
+        </objC>
+      </Substract>`,
+      cleanBody = `<Substract>
+        <intA>200</intA>
+        <objB>
+          <missingInSchemaElement>test</missingInSchemaElement>
+          <intA>test</intA>
+        </objB>
+        <objC>
+          <intA>super test</intA>
+        </objC>
+      </Substract>`,
+      result = handleMissingInRequestAndGetXpath(reason, currentBody, cleanBody);
+    expect(result).to.be.equal('/Substract/objC');
+  });
+
+  it('Should return the missingElement\'s parent xpath when it has multiple siblings in same level', function() {
+    const reason = 'Element \'objC\': Missing child element(s). Expected is ( intA ).\n',
+      currentBody = `<Substract>
+        <intA>200</intA>
+        <objB>
+          <intA>test</intA>
+        </objB>
+        <objC>
+          <intA>super test</intA>
+        </objC>
+        <objC>
+          <intA>super test</intA>
+        </objC>
+        <objC>
+          
+        </objC>
+      </Substract>`,
+      cleanBody = `<Substract>
+        <intA>200</intA>
+        <objB>
+          <missingInSchemaElement>test</missingInSchemaElement>
+          <intA>test</intA>
+        </objB>
+        <objC>
+          <intA>super test</intA>
+        </objC>
+      </Substract>`,
+      result = handleMissingInRequestAndGetXpath(reason, currentBody, cleanBody);
+    expect(result).to.be.equal('/Substract/objC[2]');
+  });
+
+  it('Should return the missingElement\'s parent xpath when reason message gives' +
+  ' the name of the missing element and next sibling', function() {
+    const reason = 'Element \'intA\': This element is not expected. Expected is ( missingInSchemaElement ).\n',
+      currentBody = `<Substract>
+        <intA>200</intA>
+        <objB>
+          <intA>test</intA>
+        </objB>
+        <objC>
+          <intA>super test</intA>
+        </objC>
+      </Substract>`,
+      expectedBody = `<Substract>
+        <intA>200</intA>
+        <objB>
+          <missingInSchemaElement>test</missingInSchemaElement>
+          <intA>test</intA>
+        </objB>
+        <objC>
+          <intA>super test</intA>
+        </objC>
+      </Substract>`,
+      result = handleMissingInRequestAndGetXpath(reason, currentBody, expectedBody);
+    expect(result).to.be.equal('/Substract/objB');
+  });
+
+  it('Should return the missingElement\'s parent xpath when the reason message gives the name' +
+  ' of the missed element\'s next sibling and parent has multiple siblings with the same name', function() {
+    const reason = 'Element \'intA\': This element is not expected. Expected is ( missingInSchemaElement ).\n',
+      currentBody = `<Substract>
+        <intA>200</intA>
+        <objB>
+          <missingInSchemaElement>provided value</missingInSchemaElement>
+          <intA>test</intA>
+        </objB>
+        <objB>
+          <missingInSchemaElement>next provided value</missingInSchemaElement>
+          <intA>test</intA>
+        </objB>
+        <objB>
+          <intA>test</intA>
+        </objB>
+        <objC>
+          <intA>super test</intA>
+        </objC>
+      </Substract>`,
+      expectedBody = `<Substract>
+        <intA>200</intA>
+        <objB>
+          <missingInSchemaElement>test</missingInSchemaElement>
+          <intA>test</intA>
+        </objB>
+        <objC>
+          <intA>super test</intA>
+        </objC>
+      </Substract>`,
+      result = handleMissingInRequestAndGetXpath(reason, currentBody, expectedBody);
+    expect(result).to.be.equal('/Substract/objB[2]');
   });
 });
