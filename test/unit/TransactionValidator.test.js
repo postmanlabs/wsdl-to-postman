@@ -31,6 +31,10 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   getMatchDetailsCollectionItems = require('./../data/transactionsValidation/getMatchDetailsCollectionItems.json'),
   numberToWordsCollectionItemsOneMissingItem =
   require('./../data/transactionsValidation/numberToWordsCollectionItemsOneMissingItem.json'),
+  numberToWordsCollectionItemsInvalidXMLBody =
+   require('./../data/transactionsValidation/numberToWordsCollectionItemsInvalidXMLBody.json'),
+  expectedMissingEndpointaebb36fc =
+  require('./../data/transactionsValidation/resultValidation/expectedMissingEndpointaebb36fc'),
   {
     assert,
     expect
@@ -851,18 +855,11 @@ describe('validateBody method', function() {
       });
       return newMismatch;
     },
-    getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch, type = 'request') => {
+    getExpectedWithMismatchInEndpoint = (expectedBase, itemId, mismatch) => {
       let newExpected = JSON.parse(JSON.stringify(expectedBase));
-      if (type === 'request') {
-        newExpected.matched = false;
-        newExpected.requests[itemId].endpoints[0].mismatches = [mismatch];
-        newExpected.requests[itemId].endpoints[0].matched = false;
-      }
-      else if (type === 'response') {
-        newExpected.matched = false;
-        newExpected.requests[itemId].endpoints[0].mismatches = [mismatch];
-        newExpected.requests[itemId].endpoints[0].matched = false;
-      }
+      newExpected.matched = false;
+      newExpected.requests[itemId].endpoints[0].mismatches = [mismatch];
+      newExpected.requests[itemId].endpoints[0].matched = false;
       return newExpected;
     },
     expectedBase = {
@@ -1757,6 +1754,16 @@ describe('validateBody method', function() {
         }
       }
     });
+  });
+
+  it('Should return object requests.endpoints empty missingEndpoints set when entry xml is invalid', function() {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsInvalidXMLBody,
+        numberToWordsWSDLObject,
+        new XMLParser());
+
+    expect(result).to.be.an('object');
+    expect(result).to.be.an('object').and.to.deep.include(expectedMissingEndpointaebb36fc);
   });
 });
 
