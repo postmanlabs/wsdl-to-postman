@@ -21,7 +21,7 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
         xmlParser = new XMLParser(),
         version = factory.getWsdlVersion(xmlDocumentContent),
         parser = factory.getParser(xmlDocumentContent),
-        wsdlObject = parser.getWsdlObject(xmlDocumentContent, xmlParser),
+        wsdlObject = parser.getWsdlObject(xmlParser.parseToObject(xmlDocumentContent)),
         xmlParsed = xmlParser.parseToObject(xmlDocumentContent),
         schemaToValidate = getCleanSchema(xmlParsed, wsdlObject, version, xmlParser);
 
