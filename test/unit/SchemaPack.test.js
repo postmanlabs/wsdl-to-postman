@@ -135,25 +135,6 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
     });
   });
 
-  it('Should get an object representing PM Collection with 2 folder when has one Port/Endpoint', function () {
-    let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
-    const options = { folderStrategy: 'Port/Endpoint' },
-      schemaPack = new SchemaPack({
-        data: fileContent,
-        type: 'string'
-      }, options);
-
-    schemaPack.convert((error, result) => {
-      expect(error).to.be.null;
-      expect(result).to.be.an('object');
-      expect(result.output).to.be.an('array');
-      expect(result.output[0].data).to.be.an('object');
-      expect(result.output[0].type).to.equal('collection');
-      expect(result.output[0].data.item).to.be.an('array');
-      expect(result.output[0].data.item.length).to.equal(2);
-    });
-  });
-
   it('Should get an object representing PM Collection without folder', function () {
     let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
     const options = { folderStrategy: 'No folders' },
