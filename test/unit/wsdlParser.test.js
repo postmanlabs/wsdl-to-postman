@@ -1258,8 +1258,9 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
 
   it('should get an object in memory representing wsdlObject validate all namespaces found',
     function () {
-      const parser = new WsdlParser(new WsdlInformationService11());
-      let wsdlObject = parser.getWsdlObject(NUMBERCONVERSION_INPUT, new XMLParser());
+      const parser = new WsdlParser(new WsdlInformationService11()),
+        xmlParser = new XMLParser();
+      let wsdlObject = parser.getWsdlObject(xmlParser.parseToObject(NUMBERCONVERSION_INPUT));
       expect(wsdlObject).to.be.an('object');
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
@@ -1335,8 +1336,9 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
   it('should get an object in memory representing wsdlObject 2.0',
     function () {
       const informationService = new WsdlInformationService20(),
-        parser = new WsdlParser(informationService);
-      let wsdlObject = parser.getWsdlObject(WSDL_SAMPLE_2_0, new XMLParser());
+        parser = new WsdlParser(informationService),
+        xmlParser = new XMLParser();
+      let wsdlObject = parser.getWsdlObject(xmlParser.parseToObject(WSDL_SAMPLE_2_0));
       expect(wsdlObject).to.be.an('object');
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',

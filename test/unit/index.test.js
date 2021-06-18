@@ -29,7 +29,7 @@ describe('getMetaData', function () {
       data: VALID_WSDL_PATH
     }, function (x, y) {
       expect(x).to.eq(null);
-      expect(y.name).to.eq('calculator-soap11and12.wsdl');
+      expect(y.name).to.eq('Calculator');
     });
 
   });
