@@ -56,7 +56,7 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       expect(result.output).to.be.an('array');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].type).to.equal('collection');
-      expect(result.output[0].data.info.name).to.equal('calculator-soap11and12.wsdl');
+      expect(result.output[0].data.info.name).to.equal('Calculator');
     });
   });
 
@@ -74,7 +74,7 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       expect(result.output).to.be.an('array');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].type).to.equal('collection');
-      expect(result.output[0].data.info.name).to.equal('http://tempuri.org/');
+      expect(result.output[0].data.info.name).to.equal('Calculator');
     });
   });
 
@@ -317,7 +317,7 @@ describe('getMetaData method', function () {
       }, {});
     schemaPack.getMetaData(function (x, y) {
       expect(x).to.eq(null);
-      expect(y.name).to.eq('calculator-soap11and12.wsdl');
+      expect(y.name).to.eq('Calculator');
     });
   });
 
@@ -348,7 +348,7 @@ describe('getMetaData method', function () {
 
 describe('merge and validate', function () {
 
-  it('Should create collection from folder having one root file for browser', function () {
+  it('Should create collection from folder having one root file for browser', function (done) {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
       files = [],
       array = [
@@ -381,6 +381,7 @@ describe('merge and validate', function () {
           expect(result.output[0].data).to.have.property('info');
           expect(result.output[0].data).to.have.property('item');
         });
+        done();
       }
       else {
         expect.fail(null, null, status.reason);
@@ -388,7 +389,7 @@ describe('merge and validate', function () {
     });
   });
 
-  it('Should create collection from folder having one root file for browser ex 2', function () {
+  it('Should create collection from folder having one root file for browser ex 2', function (done) {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/counting'),
       files = [],
       array = [
@@ -419,6 +420,7 @@ describe('merge and validate', function () {
           expect(result.output[0].type).to.have.equal('collection');
           expect(result.output[0].data).to.have.property('info');
           expect(result.output[0].data).to.have.property('item');
+          done();
         });
       }
       else {
@@ -427,7 +429,7 @@ describe('merge and validate', function () {
     });
   });
 
-  it('Should create collection from folder having only one file for browser', function () {
+  it('Should create collection from folder having only one file for browser', function (done) {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
       files = [],
       array = [
@@ -457,6 +459,7 @@ describe('merge and validate', function () {
           expect(result.output[0].type).to.have.equal('collection');
           expect(result.output[0].data).to.have.property('info');
           expect(result.output[0].data).to.have.property('item');
+          done();
         });
       }
       else {
@@ -465,7 +468,7 @@ describe('merge and validate', function () {
     });
   });
 
-  it('Should create collection from folder having only one file no imports for browser', function () {
+  it('Should create collection from folder having only one file no imports for browser', function (done) {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
       files = [],
       array = [
@@ -492,6 +495,7 @@ describe('merge and validate', function () {
           expect(result.output[0].type).to.have.equal('collection');
           expect(result.output[0].data).to.have.property('info');
           expect(result.output[0].data).to.have.property('item');
+          done();
         });
       }
       else {
@@ -500,7 +504,32 @@ describe('merge and validate', function () {
     });
   });
 
-  it('Should create collection from folder send only file info', function () {
+  it('Should throw an error when input has more than one root file (services)', function (done) {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/multipleRoot'),
+      files = [],
+      array = [
+        { fileName: folderPath + '/CountingCategoryData.xsd' },
+        { fileName: folderPath + '/CountingCategoryService.wsdl' },
+        { fileName: folderPath + '/CountingCategoryServiceCopy.wsdl' }
+      ];
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+    const schemaPack = new SchemaPack({ type: 'folder', data: files }, {});
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      expect(status.result).to.equal(false);
+      expect(status.reason).to.equal(MULTIPLE_ROOT_FILES);
+      done();
+    });
+  });
+
+  it('Should create collection from folder send only file info', function (done) {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
       array = [
         { fileName: folderPath + '/stockquote.xsd' },
@@ -522,36 +551,13 @@ describe('merge and validate', function () {
           expect(result.output[0].type).to.have.equal('collection');
           expect(result.output[0].data).to.have.property('info');
           expect(result.output[0].data).to.have.property('item');
-          expect(result.output[0].data.info.name).to.equal('http://example.com/stockquote/service');
+          expect(result.output[0].data.info.name).to.equal('StockQuoteService');
+          done();
         });
       }
       else {
         expect.fail(null, null, status.reason);
       }
-    });
-  });
-
-  it('Should throw an error when input has more than one root file (services)', function () {
-    let folderPath = path.join(__dirname, SEPARATED_FILES, '/multipleRoot'),
-      files = [],
-      array = [
-        { fileName: folderPath + '/CountingCategoryData.xsd' },
-        { fileName: folderPath + '/CountingCategoryService.wsdl' },
-        { fileName: folderPath + '/CountingCategoryServiceCopy.wsdl' }
-      ];
-    array.forEach((item) => {
-      files.push({
-        content: fs.readFileSync(item.fileName, 'utf8'),
-        fileName: item.fileName
-      });
-    });
-    const schemaPack = new SchemaPack({ type: 'folder', data: files }, {});
-    schemaPack.mergeAndValidate((err, status) => {
-      if (err) {
-        expect.fail(null, null, err);
-      }
-      expect(status.result).to.equal(false);
-      expect(status.reason).to.equal(MULTIPLE_ROOT_FILES);
     });
   });
 });
