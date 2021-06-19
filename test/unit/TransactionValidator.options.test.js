@@ -571,7 +571,7 @@ describe('validateBody method with options', function () {
           {
             key: '/NumberToWords',
             actualValue: '<ubiNum>18446744073709</ubiNum>\n<WRONGFIELD>WRONG</WRONGFIELD>',
-            suggestedValue: '<ubiNum>100</ubiNum>'
+            suggestedValue: '<ubiNum>18446744073709</ubiNum>'
           }
         )
       );
