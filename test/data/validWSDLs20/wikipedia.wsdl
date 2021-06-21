@@ -15,8 +15,8 @@
                 xmlns="http://www.tmsws.com/wsdl20sample"
                 targetNamespace="http://www.example.com/wsdl20sample">
                  
-         <xs:element name="request"> ... </xs:element>
-         <xs:element name="response"> ... </xs:element>
+         <xs:element name="request">  </xs:element>
+         <xs:element name="response">  </xs:element>
       </xs:schema>
    </types>
 
