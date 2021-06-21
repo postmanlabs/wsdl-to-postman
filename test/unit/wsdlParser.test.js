@@ -9,7 +9,7 @@ const { WsdlInformationService11 } = require('../../lib/WsdlInformationService11
     DOC_HAS_NO_BINDINGS_MESSAGE,
     DOC_HAS_NO_SERVICE_MESSAGE,
     DOC_HAS_NO_BINDINGS_OPERATIONS_MESSAGE,
-    DOC_HAS_NO_SERVICE_PORT_MESSAGE
+    DOC_HAS_NO_SERVICE_PORT_MESSAGE_2
   } = require('../../lib/constants/messageConstants'),
   {
     POST_METHOD
@@ -978,7 +978,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
     wsdlObject = parser.assignOperations(wsdlObject, parsed);
     expect(wsdlObject.operationsArray).to.be.an('array');
     expect(wsdlObject.operationsArray.length).to.equal(4);
-    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
+    expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE_2))
       .to.equal(true);
     expect(wsdlObject.operationsArray[0]).to.be.an('object')
       .and.to.include({
@@ -1239,7 +1239,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
       wsdlObject = parser.assignOperations(wsdlObject, parsed);
       expect(wsdlObject.operationsArray).to.be.an('array');
       expect(wsdlObject.operationsArray.length).to.equal(3);
-      expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
+      expect(wsdlObject.log.errors.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE_2))
         .to.equal(true);
 
       expect(wsdlObject.operationsArray[0]).to.be.an('object')
@@ -1258,8 +1258,9 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
 
   it('should get an object in memory representing wsdlObject validate all namespaces found',
     function () {
-      const parser = new WsdlParser(new WsdlInformationService11());
-      let wsdlObject = parser.getWsdlObject(NUMBERCONVERSION_INPUT, new XMLParser());
+      const parser = new WsdlParser(new WsdlInformationService11()),
+        xmlParser = new XMLParser();
+      let wsdlObject = parser.getWsdlObject(xmlParser.parseToObject(NUMBERCONVERSION_INPUT));
       expect(wsdlObject).to.be.an('object');
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',
@@ -1335,8 +1336,9 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
   it('should get an object in memory representing wsdlObject 2.0',
     function () {
       const informationService = new WsdlInformationService20(),
-        parser = new WsdlParser(informationService);
-      let wsdlObject = parser.getWsdlObject(WSDL_SAMPLE_2_0, new XMLParser());
+        parser = new WsdlParser(informationService),
+        xmlParser = new XMLParser();
+      let wsdlObject = parser.getWsdlObject(xmlParser.parseToObject(WSDL_SAMPLE_2_0));
       expect(wsdlObject).to.be.an('object');
       expect(wsdlObject).to.have.all.keys('targetNamespace',
         'wsdlNamespace', 'SOAPNamespace', 'HTTPNamespace',

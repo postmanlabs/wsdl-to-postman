@@ -509,7 +509,6 @@ describe('Tools from messageWithSchemaValidation', function () {
 
   it('Should validate message with schema', function() {
     const schema = `<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
     <xs:element name="shiporder">
       <xs:complexType>
         <xs:sequence>
@@ -560,7 +559,9 @@ describe('Tools from messageWithSchemaValidation', function () {
         </item>
       </shiporder>`,
       validResult = validateMessageWithSchema(message, schema);
-      expect(validResult).to.be.an('array').with.length(1);
-      expect(validResult[0].message).to.be.equal('Element \'price\': This element is not expected. Expected is one of ( note, quantity ).\n')
-  })
+    expect(validResult).to.be.an('array').with.length(1);
+    expect(validResult[0].message).to.be.equal(
+      'Element \'price\': This element is not expected. Expected is one of ( note, quantity ).\n'
+    );
+  });
 });

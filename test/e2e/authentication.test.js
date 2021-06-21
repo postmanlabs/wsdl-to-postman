@@ -5,7 +5,7 @@ const expect = require('chai').expect,
   usernameTokenExamples = 'test/data/auth/usernameToken',
   SAMLTokenExamples = 'test/data/auth/SAMLToken',
   sslExmaple = 'test/data/validWSDLs11/usernameTokenSSL.wsdl',
-  collName = 'http://www.dataaccess.com/webservicesserver/',
+  collName = 'NumberConversion',
   namesArray = ['NumberToWords', 'NumberToDollars', 'NumberToWords', 'NumberToDollars'],
   descArray = ['Returns the word corresponding to the positive number passed as parameter. Limited to quadrillions.',
     'Returns the non-zero dollar amount of the passed number.',
@@ -44,7 +44,105 @@ const expect = require('chai').expect,
     value: 'text/xml; charset=utf-8'
   }],
   defMethod = 'POST',
-  reqBody = [
+  usernameToken = { NoPassword: [
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Header>\n' +
+        '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap:Header>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Header>\n' +
+        '    <wsse:Security soap:mustUnderstand="1" ' +
+        'xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap:Header>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Header>\n' +
+        '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap12:Header>\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Header>\n' +
+        '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap12:Header>\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    }
+  ],
+  NoSecurityBinding: [
     {
       mode: 'raw',
       raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -162,6 +260,243 @@ const expect = require('chai').expect,
       }
     }
   ],
+  UsernameToken: [
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Header>\n' +
+        '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '        <wsse:Password Type=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">' +
+        'place password here</wsse:Password>\n' +
+        '        <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap:Header>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Header>\n' +
+        '    <wsse:Security soap:mustUnderstand="1" ' +
+        'xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '        <wsse:Password Type=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">' +
+        'place password here</wsse:Password>\n' +
+        '        <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap:Header>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Header>\n' +
+        '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '        <wsse:Password Type=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">' +
+        'place password here</wsse:Password>\n' +
+        '        <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap12:Header>\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Header>\n' +
+        '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '        <wsse:Password Type=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">' +
+        'place password here</wsse:Password>\n' +
+        '        <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap12:Header>\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    }
+  ],
+  TimeStampNoncePwdHash: [
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Header>\n' +
+        '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '        <wsse:Password Type=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' +
+        'place hashed password here</wsse:Password>\n' +
+        '        <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap:Header>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Header>\n' +
+        '    <wsse:Security soap:mustUnderstand="1" ' +
+        'xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '        <wsse:Password Type=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' +
+        'place hashed password here</wsse:Password>\n' +
+        '        <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap:Header>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Header>\n' +
+        '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '        <wsse:Password Type=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' +
+        'place hashed password here</wsse:Password>\n' +
+        '        <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap12:Header>\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>18446744073709</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    },
+    {
+      mode: 'raw',
+      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+        '  <soap12:Header>\n' +
+        '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:UsernameToken>\n' +
+        '        <wsse:Username>place username here</wsse:Username>\n' +
+        '        <wsse:Password Type=' +
+        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' +
+        'place hashed password here</wsse:Password>\n' +
+        '        <wsse:Nonce EncodingType="...#Base64Binary">place nonce here</wsse:Nonce>\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:UsernameToken>\n' +
+        '    </wsse:Security>\n' +
+        '  </soap12:Header>\n' +
+        '  <soap12:Body>\n' +
+        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <dNum>1</dNum>\n' +
+        '    </NumberToDollars>\n' +
+        '  </soap12:Body>\n' +
+        '</soap12:Envelope>\n',
+      options: {
+        raw: {
+          language: 'xml'
+        }
+      }
+    }
+  ]
+  },
   reqBodySSL = [
     {
       mode: 'raw',
@@ -260,81 +595,91 @@ const expect = require('chai').expect,
       }
     }
   ],
-  reqBodySAML = [
-    {
-      mode: 'raw',
-      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-        '  <soap:Header>\n' +
-        '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
-        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
-        '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
-        '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
-        '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
-        '        <saml2:Subject>\n' +
-        '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
-        'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
-        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
-        '        </saml2:Subject>\n' +
-        '      </saml2:Assertion>\n' +
-        '    </wsse:Security>\n' +
-        '  </soap:Header>\n' +
-        '  <soap:Body>\n' +
-        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-        '      <ubiNum>18446744073709</ubiNum>\n' +
-        '    </NumberToWords>\n' +
-        '  </soap:Body>\n' +
-        '</soap:Envelope>\n',
-      options: {
-        raw: {
-          language: 'xml'
+  saml = {
+    SenderVouchersOverSSL: [
+      {
+        mode: 'raw',
+        raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+          '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+          '  <soap:Header>\n' +
+          '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+          '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+          '      <wsse:Timestamp xmlns:wsu="http://schemas.xmlsoap.org/ws/2003/06/utility">\n' +
+          '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+          '      </wsse:Timestamp>\n' +
+          '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+          '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+          '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+          '        <saml2:Subject>\n' +
+          '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+          'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+          '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:sender-vouches"/>\n' +
+          '        </saml2:Subject>\n' +
+          '      </saml2:Assertion>\n' +
+          '    </wsse:Security>\n' +
+          '  </soap:Header>\n' +
+          '  <soap:Body>\n' +
+          '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+          '      <ubiNum>18446744073709</ubiNum>\n' +
+          '    </NumberToWords>\n' +
+          '  </soap:Body>\n' +
+          '</soap:Envelope>\n',
+        options: {
+          raw: {
+            language: 'xml'
+          }
         }
-      }
-    },
-    {
-      mode: 'raw',
-      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-        '  <soap:Header>\n' +
-        '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
-        '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
-        '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
-        '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
-        '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
-        '        <saml2:Subject>\n' +
-        '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
-        'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
-        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
-        '        </saml2:Subject>\n' +
-        '      </saml2:Assertion>\n' +
-        '    </wsse:Security>\n' +
-        '  </soap:Header>\n' +
-        '  <soap:Body>\n' +
-        '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-        '      <dNum>1</dNum>\n' +
-        '    </NumberToDollars>\n' +
-        '  </soap:Body>\n' +
-        '</soap:Envelope>\n',
-      options: {
-        raw: {
-          language: 'xml'
+      },
+      {
+        mode: 'raw',
+        raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+          '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+          '  <soap:Header>\n' +
+          '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+          '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+          '      <wsse:Timestamp xmlns:wsu="http://schemas.xmlsoap.org/ws/2003/06/utility">\n' +
+          '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+          '      </wsse:Timestamp>\n' +
+          '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+          '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+          '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+          '        <saml2:Subject>\n' +
+          '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+          'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+          '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:sender-vouches"/>\n' +
+          '        </saml2:Subject>\n' +
+          '      </saml2:Assertion>\n' +
+          '    </wsse:Security>\n' +
+          '  </soap:Header>\n' +
+          '  <soap:Body>\n' +
+          '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+          '      <dNum>1</dNum>\n' +
+          '    </NumberToDollars>\n' +
+          '  </soap:Body>\n' +
+          '</soap:Envelope>\n',
+        options: {
+          raw: {
+            language: 'xml'
+          }
         }
-      }
-    },
-    {
-      mode: 'raw',
-      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+      },
+      {
+        mode: 'raw',
+        raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
         '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
         '  <soap12:Header>\n' +
         '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
         '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:Timestamp xmlns:wsu="http://schemas.xmlsoap.org/ws/2003/06/utility">\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:Timestamp>\n' +
         '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
         '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
         '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
         '        <saml2:Subject>\n' +
         '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
         'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
-        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:sender-vouches"/>\n' +
         '        </saml2:Subject>\n' +
         '      </saml2:Assertion>\n' +
         '    </wsse:Security>\n' +
@@ -345,26 +690,29 @@ const expect = require('chai').expect,
         '    </NumberToWords>\n' +
         '  </soap12:Body>\n' +
         '</soap12:Envelope>\n',
-      options: {
-        raw: {
-          language: 'xml'
+        options: {
+          raw: {
+            language: 'xml'
+          }
         }
-      }
-    },
-    {
-      mode: 'raw',
-      raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+      },
+      {
+        mode: 'raw',
+        raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
         '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
         '  <soap12:Header>\n' +
         '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
         '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+        '      <wsse:Timestamp xmlns:wsu="http://schemas.xmlsoap.org/ws/2003/06/utility">\n' +
+        '        <wsu:Created>2007-03-28T18:42:03Z</wsu:Created>\n' +
+        '      </wsse:Timestamp>\n' +
         '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
         '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
         '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
         '        <saml2:Subject>\n' +
         '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
         'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
-        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+        '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:sender-vouches"/>\n' +
         '        </saml2:Subject>\n' +
         '      </saml2:Assertion>\n' +
         '    </wsse:Security>\n' +
@@ -375,13 +723,135 @@ const expect = require('chai').expect,
         '    </NumberToDollars>\n' +
         '  </soap12:Body>\n' +
         '</soap12:Envelope>\n',
-      options: {
-        raw: {
-          language: 'xml'
+        options: {
+          raw: {
+            language: 'xml'
+          }
         }
       }
-    }
-  ],
+    ],
+    SAMLV11Token: [
+      {
+        mode: 'raw',
+        raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+          '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+          '  <soap:Header>\n' +
+          '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+          '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+          '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+          '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+          '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+          '        <saml2:Subject>\n' +
+          '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+          'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+          '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+          '        </saml2:Subject>\n' +
+          '      </saml2:Assertion>\n' +
+          '    </wsse:Security>\n' +
+          '  </soap:Header>\n' +
+          '  <soap:Body>\n' +
+          '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+          '      <ubiNum>18446744073709</ubiNum>\n' +
+          '    </NumberToWords>\n' +
+          '  </soap:Body>\n' +
+          '</soap:Envelope>\n',
+        options: {
+          raw: {
+            language: 'xml'
+          }
+        }
+      },
+      {
+        mode: 'raw',
+        raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+          '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+          '  <soap:Header>\n' +
+          '    <wsse:Security soap:mustUnderstand="1" xmlns:wsse=' +
+          '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+          '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+          '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+          '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+          '        <saml2:Subject>\n' +
+          '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+          'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+          '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+          '        </saml2:Subject>\n' +
+          '      </saml2:Assertion>\n' +
+          '    </wsse:Security>\n' +
+          '  </soap:Header>\n' +
+          '  <soap:Body>\n' +
+          '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+          '      <dNum>1</dNum>\n' +
+          '    </NumberToDollars>\n' +
+          '  </soap:Body>\n' +
+          '</soap:Envelope>\n',
+        options: {
+          raw: {
+            language: 'xml'
+          }
+        }
+      },
+      {
+        mode: 'raw',
+        raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+          '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+          '  <soap12:Header>\n' +
+          '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+          '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+          '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+          '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+          '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+          '        <saml2:Subject>\n' +
+          '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+          'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+          '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+          '        </saml2:Subject>\n' +
+          '      </saml2:Assertion>\n' +
+          '    </wsse:Security>\n' +
+          '  </soap12:Header>\n' +
+          '  <soap12:Body>\n' +
+          '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+          '      <ubiNum>18446744073709</ubiNum>\n' +
+          '    </NumberToWords>\n' +
+          '  </soap12:Body>\n' +
+          '</soap12:Envelope>\n',
+        options: {
+          raw: {
+            language: 'xml'
+          }
+        }
+      },
+      {
+        mode: 'raw',
+        raw: '<?xml version="1.0" encoding="utf-8"?>\n' +
+          '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n' +
+          '  <soap12:Header>\n' +
+          '    <wsse:Security soap12:mustUnderstand="1" xmlns:wsse=' +
+          '"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n' +
+          '      <saml2:Assertion ID="place id here" IssueInstant="place issue instant" Version="2.0">\n' +
+          '        <saml2:Issuer>www.opensaml.org</saml2:Issuer>\n' +
+          '        <saml2:Conditions NotBefore="place not before" NotOnOrAfter="place not on or after"/>\n' +
+          '        <saml2:Subject>\n' +
+          '          <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">' +
+          'joe,ou=people,ou=saml demo,o=example.com</saml2:NameID>\n' +
+          '          <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>\n' +
+          '        </saml2:Subject>\n' +
+          '      </saml2:Assertion>\n' +
+          '    </wsse:Security>\n' +
+          '  </soap12:Header>\n' +
+          '  <soap12:Body>\n' +
+          '    <NumberToDollars xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+          '      <dNum>1</dNum>\n' +
+          '    </NumberToDollars>\n' +
+          '  </soap12:Body>\n' +
+          '</soap12:Envelope>\n',
+        options: {
+          raw: {
+            language: 'xml'
+          }
+        }
+      }
+    ] },
   status = 'OK',
   code = 200,
   resBody = ['<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -439,7 +909,8 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
   var authFolder = fs.readdirSync(usernameTokenExamples);
   async.each(authFolder, function (file, cb) {
     it('Should validate the convertion of a file with ' + file, function () {
-      let fileContent = fs.readFileSync(usernameTokenExamples + '/' + file, 'utf8');
+      let fileContent = fs.readFileSync(usernameTokenExamples + '/' + file, 'utf8'),
+        expected = usernameToken[file.split('.').slice(0, -1).join('.')];
       Index.convert(
         { type: 'string', data: fileContent },
         { folderStrategy: 'No folders' },
@@ -462,7 +933,7 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
               expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
               let fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].request.body.raw);
-              expect(fixedBody).to.be.eql(reqBody[i].raw);
+              expect(fixedBody).to.be.eql(expected[i].raw);
               expect(conversionResult.output[0].data.item[i].request.description.content).to.be.eql(descArray[i]);
               expect(conversionResult.output[0].data.item[i].request.description.type).to.be.eql(descType);
               // Expects for Response
@@ -475,7 +946,7 @@ describe('Test the convertion of valid WSDL files with authetication mechanisms'
               expect(conversionResult.output[0].data.item[i].response[0].originalRequest.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].response[0].originalRequest.method).to.be.eql(defMethod);
               fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].response[0].originalRequest.body.raw);
-              expect(fixedBody).to.be.eql(reqBody[i].raw);
+              expect(fixedBody).to.be.eql(expected[i].raw);
               expect(conversionResult.output[0].data.item[i].response[0].status).to.be.eql(status);
               expect(conversionResult.output[0].data.item[i].response[0].code).to.be.eql(code);
               expect(conversionResult.output[0].data.item[i].response[0].header).to.be.eql(header);
@@ -549,7 +1020,8 @@ describe('Authenticacion with SAML11 Token', function () {
   var authFolder = fs.readdirSync(SAMLTokenExamples);
   async.each(authFolder, function (file, cb) {
     it('Should validate the convertion of a file with SAML11 Token ' + file, function () {
-      let fileContent = fs.readFileSync(SAMLTokenExamples + '/' + file, 'utf8');
+      let fileContent = fs.readFileSync(SAMLTokenExamples + '/' + file, 'utf8'),
+        expected = saml[file.split('.').slice(0, -1).join('.')];
       Index.convert(
         { type: 'string', data: fileContent },
         { folderStrategy: 'No folders' },
@@ -572,7 +1044,7 @@ describe('Authenticacion with SAML11 Token', function () {
               expect(conversionResult.output[0].data.item[i].request.header).to.be.eql(header);
               expect(conversionResult.output[0].data.item[i].request.method).to.be.eql(defMethod);
               let fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].request.body.raw);
-              expect(fixedBody).to.be.eql(reqBodySAML[i].raw);
+              expect(fixedBody).to.be.eql(expected[i].raw);
               expect(conversionResult.output[0].data.item[i].request.description.content).to.be.eql(descArray[i]);
               expect(conversionResult.output[0].data.item[i].request.description.type).to.be.eql(descType);
               // Expects for Response
@@ -587,7 +1059,7 @@ describe('Authenticacion with SAML11 Token', function () {
 
               fixedBody = fixBodyMessage(conversionResult.output[0].data.item[i].response[0]
                 .originalRequest.body.raw);
-              expect(fixedBody).to.be.eql(reqBodySAML[i].raw);
+              expect(fixedBody).to.be.eql(expected[i].raw);
               expect(conversionResult.output[0].data.item[i].response[0].status).to.be.eql(status);
               expect(conversionResult.output[0].data.item[i].response[0].code).to.be.eql(code);
               expect(conversionResult.output[0].data.item[i].response[0].header).to.be.eql(header);

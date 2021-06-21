@@ -8,6 +8,7 @@
     "unit-tests": "./node_modules/mocha/bin/mocha test/unit/**.test.js",
     "e2e-tests": "./node_modules/mocha/bin/mocha test/e2e/**.test.js",
     "convert-validation-tests": "./node_modules/mocha/bin/mocha test/convert-validation/**.test.js",
+    "merge-convert-validate-tests": "./node_modules/mocha/bin/mocha test/merge-convert-validate/**.test.js",
     "lint": "eslint ./lib/** ./test/**/*.js",
     "coverage": "nyc --reporter=text npm run unit-tests"
   },
@@ -60,6 +61,8 @@
     "postman-collection": "3.6.9",
     "randexp": "0.5.3",
     "traverse": "0.6.6",
-    "xmllint": "0.1.1"
+    "xmldom": "0.6.0",
+    "xmllint": "0.1.1",
+    "xpath": "0.0.32"
   }
 }

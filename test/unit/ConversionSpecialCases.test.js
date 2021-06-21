@@ -9,7 +9,7 @@ const expect = require('chai').expect,
     DOC_HAS_NO_SERVICE_MESSAGE,
     DOC_HAS_NO_BINDINGS_MESSAGE,
     DOC_HAS_NO_BINDINGS_OPERATIONS_MESSAGE,
-    DOC_HAS_NO_SERVICE_PORT_MESSAGE,
+    DOC_HAS_NO_SERVICE_PORT_MESSAGE_2,
     ELEMENT_NOT_FOUND
 
   } = require('../../lib/constants/messageConstants');
@@ -31,7 +31,7 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].type).to.equal('collection');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
-      expect(result.output[0].data.item[0].item.length).to.equal(8);
+      expect(result.output[0].data.item.length).to.equal(8);
       expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_MESSAGE))
         .to.equal(true);
     });
@@ -94,8 +94,8 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].type).to.equal('collection');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
-      expect(result.output[0].data.item[0].item.length).to.equal(4);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
+      expect(result.output[0].data.item.length).to.equal(4);
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE_2))
         .to.equal(true);
     });
   });
@@ -159,8 +159,8 @@ describe('SchemaPack convert special cases WSDL 1.1', function() {
       expect(result.output[0].type).to.equal('collection');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
-      expect(result.output[0].data.item[0].item.length).to.equal(2);
-      expect(result.output[0].data.item[0].item[1].request.body.raw.includes(ELEMENT_NOT_FOUND))
+      expect(result.output[0].data.item.length).to.equal(2);
+      expect(result.output[0].data.item[1].request.body.raw.includes(ELEMENT_NOT_FOUND))
         .to.equal(true);
     });
   });
@@ -183,7 +183,7 @@ describe('SchemaPack convert special cases WSDL 2.0', function() {
       expect(result.output[0].type).to.equal('collection');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
-      expect(result.output[0].data.item[0].item.length).to.equal(3);
+      expect(result.output[0].data.item.length).to.equal(3);
       expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_MESSAGE))
         .to.equal(true);
     });
@@ -246,8 +246,8 @@ describe('SchemaPack convert special cases WSDL 2.0', function() {
       expect(result.output[0].type).to.equal('collection');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
-      expect(result.output[0].data.item[0].item.length).to.equal(3);
-      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE))
+      expect(result.output[0].data.item.length).to.equal(3);
+      expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE_2))
         .to.equal(true);
     });
   });
