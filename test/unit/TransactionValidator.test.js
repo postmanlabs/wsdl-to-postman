@@ -1428,7 +1428,7 @@ describe('validateBody method', function() {
                     ' because the content type is empty.\n',
                   suggestedFix: {
                     actualValue: '\n        ',
-                    key: '/getMatchDetailsResponse/getMatchDetailsResult/item/UpdateTimeStamp',
+                    key: '//getMatchDetailsResponse/getMatchDetailsResult/item/UpdateTimeStamp',
                     suggestedValue: ''
                   }
                 }]

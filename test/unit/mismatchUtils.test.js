@@ -314,7 +314,7 @@ describe('handleMissingInRequestAndGetElementData method', function() {
         </objC>
       </Substract>`,
       elementData = handleMissingInRequestAndGetElementData(reason, currentBody, cleanBody);
-    expect(elementData.keyXpath).to.be.equal('/Substract/objC[2]');
+    expect(elementData.keyXpath).to.be.equal('/Substract/objC[3]');
     expect(elementData.node.name()).to.be.equal('intA');
   });
 
@@ -376,7 +376,7 @@ describe('handleMissingInRequestAndGetElementData method', function() {
         </objC>
       </Substract>`,
       elementData = handleMissingInRequestAndGetElementData(reason, currentBody, expectedBody);
-    expect(elementData.keyXpath).to.be.equal('/Substract/objB[2]');
+    expect(elementData.keyXpath).to.be.equal('/Substract/objB[3]');
     expect(elementData.node.name()).to.be.equal('missingInSchemaElement');
   });
 });
