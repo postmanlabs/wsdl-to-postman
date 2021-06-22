@@ -394,7 +394,7 @@ describe('validateBody method with options', function () {
           'INVALID_TYPE'
         ),
         {
-          key: '/Subtract/intA',
+          key: '//Subtract/intA',
           actualValue: '{{}}',
           suggestedValue: '100'
         }
@@ -406,7 +406,7 @@ describe('validateBody method with options', function () {
           'INVALID_TYPE'
         ),
         {
-          key: '/Subtract/intB',
+          key: '//Subtract/intB',
           actualValue: '{{}}',
           suggestedValue: '100'
         }
@@ -569,9 +569,9 @@ describe('validateBody method with options', function () {
             'MISSING_IN_SCHEMA'
           ),
           {
-            key: '/NumberToWords',
+            key: '//NumberToWords',
             actualValue: '<ubiNum>18446744073709</ubiNum>\n<WRONGFIELD>WRONG</WRONGFIELD>',
-            suggestedValue: '<ubiNum>100</ubiNum>'
+            suggestedValue: '<ubiNum>18446744073709</ubiNum>'
           }
         )
       );
@@ -602,7 +602,7 @@ describe('validateBody method with options', function () {
             'MISSING_IN_REQUEST'
           ),
           {
-            key: '/NumberToWords',
+            key: '//NumberToWords',
             actualValue: '',
             suggestedValue: '<ubiNum>100</ubiNum>'
           }
@@ -636,7 +636,7 @@ describe('validateBody method with options', function () {
             'INVALID_TYPE'
           ),
           {
-            key: '/NumberToWords/ubiNum',
+            key: '//NumberToWords/ubiNum',
             actualValue: 'WRONG TYPE',
             suggestedValue: '100'
           }
@@ -669,7 +669,7 @@ describe('validateBody method with options', function () {
             'INVALID_TYPE'
           ),
           {
-            key: '/getPlayedMatchesResponse/getPlayedMatchesResult/item/MatchId',
+            key: '//getPlayedMatchesResponse/getPlayedMatchesResult/item/MatchId',
             actualValue: 'WRONGVALUE',
             suggestedValue: '100'
           }
