@@ -1,10 +1,10 @@
 const expect = require('chai').expect,
   assert = require('chai').assert,
   {
-    ParserFactory,
+    WSDLParserFactory,
     V11,
     V20
-  } = require('../../lib/ParserFactory'),
+  } = require('../../lib/WSDLParserFactory'),
   {
     WsdlInformationService11
   } = require('../../lib/WsdlInformationService11'),
@@ -14,12 +14,12 @@ const expect = require('chai').expect,
 
 describe('Parser Factory constructor', function () {
   it('should get an object for the factory with empty input', function () {
-    const factory = new ParserFactory('');
+    const factory = new WSDLParserFactory('');
     expect(factory).to.be.an('object');
   });
 
   it('should get an object for the factory with xml input', function () {
-    const factory = new ParserFactory(`<user is='great'>
+    const factory = new WSDLParserFactory(`<user is='great'>
       <name>Tobias</name>
       <familyName>Nickel</familyName>
       <profession>Software Developer</profession>
@@ -29,7 +29,7 @@ describe('Parser Factory constructor', function () {
   });
 
   it('should get an object for the factory with no input', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     expect(factory).to.be.an('object');
   });
 });
@@ -37,7 +37,7 @@ describe('Parser Factory constructor', function () {
 describe('Parser Factory getWsdlVersion', function () {
 
   it('should get version 1.1 when the input contains definitions>', function () {
-    const factory = new ParserFactory(''),
+    const factory = new WSDLParserFactory(''),
       version = factory.getWsdlVersion(`<?xml version="1.0" encoding="utf-8"?>
     <?xml-stylesheet type="text/xsl" href="http://tomi.vanek.sk/xml/wsdl-viewer.xsl"?>
     <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
@@ -96,7 +96,7 @@ describe('Parser Factory getWsdlVersion', function () {
   });
 
   it('should get version 2.0 when the input contains description>', function () {
-    const factory = new ParserFactory(''),
+    const factory = new WSDLParserFactory(''),
       version = factory.getWsdlVersion(`<?xml version="1.0" encoding="utf-8" ?>
     <description xmlns="http://www.w3.org/ns/wsdl>
         <types>
@@ -139,7 +139,7 @@ describe('Parser Factory getWsdlVersion', function () {
   });
 
   it('should throw an error when input is empty string', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getWsdlVersion('');
     }
@@ -149,7 +149,7 @@ describe('Parser Factory getWsdlVersion', function () {
   });
 
   it('should throw an error when input is empty', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getWsdlVersion();
     }
@@ -159,7 +159,7 @@ describe('Parser Factory getWsdlVersion', function () {
   });
 
   it('should throw an error when input is null', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getWsdlVersion(null);
     }
@@ -169,7 +169,7 @@ describe('Parser Factory getWsdlVersion', function () {
   });
 
   it('should throw an error when input is undefined', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getWsdlVersion(undefined);
     }
@@ -179,7 +179,7 @@ describe('Parser Factory getWsdlVersion', function () {
   });
 
   it('should throw an error when input does not have any of the tags', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getWsdlVersion(`<user is='great'>
       <name>Tobias</name>
@@ -198,7 +198,7 @@ describe('Parser Factory getWsdlVersion', function () {
 describe('Parser Factory getParser', function () {
 
   it('should get version an object of type Wsdl11Parser when the input contains definitions>', function () {
-    const factory = new ParserFactory(''),
+    const factory = new WSDLParserFactory(''),
       concreteParser = factory.getParser(`<?xml version="1.0" encoding="utf-8"?>
         <?xml-stylesheet type="text/xsl" href="http://tomi.vanek.sk/xml/wsdl-viewer.xsl"?>
         <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
@@ -257,7 +257,7 @@ describe('Parser Factory getParser', function () {
   });
 
   it('should get version an object of type Wsdl20Parser when the input contains description>', function () {
-    const factory = new ParserFactory(''),
+    const factory = new WSDLParserFactory(''),
       concreteParser = factory.getParser(`<?xml version="1.0" encoding="utf-8" ?>
       <description xmlns="http://www.w3.org/ns/wsdl>
           <types>
@@ -301,7 +301,7 @@ describe('Parser Factory getParser', function () {
 
 
   it('should throw an error when input is empty string', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getParser('');
     }
@@ -311,7 +311,7 @@ describe('Parser Factory getParser', function () {
   });
 
   it('should throw an error when input is an empty string', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getParser();
     }
@@ -321,7 +321,7 @@ describe('Parser Factory getParser', function () {
   });
 
   it('should throw an error when input is null', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getParser(null);
       assert.fail('we expected an error');
@@ -332,7 +332,7 @@ describe('Parser Factory getParser', function () {
   });
 
   it('should throw an error when input is undefined', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getParser(undefined);
       assert.fail('we expected an error');
@@ -343,7 +343,7 @@ describe('Parser Factory getParser', function () {
   });
 
   it('should throw an error when input does not have any of the tags', function () {
-    const factory = new ParserFactory();
+    const factory = new WSDLParserFactory();
     try {
       factory.getParser(`<user is='great'>
       <name>Tobias</name>

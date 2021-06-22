@@ -4,19 +4,22 @@ const expect = require('chai').expect,
     SOAPBody
   } = require('../../lib/utils/SOAPBody'),
   {
+    XMLParser
+  } = require('../../lib/XMLParser'),
+  {
     ERROR_ELEMENT_IDENTIFIER
   } = require('../../lib/constants/processConstants');
 
 describe('SOAPBody  constructor', function () {
   it('should get an object for the factory with empty input', function () {
-    const parametersUtils = new SOAPBody();
+    const parametersUtils = new SOAPBody(new XMLParser());
     expect(parametersUtils).to.be.an('object');
   });
 });
 
 describe('SOAPBody create', function () {
   it('Should get a json object when NumberToWords->ubinum is sent', function () {
-    const bodyCreator = new SOAPBody(),
+    const bodyCreator = new SOAPBody(new XMLParser()),
       child = {
         children: [],
         name: 'ubiNum',
@@ -42,7 +45,7 @@ describe('SOAPBody create', function () {
   });
 
   it('Should get a json object when TestCustomModel->inputmodel->id,name,email is sent', function () {
-    const bodyCreator = new SOAPBody(),
+    const bodyCreator = new SOAPBody(new XMLParser()),
       grandChild1 = {
         children: [],
         name: 'id',
@@ -96,21 +99,21 @@ describe('SOAPBody create', function () {
   });
 
   it('Should get an empty json object when null is sent', function () {
-    const bodyCreator = new SOAPBody(),
+    const bodyCreator = new SOAPBody(new XMLParser()),
       jsonObjectMessage = bodyCreator.create(null);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.be.empty;
   });
 
   it('Should get an empty json object when undefined is sent', function () {
-    const bodyCreator = new SOAPBody(),
+    const bodyCreator = new SOAPBody(new XMLParser()),
       jsonObjectMessage = bodyCreator.create(undefined);
     expect(jsonObjectMessage).to.be.an('object');
     expect(jsonObjectMessage).to.be.empty;
   });
 
   it('Should get a json object indicating the error', function () {
-    const bodyCreator = new SOAPBody(),
+    const bodyCreator = new SOAPBody(new XMLParser()),
       soapMessageParent = {
         children: [],
         name: ERROR_ELEMENT_IDENTIFIER,
@@ -124,7 +127,7 @@ describe('SOAPBody create', function () {
   });
 
   it('Should get a json object indicating the error from child', function () {
-    const bodyCreator = new SOAPBody(),
+    const bodyCreator = new SOAPBody(new XMLParser()),
 
       child = {
         children: [],
@@ -147,7 +150,7 @@ describe('SOAPBody create', function () {
   });
 
   it('Should get a json object when has complex brothers with properties with the same name', function () {
-    const bodyCreator = new SOAPBody(),
+    const bodyCreator = new SOAPBody(new XMLParser()),
       Item1Concrete2 = {
         children: [],
         name: 'Item1Concrete2',
@@ -255,7 +258,7 @@ describe('SOAPBody create', function () {
 
 describe('SOAPBody assignPropertyValue', function () {
   it('should assign the property "property" with "value" to object', function () {
-    const bodyCreator = new SOAPBody();
+    const bodyCreator = new SOAPBody(new XMLParser());
     let obj = {
       parent: {}
     };
@@ -267,28 +270,28 @@ describe('SOAPBody assignPropertyValue', function () {
 
 describe('SOAPBody SOAPBody', function () {
   it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap is the protocol', function () {
-    const parametersUtils = new SOAPBody(),
+    const parametersUtils = new SOAPBody(new XMLParser()),
       url = parametersUtils.getSOAPNamespaceFromProtocol('soap');
     expect(url).to.be.an('string');
     expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
   });
 
   it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap12 is the protocol', function () {
-    const parametersUtils = new SOAPBody(),
+    const parametersUtils = new SOAPBody(new XMLParser()),
       url = parametersUtils.getSOAPNamespaceFromProtocol('soap12');
     expect(url).to.be.an('string');
     expect(url).to.equal('http://www.w3.org/2003/05/soap-envelope');
   });
 
   it('should get http://schemas.xmlsoap.org/soap/envelope/ when dummy is the protocol', function () {
-    const parametersUtils = new SOAPBody(),
+    const parametersUtils = new SOAPBody(new XMLParser()),
       url = parametersUtils.getSOAPNamespaceFromProtocol('dummy');
     expect(url).to.be.an('string');
     expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
 
   });
   it('should get http://schemas.xmlsoap.org/soap/envelope/ when null is the protocol', function () {
-    const parametersUtils = new SOAPBody(),
+    const parametersUtils = new SOAPBody(new XMLParser()),
       url = parametersUtils.getSOAPNamespaceFromProtocol(null);
     expect(url).to.be.an('string');
     expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');

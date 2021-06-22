@@ -10,7 +10,6 @@ const
     WsdlObject
   } = require('../../lib/WSDLObject'),
   {
-    PARSER_ATTRIBUTE_NAME_PLACE_HOLDER,
     getServices,
     getBindings
   } = require('../../lib/WsdlParserCommon'),
@@ -186,7 +185,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
     operation = informationService.getAbstractOperationByName('reservationInterface',
       'opCheckAvailability', parsed, '');
     expect(operation).to.be.an('object');
-    expect(operation[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('opCheckAvailability');
+    expect(operation[xmlParser.attributePlaceHolder + 'name']).to.equal('opCheckAvailability');
   });
 
   it('should get interface operation by name in WSDL_SAMPLE_AXIS', function () {
@@ -197,7 +196,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
     operation = informationService.getAbstractOperationByName('ServiceInterface',
       'hi', parsed, 'wsdl2:');
     expect(operation).to.be.an('object');
-    expect(operation[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('hi');
+    expect(operation[xmlParser.attributePlaceHolder + 'name']).to.equal('hi');
   });
 
   it('should throw an error when parsedxml is null', function () {
@@ -378,7 +377,7 @@ describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
         ''
       ).port;
     expect(serviceEndpoint).to.be.an('object');
-    expect(serviceEndpoint[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('reservationEndpoint');
+    expect(serviceEndpoint[xmlParser.attributePlaceHolder + 'name']).to.equal('reservationEndpoint');
   });
 
   it('should get the service endpoint when exists and called with WSDL_SAMPLE_AXIS', function () {
@@ -395,7 +394,7 @@ describe('WSDL 2.0 getServiceAndExpossedInfoByBindingName', function () {
         'wsdl2:'
       ).port;
     expect(serviceEndpoint).to.be.an('object');
-    expect(serviceEndpoint[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('SayHelloHttpSoap11Endpoint');
+    expect(serviceEndpoint[xmlParser.attributePlaceHolder + 'name']).to.equal('SayHelloHttpSoap11Endpoint');
   });
 
   it('should throw an error when binding name is null', function () {
