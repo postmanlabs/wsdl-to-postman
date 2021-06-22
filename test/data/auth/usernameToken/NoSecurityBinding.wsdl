@@ -5,7 +5,7 @@
   xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
   xmlns:tns="http://www.dataaccess.com/webservicesserver/" name="NumberConversion" targetNamespace="http://www.dataaccess.com/webservicesserver/">
   <wsp:Policy>
-    <sp:SupportingTokens>
+    <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
       <wsp:Policy>
         <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
         </sp:UsernameToken>

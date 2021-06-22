@@ -2,6 +2,9 @@ const expect = require('chai').expect,
   {
     Validator
   } = require('./../../lib/Validator'),
+  {
+    XMLParser
+  } = require('./../../lib/XMLParser'),
   SEPARATED_FILES = 'test/data/separatedFiles',
   fs = require('fs');
 
@@ -10,7 +13,7 @@ describe('Validator result', function () {
   it('Should return a validatorResult format', function () {
     const validatorResult = new Validator().result(true, 'Some reason');
     expect(validatorResult).to.be.an('object')
-      .that.have.all.keys('xml', 'valResult');
+      .that.have.all.keys('xml', 'valResult', 'parsedXML');
   });
 });
 
@@ -68,7 +71,7 @@ describe('Validator validate', function () {
   it('Should return a failed validationResult when input.data is null', function () {
     const nullInput = mockInput(null),
       validator = new Validator();
-    expect(validator.validate(nullInput).valResult).to.be.an('object')
+    expect(validator.validate(nullInput, new XMLParser()).valResult).to.be.an('object')
       .and.to.include({
         result: false,
         reason: 'Input not provided'
@@ -88,7 +91,7 @@ describe('Validator validate', function () {
   it('Should return a failed validationResult when input.data is empty', function () {
     const emptyInput = mockInput(''),
       validator = new Validator();
-    expect(validator.validate(emptyInput).valResult).to.be.an('object')
+    expect(validator.validate(emptyInput, new XMLParser()).valResult).to.be.an('object')
       .and.to.include({
         result: false,
         reason: 'Input not provided'
@@ -99,7 +102,7 @@ describe('Validator validate', function () {
 string`, function () {
     const input = mockInput('Does not contains WSDL validation', 'string'),
       validator = new Validator();
-    expect(validator.validate(input).valResult).to.be.an('object')
+    expect(validator.validate(input, new XMLParser()).valResult).to.be.an('object')
       .and.to.include({
         result: false,
         reason: 'Not WSDL Specification found in your document'
@@ -109,7 +112,7 @@ string`, function () {
   it('Should return a failed validationResult if input type is not supported', function () {
     const input = mockInput('Any type data', 'NotSupportedType'),
       validator = new Validator();
-    expect(validator.validate(input).valResult).to.be.an('object')
+    expect(validator.validate(input, new XMLParser()).valResult).to.be.an('object')
       .and.to.include({
         result: false,
         reason: `Invalid input type (${input.type}). Type must be file/string/folder.`
@@ -120,10 +123,21 @@ string`, function () {
     function () {
       const definitionsInput = mockInput('<definitions ...> ... </ definitions>', 'string'),
         validator = new Validator();
-      expect(validator.validate(definitionsInput).valResult).to.be.an('object')
+      expect(validator.validate(definitionsInput, new XMLParser()).valResult).to.be.an('object')
         .and.to.include({
           result: true,
           reason: 'Success'
+        });
+    });
+
+  it('Should return  ',
+    function () {
+      const definitionsInput = mockInput('</dsefinitions> </ definitions>', 'string'),
+        validator = new Validator();
+      expect(validator.validate(definitionsInput, new XMLParser()).valResult).to.be.an('object')
+        .and.to.include({
+          result: false,
+          reason: 'Invalid format. Input must be valid XML'
         });
     });
 
@@ -131,7 +145,7 @@ string`, function () {
     function () {
       const descriptionInput = mockInput('<description ...> ... </ description>', 'string'),
         validator = new Validator();
-      expect(validator.validate(descriptionInput).valResult).to.be.an('object')
+      expect(validator.validate(descriptionInput, new XMLParser()).valResult).to.be.an('object')
         .and.to.include({
           result: true,
           reason: 'Success'
@@ -157,7 +171,7 @@ string`, function () {
 
       const input = mockInput(files, 'folder'),
         validator = new Validator(),
-        result = validator.validate(input);
+        result = validator.validate(input, new XMLParser());
       expect(result.valResult).to.be.an('object')
         .and.to.include({
           result: true,

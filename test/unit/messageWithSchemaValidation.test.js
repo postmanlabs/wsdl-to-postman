@@ -509,7 +509,6 @@ describe('Tools from messageWithSchemaValidation', function () {
 
   it('Should validate message with schema', function() {
     const schema = `<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
     <xs:element name="shiporder">
       <xs:complexType>
         <xs:sequence>
