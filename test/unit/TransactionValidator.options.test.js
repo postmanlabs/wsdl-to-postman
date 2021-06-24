@@ -952,6 +952,74 @@ describe('validateBody method with options', function () {
         );
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
+
+  it('Should return a well formated mismatch when message body has an invalid root element,' +
+  ' detailedBlobValidation in false, suggestAvailableFixes in true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsInvalidMessage,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true,
+          detailedBlobValidation: false
+        }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      mismatch = withSuggestedFix(
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name=\"NumberConversionSoapBinding\"]//operation[@name=\"NumberToWords\"]',
+          'INVALID_BODY'
+        ),
+        {
+          key: '//soap:Body',
+          actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
+            '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  ' +
+            '<soap:Body></soap:Body>\n' +
+            '</soap:Envelope>\n',
+          suggestedValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
+            '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  ' +
+            '<soap:Body>\n    ' +
+            '<NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      ' +
+            '<ubiNum>100</ubiNum>\n    ' +
+            '</NumberToWords>\n  ' +
+            '</soap:Body>\n' +
+            '</soap:Envelope>\n'
+        }
+      ),
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        mismatch
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should return a well formated mismatch when message body has an invalid root element,' +
+  ' detailedBlobValidation in false, suggestAvailableFixes in false',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        numberToWordsCollectionItemsInvalidRootElement,
+        numberToWordsWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: false,
+          detailedBlobValidation: false
+        }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedBase,
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name=\"NumberConversionSoapBinding\"]//operation[@name=\"NumberToWords\"]',
+          'INVALID_BODY'
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
 });
 
 describe('Validate Headers with options', function () {
