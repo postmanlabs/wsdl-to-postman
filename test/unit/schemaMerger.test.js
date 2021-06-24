@@ -5,8 +5,7 @@ const expect = require('chai').expect,
   {
     XMLParser
   } = require('../../lib/XMLParser'),
-  fs = require('fs'),
- { SOAPMessageHelper } = require('../../lib/utils/SOAPMessageHelper'),
+  fs = require('fs');
 
 
 describe('schemaMerger', function() {
@@ -15,7 +14,7 @@ describe('schemaMerger', function() {
     const xmlParser = new XMLParser(),
       parsed = xmlParser.parseToObject(fileContent),
       merged = mergeSchemas(parsed['wsdl:definitions']['wsdl:types']['xsd:schema']);
-    expect(merged).to.be(Object);
+    expect(merged).to.be.an('object');
   });
- 
+
 });
