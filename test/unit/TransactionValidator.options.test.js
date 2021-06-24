@@ -11,6 +11,10 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
     require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyIncomplete.json'),
   numberToWordsCollectionItemsBodyWrongType =
     require('./../data/transactionsValidation/numberToWordsCollectionItemsBodyWrongType.json'),
+  numberToWordsCollectionItemsInvalidMessage =
+    require('./../data/transactionsValidation/numberToWordsCollectionItemsInvalidMessage.json'),
+  numberToWordsCollectionItemsInvalidRootElement =
+    require('./../data/transactionsValidation/numberToWordsCollectionItemsInvalidRootElement.json'),
   getPlayedMatchesCollectionItemsWrongType =
     require('./../data/transactionsValidation/getPlayedMatchesCollectionItemsWrongType.json'),
   {
@@ -434,7 +438,7 @@ describe('validateBody method with options', function () {
           'INVALID_BODY'
         ),
         {
-          key: 'body',
+          key: '//soap:Body',
           actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
             ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
             '    <Subtract xmlns=\"http://tempuri.org/\">\n      <intA>{{}}</intA>\n    ' +
@@ -528,7 +532,7 @@ describe('validateBody method with options', function () {
           bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
           '//operation[@name="NumberToWords"]'),
           {
-            key: 'body',
+            key: '//soap:Body',
             actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope' +
               ' xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n' +
               '    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n' +
@@ -706,7 +710,7 @@ describe('validateBody method with options', function () {
             'INVALID_RESPONSE_BODY'
           ),
           {
-            key: 'body',
+            key: '//soap:Body',
             actualValue: '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
             '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  ' +
             '<soap:Body>\n    ' +
@@ -836,6 +840,118 @@ describe('validateBody method with options', function () {
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
+
+  it('Should return a well formated mismatch when message body is an invalid xml string',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          numberToWordsCollectionItemsInvalidMessage,
+          numberToWordsWSDLObject, new XMLParser(),
+          {
+            suggestAvailableFixes: false,
+            detailedBlobValidation: true
+          }
+        ),
+        mismatchReason = 'Error validating message',
+        expected = getExpectedWithMismatchInEndpoint(
+          expectedBase,
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name=\"NumberConversionSoapBinding\"]//operation[@name=\"NumberToWords\"]',
+            'INVALID_BODY'
+          )
+        );
+      expect(result).to.be.an('object').and.to.deep.include(expected);
+    });
+
+  it('Should return a well formated mismatch with suggested fix when message body is an invalid xml string',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          numberToWordsCollectionItemsInvalidMessage,
+          numberToWordsWSDLObject, new XMLParser(),
+          {
+            suggestAvailableFixes: true,
+            detailedBlobValidation: true
+          }
+        ),
+        mismatchReason = 'Error validating message',
+        mismatch = withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name=\"NumberConversionSoapBinding\"]//operation[@name=\"NumberToWords\"]',
+            'INVALID_BODY'
+          ),
+          {
+            key: '//soap:Body',
+            actualValue: '',
+            suggestedValue: '<NumberToWords >\n      <ubiNum>100</ubiNum>\n    </NumberToWords>'
+          }
+        ),
+        expected = getExpectedWithMismatchInEndpoint(
+          expectedBase,
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+          mismatch
+        );
+      expect(result).to.be.an('object').and.to.deep.include(expected);
+    });
+
+  it('Should return a well formated mismatch when message body has an invalid root element',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          numberToWordsCollectionItemsInvalidRootElement,
+          numberToWordsWSDLObject, new XMLParser(),
+          {
+            suggestAvailableFixes: false,
+            detailedBlobValidation: true
+          }
+        ),
+        mismatchReason = 'Error validating message',
+        expected = getExpectedWithMismatchInEndpoint(
+          expectedBase,
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name=\"NumberConversionSoapBinding\"]//operation[@name=\"NumberToWords\"]',
+            'INVALID_BODY'
+          )
+        );
+      expect(result).to.be.an('object').and.to.deep.include(expected);
+    });
+
+  it('Should return a well formated mismatch with suggested fix when message body has an invalid root element',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          numberToWordsCollectionItemsInvalidRootElement,
+          numberToWordsWSDLObject, new XMLParser(),
+          {
+            suggestAvailableFixes: true,
+            detailedBlobValidation: true
+          }
+        ),
+        mismatchReason = 'Error validating message',
+        mismatch = withSuggestedFix(
+          bodyMismatchMockWithReason(
+            mismatchReason,
+            '//definitions//binding[@name=\"NumberConversionSoapBinding\"]//operation[@name=\"NumberToWords\"]',
+            'INVALID_BODY'
+          ),
+          {
+            key: '//soap:Body',
+            actualValue: '',
+            suggestedValue: '<NumberToWords >\n      <ubiNum>100</ubiNum>\n    </NumberToWords>'
+          }
+        ),
+        expected = getExpectedWithMismatchInEndpoint(
+          expectedBase,
+          'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
+          mismatch
+        );
+      expect(result).to.be.an('object').and.to.deep.include(expected);
+    });
 });
 
 describe('Validate Headers with options', function () {
