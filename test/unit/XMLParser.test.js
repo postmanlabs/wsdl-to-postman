@@ -2,9 +2,6 @@ const expect = require('chai').expect,
   {
     XMLParser
   } = require('../../lib/XMLParser'),
-  {
-    PARSER_ATTRIBUTE_NAME_PLACE_HOLDER
-  } = require('../../lib/WsdlParserCommon'),
   UNCLEAN_INPUT_XML = `This XML file does not appear to have any style information associated with it.
   The document tree is shown below. this text should be ignored while parsing
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
@@ -59,7 +56,7 @@ describe('XMLparser parseToObject', function () {
     expect(parsed).to.be.an('object');
     expect(parsed).to.have.own.property('user');
     expect(parsed.user).to.have.own.property('name');
-    expect(parsed.user[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'is']).to.equal('great');
+    expect(parsed.user[xmlParser.attributePlaceHolder + 'is']).to.equal('great');
 
   });
 

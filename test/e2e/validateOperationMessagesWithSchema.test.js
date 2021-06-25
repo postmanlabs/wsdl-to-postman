@@ -1,8 +1,8 @@
 const fs = require('fs'),
   expect = require('chai').expect,
   {
-    ParserFactory
-  } = require('../../lib/ParserFactory'),
+    WSDLParserFactory
+  } = require('../../lib/WSDLParserFactory'),
   {
     validateOperationMessagesWithSchema,
     getCleanSchema
@@ -19,7 +19,7 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
   WSDLsFiles.forEach((file) => {
     it(`Should return an empty array when body messages matches with schema. ${file}`, function () {
       const xmlDocumentContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8'),
-        factory = new ParserFactory(),
+        factory = new WSDLParserFactory(),
         xmlParser = new XMLParser(),
         version = factory.getWsdlVersion(xmlDocumentContent),
         parser = factory.getParser(xmlDocumentContent),
@@ -37,7 +37,7 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
   WSDLFilesv20.forEach((file) => {
     it(`Should return an empty array when body messages match with schema WSDLs20. ${file}`, function () {
       const xmlDocumentContent = fs.readFileSync(validWSDLs20 + '/' + file, 'utf8'),
-        factory = new ParserFactory(),
+        factory = new WSDLParserFactory(),
         xmlParser = new XMLParser(),
         version = factory.getWsdlVersion(xmlDocumentContent),
         parser = factory.getParser(xmlDocumentContent),

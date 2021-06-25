@@ -6,10 +6,7 @@ const expect = require('chai').expect,
   validSchemaFolder = 'test/data/schemaTest',
   {
     XMLParser
-  } = require('../../lib/XMLParser'),
-  {
-    PARSER_ATTRIBUTE_NAME_PLACE_HOLDER
-  } = require('../../lib/WsdlParserCommon');
+  } = require('../../lib/XMLParser');
 
 describe('SchemaBuilderXSD Constructor', function () {
   it('should get an object of the schema builder', function () {
@@ -40,7 +37,7 @@ describe('SchemaBuilderXSD getElements', function () {
       elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
         schemaNamespace,
         tnsNamespace
-      }, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      }, parser.attributePlaceHolder);
     expect(elements).to.be.a('array');
     expect(elements.length).to.eq(6);
 
@@ -115,7 +112,7 @@ describe('SchemaBuilderXSD getElements', function () {
       elements = builder.getElements(parsedXml, '', 'definitions', {
         schemaNamespace,
         tnsNamespace
-      }, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      }, parser.attributePlaceHolder);
     expect(elements).to.be.an('array');
     expect(elements).to.be.empty;
   });
@@ -160,7 +157,7 @@ describe('SchemaBuilderXSD getElements', function () {
       elements = builder.getElements(parsedXml, '', 'definitions', {
         schemaNamespace,
         tnsNamespace
-      }, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      }, parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
 
@@ -218,7 +215,7 @@ describe('SchemaBuilderXSD getElements', function () {
       elements = builder.getElements(parsedXml, '', 'definitions', {
         schemaNamespace,
         tnsNamespace
-      }, PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      }, parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
 
@@ -308,7 +305,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
     expect(elements).to.be.an('array');
 
     expect(elements[1].name).to.equal('TestCustomModel');
@@ -402,7 +399,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
     expect(elements).to.be.an('array');
 
     expect(elements[0].name).to.equal('ListOfCurrenciesByCodeResponse');
@@ -507,7 +504,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
     expect(elements).to.be.an('array');
 
     expect(elements[1].name).to.equal('getMatchClassesForTournamentResponse');
@@ -553,7 +550,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -580,7 +577,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      '');
       assert.fail('we expected an error');
     }
     catch (error) {
@@ -640,7 +637,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
 
@@ -717,7 +714,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
 
@@ -789,7 +786,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
 
@@ -858,7 +855,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
 
@@ -945,7 +942,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
 
@@ -1025,7 +1022,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
     expect(elements).to.be.an('array');
 
     expect(elements[0].name).to.equal('foobar');
@@ -1101,7 +1098,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
     expect(elements[0].name).to.equal('TestElement');
@@ -1171,7 +1168,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
     expect(elements[0].name).to.equal('PO');
@@ -1205,7 +1202,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
     expect(elements[0].name).to.equal('CreateQueueResult');
@@ -1246,7 +1243,7 @@ describe('SchemaBuilderXSD getElements', function () {
         schemaNamespace,
         tnsNamespace
       },
-      PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+      parser.attributePlaceHolder);
 
     expect(elements).to.be.an('array');
     expect(elements.length).to.equal(1);
@@ -1281,7 +1278,7 @@ describe('SchemaBuilderXSD parseObjectToXML', function () {
 describe('SchemaBuilderXSD getWSDLElementsFromJsonSchema', function () {
   it('should get an error when the object sent is undefined', function () {
     const builder = new SchemaBuilderXSD();
-    let elements = builder.getWSDLElementsFromJsonSchema(null, '', '', PARSER_ATTRIBUTE_NAME_PLACE_HOLDER);
+    let elements = builder.getWSDLElementsFromJsonSchema(null, '', '', '');
     expect(elements.elements.length).to.equal(0);
   });
 });

@@ -12,7 +12,6 @@ const { POST_METHOD } = require('../../lib/utils/httpUtils'),
   } = require('../../lib/WSDLObject'),
   {
     getServices,
-    PARSER_ATTRIBUTE_NAME_PLACE_HOLDER,
     getBindings
   } = require('../../lib/WsdlParserCommon'),
   {
@@ -1491,7 +1490,7 @@ describe('WSDL 1.1 parser getServiceAndExpossedInfoByBindingName', function () {
       services,
       '').service;
     expect(service).to.be.an('object');
-    expect(service[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberConversion');
+    expect(service[xmlParser.attributePlaceHolder + 'name']).to.equal('NumberConversion');
   });
 
 
@@ -1669,7 +1668,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
     service = informationService.getAbstractOperationByName('NumberConversionSoapType',
       'NumberToWords', parsed, '');
     expect(service).to.be.an('object');
-    expect(service[PARSER_ATTRIBUTE_NAME_PLACE_HOLDER + 'name']).to.equal('NumberToWords');
+    expect(service[xmlParser.attributePlaceHolder + 'name']).to.equal('NumberToWords');
   });
 
   it('should throw an error when parsedxml is null', function () {
