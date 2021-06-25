@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions targetNamespace="http://sap.com/xi/A1S/Global" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:rfc="urn:sap-com:sap:rfc:functions" xmlns:tns="http://sap.com/xi/A1S/Global" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:n1="http://sap.com/xi/AP/Globalization" xmlns:n2="http://sap.com/xi/SAPGlobal20/Global" xmlns:n3="http://sap.com/xi/AP/Common/Global" xmlns:n4="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:n5="http://sap.com/xi/AP/Common/GDT" xmlns:n6="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:n7="http://sap.com/xi/BASIS/Global" xmlns:n8="http://sap.com/xi/DocumentServices/Global" xmlns:n9="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:n10="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:n11="http://sap.com/xi/A1S" xmlns:n12="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:n13="http://sap.com/xi/AP/XU/SRM/Global" xmlns:n14="http://sap.com/xi/AP/CRM/Global" xmlns:n15="http://sap.com/xi/AP/PDI/bo" xmlns:n16="http://sap.com/xi/Common/DataTypes">
+<wsdl:definitions targetNamespace="http://{{url}}/xi/A1S/Global" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:rfc="urn:sap-com:sap:rfc:functions" xmlns:tns="http://{{url}}/xi/A1S/Global" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:n1="http://{{url}}/xi/AP/Globalization" xmlns:n2="http://{{url}}/xi/SAPGlobal20/Global" xmlns:n3="http://{{url}}/xi/AP/Common/Global" xmlns:n4="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:n5="http://{{url}}/xi/AP/Common/GDT" xmlns:n6="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:n7="http://{{url}}/xi/BASIS/Global" xmlns:n8="http://{{url}}/xi/DocumentServices/Global" xmlns:n9="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:n10="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:n11="http://{{url}}/xi/A1S" xmlns:n12="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:n13="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:n14="http://{{url}}/xi/AP/CRM/Global" xmlns:n15="http://{{url}}/xi/AP/PDI/bo" xmlns:n16="http://{{url}}/xi/Common/DataTypes">
   <wsdl:documentation>
-    <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl"/>
+    <sidl:sidl xmlns:sidl="http://www.{{url}}/2007/03/sidl"/>
   </wsdl:documentation>
   <wsp:UsingPolicy wsdl:required="true"/>
   <wsp:Policy wsu:Id="BN_BN_binding_SOAP12">
-    <saptrnbnd:OptimizedXMLTransfer uri="http://xml.sap.com/2006/11/esi/esp/binxml" xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/" wsp:Optional="true"/>
+    <saptrnbnd:OptimizedXMLTransfer uri="http://xml.{{url}}/2006/11/esi/esp/binxml" xmlns:saptrnbnd="http://www.{{url}}/webas/710/soap/features/transportbinding/" wsp:Optional="true"/>
     <saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true"/>
     <wsp:ExactlyOne xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
       <wsp:All>
-        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.{{url}}/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
           <wsp:Policy>
             <sp:TransportToken>
               <wsp:Policy>
@@ -34,7 +34,7 @@
         </sp:TransportBinding>
       </wsp:All>
       <wsp:All>
-        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.{{url}}/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
           <wsp:Policy>
             <sp:TransportToken>
               <wsp:Policy>
@@ -59,7 +59,7 @@
         </sp:TransportBinding>
       </wsp:All>
       <wsp:All>
-        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.{{url}}/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
           <wsp:Policy>
             <sp:TransportToken>
               <wsp:Policy>
@@ -87,11 +87,11 @@
     <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
   </wsp:Policy>
   <wsp:Policy wsu:Id="BN_BN_binding">
-    <saptrnbnd:OptimizedXMLTransfer uri="http://xml.sap.com/2006/11/esi/esp/binxml" xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/" wsp:Optional="true"/>
+    <saptrnbnd:OptimizedXMLTransfer uri="http://xml.{{url}}/2006/11/esi/esp/binxml" xmlns:saptrnbnd="http://www.{{url}}/webas/710/soap/features/transportbinding/" wsp:Optional="true"/>
     <saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true"/>
     <wsp:ExactlyOne xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
       <wsp:All>
-        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.{{url}}/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
           <wsp:Policy>
             <sp:TransportToken>
               <wsp:Policy>
@@ -116,7 +116,7 @@
         </sp:TransportBinding>
       </wsp:All>
       <wsp:All>
-        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.{{url}}/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
           <wsp:Policy>
             <sp:TransportToken>
               <wsp:Policy>
@@ -141,7 +141,7 @@
         </sp:TransportBinding>
       </wsp:All>
       <wsp:All>
-        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+        <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.{{url}}/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
           <wsp:Policy>
             <sp:TransportToken>
               <wsp:Policy>
@@ -169,53 +169,53 @@
     <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
   </wsp:Policy>
   <wsp:Policy wsu:Id="IF_IF_ManagePurchaseOrderIn">
-    <sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
+    <sapsession:Session xmlns:sapsession="http://www.{{url}}/webas/630/soap/features/session/">
       <sapsession:enableSession>false</sapsession:enableSession>
     </sapsession:Session>
-    <sapcentraladmin:CentralAdministration xmlns:sapcentraladmin="http://www.sap.com/webas/700/soap/features/CentralAdministration/" wsp:Optional="true">
+    <sapcentraladmin:CentralAdministration xmlns:sapcentraladmin="http://www.{{url}}/webas/700/soap/features/CentralAdministration/" wsp:Optional="true">
       <sapcentraladmin:BusinessApplicationID>0000000000011ED1A4B4369FDD3C4253</sapcentraladmin:BusinessApplicationID>
     </sapcentraladmin:CentralAdministration>
   </wsp:Policy>
   <wsp:Policy wsu:Id="OP_IF_OP_ManagePurchaseOrderInRead">
-    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
-    <sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
-    <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
-    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.{{url}}/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
+    <sapblock:enableBlocking xmlns:sapblock="http://www.{{url}}/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
+    <saptrhnw05:required xmlns:saptrhnw05="http://www.{{url}}/NW05/soap/features/transaction/">no</saptrhnw05:required>
+    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.{{url}}/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
   </wsp:Policy>
   <wsp:Policy wsu:Id="OP_IF_OP_ManagePurchaseOrderInCheckMaintainBundle">
-    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
-    <sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
-    <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
-    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
-    <sapidp:Idempotency n0:Optional="true" xmlns:sapidp="http://www.sap.com/710/soap/features/idempotency/" xmlns:n0="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.{{url}}/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
+    <sapblock:enableBlocking xmlns:sapblock="http://www.{{url}}/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
+    <saptrhnw05:required xmlns:saptrhnw05="http://www.{{url}}/NW05/soap/features/transaction/">no</saptrhnw05:required>
+    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.{{url}}/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+    <sapidp:Idempotency n0:Optional="true" xmlns:sapidp="http://www.{{url}}/710/soap/features/idempotency/" xmlns:n0="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
   </wsp:Policy>
   <wsp:Policy wsu:Id="OP_IF_OP_ManagePurchaseOrderExcelUpload">
-    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
-    <sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
-    <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
-    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
-    <sapidp:Idempotency n0:Optional="true" xmlns:sapidp="http://www.sap.com/710/soap/features/idempotency/" xmlns:n0="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.{{url}}/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
+    <sapblock:enableBlocking xmlns:sapblock="http://www.{{url}}/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
+    <saptrhnw05:required xmlns:saptrhnw05="http://www.{{url}}/NW05/soap/features/transaction/">no</saptrhnw05:required>
+    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.{{url}}/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+    <sapidp:Idempotency n0:Optional="true" xmlns:sapidp="http://www.{{url}}/710/soap/features/idempotency/" xmlns:n0="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
   </wsp:Policy>
   <wsp:Policy wsu:Id="OP_IF_OP_ManagePurchaseOrderInMaintainBundle">
-    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
-    <sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
-    <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
-    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
-    <sapidp:Idempotency n0:Optional="true" xmlns:sapidp="http://www.sap.com/710/soap/features/idempotency/" xmlns:n0="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.{{url}}/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
+    <sapblock:enableBlocking xmlns:sapblock="http://www.{{url}}/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
+    <saptrhnw05:required xmlns:saptrhnw05="http://www.{{url}}/NW05/soap/features/transaction/">no</saptrhnw05:required>
+    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.{{url}}/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+    <sapidp:Idempotency n0:Optional="true" xmlns:sapidp="http://www.{{url}}/710/soap/features/idempotency/" xmlns:n0="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
   </wsp:Policy>
   <wsdl:types>
-    <xsd:schema targetNamespace="http://sap.com/xi/A1S/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/A1S/Global">
-      <xsd:import namespace="http://sap.com/xi/A1S"/>
-      <xsd:import namespace="http://sap.com/xi/AP/FO/PlannedLandedCost"/>
-      <xsd:import namespace="http://sap.com/xi/AP/Globalization"/>
-      <xsd:import namespace="http://sap.com/xi/AP/XU/SRM/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/IS/CodingBlock/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/Common/Global"/>
-      <xsd:import namespace="http://sap.com/xi/DocumentServices/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/CRM/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/FO/CashDiscountTerms/Global"/>
-      <xsd:import namespace="http://sap.com/xi/BASIS/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/Common/GDT"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/A1S/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/A1S/Global">
+      <xsd:import namespace="http://{{url}}/xi/A1S"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/FO/PlannedLandedCost"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/Globalization"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/XU/SRM/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/IS/CodingBlock/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/DocumentServices/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/CRM/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/BASIS/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
       <xsd:complexType name="PurchaseOrderBundleMaintainRequestMessage_sync">
         <xsd:sequence>
           <xsd:element name="BasicMessageHeader" type="xi20:BusinessDocumentBasicMessageHeader"/>
@@ -941,8 +941,8 @@
       </xsd:group>
       <xsd:attributeGroup name="PurchaseOrderUploadItemGloExtension"/>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/Globalization" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/Globalization">
-      <xsd:import namespace="http://sap.com/xi/AP/Common/GDT"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/Globalization" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/Globalization">
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
       <xsd:group name="PurchaseOrderMaintainRequestBundleItemGloExtension">
         <xsd:sequence>
           <xsd:element name="HSNCodeIndiaCode" minOccurs="0" form="qualified" type="xi20:ProductTaxStandardClassificationCode"/>
@@ -950,8 +950,8 @@
       </xsd:group>
       <xsd:attributeGroup name="PurchaseOrderMaintainRequestBundleItemGloExtension"/>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/SAPGlobal20/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/SAPGlobal20/Global">
-      <xsd:import namespace="http://sap.com/xi/A1S/Global"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/SAPGlobal20/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/SAPGlobal20/Global">
+      <xsd:import namespace="http://{{url}}/xi/A1S/Global"/>
       <xsd:element name="PurchaseOrderBundleCheckMaintainRequest_sync" type="xi15:PurchaseOrderBundleMaintainRequestMessage_sync"/>
       <xsd:element name="PurchaseOrderBundleMaintainConfirmation_sync" type="xi15:PurchaseOrderMaintainConfirmationBundleMessage_sync"/>
       <xsd:element name="PurchaseOrderBundleMaintainRequest_sync" type="xi15:PurchaseOrderBundleMaintainRequestMessage_sync"/>
@@ -960,8 +960,8 @@
       <xsd:element name="PurchaseOrderUploadConfirmation_sync" type="xi15:PurchaseOrderUploadConfirmationMessage_sync"/>
       <xsd:element name="PurchaseOrderUploadRequest_sync" type="xi15:PurchaseOrderUploadRequestMessage_sync"/>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/Common/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/Common/Global">
-      <xsd:import namespace="http://sap.com/xi/AP/Common/GDT"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/Common/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/Common/Global">
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
       <xsd:complexType name="ExchangeFaultData">
         <xsd:sequence>
           <xsd:element name="faultText" type="xsd:string"/>
@@ -1027,9 +1027,9 @@
         </xsd:complexType>
       </xsd:element>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/FO/CashDiscountTerms/Global">
-      <xsd:import namespace="http://sap.com/xi/BASIS/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/Common/GDT"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global">
+      <xsd:import namespace="http://{{url}}/xi/BASIS/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
       <xsd:complexType name="AccessCashDiscountTerms">
         <xsd:sequence>
           <xsd:element name="UUID" type="xi20:UUID" minOccurs="0"/>
@@ -1055,8 +1055,8 @@
         <xsd:attribute name="ActionCode" type="xi20:ActionCode"/>
       </xsd:complexType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/Common/GDT" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/Common/GDT">
-      <xsd:import namespace="http://sap.com/xi/BASIS/Global"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/Common/GDT" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/Common/GDT">
+      <xsd:import namespace="http://{{url}}/xi/BASIS/Global"/>
       <xsd:simpleType name="AccountDeterminationExpenseGroupCode">
         <xsd:annotation>
           <xsd:documentation xml:lang="EN">
@@ -4241,12 +4241,12 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/IS/CodingBlock/Global">
-      <xsd:import namespace="http://sap.com/xi/AP/FO/GrantManagement/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/FO/FundManagement/Global"/>
-      <xsd:import namespace="http://sap.com/xi/Common/DataTypes"/>
-      <xsd:import namespace="http://sap.com/xi/BASIS/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/Common/GDT"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/IS/CodingBlock/Global">
+      <xsd:import namespace="http://{{url}}/xi/AP/FO/GrantManagement/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/FO/FundManagement/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/Common/DataTypes"/>
+      <xsd:import namespace="http://{{url}}/xi/BASIS/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
       <xsd:complexType name="AccountingObjectCheckItemCostObjectReference">
         <xsd:sequence>
           <xsd:element name="CostObjectTypeCode" type="xi20:CostObjectTypeCode" minOccurs="0"/>
@@ -4506,7 +4506,7 @@
         </xsd:sequence>
       </xsd:complexType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/BASIS/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/BASIS/Global">
+    <xsd:schema targetNamespace="http://{{url}}/xi/BASIS/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/BASIS/Global">
       <xsd:simpleType name="AgencyIdentificationCode">
         <xsd:annotation>
           <xsd:documentation xml:lang="EN">
@@ -4647,9 +4647,9 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/DocumentServices/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/DocumentServices/Global">
-      <xsd:import namespace="http://sap.com/xi/BASIS/Global"/>
-      <xsd:import namespace="http://sap.com/xi/AP/Common/GDT"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/DocumentServices/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/DocumentServices/Global">
+      <xsd:import namespace="http://{{url}}/xi/BASIS/Global"/>
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
       <xsd:complexType name="MaintenanceAttachmentFolder">
         <xsd:sequence>
           <xsd:element name="UUID" type="xi20:UUID" minOccurs="0"/>
@@ -4735,7 +4735,7 @@
         <xsd:attribute name="ActionCode" type="xi20:ActionCode"/>
       </xsd:complexType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/FO/PlannedLandedCost">
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/FO/PlannedLandedCost">
       <xsd:simpleType name="PlannedLandedCostProfileCalculationMethodCode">
         <xsd:annotation>
           <xsd:documentation xml:lang="EN">
@@ -4786,7 +4786,7 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/FO/FundManagement/Global">
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/FO/FundManagement/Global">
       <xsd:simpleType name="FunctionID">
         <xsd:annotation>
           <xsd:documentation xml:lang="EN">
@@ -4810,7 +4810,7 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/A1S" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/A1S">
+    <xsd:schema targetNamespace="http://{{url}}/xi/A1S" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/A1S">
       <xsd:simpleType name="General_StringForExcelUpload">
         <xsd:annotation>
           <xsd:documentation xml:lang="EN">
@@ -4820,7 +4820,7 @@
         <xsd:restriction base="xsd:string"/>
       </xsd:simpleType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/FO/GrantManagement/Global">
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/FO/GrantManagement/Global">
       <xsd:simpleType name="GrantID">
         <xsd:annotation>
           <xsd:documentation xml:lang="EN">
@@ -4833,8 +4833,8 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/XU/SRM/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/XU/SRM/Global">
-      <xsd:import namespace="http://sap.com/xi/AP/Common/GDT"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/XU/SRM/Global">
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
       <xsd:complexType name="ProcurementDocumentItemFollowUpDelivery">
         <xsd:sequence>
           <xsd:element name="RequirementCode" type="xi20:FollowUpBusinessTransactionDocumentRequirementCode" minOccurs="0"/>
@@ -4874,8 +4874,8 @@
         </xsd:sequence>
       </xsd:complexType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/CRM/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/CRM/Global">
-      <xsd:import namespace="http://sap.com/xi/AP/Common/GDT"/>
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/CRM/Global" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/CRM/Global">
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
       <xsd:complexType name="PurchaseOrderByIDResponseDeliveryTerms">
         <xsd:sequence>
           <xsd:element name="TechnicalID" type="xi20:ObjectNodeTechnicalID" minOccurs="0"/>
@@ -4911,7 +4911,7 @@
         </xsd:sequence>
       </xsd:complexType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/AP/PDI/bo" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/AP/PDI/bo">
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/PDI/bo" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/AP/PDI/bo">
       <xsd:simpleType name="String">
         <xsd:annotation>
           <xsd:documentation xml:lang="EN">
@@ -4921,7 +4921,7 @@
         <xsd:restriction base="xsd:string"/>
       </xsd:simpleType>
     </xsd:schema>
-    <xsd:schema targetNamespace="http://sap.com/xi/Common/DataTypes" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://sap.com/xi/A1S/Global" xmlns:xi16="http://sap.com/xi/AP/Globalization" xmlns:xi17="http://sap.com/xi/SAPGlobal20/Global" xmlns:xi18="http://sap.com/xi/AP/Common/Global" xmlns:xi19="http://sap.com/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://sap.com/xi/AP/Common/GDT" xmlns:xi21="http://sap.com/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://sap.com/xi/BASIS/Global" xmlns:xi23="http://sap.com/xi/DocumentServices/Global" xmlns:xi26="http://sap.com/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://sap.com/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://sap.com/xi/A1S" xmlns:xi30="http://sap.com/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://sap.com/xi/AP/XU/SRM/Global" xmlns:xi36="http://sap.com/xi/AP/CRM/Global" xmlns:xi37="http://sap.com/xi/AP/PDI/bo" xmlns:xi38="http://sap.com/xi/Common/DataTypes" xmlns="http://sap.com/xi/Common/DataTypes">
+    <xsd:schema targetNamespace="http://{{url}}/xi/Common/DataTypes" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0" xmlns:xi15="http://{{url}}/xi/A1S/Global" xmlns:xi16="http://{{url}}/xi/AP/Globalization" xmlns:xi17="http://{{url}}/xi/SAPGlobal20/Global" xmlns:xi18="http://{{url}}/xi/AP/Common/Global" xmlns:xi19="http://{{url}}/xi/AP/FO/CashDiscountTerms/Global" xmlns:xi20="http://{{url}}/xi/AP/Common/GDT" xmlns:xi21="http://{{url}}/xi/AP/IS/CodingBlock/Global" xmlns:xi22="http://{{url}}/xi/BASIS/Global" xmlns:xi23="http://{{url}}/xi/DocumentServices/Global" xmlns:xi26="http://{{url}}/xi/AP/FO/PlannedLandedCost" xmlns:xi28="http://{{url}}/xi/AP/FO/FundManagement/Global" xmlns:xi29="http://{{url}}/xi/A1S" xmlns:xi30="http://{{url}}/xi/AP/FO/GrantManagement/Global" xmlns:xi32="http://{{url}}/xi/AP/XU/SRM/Global" xmlns:xi36="http://{{url}}/xi/AP/CRM/Global" xmlns:xi37="http://{{url}}/xi/AP/PDI/bo" xmlns:xi38="http://{{url}}/xi/Common/DataTypes" xmlns="http://{{url}}/xi/Common/DataTypes">
       <xsd:simpleType name="UUID">
         <xsd:annotation>
           <xsd:documentation xml:lang="EN">
@@ -5007,7 +5007,7 @@
     </wsp:Policy>
     <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
     <wsdl:operation name="ManagePurchaseOrderInCheckMaintainBundle">
-      <wsoap12:operation soapAction="http://sap.com/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInCheckMaintainBundleRequest" style="document"/>
+      <wsoap12:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInCheckMaintainBundleRequest" style="document"/>
       <wsdl:input>
         <wsoap12:body use="literal"/>
       </wsdl:input>
@@ -5019,7 +5019,7 @@
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ManagePurchaseOrderInMaintainBundle">
-      <wsoap12:operation soapAction="http://sap.com/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInMaintainBundleRequest" style="document"/>
+      <wsoap12:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInMaintainBundleRequest" style="document"/>
       <wsdl:input>
         <wsoap12:body use="literal"/>
       </wsdl:input>
@@ -5031,7 +5031,7 @@
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ManagePurchaseOrderInRead">
-      <wsoap12:operation soapAction="http://sap.com/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInReadRequest" style="document"/>
+      <wsoap12:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInReadRequest" style="document"/>
       <wsdl:input>
         <wsoap12:body use="literal"/>
       </wsdl:input>
@@ -5043,7 +5043,7 @@
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ManagePurchaseOrderExcelUpload">
-      <wsoap12:operation soapAction="http://sap.com/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderExcelUploadRequest" style="document"/>
+      <wsoap12:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderExcelUploadRequest" style="document"/>
       <wsdl:input>
         <wsoap12:body use="literal"/>
       </wsdl:input>
@@ -5061,7 +5061,7 @@
     </wsp:Policy>
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
     <wsdl:operation name="ManagePurchaseOrderInCheckMaintainBundle">
-      <soap:operation soapAction="http://sap.com/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInCheckMaintainBundleRequest" style="document"/>
+      <soap:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInCheckMaintainBundleRequest" style="document"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -5073,7 +5073,7 @@
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ManagePurchaseOrderInMaintainBundle">
-      <soap:operation soapAction="http://sap.com/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInMaintainBundleRequest" style="document"/>
+      <soap:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInMaintainBundleRequest" style="document"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -5085,7 +5085,7 @@
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ManagePurchaseOrderInRead">
-      <soap:operation soapAction="http://sap.com/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInReadRequest" style="document"/>
+      <soap:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderInReadRequest" style="document"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -5097,7 +5097,7 @@
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ManagePurchaseOrderExcelUpload">
-      <soap:operation soapAction="http://sap.com/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderExcelUploadRequest" style="document"/>
+      <soap:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderExcelUploadRequest" style="document"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -5111,10 +5111,10 @@
   </wsdl:binding>
   <wsdl:service name="service">
     <wsdl:port name="binding_SOAP12" binding="tns:binding_SOAP12">
-      <wsoap12:address location="https://my353374.sapbydesign.com/sap/bc/srt/scs/sap/managepurchaseorderin?sap-vhost=my353374.sapbydesign.com"/>
+      <wsoap12:address location="https://{{url}}/sap/bc/srt/scs/sap/managepurchaseorderin?sap-vhost={{url}}"/>
     </wsdl:port>
     <wsdl:port name="binding" binding="tns:binding">
-      <soap:address location="https://my353374.sapbydesign.com/sap/bc/srt/scs/sap/managepurchaseorderin?sap-vhost=my353374.sapbydesign.com"/>
+      <soap:address location="https://{{url}}/sap/bc/srt/scs/sap/managepurchaseorderin?sap-vhost={{url}}"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
