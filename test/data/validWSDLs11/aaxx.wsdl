@@ -1,0 +1,118 @@
+<wsdl:definitions targetNamespace="http://{{url}}/xi/A1S/Global"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+  xmlns:rfc="urn:sap-com:sap:rfc:functions"
+  xmlns:tns="http://{{url}}/xi/A1S/Global"
+  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+  xmlns:n2="http://{{url}}/xi/SAPGlobal20/Global"
+  xmlns:n5="http://{{url}}/xi/AP/Common/GDT">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://{{url}}/xi/A1S/Global"
+      xmlns:xi20="http://{{url}}/xi/AP/Common/GDT"
+      xmlns="http://{{url}}/xi/A1S/Global">
+      <xsd:import namespace="http://{{url}}/xi/AP/Common/GDT"/>
+      <xsd:complexType name="PurchaseOrderUploadItem">
+        <xsd:sequence>
+          <xsd:group ref="PurchaseOrderUploadItemGloExtension"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:group name="PurchaseOrderUploadItemGloExtension">
+        <xsd:sequence>
+          <xsd:element name="HSNCodeIndiaCode" minOccurs="0" form="qualified" type="xi20:ProductTaxStandardClassificationCode"/>
+        </xsd:sequence>
+      </xsd:group>
+      <xsd:complexType name="PurchaseOrderUploadRequest">
+        <xsd:sequence>
+          <xsd:element name="Item" type="PurchaseOrderUploadItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="PurchaseOrderUploadRequestMessage_sync">
+        <xsd:sequence>
+          <xsd:element name="PurchaseOrder" type="PurchaseOrderUploadRequest" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema targetNamespace="http://{{url}}/xi/AP/Common/GDT"
+      xmlns:xi20="http://{{url}}/xi/AP/Common/GDT"
+      xmlns="http://{{url}}/xi/AP/Common/GDT">
+      <xsd:complexType name="ProductTaxStandardClassificationCode">
+        <xsd:simpleContent>
+          <xsd:extension base="ProductTaxStandardClassificationCode.Content">
+            <xsd:attribute name="listID">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:token">
+                  <xsd:maxLength value="60"/>
+                  <xsd:minLength value="1"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="listAgencyID">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:token">
+                  <xsd:maxLength value="60"/>
+                  <xsd:minLength value="1"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:simpleType name="ProductTaxStandardClassificationCode.Content">
+        <xsd:restriction base="xsd:token">
+          <xsd:maxLength value="16"/>
+          <xsd:minLength value="1"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+    <xsd:schema targetNamespace="http://{{url}}/xi/SAPGlobal20/Global"
+      xmlns:xi15="http://{{url}}/xi/A1S/Global"
+      xmlns="http://{{url}}/xi/SAPGlobal20/Global">
+      <xsd:import namespace="http://{{url}}/xi/A1S/Global"/>
+      <xsd:element name="PurchaseOrderUploadRequest_sync" type="xi15:PurchaseOrderUploadRequestMessage_sync"/>
+    </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="PurchaseOrderUploadRequest_sync">
+    <wsdl:part name="PurchaseOrderUploadRequest_sync" element="n2:PurchaseOrderUploadRequest_sync"/>
+  </wsdl:message>
+  <wsdl:message name="PurchaseOrderUploadConfirmation_sync">
+    <wsdl:part name="PurchaseOrderUploadConfirmation_sync" element="n2:PurchaseOrderUploadRequest_sync"/>
+  </wsdl:message>
+
+  <wsdl:portType name="ManagePurchaseOrderIn">
+
+    <wsdl:operation name="ManagePurchaseOrderExcelUpload">
+      <wsdl:input message="tns:PurchaseOrderUploadRequest_sync"/>
+      <wsdl:output message="tns:PurchaseOrderUploadConfirmation_sync"/>
+      <wsdl:fault name="StandardFaultMessage" message="tns:StandardFaultMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+
+  <wsdl:binding name="binding_SOAP12" type="tns:ManagePurchaseOrderIn">
+    <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="ManagePurchaseOrderExcelUpload">
+      <wsoap12:operation soapAction="http://{{url}}/xi/A1S/Global/ManagePurchaseOrderIn/ManagePurchaseOrderExcelUploadRequest" style="document"/>
+      <wsdl:input>
+        <wsoap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsoap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="StandardFaultMessage">
+        <wsoap12:fault name="StandardFaultMessage" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="service">
+    <wsdl:port name="binding_SOAP12" binding="tns:binding_SOAP12">
+      <wsoap12:address location="https://{{url}}/sap/bc/srt/scs/sap/managepurchaseorderin?sap-vhost={{url}}"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
