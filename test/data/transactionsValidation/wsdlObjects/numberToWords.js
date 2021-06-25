@@ -51,7 +51,9 @@ module.exports = {
       xpath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
         '//operation[@name="NumberToWords"]',
       wsdlNamespaceUrl: 'http://schemas.xmlsoap.org/wsdl/'
-    }
+    },
+    soapActionSegment: 'NumberToWords',
+    soapAction: 'http://www.dataaccess.com/webservicesserver/NumberToWords'
   },
   {
     name: 'NumberToDollars',
