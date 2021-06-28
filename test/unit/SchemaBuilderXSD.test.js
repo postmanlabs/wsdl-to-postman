@@ -1360,6 +1360,61 @@ describe('SchemaBuilderXSD getElements', function () {
     ]);
   });
 
+  it('should get using choice', function () {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" 
+    targetNamespace="https://geoservices.tamu.edu/">
+        <types>
+            <s:schema elementFormDefault="qualified" 
+            targetNamespace="https://geoservices.tamu.edu/" 
+            xmlns:s="http://www.w3.org/2001/XMLSchema" 
+            xmlns:tns="https://geoservices.tamu.edu/">
+            <s:element name="Add">
+              <s:complexType>
+                  <s:choice>
+                      <s:element minOccurs="1" maxOccurs="1" name="intA" type="s:int" />
+                      <s:element minOccurs="1" maxOccurs="1" name="intB" type="s:int" />
+                  </s:choice>
+              </s:complexType>
+        </s:element>
+            </s:schema>
+        </types>
+    </definitions>`,
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      tnsNamespace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'https://geoservices.tamu.edu/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      parser.attributePlaceHolder);
+
+    expect(elements).to.be.an('array');
+    expect(elements.length).to.equal(1);
+    expect(elements[0].name).to.equal('Add');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].children[0].type).to.equal('integer');
+  });
+
 });
 
 describe('SchemaBuilderXSD parseObjectToXML', function () {
