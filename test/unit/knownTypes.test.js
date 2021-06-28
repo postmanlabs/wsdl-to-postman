@@ -157,7 +157,7 @@ describe('knownTypes getValueExample', function () {
     expect(example.length).to.equal(8);
   });
 
-  it('should get s. when called with minLength and maxLength of 8', function () {
+  it('should get s. when called with minLength and maxLength of 2', function () {
     const element = {
       name: 'password',
       type: 'string',
@@ -171,7 +171,7 @@ describe('knownTypes getValueExample', function () {
     expect(example.length).to.equal(2);
   });
 
-  it('should get string.. when called with minLength of 8 no maxLength', function () {
+  it('should get string.. when called with minLength of 8 and no maxLength', function () {
     const element = {
       name: 'password',
       type: 'string',
