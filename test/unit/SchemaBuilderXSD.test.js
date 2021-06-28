@@ -800,11 +800,11 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].children[0].name).to.equal('censusYear');
     expect(elements[0].children[0].isComplex).to.equal(false);
     expect(elements[0].children[0].type).to.equal('string');
-    expect(elements[0].children[0].enumValues).to.be.an('array');
-    expect(elements[0].children[0].enumValues.length).to.equal(5);
+    expect(elements[0].children[0].enum).to.be.an('array');
+    expect(elements[0].children[0].enum.length).to.equal(5);
     expect(elements[0].children[0].children).to.be.an('array');
     expect(elements[0].children[0].children).to.be.empty;
-    expect(elements[0].children[0].enumValues).to.have.members(['Unknown',
+    expect(elements[0].children[0].enum).to.have.members(['Unknown',
       'NineteenNinety',
       'TwoThousand',
       'TwoThousandTen',
@@ -866,7 +866,7 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
     expect(elements[0].children).to.be.an('array');
     expect(elements[0].children).to.be.empty;
-    expect(elements[0].enumValues).to.have.members(['1',
+    expect(elements[0].enum).to.have.members(['1',
       '1011',
       '1032'
     ]);
@@ -953,7 +953,7 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
     expect(elements[0].children).to.be.an('array');
     expect(elements[0].children).to.be.empty;
-    expect(elements[0].enumValues).to.have.members(['1',
+    expect(elements[0].enum).to.have.members(['1',
       '1011',
       '1032'
     ]);
@@ -1032,7 +1032,7 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
     expect(elements[0].children).to.be.an('array');
     expect(elements[0].children).to.be.empty;
-    expect(elements[0].enumValues).to.have.members(['1',
+    expect(elements[0].enum).to.have.members(['1',
       '1011',
       '1032'
     ]);
@@ -1354,7 +1354,7 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].name).to.equal('car');
     expect(elements[0].isComplex).to.equal(false);
     expect(elements[0].type).to.equal('string');
-    expect(elements[0].enumValues).to.have.members(['Audi',
+    expect(elements[0].enum).to.have.members(['Audi',
       'Golf',
       'BMW'
     ]);
