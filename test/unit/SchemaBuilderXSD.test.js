@@ -1250,7 +1250,7 @@ describe('SchemaBuilderXSD getElements', function () {
 
   });
 
-  it('should get restriction', function () {
+  it('should get restriction of min and max length of 8 in a simple string type with length att', function () {
     const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
     xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -1300,6 +1300,64 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].maxLength).to.equal(8);
     expect(elements[0].namespace).to.equal('https://geoservices.tamu.edu/');
     expect(elements[0].children).to.be.an('array');
+  });
+
+  it('should get restriction of enum in inline simpleType', function () {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" 
+    targetNamespace="https://geoservices.tamu.edu/">
+        <types>
+            <s:schema elementFormDefault="qualified" 
+            targetNamespace="https://geoservices.tamu.edu/" 
+            xmlns:s="http://www.w3.org/2001/XMLSchema" 
+            xmlns:tns="https://geoservices.tamu.edu/">
+                <s:element name="car">
+                    <s:simpleType>
+                        <s:restriction base="s:string">
+                            <s:enumeration value="Audi" />
+                            <s:enumeration value="Golf" />
+                            <s:enumeration value="BMW" />
+                        </s:restriction>
+                    </s:simpleType>
+                </s:element>
+            </s:schema>
+        </types>
+    </definitions>`,
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      tnsNamespace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'https://geoservices.tamu.edu/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      parser.attributePlaceHolder);
+
+    expect(elements).to.be.an('array');
+    expect(elements[0].name).to.equal('car');
+    expect(elements[0].isComplex).to.equal(false);
+    expect(elements[0].type).to.equal('string');
+    expect(elements[0].enumValues).to.have.members(['Audi',
+      'Golf',
+      'BMW'
+    ]);
   });
 
 });
