@@ -38,6 +38,9 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
         expect(result.output).to.be.an('array');
         expect(result.output[0].data).to.be.an('object');
         expect(result.output[0].type).to.equal('collection');
+        if (file === 'aaxx.wsdl') {
+          fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
+        }
       });
     });
   });

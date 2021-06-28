@@ -19,6 +19,9 @@ const expect = require('chai').expect,
     WsdlInformationService20
   } = require('../../lib/WsdlInformationService20'),
   {
+    WsdlObject
+  } = require('../../lib/WSDLObject'),
+  {
     XMLParser
   } = require('../../lib/XMLParser'),
   WSDL_SAMPLE = `<?xml version="1.0" encoding="utf-8" ?>
@@ -1837,7 +1840,8 @@ describe('WSDL parser common getWSDLDocumentation', function () {
     let parsed = parser.parseToObject(WSDL_1_1),
       documentation = getWSDLDocumentation(
         parsed,
-        informationService.RootTagName
+        informationService.RootTagName,
+        {}
       );
     expect(documentation).to.equal('This document describes number convertion service');
   });
@@ -1848,7 +1852,8 @@ describe('WSDL parser common getWSDLDocumentation', function () {
     let parsed = parser.parseToObject(WSDL_SAMPLE_AXIS),
       documentation = getWSDLDocumentation(
         parsed,
-        informationService.RootTagName
+        informationService.RootTagName,
+        {}
       );
     expect(documentation).to.equal('Please Type your service description here');
   });
@@ -1861,7 +1866,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get documentation from undefined or null object');
+      expect(error.message).to.equal('Cannot get documentation, parsed wsdl is null');
     }
   });
 
@@ -1873,17 +1878,13 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get documentation from undefined or null object');
+      expect(error.message).to.equal('Cannot get documentation, parsed wsdl is null');
     }
   });
 
   it('should throw an error when call with an empty object', function () {
-    try {
-      getWSDLDocumentation({});
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Cannot get documentation from object');
-    }
+    let wsdlObject = new WsdlObject();
+    getWSDLDocumentation({}, '', wsdlObject);
+    assert.equal(wsdlObject.log.errors.includes('Cannot get documentation from wsdl'), true);
   });
 });

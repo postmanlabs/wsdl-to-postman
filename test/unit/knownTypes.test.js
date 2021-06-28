@@ -142,6 +142,49 @@ describe('knownTypes getValueExample', function () {
     expect(example).to.be.a('string');
   });
 
+  it('should get string.. when called with minLength and maxLength of 8', function () {
+
+    const element = {
+      name: 'password',
+      type: 'string',
+      namespace: 'https://geoservices.tamu.edu/',
+      maxLength: 8,
+      minLength: 8
+    };
+
+    let example = getValueExample(element);
+    expect(example).to.equal('string..');
+    expect(example.length).to.equal(8);
+  });
+
+  it('should get s. when called with minLength and maxLength of 2', function () {
+    const element = {
+      name: 'password',
+      type: 'string',
+      namespace: 'https://geoservices.tamu.edu/',
+      maxLength: 2,
+      minLength: 2
+    };
+
+    let example = getValueExample(element);
+    expect(example).to.equal('s.');
+    expect(example.length).to.equal(2);
+  });
+
+  it('should get string.. when called with minLength of 8 and no maxLength', function () {
+    const element = {
+      name: 'password',
+      type: 'string',
+      namespace: 'https://geoservices.tamu.edu/',
+      minLength: 8
+    };
+
+    let example = getValueExample(element);
+    expect(example).to.equal('string..');
+    expect(example.length).to.equal(8);
+  });
+
+
   it('should get default value when called with null', function () {
     const element = new Element();
     element.type = null;
@@ -156,7 +199,7 @@ describe('knownTypes getValueExample', function () {
     expect(example).to.equal(true);
   });
 
-  it('should get 1 when called with decimal', function () {
+  it('should get a number between 2 and 100 when called with decimal', function () {
     const element = new Element();
     element.type = 'decimal';
     let example = getValueExample(element);
@@ -164,7 +207,7 @@ describe('knownTypes getValueExample', function () {
     assert.isAtMost(example, 100);
   });
 
-  it('should get 1 when called with float', function () {
+  it('should get a number between 2 and 100 when called with float', function () {
     const element = new Element();
     element.type = 'float';
     let example = getValueExample(element);
@@ -172,7 +215,7 @@ describe('knownTypes getValueExample', function () {
     assert.isAtMost(example, 100);
   });
 
-  it('should get 1 when called with double', function () {
+  it('should get a number between 2 and 100 when called with double', function () {
     const element = new Element();
     element.type = 'double';
     let example = getValueExample(element);
@@ -180,7 +223,7 @@ describe('knownTypes getValueExample', function () {
     assert.isAtMost(example, 100);
   });
 
-  it('should get 1 when called with int', function () {
+  it('should get a number between 2 and 100 when called with int', function () {
     const element = new Element();
     element.type = 'int';
     let example = getValueExample(element);
@@ -188,7 +231,7 @@ describe('knownTypes getValueExample', function () {
     assert.isAtMost(example, 100);
   });
 
-  it('should get true when called with long', function () {
+  it('should get a number between 2 and 100 when called with long', function () {
     const element = new Element();
     element.type = 'long';
     let example = getValueExample(element);
@@ -196,7 +239,7 @@ describe('knownTypes getValueExample', function () {
     assert.isAtMost(example, 100);
   });
 
-  it('should get true when called with short', function () {
+  it('should get a number between 2 and 100 when called with short', function () {
     const element = new Element();
     element.type = 'short';
     let example = getValueExample(element);
@@ -204,7 +247,7 @@ describe('knownTypes getValueExample', function () {
     assert.isAtMost(example, 100);
   });
 
-  it('should get 1 when called with unsignedInt', function () {
+  it('should get a number between 2 and 100 when called with unsignedInt', function () {
     const element = new Element();
     element.type = 'unsignedInt';
     let example = getValueExample(element);
@@ -212,7 +255,7 @@ describe('knownTypes getValueExample', function () {
     assert.isAtMost(example, 100);
   });
 
-  it('should get 1 when called with unsignedLong', function () {
+  it('should get a number between 2 and 100 when called with unsignedLong', function () {
     const element = new Element();
     element.type = 'unsignedLong';
     let example = getValueExample(element);
@@ -221,7 +264,7 @@ describe('knownTypes getValueExample', function () {
   });
 
 
-  it('should get 1 when called with unsignedShort', function () {
+  it('should get a number between 2 and 100 when called with unsignedShort', function () {
     const element = new Element();
     element.type = 'unsignedShort';
     let example = getValueExample(element);
@@ -244,7 +287,6 @@ describe('knownTypes getValueExample', function () {
     let example = getValueExample(element);
     expect(example).to.equal('default value');
   });
-
 });
 
 describe('knownTypes isKnownType', function () {

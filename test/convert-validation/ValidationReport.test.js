@@ -17,7 +17,7 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
     fs.mkdirSync(outputDirectory);
   }
   async.each(validWSDLsFolder, function (file) {
-    it('Should counvert and validate all files ' + file, function () {
+    it('Should convert and validate all files ' + file, function () {
       let fileContent = fs.readFileSync(validWSDLs + '/' + file, 'utf8');
       const schemaPack = new SchemaPack({
         data: fileContent,
