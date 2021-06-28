@@ -74,7 +74,7 @@ describe('Validator validate', function () {
     expect(validator.validate(nullInput, new XMLParser()).valResult).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Input not provided'
+        reason: 'Input.data not provided'
       });
   });
 
@@ -84,7 +84,7 @@ describe('Validator validate', function () {
     expect(validator.validate(undefinedInput).valResult).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Input not provided'
+        reason: 'Input.data not provided'
       });
   });
 
@@ -94,7 +94,7 @@ describe('Validator validate', function () {
     expect(validator.validate(emptyInput, new XMLParser()).valResult).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Input not provided'
+        reason: 'Input.data not provided'
       });
   });
 

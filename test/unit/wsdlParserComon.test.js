@@ -1866,7 +1866,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get documentation, parsed wsdl is null');
+      expect(error.message).to.equal('Cannot get documentation from undefined or null object');
     }
   });
 
@@ -1878,7 +1878,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get documentation, parsed wsdl is null');
+      expect(error.message).to.equal('Cannot get documentation from undefined or null object');
     }
   });
 

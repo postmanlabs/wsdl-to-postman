@@ -207,7 +207,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
+      expect(error.message).to.equal('Cannot get port type from undefined or null object');
     }
   });
 
@@ -219,7 +219,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
+      expect(error.message).to.equal('Cannot get port type from undefined or null object');
     }
   });
 
@@ -318,7 +318,7 @@ describe('WSDL 2.0 getInterfaceByInterfaceName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot interface from undefined or null object');
+      expect(error.message).to.equal('Cannot get interface from undefined or null object');
     }
   });
   it('should get an error when called with empty name', function () {
