@@ -45,6 +45,7 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   {
     TransactionValidator
   } = require('./../../lib/TransactionValidator'),
+  getOptions = require('./../../lib/utils/options').getOptions,
   {
     XMLParser
   } = require('../../lib/XMLParser');
@@ -317,15 +318,20 @@ describe('Validate method and url found item in wsdl and operation wsdl in colle
 });
 
 describe('Validate Headers', function() {
-  it('Should return missing header when validateContentType option is on true' +
+  it('Should return missing header when validateHeader option is on true' +
     ' and not content-type header is present',
   function() {
-    const options = {
-        validateContentType: true
-      },
-      transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
-        numberToWordsWSDLObject, new XMLParser(), options);
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      transactionValidator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    transactionValidator = new TransactionValidator();
+    result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
+      numberToWordsWSDLObject, new XMLParser(), optionFromOptions);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
       requests: {
@@ -409,15 +415,20 @@ describe('Validate Headers', function() {
     });
   });
 
-  it('Should return bad header mismatch when validateContentType option' +
+  it('Should return bad header mismatch when validateHeader option' +
     ' is true and content-type header is not text/xml',
   function() {
-    const options = {
-        validateContentType: true
-      },
-      transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
-        numberToWordsWSDLObject, new XMLParser(), options);
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      transactionValidator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    transactionValidator = new TransactionValidator();
+    result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
+      numberToWordsWSDLObject, new XMLParser(), optionFromOptions);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: false,
       requests: {
@@ -503,7 +514,7 @@ describe('Validate Headers', function() {
     });
   });
 
-  it('Should not return missing header when validateContentType option is not provided' +
+  it('Should not return missing header when validateHeader option is not provided' +
     ' and not content-type header is present',
   function() {
     const transactionValidator = new TransactionValidator(),
@@ -580,7 +591,7 @@ describe('Validate Headers', function() {
     });
   });
 
-  it('Should not return bad header mismatch when validateContentType option' +
+  it('Should not return bad header mismatch when validateHeader option' +
     ' is not provided and content-type header is not text/xml',
   function() {
     const transactionValidator = new TransactionValidator(),
@@ -658,15 +669,20 @@ describe('Validate Headers', function() {
   });
 
 
-  it('Should not return missing header when validateContentType option is set explicitly on false' +
+  it('Should not return missing header when validateHeader option is set explicitly on false' +
     ' and not content-type header is present',
   function() {
-    const options = {
-        validateContentType: false
-      },
-      transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
-        numberToWordsWSDLObject, new XMLParser(), options);
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      transactionValidator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = false;
+    transactionValidator = new TransactionValidator();
+    result = transactionValidator.validateTransaction(numberToWordsCollectionItemsNoCTHeader,
+      numberToWordsWSDLObject, new XMLParser(), optionFromOptions);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {
@@ -738,15 +754,20 @@ describe('Validate Headers', function() {
     });
   });
 
-  it('Should not return bad header mismatch when validateContentType option is set explicitly on false' +
+  it('Should not return bad header mismatch when validateHeader option is set explicitly on false' +
     ' and content-type header is not text/xml',
   function() {
-    const options = {
-        validateContentType: false
-      },
-      transactionValidator = new TransactionValidator(),
-      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
-        numberToWordsWSDLObject, new XMLParser(), options);
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      transactionValidator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = false;
+    transactionValidator = new TransactionValidator();
+    result = transactionValidator.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML,
+      numberToWordsWSDLObject, new XMLParser(), options);
     expect(result).to.be.an('object').and.to.deep.include({
       matched: true,
       requests: {

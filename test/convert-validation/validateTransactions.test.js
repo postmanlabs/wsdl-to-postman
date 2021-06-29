@@ -39,10 +39,10 @@ describe('Test validate Transactions method in SchemaPack', function () {
     });
   });
 
-  it('Should validate when validateContentType option is true ' +
+  it('Should validate when validateHeader option is true ' +
     'and Header Content-Type was not found in the transaction', function () {
     const options = {
-        validateContentType: true
+        validateHeader: true
       },
       schemaPackWithOptions = new SchemaPack({
         type: 'string', data: fileContent
@@ -133,10 +133,10 @@ describe('Test validate Transactions method in SchemaPack', function () {
     });
   });
 
-  it('Should validate when validateContentType option is true' +
+  it('Should validate when validateHeader option is true' +
     ' and Header is other than text/xml', function () {
     const options = {
-        validateContentType: true
+        validateHeader: true
       },
       schemaPackWithOptions = new SchemaPack({
         type: 'string', data: fileContent
@@ -229,7 +229,7 @@ describe('Test validate Transactions method in SchemaPack', function () {
     });
   });
 
-  it('Should not validate header when validateContentType option is not provided (false by default) ' +
+  it('Should not validate header when validateHeader option is not provided (false by default) ' +
     'and Header Content-Type was not found in the transaction', function () {
     schemaPack.validateTransaction(numberToWordsCollectionItemsNoCTHeader, (error, result) => {
       expect(error).to.be.null;
@@ -305,7 +305,7 @@ describe('Test validate Transactions method in SchemaPack', function () {
     });
   });
 
-  it('Should not validate header when validateContentType option is not provided (false by default) ' +
+  it('Should not validate header when validateHeader option is not provided (false by default) ' +
     ' and Header is other than text/xml', function () {
     schemaPack.validateTransaction(numberToWordsCollectionItemsCTHeaderNXML, (error, result) => {
       expect(error).to.be.null;
