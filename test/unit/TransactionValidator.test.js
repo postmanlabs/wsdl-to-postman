@@ -26,6 +26,8 @@ const notIdCollectionItems = require('./../data/transactionsValidation/notIdColl
   numberToWordsCollectionItemsCTHeaderNXML =
   require('./../data/transactionsValidation/numberToWordsCollectionItemsCTHeaderNXML.json'),
   numberToWordsCollectionItemsGET = require('./../data/transactionsValidation/numberToWordsCollectionItemsGET.json'),
+  numberToWordsCollectionItemsGETDifFormatBody =
+  require('./../data/transactionsValidation/numberToWordsCollectionItemsGETDifFormatBody.json'),
   numberToWordsCollectionItemsIncompleteItems =
   require('./../data/transactionsValidation/numberToWordsCollectionItemsIncompleteItems.json'),
   getMatchDetailsCollectionItems = require('./../data/transactionsValidation/getMatchDetailsCollectionItems.json'),
@@ -1968,6 +1970,67 @@ describe('soapMethodValidation', function() {
           requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
         }
       }
+    });
+  });
+
+  it('Should not throw error with different formats in body', function() {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(numberToWordsCollectionItemsGETDifFormatBody,
+        numberToWordsWSDLObject, new XMLParser());
+    expect(result).to.be.an('object').and.to.deep.include({
+      matched: true,
+      requests: {
+        '18403328-4213-4c3e-b0e9-b21a636697c3': {
+          endpoints: [],
+          requestId: '18403328-4213-4c3e-b0e9-b21a636697c3'
+        },
+        '353e33da-1eee-41c1-8865-0f72b2e1fd10': {
+          endpoints: [],
+          requestId: '353e33da-1eee-41c1-8865-0f72b2e1fd10'
+        },
+        '395c9db6-d6f5-45a7-90f5-09f5aab4fe92': {
+          endpoints: [],
+          requestId: '395c9db6-d6f5-45a7-90f5-09f5aab4fe92'
+        },
+        'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0': {
+          endpoints: [],
+          requestId: 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0'
+        }
+      },
+      missingEndpoints: [
+        {
+          property: 'ENDPOINT',
+          transactionJsonPath: null,
+          schemaJsonPath: 'soap NumberToWords',
+          reasonCode: 'MISSING_ENDPOINT',
+          reason: 'The endpoint "POST soap NumberToWords" is missing in collection',
+          endpoint: 'POST soap NumberToWords'
+        },
+        {
+          property: 'ENDPOINT',
+          transactionJsonPath: null,
+          schemaJsonPath: 'soap NumberToDollars',
+          reasonCode: 'MISSING_ENDPOINT',
+          reason: 'The endpoint "POST soap NumberToDollars" is missing in collection',
+          endpoint: 'POST soap NumberToDollars'
+        },
+        {
+          property: 'ENDPOINT',
+          transactionJsonPath: null,
+          schemaJsonPath: 'soap12 NumberToWords',
+          reasonCode: 'MISSING_ENDPOINT',
+          reason: 'The endpoint "POST soap12 NumberToWords" is missing in collection',
+          endpoint: 'POST soap12 NumberToWords'
+        },
+        {
+          property: 'ENDPOINT',
+          transactionJsonPath: null,
+          schemaJsonPath: 'soap12 NumberToDollars',
+          reasonCode: 'MISSING_ENDPOINT',
+          reason: 'The endpoint "POST soap12 NumberToDollars" is missing in collection',
+          endpoint: 'POST soap12 NumberToDollars'
+        }
+      ]
     });
   });
 });
