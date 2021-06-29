@@ -1024,10 +1024,10 @@ describe('validateBody method with options', function () {
 
 describe('Validate Headers with options', function () {
 
-  it('Should return bad header mismatch when validateContentType option' +
+  it('Should return bad header mismatch when validateHeader option' +
     ' is true content-type header is not text/xml and ignore unresolved variables is false', function () {
     const options = {
-        validateContentType: true,
+        validateHeader: true,
         ignoreUnresolvedVariables: false
       },
       transactionValidator = new TransactionValidator(),
@@ -1125,7 +1125,7 @@ describe('Validate Headers with options', function () {
         numberToWordsCollectionItemsCTHeaderPMVariable,
         numberToWordsWSDLObject, new XMLParser(),
         {
-          validateContentType: true,
+          validateHeader: true,
           ignoreUnresolvedVariables: true
         }
       );
