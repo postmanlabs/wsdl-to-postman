@@ -202,7 +202,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function () {
         name: 'censusYear',
         isComplex: false,
         type: 'string',
-        enumValues: ['Unknown',
+        enum: ['Unknown',
           'NineteenNinety',
           'TwoThousand',
           'TwoThousandTen',
@@ -239,7 +239,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function () {
         isComplex: false,
         type: 'integer',
         namespace: 'https://geoservices.tamu.edu/',
-        enumValues: ['1',
+        enum: ['1',
           '1011',
           '1032'
         ]

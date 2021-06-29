@@ -21,7 +21,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -37,7 +37,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -51,7 +51,7 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
       },
       output: {
@@ -74,7 +74,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -90,7 +90,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -106,7 +106,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -122,7 +122,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -138,7 +138,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -154,7 +154,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -170,7 +170,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -186,7 +186,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -202,7 +202,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -218,7 +218,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -234,7 +234,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -250,7 +250,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -266,7 +266,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -282,7 +282,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -298,7 +298,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -314,7 +314,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -330,7 +330,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -346,7 +346,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -362,7 +362,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -378,7 +378,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -394,7 +394,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -410,7 +410,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -426,7 +426,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -442,7 +442,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -458,7 +458,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -474,7 +474,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -490,7 +490,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -506,7 +506,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -522,7 +522,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -538,7 +538,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -554,7 +554,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -570,7 +570,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -586,7 +586,7 @@ module.exports = {
                     maxLength: undefined,
                     minLength: undefined,
                     pattern: undefined,
-                    enumValues: undefined,
+                    enum: undefined,
                   },
                   {
                     children: [
@@ -606,7 +606,7 @@ module.exports = {
                             maxLength: undefined,
                             minLength: undefined,
                             pattern: undefined,
-                            enumValues: undefined,
+                            enum: undefined,
                           },
                           {
                             children: [
@@ -622,7 +622,7 @@ module.exports = {
                             maxLength: undefined,
                             minLength: undefined,
                             pattern: undefined,
-                            enumValues: undefined,
+                            enum: undefined,
                           },
                           {
                             children: [
@@ -638,7 +638,7 @@ module.exports = {
                             maxLength: undefined,
                             minLength: undefined,
                             pattern: undefined,
-                            enumValues: undefined,
+                            enum: undefined,
                           },
                           {
                             children: [
@@ -658,7 +658,7 @@ module.exports = {
                                     maxLength: undefined,
                                     minLength: undefined,
                                     pattern: undefined,
-                                    enumValues: undefined,
+                                    enum: undefined,
                                   },
                                   {
                                     children: [
@@ -674,7 +674,7 @@ module.exports = {
                                     maxLength: undefined,
                                     minLength: undefined,
                                     pattern: undefined,
-                                    enumValues: undefined,
+                                    enum: undefined,
                                   },
                                   {
                                     children: [
@@ -690,7 +690,7 @@ module.exports = {
                                     maxLength: undefined,
                                     minLength: undefined,
                                     pattern: undefined,
-                                    enumValues: undefined,
+                                    enum: undefined,
                                   },
                                   {
                                     children: [
@@ -706,7 +706,7 @@ module.exports = {
                                     maxLength: undefined,
                                     minLength: undefined,
                                     pattern: undefined,
-                                    enumValues: undefined,
+                                    enum: undefined,
                                   },
                                   {
                                     children: [
@@ -722,7 +722,7 @@ module.exports = {
                                     maxLength: undefined,
                                     minLength: undefined,
                                     pattern: undefined,
-                                    enumValues: undefined,
+                                    enum: undefined,
                                   },
                                   {
                                     children: [
@@ -738,7 +738,7 @@ module.exports = {
                                     maxLength: undefined,
                                     minLength: undefined,
                                     pattern: "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?",
-                                    enumValues: undefined,
+                                    enum: undefined,
                                   },
                                   {
                                     children: [
@@ -754,7 +754,7 @@ module.exports = {
                                     maxLength: undefined,
                                     minLength: undefined,
                                     pattern: undefined,
-                                    enumValues: undefined,
+                                    enum: undefined,
                                   },
                                   {
                                     children: [
@@ -770,7 +770,7 @@ module.exports = {
                                     maxLength: undefined,
                                     minLength: undefined,
                                     pattern: undefined,
-                                    enumValues: undefined,
+                                    enum: undefined,
                                   },
                                 ],
                                 minOccurs: "1",
@@ -784,7 +784,7 @@ module.exports = {
                                 maxLength: "",
                                 minLength: "",
                                 pattern: "",
-                                enumValues: "",
+                                enum: "",
                               },
                             ],
                             minOccurs: "1",
@@ -798,7 +798,7 @@ module.exports = {
                             maxLength: "",
                             minLength: "",
                             pattern: "",
-                            enumValues: "",
+                            enum: "",
                           },
                         ],
                         minOccurs: "1",
@@ -812,7 +812,7 @@ module.exports = {
                         maxLength: "",
                         minLength: "",
                         pattern: "",
-                        enumValues: "",
+                        enum: "",
                       },
                     ],
                     minOccurs: "1",
@@ -826,7 +826,7 @@ module.exports = {
                     maxLength: "",
                     minLength: "",
                     pattern: "",
-                    enumValues: "",
+                    enum: "",
                   },
                 ],
                 minOccurs: "1",
@@ -840,7 +840,7 @@ module.exports = {
                 maxLength: "",
                 minLength: "",
                 pattern: "",
-                enumValues: "",
+                enum: "",
               },
             ],
             minOccurs: "1",
@@ -854,7 +854,7 @@ module.exports = {
             maxLength: "",
             minLength: "",
             pattern: "",
-            enumValues: "",
+            enum: "",
           },
         ],
         minOccurs: "0",
@@ -868,7 +868,7 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
       },
       fault: null,
