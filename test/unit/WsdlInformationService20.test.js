@@ -207,7 +207,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type from undefined or null object');
+      expect(error.message).to.equal('Cannot get portType from undefined or null object');
     }
   });
 
@@ -219,7 +219,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type from undefined or null object');
+      expect(error.message).to.equal('Cannot get portType from undefined or null object');
     }
   });
 
@@ -231,7 +231,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type from WSDL');
+      expect(error.message).to.equal('Cannot get portType from WSDL');
     }
   });
 
@@ -245,7 +245,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Cannot get portType with no filter name');
     }
   });
 
@@ -257,7 +257,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Cannot get portType with no filter name');
     }
   });
 
@@ -269,7 +269,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Cannot get portType with no filter name');
     }
   });
 
@@ -281,7 +281,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get portType with no filter operationName');
     }
   });
 
@@ -293,7 +293,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get portType with no filter operationName');
     }
   });
 
@@ -305,7 +305,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get portType with no filter operationName');
     }
   });
 });
