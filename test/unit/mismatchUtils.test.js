@@ -2,7 +2,7 @@ const { expect } = require('chai'),
   {
     getElementFromMissingInRequestBySiblingsXpath,
     getElementFromMissingInRequestByPath,
-    getElementFromMissingInSchemaByXpath,
+    getElementFromNotExpectedInBodyByXpath,
     handleInvalidTypeAndGetElementData,
     handleMissingInRequestAndGetElementData,
     addNodeInString,
@@ -105,7 +105,7 @@ describe('testing mismatchUtils getXpathFromMissingInRequestBySiblings', functio
   });
 });
 
-describe('mismatchUtils getElementFromMissingInSchemaByXpath', function() {
+describe('mismatchUtils getElementFromNotExpectedInBodyByXpath', function() {
   it('Should return the element that is missing in schema when it is' +
   ' in the first level of the body and it is the only element with this name', function() {
     const currentBody = `<Substract>
@@ -128,7 +128,7 @@ describe('mismatchUtils getElementFromMissingInSchemaByXpath', function() {
         </objC>
       </Substract>`,
       xpath = '//missingInSchemaElement',
-      missingElementNode = getElementFromMissingInSchemaByXpath(currentBody, cleanBody, xpath),
+      missingElementNode = getElementFromNotExpectedInBodyByXpath(currentBody, cleanBody, xpath),
       expected = '/Substract/objB/missingInSchemaElement';
     expect(missingElementNode.path()).to.be.equal(expected);
   });
@@ -157,7 +157,7 @@ describe('mismatchUtils getElementFromMissingInSchemaByXpath', function() {
         </objC>
       </Substract>`,
       xpath = '//target',
-      missingElementNode = getElementFromMissingInSchemaByXpath(currentBody, cleanBody, xpath),
+      missingElementNode = getElementFromNotExpectedInBodyByXpath(currentBody, cleanBody, xpath),
       expected = '/Substract/objB/target';
     expect(missingElementNode.path()).to.be.equal(expected);
   });
@@ -187,7 +187,7 @@ describe('mismatchUtils getElementFromMissingInSchemaByXpath', function() {
         </objC>
       </Substract>`,
       xpath = '//missingInSchemaElement',
-      missingElementNode = getElementFromMissingInSchemaByXpath(currentBody, cleanBody, xpath),
+      missingElementNode = getElementFromNotExpectedInBodyByXpath(currentBody, cleanBody, xpath),
       expected = '/Substract/objB[2]/missingInSchemaElement';
     expect(missingElementNode.path()).to.be.equal(expected);
   });
