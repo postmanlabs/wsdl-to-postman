@@ -759,9 +759,9 @@ provides functions that convert numbers into words or dollar amounts.</documenta
         portName: 'NumberConversionSoap',
         serviceName: 'NumberConversion'
       });
-    expect(wsdlObject.operationsArray[0].input).to.be.an('object');
-    expect(wsdlObject.operationsArray[0].output).to.be.an('object');
-    expect(wsdlObject.operationsArray[0].fault).to.be.an('object');
+    expect(wsdlObject.operationsArray[0].input).to.be.an('Array');
+    expect(wsdlObject.operationsArray[0].output).to.be.an('Array');
+    expect(wsdlObject.operationsArray[0].fault).to.be.an('Array');
 
     expect(wsdlObject.operationsArray[0].description.replace(/[\r\n\s]+/g, '')).to.equal(
       ('Returns the word corresponding to the positive number ' +
@@ -777,8 +777,8 @@ provides functions that convert numbers into words or dollar amounts.</documenta
         portName: 'NumberConversionSoap',
         serviceName: 'NumberConversion'
       });
-    expect(wsdlObject.operationsArray[1].input).to.be.an('object');
-    expect(wsdlObject.operationsArray[1].output).to.be.an('object');
+    expect(wsdlObject.operationsArray[1].input).to.be.an('Array');
+    expect(wsdlObject.operationsArray[1].output).to.be.an('Array');
     expect(wsdlObject.operationsArray[1].fault).to.be.null;
 
     expect(wsdlObject.operationsArray[2]).to.be.an('object')
