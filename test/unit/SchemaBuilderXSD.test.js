@@ -1443,7 +1443,7 @@ describe('SchemaBuilderXSD parseObjectToXML', function () {
 describe('SchemaBuilderXSD getWSDLElementsFromJsonSchema', function () {
   it('should get an error when the object sent is undefined', function () {
     const builder = new SchemaBuilderXSD();
-    let elements = builder.getWSDLElementsFromJsonSchema(null, '', '', '');
+    let elements = builder.getWSDLElementsFromJsonSchema({ jsonSchema: null });
     expect(elements.elements.length).to.equal(0);
   });
 });
