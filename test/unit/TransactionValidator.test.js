@@ -981,7 +981,7 @@ describe('validateBody method', function() {
   });
 
   it('Should have a mismatch when a request endpoint body has not complete all required fields ' +
-    'showMissingSchemaErrors option by default (true)',
+    'showMissingInSchemaErrors option by default (true)',
   function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -1001,14 +1001,14 @@ describe('validateBody method', function() {
   });
 
   it('Should have a mismatch when a request endpoint body has not complete all required fields ' +
-    'showMissingSchemaErrors option set as false',
+    'showMissingInSchemaErrors option set as false',
   function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyIncomplete,
         numberToWordsWSDLObject, new XMLParser(), {
           detailedBlobValidation: true,
-          showMissingSchemaErrors: false
+          showMissingInSchemaErrors: false
         }
       ),
       mismatchReason = 'Element \'NumberToWords\': Missing child element(s). Expected is ( ubiNum ).\n',
@@ -1022,7 +1022,7 @@ describe('validateBody method', function() {
   });
 
   it('Should have a mismatch when a request endpoint body has more fields than expected ' +
-  'and showMissingSchemaErrors is set as default (true)',
+  'and showMissingInSchemaErrors is set as default (true)',
   function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -1037,20 +1037,20 @@ describe('validateBody method', function() {
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason,
           '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
+          '//operation[@name="NumberToWords"]', 'INVALID_BODY')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
   it('Should not have any mismatch when a request endpoint body has more fields than expected ' +
-    'and showMissingSchemaErrors is set in false',
+    'and showMissingInSchemaErrors is set in false',
   function() {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(), {
           detailedBlobValidation: true,
-          showMissingSchemaErrors: false
+          showMissingInSchemaErrors: false
         }
       );
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
@@ -1280,7 +1280,7 @@ describe('validateBody method', function() {
                   transactionJsonPath: '$.response.body',
                   schemaJsonPath: '//definitions//binding[@name="NumberConversionSoapBinding"]' +
                     '//operation[@name="NumberToWords"]',
-                  reasonCode: 'MISSING_IN_SCHEMA',
+                  reasonCode: 'INVALID_RESPONSE_BODY',
                   reason: 'Element \'WRONGFIELD\': This element is not expected.\n'
                 }]
               }

@@ -468,7 +468,7 @@ describe('validateBody method with options', function () {
     });
 
   it('Should have a mismatch when a request msg has more than expected fields and ' +
-  'showMissingSchemaErrors is not sent', function () {
+  'showMissingInSchemaErrors is not sent', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
@@ -480,24 +480,24 @@ describe('validateBody method with options', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
+          '//operation[@name="NumberToWords"]', 'INVALID_BODY')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
   it('Shouldn\'t have any mismatch when a request msg has more than expected fields' +
-  ' and showMissingSchemaErrors is false',
+  ' and showMissingInSchemaErrors is false',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
-        { showMissingSchemaErrors: false }
+        { showMissingInSchemaErrors: false }
       );
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
-  it('Should have a mismatch when a request msg has more than expected fields and showMissingSchemaErrors is true',
+  it('Should have a mismatch when a request msg has more than expected fields and showMissingInSchemaErrors is true',
     function () {
       const transactionValidator = new TransactionValidator(),
         result = transactionValidator.validateTransaction(
@@ -510,19 +510,19 @@ describe('validateBody method with options', function () {
           expectedBase,
           'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
           bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-            '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
+            '//operation[@name="NumberToWords"]', 'INVALID_BODY')
         );
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
 
-  it('Should have a mismatch when a request msg has more than expected fields, showMissingSchemaErrors is true' +
+  it('Should have a mismatch when a request msg has more than expected fields, showMissingInSchemaErrors is true' +
   ' and suggestAvaulableFixes is true',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
-        { showMissingSchemaErrors: true, suggestAvailableFixes: true }
+        { showMissingInSchemaErrors: true, suggestAvailableFixes: true }
       ),
       mismatchReason = 'The request body didn\'t match the specified schema',
       expected = getExpectedWithMismatchInEndpoint(
@@ -548,7 +548,7 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Should have a mismatch when a request msg has more than expected fields, showMissingSchemaErrors is true,' +
+  it('Should have a mismatch when a request msg has more than expected fields, showMissingInSchemaErrors is true,' +
   ' suggestAvaulableFixes is true and detailedBlobValidation is true',
   function () {
     const transactionValidator = new TransactionValidator(),
@@ -556,7 +556,7 @@ describe('validateBody method with options', function () {
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
         {
-          showMissingSchemaErrors: true,
+          showMissingInSchemaErrors: true,
           suggestAvailableFixes: true,
           detailedBlobValidation: true
         }
@@ -570,7 +570,7 @@ describe('validateBody method with options', function () {
             mismatchReason,
             '//definitions//binding[@name="NumberConversionSoapBinding"]' +
             '//operation[@name="NumberToWords"]',
-            'MISSING_IN_SCHEMA'
+            'INVALID_BODY'
           ),
           {
             key: '//NumberToWords',
