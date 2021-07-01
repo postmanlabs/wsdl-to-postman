@@ -5,7 +5,7 @@ module.exports = {
       description: "Returns the matches in a tournament/league which has result registered..",
       style: undefined,
       url: "http://{{url}}/soap/services/getPlayedMatches.php",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -53,8 +53,8 @@ module.exports = {
         pattern: undefined,
         enum: undefined,
         isElement: true,
-      },
-      output: {
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -870,7 +870,7 @@ module.exports = {
         pattern: undefined,
         enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "getPlayedMatchesPort",
       serviceName: "getPlayedMatchesService",

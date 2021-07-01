@@ -5,7 +5,7 @@ module.exports = {
             description: "Returns the details - including results - that belong to a match.",
             style: undefined,
             url: "url/soap/services/getMatchDetails.php",
-            input: {
+            input: [{
                 children: [
                     {
                         children: [
@@ -53,8 +53,8 @@ module.exports = {
                 pattern: undefined,
                 enum: undefined,
                 isElement: true,
-            },
-            output: {
+            }],
+            output: [{
                 children: [
                     {
                         children: [
@@ -262,7 +262,7 @@ module.exports = {
                 pattern: undefined,
                 enum: undefined,
                 isElement: true,
-            },
+            }],
             fault: null,
             portName: "getMatchDetailsPort",
             serviceName: "getMatchDetailsService",

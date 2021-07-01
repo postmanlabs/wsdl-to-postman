@@ -333,7 +333,7 @@ describe('Tools from messageWithSchemaValidation', function () {
                   Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'input': {
+          'input': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -348,8 +348,8 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
-          'output': {
+          }],
+          'output': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -364,7 +364,7 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
+          }],
           'fault': null,
           'portName': 'NumberConversionSoap',
           'serviceName': 'NumberConversion',
@@ -375,7 +375,7 @@ describe('Tools from messageWithSchemaValidation', function () {
           'description': 'Returns the non-zero dollar amount of the passed number.',
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'input': {
+          'input': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -390,8 +390,8 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
-          'output': {
+          }],
+          'output': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -406,7 +406,7 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
+          }],
           'fault': null,
           'portName': 'NumberConversionSoap',
           'serviceName': 'NumberConversion',
@@ -418,7 +418,7 @@ describe('Tools from messageWithSchemaValidation', function () {
                   Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'input': {
+          'input': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -433,8 +433,8 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
-          'output': {
+          }],
+          'output': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -449,7 +449,7 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
+          }],
           'fault': null,
           'portName': 'NumberConversionSoap12',
           'serviceName': 'NumberConversion',
@@ -460,7 +460,7 @@ describe('Tools from messageWithSchemaValidation', function () {
           'description': 'Returns the non-zero dollar amount of the passed number.',
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'input': {
+          'input': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -475,8 +475,8 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
-          'output': {
+          }],
+          'output': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -491,7 +491,7 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
+          }],
           'fault': null,
           'portName': 'NumberConversionSoap12',
           'serviceName': 'NumberConversion',
