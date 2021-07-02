@@ -36,7 +36,7 @@
   </interface>
   <!-- Concrete Binding Over HTTP -->
   <binding name="HttpBinding" interface="tns:Interface1" type="http://www.w3.org/ns/wsdl/http">
-    <operation ref="tns:Get" whttp:method="GET" />
+    <operation ref="tns:Get" whttp:method="POST" />
   </binding>
   <!-- Concrete Binding with SOAP-->
   <binding name="SoapBinding" interface="tns:Interface1" type="http://www.w3.org/ns/wsdl/soap" wsoap:protocol="http://www.w3.org/2003/05/soap/bindings/HTTP/" wsoap:mepDefault="http://www.w3.org/2003/05/soap/mep/request-response">
