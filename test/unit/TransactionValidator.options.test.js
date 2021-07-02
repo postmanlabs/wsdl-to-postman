@@ -560,7 +560,8 @@ describe('validateBody method with options', function () {
         {
           showMissingInSchemaErrors: true,
           suggestAvailableFixes: true,
-          detailedBlobValidation: true
+          detailedBlobValidation: true,
+          ignoreUnresolvedVariables: true
         }
       ),
       mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
@@ -877,6 +878,26 @@ describe('validateBody method with options', function () {
           {
             suggestAvailableFixes: true,
             detailedBlobValidation: false
+          }
+        ),
+        request = result.requests['d15dbad2-a5d2-4c96-9a9c-5f794d3eba01'];
+      expect(request.endpoints[0].matched).equal(false);
+      expect(request.endpoints[0].mismatches[0].reasonCode).equal('INVALID_BODY');
+
+    });
+
+
+  it('Should return invalid body when called with tag not closed </intA instead of </intA> options sent',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          calculatorCollectionItemsMissingCharacter,
+          calculatorWSDLObject, new XMLParser(),
+          {
+            suggestAvailableFixes: true,
+            validateHeader: true,
+            ignoreUnresolvedVariables: true,
+            showMissingInSchemaErrors: true
           }
         ),
         request = result.requests['d15dbad2-a5d2-4c96-9a9c-5f794d3eba01'];
