@@ -32,7 +32,7 @@
 <!-- Concrete Binding Over HTTP -->
    <binding name="HttpBinding" interface="tns:Interface1" 
             type="http://www.w3.org/ns/wsdl/http">
-      <operation ref="tns:Get" whttp:method="POST"/>
+      <operation ref="tns:Get" whttp:method="GET"/>
    </binding>
    
 <!-- Concrete Binding with SOAP-->
