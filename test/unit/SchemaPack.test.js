@@ -38,9 +38,6 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
         expect(result.output).to.be.an('array');
         expect(result.output[0].data).to.be.an('object');
         expect(result.output[0].type).to.equal('collection');
-        if (file === 'temperatureConverterHTTP.wsdl') {
-          fs.writeFileSync('coll1.json', JSON.stringify(result.output[0].data));
-        }
       });
     });
   });
