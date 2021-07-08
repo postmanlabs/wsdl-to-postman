@@ -228,7 +228,7 @@ describe('SOAPMessageHelper convertInputToMessage ', function () {
         '<soap:Envelope' +
         'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
         '<soap:Body>' +
-        '<foobar>' +
+        '<foobarxmlns="https://geoservices.tamu.edu/">' +
         '1' +
         '</foobar>' +
         '</soap:Body>' +
@@ -330,4 +330,35 @@ oasis-200401-wss-username-token-profile-1.0#PasswordDigest">place hashed passwor
 
   });
 
+});
+
+describe('SOAPMessageHelper getSOAPNamespaceFromProtocol', function () {
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap is the protocol', function () {
+    const parametersUtils = new SOAPMessageHelper(),
+      url = parametersUtils.getSOAPNamespaceFromProtocol('soap');
+    expect(url).to.be.an('string');
+    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
+  });
+
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap12 is the protocol', function () {
+    const parametersUtils = new SOAPMessageHelper(),
+      url = parametersUtils.getSOAPNamespaceFromProtocol('soap12');
+    expect(url).to.be.an('string');
+    expect(url).to.equal('http://www.w3.org/2003/05/soap-envelope');
+  });
+
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when dummy is the protocol', function () {
+    const parametersUtils = new SOAPMessageHelper(),
+      url = parametersUtils.getSOAPNamespaceFromProtocol('dummy');
+    expect(url).to.be.an('string');
+    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
+
+  });
+  it('should get http://schemas.xmlsoap.org/soap/envelope/ when null is the protocol', function () {
+    const parametersUtils = new SOAPMessageHelper(),
+      url = parametersUtils.getSOAPNamespaceFromProtocol(null);
+    expect(url).to.be.an('string');
+    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
+
+  });
 });

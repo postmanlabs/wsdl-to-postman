@@ -267,34 +267,3 @@ describe('SOAPBody assignPropertyValue', function () {
     expect(obj.parent.property).to.equal('value');
   });
 });
-
-describe('SOAPBody SOAPBody', function () {
-  it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap is the protocol', function () {
-    const parametersUtils = new SOAPBody(new XMLParser()),
-      url = parametersUtils.getSOAPNamespaceFromProtocol('soap');
-    expect(url).to.be.an('string');
-    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
-  });
-
-  it('should get http://schemas.xmlsoap.org/soap/envelope/ when soap12 is the protocol', function () {
-    const parametersUtils = new SOAPBody(new XMLParser()),
-      url = parametersUtils.getSOAPNamespaceFromProtocol('soap12');
-    expect(url).to.be.an('string');
-    expect(url).to.equal('http://www.w3.org/2003/05/soap-envelope');
-  });
-
-  it('should get http://schemas.xmlsoap.org/soap/envelope/ when dummy is the protocol', function () {
-    const parametersUtils = new SOAPBody(new XMLParser()),
-      url = parametersUtils.getSOAPNamespaceFromProtocol('dummy');
-    expect(url).to.be.an('string');
-    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
-
-  });
-  it('should get http://schemas.xmlsoap.org/soap/envelope/ when null is the protocol', function () {
-    const parametersUtils = new SOAPBody(new XMLParser()),
-      url = parametersUtils.getSOAPNamespaceFromProtocol(null);
-    expect(url).to.be.an('string');
-    expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
-
-  });
-});
