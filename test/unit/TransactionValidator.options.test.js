@@ -17,6 +17,8 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
     require('./../data/transactionsValidation/numberToWordsCollectionItemsInvalidRootElement.json'),
   getPlayedMatchesCollectionItemsWrongType =
     require('./../data/transactionsValidation/getPlayedMatchesCollectionItemsWrongType.json'),
+  calculatorCollectionItemsMissingCharacter =
+    require('./../data/transactionsValidation/calculatorCollectionItemsMissing>.json'),
   {
     expect
   } = require('chai'),
@@ -468,7 +470,7 @@ describe('validateBody method with options', function () {
     });
 
   it('Should have a mismatch when a request msg has more than expected fields and ' +
-  'showMissingSchemaErrors is not sent', function () {
+  'showMissingInSchemaErrors is not sent', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
@@ -480,24 +482,24 @@ describe('validateBody method with options', function () {
         expectedBase,
         'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
         bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-          '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
+          '//operation[@name="NumberToWords"]', 'INVALID_BODY')
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
   it('Shouldn\'t have any mismatch when a request msg has more than expected fields' +
-  ' and showMissingSchemaErrors is false',
+  ' and showMissingInSchemaErrors is false',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
-        { showMissingSchemaErrors: false }
+        { showMissingInSchemaErrors: false }
       );
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
-  it('Should have a mismatch when a request msg has more than expected fields and showMissingSchemaErrors is true',
+  it('Should have a mismatch when a request msg has more than expected fields and showMissingInSchemaErrors is true',
     function () {
       const transactionValidator = new TransactionValidator(),
         result = transactionValidator.validateTransaction(
@@ -510,19 +512,19 @@ describe('validateBody method with options', function () {
           expectedBase,
           'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0',
           bodyMismatchMockWithReason(mismatchReason, '//definitions//binding[@name="NumberConversionSoapBinding"]' +
-            '//operation[@name="NumberToWords"]', 'MISSING_IN_SCHEMA')
+            '//operation[@name="NumberToWords"]', 'INVALID_BODY')
         );
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
 
-  it('Should have a mismatch when a request msg has more than expected fields, showMissingSchemaErrors is true' +
+  it('Should have a mismatch when a request msg has more than expected fields, showMissingInSchemaErrors is true' +
   ' and suggestAvaulableFixes is true',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
-        { showMissingSchemaErrors: true, suggestAvailableFixes: true }
+        { showMissingInSchemaErrors: true, suggestAvailableFixes: true }
       ),
       mismatchReason = 'The request body didn\'t match the specified schema',
       expected = getExpectedWithMismatchInEndpoint(
@@ -548,7 +550,7 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Should have a mismatch when a request msg has more than expected fields, showMissingSchemaErrors is true,' +
+  it('Should have a mismatch when a request msg has more than expected fields, showMissingInSchemaErrors is true,' +
   ' suggestAvaulableFixes is true and detailedBlobValidation is true',
   function () {
     const transactionValidator = new TransactionValidator(),
@@ -556,9 +558,10 @@ describe('validateBody method with options', function () {
         numberToWordsCollectionItemsBodyMoreFields,
         numberToWordsWSDLObject, new XMLParser(),
         {
-          showMissingSchemaErrors: true,
+          showMissingInSchemaErrors: true,
           suggestAvailableFixes: true,
-          detailedBlobValidation: true
+          detailedBlobValidation: true,
+          ignoreUnresolvedVariables: true
         }
       ),
       mismatchReason = 'Element \'WRONGFIELD\': This element is not expected.\n',
@@ -570,7 +573,7 @@ describe('validateBody method with options', function () {
             mismatchReason,
             '//definitions//binding[@name="NumberConversionSoapBinding"]' +
             '//operation[@name="NumberToWords"]',
-            'MISSING_IN_SCHEMA'
+            'INVALID_BODY'
           ),
           {
             key: '//NumberToWords',
@@ -865,6 +868,44 @@ describe('validateBody method with options', function () {
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
 
+
+  it('Should return invalid body when called with tag not closed </intA instead of </intA>',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          calculatorCollectionItemsMissingCharacter,
+          calculatorWSDLObject, new XMLParser(),
+          {
+            suggestAvailableFixes: true,
+            detailedBlobValidation: false
+          }
+        ),
+        request = result.requests['d15dbad2-a5d2-4c96-9a9c-5f794d3eba01'];
+      expect(request.endpoints[0].matched).equal(false);
+      expect(request.endpoints[0].mismatches[0].reasonCode).equal('INVALID_BODY');
+
+    });
+
+
+  it('Should return invalid body when called with tag not closed </intA instead of </intA> options sent',
+    function () {
+      const transactionValidator = new TransactionValidator(),
+        result = transactionValidator.validateTransaction(
+          calculatorCollectionItemsMissingCharacter,
+          calculatorWSDLObject, new XMLParser(),
+          {
+            suggestAvailableFixes: true,
+            validateHeader: true,
+            ignoreUnresolvedVariables: true,
+            showMissingInSchemaErrors: true
+          }
+        ),
+        request = result.requests['d15dbad2-a5d2-4c96-9a9c-5f794d3eba01'];
+      expect(request.endpoints[0].matched).equal(false);
+      expect(request.endpoints[0].mismatches[0].reasonCode).equal('INVALID_BODY');
+
+    });
+
   it('Should return a well formated mismatch with suggested fix when message body is an invalid xml string',
     function () {
       const transactionValidator = new TransactionValidator(),
@@ -1024,10 +1065,10 @@ describe('validateBody method with options', function () {
 
 describe('Validate Headers with options', function () {
 
-  it('Should return bad header mismatch when validateContentType option' +
+  it('Should return bad header mismatch when validateHeader option' +
     ' is true content-type header is not text/xml and ignore unresolved variables is false', function () {
     const options = {
-        validateContentType: true,
+        validateHeader: true,
         ignoreUnresolvedVariables: false
       },
       transactionValidator = new TransactionValidator(),
@@ -1125,7 +1166,7 @@ describe('Validate Headers with options', function () {
         numberToWordsCollectionItemsCTHeaderPMVariable,
         numberToWordsWSDLObject, new XMLParser(),
         {
-          validateContentType: true,
+          validateHeader: true,
           ignoreUnresolvedVariables: true
         }
       );

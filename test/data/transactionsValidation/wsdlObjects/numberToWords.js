@@ -5,7 +5,7 @@ module.exports = {
     description: 'Returns the word corresponding to the positive number passed as parameter.',
     style: 'document',
     url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-    input: {
+    input: [{
       children: [{
         children: [],
         name: 'ubiNum',
@@ -18,8 +18,8 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/',
-    },
-    output: {
+    }],
+    output: [{
       children: [{
         children: [],
         name: 'NumberToWordsResult',
@@ -30,8 +30,8 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
-    },
-    fault: {
+    }],
+    fault: [{
       children: [{
         children: [],
         name: 'faultcode',
@@ -42,7 +42,7 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: ''
-    },
+    }],
     portName: 'NumberConversionSoap',
     serviceName: 'NumberConversion',
     method: 'POST',
@@ -60,7 +60,7 @@ module.exports = {
     description: 'Returns the non-zero dollar amount of the passed number.',
     style: 'document',
     url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-    input: {
+    input: [{
       children: [{
         children: [],
         name: 'dNum',
@@ -71,8 +71,8 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
-    },
-    output: {
+    }],
+    output: [{
       children: [{
         children: [],
         name: 'NumberToDollarsResult',
@@ -83,7 +83,7 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
-    },
+    }],
     fault: undefined,
     portName: 'NumberConversionSoap',
     serviceName: 'NumberConversion',
@@ -100,7 +100,7 @@ module.exports = {
     description: 'Returns the word corresponding to the positive number passed as parameter.',
     style: 'document',
     url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-    input: {
+    input: [{
       children: [{
         children: [],
         name: 'ubiNum',
@@ -113,8 +113,8 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
-    },
-    output: {
+    }],
+    output: [{
       children: [{
         children: [],
         name: 'NumberToWordsResult',
@@ -125,7 +125,7 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
-    },
+    }],
     fault: undefined,
     portName: 'NumberConversionSoap12',
     serviceName: 'NumberConversion',
@@ -142,7 +142,7 @@ module.exports = {
     description: 'Returns the non-zero dollar amount of the passed number.',
     style: 'document',
     url: 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-    input: {
+    input: [{
       children: [child = {
         children: [],
         name: 'dNum',
@@ -153,8 +153,8 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
-    },
-    output: {
+    }],
+    output: [{
       children: [{
         children: [],
         name: 'NumberToDollarsResult',
@@ -165,7 +165,7 @@ module.exports = {
       isComplex: true,
       type: 'complex',
       namespace: 'http://www.dataaccess.com/webservicesserver/'
-    },
+    }],
     fault: undefined,
     portName: 'NumberConversionSoap12',
     serviceName: 'NumberConversion',

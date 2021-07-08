@@ -333,7 +333,7 @@ describe('Tools from messageWithSchemaValidation', function () {
                   Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'input': {
+          'input': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -348,8 +348,8 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
-          'output': {
+          }],
+          'output': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -364,7 +364,7 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
+          }],
           'fault': null,
           'portName': 'NumberConversionSoap',
           'serviceName': 'NumberConversion',
@@ -375,7 +375,7 @@ describe('Tools from messageWithSchemaValidation', function () {
           'description': 'Returns the non-zero dollar amount of the passed number.',
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'input': {
+          'input': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -390,8 +390,8 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
-          'output': {
+          }],
+          'output': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -406,7 +406,7 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
+          }],
           'fault': null,
           'portName': 'NumberConversionSoap',
           'serviceName': 'NumberConversion',
@@ -418,7 +418,7 @@ describe('Tools from messageWithSchemaValidation', function () {
                   Limited to quadrillions.`,
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'input': {
+          'input': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -433,8 +433,8 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
-          'output': {
+          }],
+          'output': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -449,7 +449,7 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
+          }],
           'fault': null,
           'portName': 'NumberConversionSoap12',
           'serviceName': 'NumberConversion',
@@ -460,7 +460,7 @@ describe('Tools from messageWithSchemaValidation', function () {
           'description': 'Returns the non-zero dollar amount of the passed number.',
           'style': 'document',
           'url': 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso',
-          'input': {
+          'input': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -475,8 +475,8 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
-          'output': {
+          }],
+          'output': [{
             'children': [{
               'children': [],
               'minOccurs': '1',
@@ -491,7 +491,7 @@ describe('Tools from messageWithSchemaValidation', function () {
             'type': 'complex',
             'isComplex': true,
             'namespace': 'http://www.dataaccess.com/webservicesserver/'
-          },
+          }],
           'fault': null,
           'portName': 'NumberConversionSoap12',
           'serviceName': 'NumberConversion',
@@ -648,5 +648,79 @@ describe('Tools from messageWithSchemaValidation', function () {
     expect(validResult[0].message).to.be.equal(
       'Element \'price\': This element is not expected. Expected is one of ( note, quantity ).\n'
     );
+  });
+
+  it('Should validate calculator Add message with schema', function() {
+    const schema = `
+    <s:schema elementFormDefault="qualified" xmlns:s="http://www.w3.org/2001/XMLSchema">
+    <s:element name="Add">
+        <s:complexType>
+            <s:choice>
+                <s:element minOccurs="1" maxOccurs="1" name="intA" type="s:int" />
+                <s:element minOccurs="1" maxOccurs="1" name="intB" type="s:int" />
+            </s:choice>
+        </s:complexType>
+    </s:element>
+    <s:element name="AddResponse">
+        <s:complexType>
+            <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="AddResult" type="s:int" />
+            </s:sequence>
+        </s:complexType>
+    </s:element>
+    <s:element name="Subtract">
+        <s:complexType>
+            <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="intA" type="s:int" />
+                <s:element minOccurs="1" maxOccurs="1" name="intB" type="s:int" />
+            </s:sequence>
+        </s:complexType>
+    </s:element>
+    <s:element name="SubtractResponse">
+        <s:complexType>
+            <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="SubtractResult" type="s:int" />
+            </s:sequence>
+        </s:complexType>
+    </s:element>
+    <s:element name="Multiply">
+        <s:complexType>
+            <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="intA" type="s:int" />
+                <s:element minOccurs="1" maxOccurs="1" name="intB" type="s:int" />
+            </s:sequence>
+        </s:complexType>
+    </s:element>
+    <s:element name="MultiplyResponse">
+        <s:complexType>
+            <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="MultiplyResult" type="s:int" />
+            </s:sequence>
+        </s:complexType>
+    </s:element>
+    <s:element name="Divide">
+        <s:complexType>
+            <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="intA" type="s:int" />
+                <s:element minOccurs="1" maxOccurs="1" name="intB" type="s:int" />
+            </s:sequence>
+        </s:complexType>
+    </s:element>
+    <s:element name="DivideResponse">
+        <s:complexType>
+            <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="DivideResult" type="s:int" />
+            </s:sequence>
+        </s:complexType>
+    </s:element>
+  </s:schema>`,
+      message = `
+      <Add>
+        <intA>100</intA
+        <intB>100</intB>
+      </Add>`,
+      result = validateMessageWithSchema(message, schema);
+    expect(result[0].message).to.be.equal('Error validating message');
+    expect(result[0].code).to.be.equal(1);
   });
 });

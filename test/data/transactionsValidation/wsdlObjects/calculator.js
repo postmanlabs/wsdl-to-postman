@@ -5,7 +5,7 @@ module.exports = {
       description: "Adds two integers. This is a test WebService. ©DNE Online",
       style: "document",
       url: "http://www.dneonline.com/calculator.asmx",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -21,7 +21,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -37,7 +37,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined
           },
         ],
         minOccurs: "0",
@@ -51,10 +51,10 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
-        isElement: true,
-      },
-      output: {
+        enum: undefined,
+        isElement: true
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -70,7 +70,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -84,9 +84,9 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "CalculatorSoap",
       serviceName: "Calculator",
@@ -102,7 +102,7 @@ module.exports = {
       description: "",
       style: "document",
       url: "http://www.dneonline.com/calculator.asmx",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -118,7 +118,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -134,7 +134,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -148,10 +148,10 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
-      output: {
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -167,7 +167,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -181,9 +181,9 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "CalculatorSoap",
       serviceName: "Calculator",
@@ -199,7 +199,7 @@ module.exports = {
       description: "",
       style: "document",
       url: "http://www.dneonline.com/calculator.asmx",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -215,7 +215,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -231,7 +231,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -245,10 +245,10 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
-      output: {
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -264,7 +264,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -278,9 +278,9 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "CalculatorSoap",
       serviceName: "Calculator",
@@ -296,7 +296,7 @@ module.exports = {
       description: "",
       style: "document",
       url: "http://www.dneonline.com/calculator.asmx",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -312,7 +312,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -328,7 +328,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -342,10 +342,10 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
-      output: {
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -361,7 +361,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -375,9 +375,9 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "CalculatorSoap",
       serviceName: "Calculator",
@@ -393,7 +393,7 @@ module.exports = {
       description: "Adds two integers. This is a test WebService. ©DNE Online",
       style: "document",
       url: "http://www.dneonline.com/calculator.asmx",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -409,7 +409,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -425,7 +425,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -439,10 +439,10 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
-      output: {
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -458,7 +458,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -472,9 +472,9 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "CalculatorSoap12",
       serviceName: "Calculator",
@@ -490,7 +490,7 @@ module.exports = {
       description: "",
       style: "document",
       url: "http://www.dneonline.com/calculator.asmx",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -506,7 +506,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -522,7 +522,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -536,10 +536,10 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
-      output: {
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -555,7 +555,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -569,9 +569,9 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "CalculatorSoap12",
       serviceName: "Calculator",
@@ -587,7 +587,7 @@ module.exports = {
       description: "",
       style: "document",
       url: "http://www.dneonline.com/calculator.asmx",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -603,7 +603,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -619,7 +619,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -633,10 +633,10 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
-      output: {
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -652,7 +652,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -666,9 +666,9 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "CalculatorSoap12",
       serviceName: "Calculator",
@@ -684,7 +684,7 @@ module.exports = {
       description: "",
       style: "document",
       url: "http://www.dneonline.com/calculator.asmx",
-      input: {
+      input: [{
         children: [
           {
             children: [
@@ -700,7 +700,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
           {
             children: [
@@ -716,7 +716,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -730,10 +730,10 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
-      output: {
+      }],
+      output: [{
         children: [
           {
             children: [
@@ -749,7 +749,7 @@ module.exports = {
             maxLength: undefined,
             minLength: undefined,
             pattern: undefined,
-            enumValues: undefined,
+            enum: undefined,
           },
         ],
         minOccurs: "0",
@@ -763,9 +763,9 @@ module.exports = {
         maxLength: undefined,
         minLength: undefined,
         pattern: undefined,
-        enumValues: undefined,
+        enum: undefined,
         isElement: true,
-      },
+      }],
       fault: null,
       portName: "CalculatorSoap12",
       serviceName: "Calculator",

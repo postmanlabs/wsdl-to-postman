@@ -183,7 +183,7 @@ describe('SchemaPack convert special cases WSDL 2.0', function() {
       expect(result.output[0].type).to.equal('collection');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
-      expect(result.output[0].data.item.length).to.equal(3);
+      expect(result.output[0].data.item.length).to.equal(2);
       expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_MESSAGE))
         .to.equal(true);
     });
@@ -246,7 +246,7 @@ describe('SchemaPack convert special cases WSDL 2.0', function() {
       expect(result.output[0].type).to.equal('collection');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].data.item).to.be.an('array');
-      expect(result.output[0].data.item.length).to.equal(3);
+      expect(result.output[0].data.item.length).to.equal(2);
       expect(result.output[0].data.info.description.content.includes(DOC_HAS_NO_SERVICE_PORT_MESSAGE_2))
         .to.equal(true);
     });

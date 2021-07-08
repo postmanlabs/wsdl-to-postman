@@ -5,7 +5,7 @@ module.exports = {
             description: "Returns the details - including results - that belong to a match.",
             style: undefined,
             url: "url/soap/services/getMatchDetails.php",
-            input: {
+            input: [{
                 children: [
                     {
                         children: [
@@ -21,7 +21,7 @@ module.exports = {
                         maxLength: undefined,
                         minLength: undefined,
                         pattern: undefined,
-                        enumValues: undefined,
+                        enum: undefined,
                     },
                     {
                         children: [
@@ -37,7 +37,7 @@ module.exports = {
                         maxLength: undefined,
                         minLength: undefined,
                         pattern: undefined,
-                        enumValues: undefined,
+                        enum: undefined,
                     },
                 ],
                 minOccurs: "0",
@@ -51,10 +51,10 @@ module.exports = {
                 maxLength: undefined,
                 minLength: undefined,
                 pattern: undefined,
-                enumValues: undefined,
+                enum: undefined,
                 isElement: true,
-            },
-            output: {
+            }],
+            output: [{
                 children: [
                     {
                         children: [
@@ -74,7 +74,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: undefined,
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -90,7 +90,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: undefined,
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -106,7 +106,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: undefined,
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -122,7 +122,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: undefined,
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -138,7 +138,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: undefined,
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -154,7 +154,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?",
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -170,7 +170,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: undefined,
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -186,7 +186,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: undefined,
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -202,7 +202,7 @@ module.exports = {
                                         maxLength: undefined,
                                         minLength: undefined,
                                         pattern: undefined,
-                                        enumValues: undefined,
+                                        enum: undefined,
                                     },
                                     {
                                         children: [
@@ -218,7 +218,7 @@ module.exports = {
                                         maxLength: "",
                                         minLength: "",
                                         pattern: "",
-                                        enumValues: "",
+                                        enum: "",
                                     },
                                 ],
                                 minOccurs: "1",
@@ -232,7 +232,7 @@ module.exports = {
                                 maxLength: "",
                                 minLength: "",
                                 pattern: "",
-                                enumValues: "",
+                                enum: "",
                             },
                         ],
                         minOccurs: "1",
@@ -246,7 +246,7 @@ module.exports = {
                         maxLength: "",
                         minLength: "",
                         pattern: "",
-                        enumValues: "",
+                        enum: "",
                     },
                 ],
                 minOccurs: "0",
@@ -260,9 +260,9 @@ module.exports = {
                 maxLength: undefined,
                 minLength: undefined,
                 pattern: undefined,
-                enumValues: undefined,
+                enum: undefined,
                 isElement: true,
-            },
+            }],
             fault: null,
             portName: "getMatchDetailsPort",
             serviceName: "getMatchDetailsService",

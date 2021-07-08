@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:tns="http://{{url}}/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="serviceManyFaults" targetNamespace="http://{{url}}/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:tns="http://{{url}}/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://{{url}}/">
+      <xs:element name="checkPetExistance" type="tns:checkPetExistance"/>
+      <xs:element name="checkPetExistanceResponse" type="tns:checkPetExistanceResponse"/>
+      <xs:complexType name="checkPetExistance">
+        <xs:sequence>
+          <xs:element name="wsSessionId" type="xs:string"/>
+          <xs:element name="fiscalID" type="xs:string"/>
+          <xs:element name="documentType" type="xs:byte"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="checkPetExistanceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="getPetResult" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AccessDeniedException" type="tns:AccessDeniedException"/>
+      <xs:complexType name="AccessDeniedException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="InstantiationException" type="tns:InstantiationException"/>
+      <xs:complexType name="InstantiationException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="IllegalAccessException" type="tns:IllegalAccessException"/>
+      <xs:complexType name="IllegalAccessException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="checkPetExistanceResponse">
+    <wsdl:part element="tns:checkPetExistanceResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkPetExistance">
+    <wsdl:part element="tns:checkPetExistance" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InstantiationException">
+    <wsdl:part element="tns:InstantiationException" name="InstantiationException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IllegalAccessException">
+    <wsdl:part element="tns:IllegalAccessException" name="IllegalAccessException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AccessDeniedException">
+    <wsdl:part element="tns:AccessDeniedException" name="AccessDeniedException">
+    </wsdl:part>
+  </wsdl:message>
+
+  <wsdl:portType name="PetWS">
+    <wsdl:operation name="checkPetExistance">
+      <wsdl:documentation> Pet</wsdl:documentation>
+      <wsdl:input message="tns:checkPetExistance" name="checkPetExistance">
+      </wsdl:input>
+      <wsdl:output message="tns:checkPetExistanceResponse" name="checkPetExistanceResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:AccessDeniedException" name="AccessDeniedException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:InstantiationException" name="InstantiationException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:IllegalAccessException" name="IllegalAccessException">
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PetWSSoapBinding" type="tns:PetWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="checkPetExistance">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="checkPetExistance">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkPetExistanceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="AccessDeniedException">
+        <soap:fault name="AccessDeniedException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InstantiationException">
+        <soap:fault name="InstantiationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalAccessException">
+        <soap:fault name="IllegalAccessException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="serviceManyFaults">
+    <wsdl:port binding="tns:PetWSSoapBinding" name="PetWSPort">
+      <soap:address location="https://{{url2}}/services/Pet/v7.8"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

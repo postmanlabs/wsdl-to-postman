@@ -1292,7 +1292,6 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
         soap12Namespace,
         httpNamespace
       ),
-
       operation = {};
     operation['http:operation'] = {
       '@_location': '/FahrenheitToCelsius'
@@ -1306,7 +1305,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
     }
   });
 
-  it('should throw an error when called with operation as empty object', function () {
+  it('should return empty style when called with operation as empty object', function () {
 
     const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
     xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
@@ -1394,14 +1393,9 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
         soapNamespace,
         soap12Namespace,
         httpNamespace
-      );
-    try {
-      informationService.getStyleFromBindingOperation({}, bindingInfo);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Cannot get style info from binding operation');
-    }
+      ),
+      style = informationService.getStyleFromBindingOperation({}, bindingInfo);
+    expect(style).to.equal('');
   });
 });
 
