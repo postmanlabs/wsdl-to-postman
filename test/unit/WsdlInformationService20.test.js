@@ -148,13 +148,8 @@ describe('WSDL 2.0 parser getLocationFromBindingOperation', function () {
 
   it('should get null when binding tag info is null', function () {
     const informationService = new WsdlInformationService20();
-    try {
-      informationService.getLocationFromBindingOperation({}, null);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Cannot get location info from operation');
-    }
+    let location = informationService.getLocationFromBindingOperation({}, null);
+    expect(location).to.equal('');
   });
 });
 
