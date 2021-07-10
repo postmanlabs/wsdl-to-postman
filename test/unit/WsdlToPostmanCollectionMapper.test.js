@@ -212,7 +212,7 @@ describe('WsdlToPostmanCollectionMapper constructor', function () {
       expectedMessage = 'Wsdl Object must be provided and must not be empty';
     try {
       let mapper = new WsdlToPostmanCollectionMapper(undefinedWsdl);
-      assert.fail('We expect an error');
+      assert.fail(expectedMessage);
       return mapper;
     }
     catch (error) {
@@ -225,7 +225,7 @@ describe('WsdlToPostmanCollectionMapper constructor', function () {
       expectedMessage = 'Wsdl Object must be provided and must not be empty';
     try {
       let mapper = new WsdlToPostmanCollectionMapper(nullWsdl);
-      assert.fail('We expect an error');
+      assert.fail(expectedMessage);
       return mapper;
 
     }

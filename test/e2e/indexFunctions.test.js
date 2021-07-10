@@ -62,7 +62,7 @@ describe('Test validate function in SchemaPack through Index', function() {
     expect(result).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Input not provided'
+        reason: 'Input.data not provided'
       });
   });
 

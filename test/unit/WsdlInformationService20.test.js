@@ -148,13 +148,8 @@ describe('WSDL 2.0 parser getLocationFromBindingOperation', function () {
 
   it('should get null when binding tag info is null', function () {
     const informationService = new WsdlInformationService20();
-    try {
-      informationService.getLocationFromBindingOperation({}, null);
-      assert.fail('we expected an error');
-    }
-    catch (error) {
-      expect(error.message).to.equal('Cannot get location info from operation');
-    }
+    let location = informationService.getLocationFromBindingOperation({}, null);
+    expect(location).to.equal('');
   });
 });
 
@@ -207,7 +202,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
+      expect(error.message).to.equal('Cannot get portType from undefined or null object');
     }
   });
 
@@ -219,7 +214,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
+      expect(error.message).to.equal('Cannot get portType from undefined or null object');
     }
   });
 
@@ -231,7 +226,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type from WSDL');
+      expect(error.message).to.equal('Cannot get portType from WSDL');
     }
   });
 
@@ -245,7 +240,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Cannot get portType with no filter name');
     }
   });
 
@@ -257,7 +252,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Cannot get portType with no filter name');
     }
   });
 
@@ -269,7 +264,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Cannot get portType with no filter name');
     }
   });
 
@@ -281,7 +276,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get portType with no filter operationName');
     }
   });
 
@@ -293,7 +288,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get portType with no filter operationName');
     }
   });
 
@@ -305,7 +300,7 @@ describe('WSDL 2.0 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Cannot get portType with no filter operationName');
     }
   });
 });
@@ -318,7 +313,7 @@ describe('WSDL 2.0 getInterfaceByInterfaceName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot interface from undefined or null object');
+      expect(error.message).to.equal('Cannot get interface from undefined or null object');
     }
   });
   it('should get an error when called with empty name', function () {

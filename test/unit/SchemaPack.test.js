@@ -339,7 +339,7 @@ describe('getMetaData method', function () {
       }, {});
     schemaPack.getMetaData(function (error, result) {
       expect(error).to.eq(null);
-      expect(result.reason).to.eq('Input not provided');
+      expect(result.reason).to.eq('Input.data not provided');
     });
   });
 });

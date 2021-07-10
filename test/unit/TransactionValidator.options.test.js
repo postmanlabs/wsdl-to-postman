@@ -381,8 +381,8 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
-  it('Should have two mismatch when a request msg has 2 unresolved PM variable no option sent' +
-  ', detailedBlobValidation is true and suggestAvailableFixes is true', function () {
+  it('Should have two mismatches when a request msg has 2 unresolved PM variables no option sent,' +
+  'detailedBlobValidation is true and suggestAvailableFixes is true', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         calculatorCollectionItemsPMVariable,
@@ -424,8 +424,8 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Should have one mismatch when a request msg has 2 unresolved PM variable no option sent' +
-  ', detaledBlobValidation is false and suggestAvailableFixes is true', function () {
+  it('Should have one mismatch when a request msg has 2 unresolved PM variables no option sent,' +
+  'detaledBlobValidation is false and suggestAvailableFixes is true', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
         calculatorCollectionItemsPMVariable,
@@ -458,18 +458,19 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Shouldn\'t have a mismatch when a request msg has 2 unresolved PM variable and ignoreUnresolvedVariables is true',
-    function () {
-      const transactionValidator = new TransactionValidator(),
-        result = transactionValidator.validateTransaction(
-          calculatorCollectionItemsPMVariable,
-          calculatorWSDLObject, new XMLParser(),
-          { ignoreUnresolvedVariables: true }
-        );
-      expect(result).to.be.an('object').and.to.deep.include(expectedCalculatorBase);
-    });
+  it('Shouldn\'t have a mismatch when a request msg has 2 unresolved PM variables ' +
+  'and ignoreUnresolvedVariables is true',
+  function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        calculatorCollectionItemsPMVariable,
+        calculatorWSDLObject, new XMLParser(),
+        { ignoreUnresolvedVariables: true }
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expectedCalculatorBase);
+  });
 
-  it('Should have a mismatch when a request msg has more than expected fields and ' +
+  it('Should have a mismatch when a request msg has more fields than expected and ' +
   'showMissingInSchemaErrors is not sent', function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -487,8 +488,8 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Shouldn\'t have any mismatch when a request msg has more than expected fields' +
-  ' and showMissingInSchemaErrors is false',
+  it('Shouldn\'t have any mismatch when a request msg has more fields than expected ' +
+  'and showMissingInSchemaErrors is false',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -499,7 +500,7 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expectedBase);
   });
 
-  it('Should have a mismatch when a request msg has more than expected fields and showMissingInSchemaErrors is true',
+  it('Should have a mismatch when a request msg has more fields than expected and showMissingInSchemaErrors is true',
     function () {
       const transactionValidator = new TransactionValidator(),
         result = transactionValidator.validateTransaction(
@@ -517,8 +518,8 @@ describe('validateBody method with options', function () {
       expect(result).to.be.an('object').and.to.deep.include(expected);
     });
 
-  it('Should have a mismatch when a request msg has more than expected fields, showMissingInSchemaErrors is true' +
-  ' and suggestAvaulableFixes is true',
+  it('Should have a mismatch when a request msg has more fields than expected, showMissingInSchemaErrors is true,' +
+  ' and suggestAvailableFixes is true',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -550,8 +551,8 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Should have a mismatch when a request msg has more than expected fields, showMissingInSchemaErrors is true,' +
-  ' suggestAvaulableFixes is true and detailedBlobValidation is true',
+  it('Should have a mismatch when a request msg has more fields than expected, showMissingInSchemaErrors is true,' +
+  ' suggestAvailableFixes is true and detailedBlobValidation is true',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -585,8 +586,8 @@ describe('validateBody method with options', function () {
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
 
-  it('Should have a mismatch when a request msg has less than expected fields,' +
-  ' suggestAvaulableFixes is true and detailedBlobValidation is true',
+  it('Should have a mismatch when a request msg has less field than expected,' +
+  ' suggestAvailableFixes is true and detailedBlobValidation is true',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -619,7 +620,7 @@ describe('validateBody method with options', function () {
   });
 
   it('Should have a mismatch when a request msg has a different type than expected in field,' +
-  ' suggestAvailableFixes is true and detailedBlobValidation is true',
+  ' suggestAvailableFixes is true, and detailedBlobValidation is true',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
@@ -653,8 +654,8 @@ describe('validateBody method with options', function () {
   });
 
   it('Should have a mismatch when a response msg has a different type than expected in field,' +
-  ' and there are multiple elements with the same name than its parent in different levels' +
-  'suggestAvailableFixes is true and detailedBlobValidation is true',
+  ' and there are multiple elements with the same name than its parent in different levels,' +
+  'suggestAvailableFixes is true, and detailedBlobValidation is true',
   function () {
     const transactionValidator = new TransactionValidator(),
       result = transactionValidator.validateTransaction(
