@@ -1,4 +1,4 @@
-const GeocodeAddressParsedWSDLOp = 
+const GeocodeAddressParsedWSDLOp =
 require('./../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOp'),
   GeocodeAddressParsedWSDLOpMissParam =
   require('./../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpMissParam'),
