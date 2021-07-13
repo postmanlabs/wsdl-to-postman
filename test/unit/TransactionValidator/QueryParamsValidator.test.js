@@ -1,13 +1,14 @@
-const GeocodeAddressParsedWSDLOp = require('./../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOp'),
+const GeocodeAddressParsedWSDLOp = 
+require('./../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOp'),
   GeocodeAddressParsedWSDLOpMissParam =
-  require('./../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpMissParam'),
+  require('./../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpMissParam'),
   {
     expect
   } = require('chai'),
   {
-    TransactionValidator
-  } = require('./../../lib/TransactionValidator'),
-  getOptions = require('./../../lib/utils/options').getOptions;
+    QueryParamsValidator
+  } = require('./../../../lib/TransactionValidator/QueryParamsValidator'),
+  getOptions = require('./../../../lib/utils/options').getOptions;
 
 
 describe('validateQueryParams', function () {
@@ -36,11 +37,11 @@ describe('validateQueryParams', function () {
       }),
       validateHeaderOption = options.find((option) => { return option.id === 'validationPropertiesToIgnore'; });
     let optionFromOptions = {},
-      transactionValidator,
+      paramsValidator,
       result;
     optionFromOptions[`${validateHeaderOption.id}`] = 'QUERYPARAM';
-    transactionValidator = new TransactionValidator();
-    result = transactionValidator.validateQueryParams({
+    paramsValidator = new QueryParamsValidator();
+    result = paramsValidator.validate({
       itemRequestProcessedInfo: {}, operationFromWSDLL: {},
       options: optionFromOptions
     });
@@ -50,17 +51,17 @@ describe('validateQueryParams', function () {
 
   it('Should not return missmatch when url is correct', function () {
     const itemRequestProcessedInfo = {
-      url: geocodeAddressParsedURL,
+      fullURL: geocodeAddressParsedURL,
       name: '',
       protocol: 'http',
       method: 'GET',
       soapActionSegment: ''
     };
     let optionFromOptions = {},
-      transactionValidator,
+      paramsValidator,
       result;
-    transactionValidator = new TransactionValidator();
-    result = transactionValidator.validateQueryParams({
+    paramsValidator = new QueryParamsValidator();
+    result = paramsValidator.validate({
       itemRequestProcessedInfo: itemRequestProcessedInfo,
       operationFromWSDL: GeocodeAddressParsedWSDLOp, options: optionFromOptions
     });
@@ -68,19 +69,19 @@ describe('validateQueryParams', function () {
     expect(result.length).to.equal(0);
   });
 
-  it('Should get one missmatch when a parameter is missing in request', function () {
+  it('AAAAAAAAaaaaaShould get one missmatch when a parameter is missing in request', function () {
     const itemRequestProcessedInfo = {
-      url: geocodeAddressParsedURLMissing,
+      fullURL: geocodeAddressParsedURLMissing,
       name: '',
       protocol: 'http',
       method: 'GET',
       soapActionSegment: ''
     };
     let optionFromOptions = {},
-      transactionValidator,
+      paramsValidator,
       result;
-    transactionValidator = new TransactionValidator();
-    result = transactionValidator.validateQueryParams({
+    paramsValidator = new QueryParamsValidator();
+    result = paramsValidator.validate({
       itemRequestProcessedInfo: itemRequestProcessedInfo,
       operationFromWSDL: GeocodeAddressParsedWSDLOp, options: optionFromOptions
     });
@@ -104,17 +105,17 @@ describe('validateQueryParams', function () {
       suggestAvailableFixesOption = options.find((option) => { return option.id === 'suggestAvailableFixes'; });
     let optionFromOptions = {},
       itemRequestProcessedInfo = {
-        url: geocodeAddressParsedURLMissing,
+        fullURL: geocodeAddressParsedURLMissing,
         name: '',
         protocol: 'http',
         method: 'GET',
         soapActionSegment: ''
       },
-      transactionValidator,
+      paramsValidator,
       result;
     optionFromOptions[`${suggestAvailableFixesOption.id}`] = true;
-    transactionValidator = new TransactionValidator();
-    result = transactionValidator.validateQueryParams({
+    paramsValidator = new QueryParamsValidator();
+    result = paramsValidator.validate({
       itemRequestProcessedInfo: itemRequestProcessedInfo,
       operationFromWSDL: GeocodeAddressParsedWSDLOp, options: optionFromOptions
     });
@@ -141,17 +142,17 @@ describe('validateQueryParams', function () {
 
   it('Should get two missmatch when 2 parameters are missing in request', function () {
     const itemRequestProcessedInfo = {
-      url: geocodeAddressParsedURLMissing2,
+      fullURL: geocodeAddressParsedURLMissing2,
       name: '',
       protocol: 'http',
       method: 'GET',
       soapActionSegment: ''
     };
     let optionFromOptions = {},
-      transactionValidator,
+      paramsValidator,
       result;
-    transactionValidator = new TransactionValidator();
-    result = transactionValidator.validateQueryParams({
+    paramsValidator = new QueryParamsValidator();
+    result = paramsValidator.validate({
       itemRequestProcessedInfo: itemRequestProcessedInfo,
       operationFromWSDL: GeocodeAddressParsedWSDLOp, options: optionFromOptions
     });
@@ -174,6 +175,7 @@ describe('validateQueryParams', function () {
       reason: 'The required query parameter \"shouldNotStoreTransactionDetails\" was not found in the transaction'
     });
   });
+
   it('Should get one missmatch of missing in schema when a parameter is missing in schema', function () {
     const options = getOptions({
         usage: ['VALIDATION']
@@ -181,17 +183,17 @@ describe('validateQueryParams', function () {
       suggestAvailableFixesOption = options.find((option) => { return option.id === 'showMissingInSchemaErrors'; });
     let optionFromOptions = {},
       itemRequestProcessedInfo = {
-        url: geocodeAddressParsedURL,
+        fullURL: geocodeAddressParsedURL,
         name: '',
         protocol: 'http',
         method: 'GET',
         soapActionSegment: ''
       },
-      transactionValidator,
+      paramsValidator,
       result;
     optionFromOptions[`${suggestAvailableFixesOption.id}`] = true;
-    transactionValidator = new TransactionValidator();
-    result = transactionValidator.validateQueryParams({
+    paramsValidator = new QueryParamsValidator();
+    result = paramsValidator.validate({
       itemRequestProcessedInfo: itemRequestProcessedInfo,
       operationFromWSDL: GeocodeAddressParsedWSDLOpMissParam, options: optionFromOptions
     });
