@@ -7,7 +7,7 @@ require('../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOp')
   } = require('chai'),
   {
     QueryParamsValidator
-  } = require('../../lib/TransactionValidator/QueryParamsValidator'),
+  } = require('../../lib/transactionValidator/QueryParamsValidator'),
   getOptions = require('../../lib/utils/options').getOptions;
 
 
