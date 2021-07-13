@@ -69,7 +69,7 @@ describe('validateQueryParams', function () {
     expect(result.length).to.equal(0);
   });
 
-  it('AAAAAAAAaaaaaShould get one missmatch when a parameter is missing in request', function () {
+  it('Should get one missmatch when a parameter is missing in request', function () {
     const itemRequestProcessedInfo = {
       fullURL: geocodeAddressParsedURLMissing,
       name: '',
