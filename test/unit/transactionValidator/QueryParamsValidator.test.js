@@ -1,14 +1,14 @@
 const GeocodeAddressParsedWSDLOp =
-require('../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOp'),
+require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOp'),
   GeocodeAddressParsedWSDLOpMissParam =
-  require('../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpMissParam'),
+  require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpMissParam'),
   {
     expect
   } = require('chai'),
   {
     QueryParamsValidator
-  } = require('../../lib/transactionValidator/QueryParamsValidator'),
-  getOptions = require('../../lib/utils/options').getOptions;
+  } = require('../../../lib/transactionValidator/QueryParamsValidator'),
+  getOptions = require('../../../lib/utils/options').getOptions;
 
 
 describe('validateQueryParams', function () {
