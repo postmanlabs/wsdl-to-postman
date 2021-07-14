@@ -14,11 +14,11 @@ describe('HeadersValidator', function () {
       }),
       validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
     let optionFromOptions = {},
-      transactionValidator,
+      validator,
       result;
     optionFromOptions[`${validateHeaderOption.id}`] = true;
-    transactionValidator = new HeadersValidator();
-    result = transactionValidator.validate([], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
+    validator = new HeadersValidator();
+    result = validator.validate([], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
     expect(result).to.be.an('Array');
     expect(result[0]).to.be.an('object').and.to.deep.include({
       property: 'HEADER',
@@ -37,11 +37,11 @@ describe('HeadersValidator', function () {
       }),
       validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
     let optionFromOptions = {},
-      transactionValidator,
+      validator,
       result;
     optionFromOptions[`${validateHeaderOption.id}`] = true;
-    transactionValidator = new HeadersValidator();
-    result = transactionValidator.validate([{
+    validator = new HeadersValidator();
+    result = validator.validate([{
       'key': 'Content-Type',
       'value': 'text/plain; charset=utf-8'
     }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
@@ -59,8 +59,8 @@ describe('HeadersValidator', function () {
   it('Should not return missing header when validateHeader option is not provided' +
   ' and not content-type header is present',
   function () {
-    const transactionValidator = new HeadersValidator(),
-      result = transactionValidator.validate([], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', false, false, {});
+    const validator = new HeadersValidator(),
+      result = validator.validate([], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', false, false, {});
     expect(result).to.be.an('array');
     expect(result.length).to.eq(0);
   });
@@ -68,8 +68,8 @@ describe('HeadersValidator', function () {
   it('Should not return bad header mismatch when validateHeader option' +
   ' is false and content-type header is not text/xml',
   function () {
-    const transactionValidator = new HeadersValidator(),
-      result = transactionValidator.validate([{
+    const validator = new HeadersValidator(),
+      result = validator.validate([{
         'key': 'Content-Type',
         'value': 'text/plain; charset=utf-8'
       }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', false, false, {});
