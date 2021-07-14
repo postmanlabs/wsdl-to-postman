@@ -492,7 +492,7 @@ describe('Validate Headers', function() {
               transactionJsonPath: '$.request.header[0].value',
               schemaJsonPath: 'schemaPathPrefix',
               reasonCode: 'INVALID_TYPE',
-              reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we ' +
+              reason: 'The header \"Content-Type\" needs to be \"text/xml\" or \"application/soap+xml\" but we ' +
                 'found \"text/plain; charset=utf-8\" instead'
             }],
             responses: {
@@ -504,7 +504,7 @@ describe('Validate Headers', function() {
                   transactionJsonPath: '$.responses[d36c56cf-0cf6-4273-a34d-973e842bf80f].header[0].value',
                   schemaJsonPath: 'schemaPathPrefix',
                   reasonCode: 'INVALID_TYPE',
-                  reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we' +
+                  reason: 'The header \"Content-Type\" needs to be \"text/xml\" or \"application/soap+xml\" but we' +
                     ' found \"text/plain; charset=utf-8\" instead'
                 }]
               }

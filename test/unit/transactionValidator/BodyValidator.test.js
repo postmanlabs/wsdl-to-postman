@@ -37,7 +37,7 @@ const {
         name: 'NumberToWords',
         isComplex: true,
         type: 'complex',
-        namespace: 'http://www.dataaccess.com/webservicesserver/',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
       }
     ],
     output: [
@@ -65,14 +65,14 @@ const {
             ],
             name: 'faultcode',
             isComplex: false,
-            type: 'string',
-          },
+            type: 'string'
+          }
         ],
         name: 'fault',
         isComplex: true,
         type: 'complex',
-        namespace: '',
-      },
+        namespace: ''
+      }
     ],
     portName: 'NumberConversionSoap',
     serviceName: 'NumberConversion',

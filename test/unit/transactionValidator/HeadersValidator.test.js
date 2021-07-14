@@ -51,7 +51,7 @@ describe('HeadersValidator', function () {
       transactionJsonPath: '$.request.header[0].value',
       schemaJsonPath: 'schemaPathPrefix',
       reasonCode: 'INVALID_TYPE',
-      reason: 'The header \"Content-Type\" needs to be \"text/xml\" but we ' +
+      reason: 'The header \"Content-Type\" needs to be \"text/xml\" or \"application/soap+xml\" but we ' +
         'found \"text/plain; charset=utf-8\" instead'
     });
   });
@@ -75,6 +75,42 @@ describe('HeadersValidator', function () {
       }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', false, false, {});
     expect(result).to.be.an('array');
     expect(result.length).to.eq(0);
+  });
+
+  it('Should not return missmatch when header is text/xml and validateHeader option is true', function () {
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      validator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    validator = new HeadersValidator();
+    result = validator.validate([{
+      'key': 'Content-Type',
+      'value': 'text/xml'
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
+    expect(result).to.be.an('Array');
+    expect(result.length).to.equal(0);
+  });
+
+  it('Should not return missmatch when header is application/soap+xml and validateHeader option is true', function () {
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      validator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    validator = new HeadersValidator();
+    result = validator.validate([{
+      'key': 'Content-Type',
+      'value': 'application/soap+xml'
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
+    expect(result).to.be.an('Array');
+    expect(result.length).to.equal(0);
   });
 
 });
