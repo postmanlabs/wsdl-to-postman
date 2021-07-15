@@ -557,5 +557,12 @@ describe('knownTypes isValidType', function () {
     expect(result).to.equal(true);
   });
 
+  it('should get false when called with string and value of \'9\'', function () {
+    const element = new Element();
+    element.type = 'string';
+    let result = isValidType(9, element);
+    expect(result).to.equal(false);
+  });
+
 
 });
