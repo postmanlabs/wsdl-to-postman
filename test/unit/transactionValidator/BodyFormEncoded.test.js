@@ -1,7 +1,9 @@
 const GeocodeAddressParsedWSDLOpHTTPPOST =
   require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpHTTPPOST'),
   GeocodeAddressParsedWSDLOpHTTPPOSTMissParam =
-    require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpHTTPPOSTMissParam'),
+    require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpHTTPPOSTMissParam'), 
+  GeocodeAddressParsedWSDLOpHTTPPOSTInt =
+    require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpHTTPPOSTInt'),
   {
     expect
   } = require('chai'),
@@ -287,6 +289,99 @@ describe('validate BodyFormEncodedValidator', function () {
           value: 'string'
         }
       ]
+    },
+    PM_VAR_VALID_BODY = {
+      mode: 'urlencoded',
+      urlencoded: [
+        {
+          key: 'number',
+          value: '{{variable}}'
+        },
+        {
+          key: 'numberFractional',
+          value: 'string'
+        },
+        {
+          key: 'preDirectional',
+          value: 'string'
+        },
+        {
+          key: 'preQualifier',
+          value: 'string'
+        },
+        {
+          key: 'preType',
+          value: 'string'
+        },
+        {
+          key: 'preArticle',
+          value: 'string'
+        },
+        {
+          key: 'name',
+          value: 'string'
+        },
+        {
+          key: 'suffix',
+          value: 'string'
+        },
+        {
+          key: 'postArticle',
+          value: 'string'
+        },
+        {
+          key: 'postQualifier',
+          value: 'string'
+        },
+        {
+          key: 'postDirectional',
+          value: 'string'
+        },
+        {
+          key: 'suiteType',
+          value: 'string'
+        },
+        {
+          key: 'suiteNumber',
+          value: 'string'
+        },
+        {
+          key: 'city',
+          value: 'string'
+        },
+        {
+          key: 'state',
+          value: 'string'
+        },
+        {
+          key: 'zip',
+          value: 'string'
+        },
+        {
+          key: 'apiKey',
+          value: 'string'
+        },
+        {
+          key: 'version',
+          value: 'string'
+        },
+        {
+          key: 'shouldCalculateCensus',
+          value: 'string'
+        },
+        {
+          key: 'censusYear',
+          value: 'string'
+        },
+        {
+          key: 'shouldReturnReferenceGeometry',
+          value: 'string'
+        },
+        {
+          key: 'shouldNotStoreTransactionDetails',
+          value: 'string'
+        }
+      ]
     };
 
   it('Should not validate body when properties to ignore contains BODY', function () {
@@ -453,6 +548,41 @@ describe('validate BodyFormEncodedValidator', function () {
         }
       }
     });
+  });
+
+  it('Should get zero missmatch with a pm collection variable and ingnore on true', function () {
+    const options = getOptions({ usage: ['VALIDATION'] }),
+      ignoreUnresolvedVariables = options.find((option) => { return option.id === 'ignoreUnresolvedVariables'; });
+    let optionFromOptions = {},
+      paramsValidator,
+      result;
+    optionFromOptions[`${ignoreUnresolvedVariables.id}`] = true;
+    paramsValidator = new BodyFormEncodedValidator();
+    result = paramsValidator.validate({
+      body: PM_VAR_VALID_BODY,
+      operationFromWSDL: GeocodeAddressParsedWSDLOpHTTPPOSTInt, options: optionFromOptions,
+      isResponse: false
+    });
+    expect(result).to.be.an('array');
+    expect(result.length).to.equal(0);
+  });
+
+  it('Should get one missmatch with a pm collection variable and ignore on false', function () {
+    const options = getOptions({ usage: ['VALIDATION'] }),
+      ignoreUnresolvedVariables = options.find((option) => { return option.id === 'ignoreUnresolvedVariables'; });
+    let optionFromOptions = {},
+      paramsValidator,
+      result;
+    optionFromOptions[`${ignoreUnresolvedVariables.id}`] = false;
+    paramsValidator = new BodyFormEncodedValidator();
+    result = paramsValidator.validate({
+      body: PM_VAR_VALID_BODY,
+      operationFromWSDL: GeocodeAddressParsedWSDLOpHTTPPOSTInt, options: optionFromOptions,
+      isResponse: false
+    });
+    expect(result).to.be.an('array');
+    expect(result[0].property).to.equal('BODY');
+    expect(result[0].reason).to.equal('The request body needs to be of type integer, but we found "{{variable}}"');
   });
 
 });
