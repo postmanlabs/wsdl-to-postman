@@ -1,7 +1,7 @@
 const GeocodeAddressParsedWSDLOpHTTPPOST =
   require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpHTTPPOST'),
   GeocodeAddressParsedWSDLOpHTTPPOSTMissParam =
-    require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpHTTPPOSTMissParam'), 
+    require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpHTTPPOSTMissParam'),
   GeocodeAddressParsedWSDLOpHTTPPOSTInt =
     require('../../data/transactionsValidation/wsdlObjects/GeocodeAddressParsedWSDLOpHTTPPOSTInt'),
   {
