@@ -2,8 +2,8 @@ const {
     expect
   } = require('chai'),
   {
-    BodyValidator
-  } = require('../../../lib/transactionValidator/BodyValidator'),
+    BodyValidatorRawSOAP
+  } = require('../../../lib/transactionValidator/BodyValidatorRawSOAP'),
   {
     XMLParser
   } = require('../../../lib/XMLParser'),
@@ -105,7 +105,7 @@ const {
 
 describe('BodyValidator', function () {
   it('Should return an empty array when request and response bodies are valid', function() {
-    const validator = new BodyValidator(),
+    const validator = new BodyValidatorRawSOAP(),
       result = validator.validate(VALID_BODY, numberToWordsWSDLObject, OPERATION, false,
         {}, new XMLParser(), OPERATION_ELEMENT);
     expect(result).to.be.an('Array');
@@ -113,7 +113,7 @@ describe('BodyValidator', function () {
   });
 
   it('Should have a mismatch INVALID_BODY when a request endpoint has a type error in body', function() {
-    const validator = new BodyValidator(),
+    const validator = new BodyValidatorRawSOAP(),
       result = validator.validate(INVALID_BODY_TYPE, numberToWordsWSDLObject, OPERATION, false,
         {}, new XMLParser(), OPERATION_ELEMENT);
     expect(result).to.be.an('Array');
@@ -129,7 +129,7 @@ describe('BodyValidator', function () {
 
   it('Should have a mismatch INVALID_TYPE when a request endpoint has a type error in body option detailed true',
     function() {
-      const validator = new BodyValidator(),
+      const validator = new BodyValidatorRawSOAP(),
         result = validator.validate(INVALID_BODY_TYPE, numberToWordsWSDLObject, OPERATION, false,
           { detailedBlobValidation: true }, new XMLParser(), OPERATION_ELEMENT);
       expect(result).to.be.an('Array');
