@@ -1,0 +1,529 @@
+[{
+  "id": "d15dbad2-a5d2-4c96-9a9c-5f794d3eba01",
+  "name": "Add",
+  "request": {
+    "description": {
+      "content": "Adds two integers. This is a test WebService. ©DNE Online",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["calculator.asmx"],
+      "host": "http://www.dneonline.com",
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <Add xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Add>\n  </soap:Body>\n</soap:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "0b710935-f1f7-4048-9ea8-ce829a477eab",
+    "name": "Add response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["calculator.asmx"],
+        "host": ["www", "dneonline", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <Add xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Add>\n  </soap:Body>\n</soap:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <AddResponse xmlns=\"http://tempuri.org/\">\n      <AddResult>100</AddResult>\n    </AddResponse>\n  </soap:Body>\n</soap:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}, {
+  "id": "96552d2b-2877-4cf1-ac6d-33846c17abd2",
+  "name": "Subtract",
+  "request": {
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["calculator.asmx"],
+      "host": "http://www.dneonline.com",
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <Subtract xmlns=\"http://tempuri.org/\">\n      <intB>200</intB>\n      <intA>100</intA>\n    </Subtract>\n  </soap:Body>\n</soap:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "4f1d0f6c-65ed-4302-babc-a46ce2134ac3",
+    "name": "Subtract response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["calculator.asmx"],
+        "host": ["www", "dneonline", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <Subtract xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Subtract>\n  </soap:Body>\n</soap:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <SubtractResponse xmlns=\"http://tempuri.org/\">\n      <SubtractResult>100</SubtractResult>\n    </SubtractResponse>\n  </soap:Body>\n</soap:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}, {
+  "id": "afe6f424-c8d3-4f22-ac7f-68fd7227a486",
+  "name": "Multiply",
+  "request": {
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["calculator.asmx"],
+      "host": "http://www.dneonline.com",
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <Multiply xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Multiply>\n  </soap:Body>\n</soap:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "ca88bea9-ba25-43ff-8992-5478e8b22a3c",
+    "name": "Multiply response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["calculator.asmx"],
+        "host": ["www", "dneonline", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <Multiply xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Multiply>\n  </soap:Body>\n</soap:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <MultiplyResponse xmlns=\"http://tempuri.org/\">\n      <MultiplyResult>100</MultiplyResult>\n    </MultiplyResponse>\n  </soap:Body>\n</soap:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}, {
+  "id": "d724b317-5f53-451b-a5ce-6ee112034159",
+  "name": "Divide",
+  "request": {
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["calculator.asmx"],
+      "host": "http://www.dneonline.com",
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <Divide xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Divide>\n  </soap:Body>\n</soap:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "77c8ddce-e038-450d-b62b-e6eddd8c35e3",
+    "name": "Divide response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["calculator.asmx"],
+        "host": ["www", "dneonline", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <Divide xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Divide>\n  </soap:Body>\n</soap:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <DivideResponse xmlns=\"http://tempuri.org/\">\n      <DivideResult>100</DivideResult>\n    </DivideResponse>\n  </soap:Body>\n</soap:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}, {
+  "id": "97a39497-046f-4070-acac-c74f56e25a12",
+  "name": "Add",
+  "request": {
+    "description": {
+      "content": "Adds two integers. This is a test WebService. ©DNE Online",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["calculator.asmx"],
+      "host": "http://www.dneonline.com",
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <Add xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Add>\n  </soap12:Body>\n</soap12:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "1e031046-c0f0-43a2-86be-73fe40232125",
+    "name": "Add response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["calculator.asmx"],
+        "host": ["www", "dneonline", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <Add xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Add>\n  </soap12:Body>\n</soap12:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <AddResponse xmlns=\"http://tempuri.org/\">\n      <AddResult>100</AddResult>\n    </AddResponse>\n  </soap12:Body>\n</soap12:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}, {
+  "id": "345a134b-4a5b-491a-9e44-e2e8248571bc",
+  "name": "Subtract",
+  "request": {
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["calculator.asmx"],
+      "host": "http://www.dneonline.com",
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <Subtract xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Subtract>\n  </soap12:Body>\n</soap12:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "b9b97647-8277-4a33-81fc-49c1d6d64761",
+    "name": "Subtract response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["calculator.asmx"],
+        "host": ["www", "dneonline", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <Subtract xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Subtract>\n  </soap12:Body>\n</soap12:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <SubtractResponse xmlns=\"http://tempuri.org/\">\n      <SubtractResult>100</SubtractResult>\n    </SubtractResponse>\n  </soap12:Body>\n</soap12:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}, {
+  "id": "d0c1ac21-2949-4f62-ad09-daa10cf608ef",
+  "name": "Multiply",
+  "request": {
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["calculator.asmx"],
+      "host": "http://www.dneonline.com",
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <Multiply xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Multiply>\n  </soap12:Body>\n</soap12:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "0bd70547-189b-47e2-969d-44d04423224e",
+    "name": "Multiply response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["calculator.asmx"],
+        "host": ["www", "dneonline", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <Multiply xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Multiply>\n  </soap12:Body>\n</soap12:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <MultiplyResponse xmlns=\"http://tempuri.org/\">\n      <MultiplyResult>100</MultiplyResult>\n    </MultiplyResponse>\n  </soap12:Body>\n</soap12:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}, {
+  "id": "1a4fd56b-1260-4861-9483-7724b46a27c2",
+  "name": "Divide",
+  "request": {
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    },
+    "url": {
+      "path": ["calculator.asmx"],
+      "host": "http://www.dneonline.com",
+      "query": [],
+      "variable": []
+    },
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "method": "POST",
+    "body": {
+      "mode": "raw",
+      "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <Divide xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Divide>\n  </soap12:Body>\n</soap12:Envelope>\n",
+      "options": {
+        "raw": {
+          "language": "xml"
+        }
+      }
+    }
+  },
+  "response": [{
+    "id": "7c690fc8-cad3-4a7f-aa7f-9b98a03a3c4b",
+    "name": "Divide response",
+    "originalRequest": {
+      "url": {
+        "protocol": "http",
+        "path": ["calculator.asmx"],
+        "host": ["www", "dneonline", "com"],
+        "query": [],
+        "variable": []
+      },
+      "header": [{
+        "key": "Content-Type",
+        "value": "text/xml; charset=utf-8"
+      }],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <Divide xmlns=\"http://tempuri.org/\">\n      <intA>100</intA>\n      <intB>100</intB>\n    </Divide>\n  </soap12:Body>\n</soap12:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "status": "OK",
+    "code": 200,
+    "header": [{
+      "key": "Content-Type",
+      "value": "text/xml; charset=utf-8"
+    }],
+    "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n  <soap12:Body>\n    <DivideResponse xmlns=\"http://tempuri.org/\">\n      <DivideResult>100</DivideResult>\n    </DivideResponse>\n  </soap12:Body>\n</soap12:Envelope>\n",
+    "cookie": [],
+    "_postman_previewlanguage": "xml"
+  }],
+  "event": []
+}]
