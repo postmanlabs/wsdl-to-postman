@@ -949,6 +949,33 @@ describe('Invalid xml string cases', function() {
         expectedBody: commonExpectedBody
       }
     };
+
+  it('Should return an INVALID_BODY mismatch in INVALID_XML_STRING__SINGLE case ' +
+  'detailedBlobValidation = false, suggestAvailableFixes = true', function() {
+    const options = {
+        detailedBlobValidation: false,
+        suggestAvailableFixes: true
+      },
+      {
+        currentBody,
+        expectedBody
+      } = cases.INVALID_XML_STRING__SINGLE,
+      mismatch = new BodyMismatch(error, currentBody, expectedBody, operation, false, options),
+      result = mismatch.getMismatch();
+    expect(result).to.be.deep.equal({
+      property: 'BODY',
+      reason: 'The request body didn\'t match the specified schema',
+      reasonCode: 'INVALID_BODY',
+      schemaJsonPath: '//Test//xpath',
+      transactionJsonPath: '$.request.body',
+      suggestedFix: {
+        key: '//soap:Body',
+        actualValue: currentBody,
+        suggestedValue: expectedBody
+      }
+    });
+  });
+
   it('Should return an INVALID_BODY mismatch in INVALID_XML_STRING__SINGLE case ' +
   'detailedBlobValidation = false, suggestAvailableFixes = true', function() {
     const options = {
@@ -971,6 +998,155 @@ describe('Invalid xml string cases', function() {
         key: '//soap:Body',
         actualValue: currentBody,
         suggestedValue: expectedBody
+      }
+    });
+  });
+});
+
+describe('Invalid root cases', function() {
+  const error = {
+      message: 'Element \'NOTEXPECTEDROOT\': No matching global declaration available for the validation root',
+      code: 1
+    },
+    commonExpectedBody = '<Subtract >' +
+        '<ob>' +
+          '<intA>100</intA>' +
+        '</ob>' +
+      '</Subtract>',
+    cases = {
+      INVALID_ROOT_ELEMENT__SINGLE: {
+        currentBody: 'NOTEXPECTEDROOT >' +
+            '<ob>' +
+              '<intA>100</intA>' +
+            '</ob>' +
+          '</NOTEXPECTEDROOT>',
+        expectedBody: commonExpectedBody
+      }
+    };
+
+  it('Should return an INVALID_BODY mismatch in INVALID_ROOT_ELEMENT__SINGLE case' +
+    'detailedBlobValidation = false, suggestAvailableFixes = true', function() {
+    const options = {
+        detailedBlobValidation: false,
+        suggestAvailableFixes: true
+      },
+      {
+        currentBody,
+        expectedBody
+      } = cases.INVALID_ROOT_ELEMENT__SINGLE,
+      mismatch = new BodyMismatch(error, currentBody, expectedBody, operation, false, options),
+      result = mismatch.getMismatch();
+    expect(result).to.be.deep.equal({
+      property: 'BODY',
+      reason: 'The request body didn\'t match the specified schema',
+      reasonCode: 'INVALID_BODY',
+      schemaJsonPath: '//Test//xpath',
+      transactionJsonPath: '$.request.body',
+      suggestedFix: {
+        key: '//soap:Body',
+        actualValue: currentBody,
+        suggestedValue: expectedBody
+      }
+    });
+  });
+
+  it('Should return an INVALID_BODY mismatch in INVALID_ROOT_ELEMENT__SINGLE case' +
+    'detailedBlobValidation = true, suggestAvailableFixes = true', function() {
+    const options = {
+        detailedBlobValidation: true,
+        suggestAvailableFixes: true
+      },
+      {
+        currentBody,
+        expectedBody
+      } = cases.INVALID_ROOT_ELEMENT__SINGLE,
+      mismatch = new BodyMismatch(error, currentBody, expectedBody, operation, false, options),
+      result = mismatch.getMismatch();
+    expect(result).to.be.deep.equal({
+      property: 'BODY',
+      reason: 'Element \'NOTEXPECTEDROOT\': No matching global declaration available for the validation root',
+      reasonCode: 'INVALID_BODY',
+      schemaJsonPath: '//Test//xpath',
+      transactionJsonPath: '$.request.body',
+      suggestedFix: {
+        key: '//soap:Body',
+        actualValue: currentBody,
+        suggestedValue: expectedBody
+      }
+    });
+  });
+});
+
+describe('Not expected in body cases', function() {
+  const error = {
+      message: 'Element \'WRONGELEMENT\': This element is not expected',
+      code: 1
+    },
+    commonExpectedBody = '<Subtract >' +
+        '<ob>' +
+          '<intA>100</intA>' +
+        '</ob>' +
+      '</Subtract>',
+    cases = {
+      NOT_EXPECTED_IN_BODY__SINGLE: {
+        currentBody: '<Subtract >' +
+            '<ob>' +
+              '<intA>100</intA>' +
+              '<WRONGELEMENT>100</WRONGELEMENT>' +
+            '</ob>' +
+          '</Subtract>',
+        expectedBody: commonExpectedBody
+      }
+    };
+
+  it('Should return an INVALID_BODY mismatch in NOT_EXPECTED_IN_BODY__SINGLE case' +
+    'detailedBlobValidation = false, suggestAvailableFixes = true', function() {
+    const options = {
+        detailedBlobValidation: false,
+        suggestAvailableFixes: true
+      },
+      {
+        currentBody,
+        expectedBody
+      } = cases.NOT_EXPECTED_IN_BODY__SINGLE,
+      mismatch = new BodyMismatch(error, currentBody, expectedBody, operation, false, options),
+      result = mismatch.getMismatch();
+    expect(result).to.be.deep.equal({
+      property: 'BODY',
+      reason: 'The request body didn\'t match the specified schema',
+      reasonCode: 'INVALID_BODY',
+      schemaJsonPath: '//Test//xpath',
+      transactionJsonPath: '$.request.body',
+      suggestedFix: {
+        key: '//soap:Body',
+        actualValue: currentBody,
+        suggestedValue: expectedBody
+      }
+    });
+  });
+
+  it('Should return an INVALID_BODY mismatch in NOT_EXPECTED_IN_BODY__SINGLE case' +
+    'detailedBlobValidation = true, suggestAvailableFixes = true', function() {
+    const options = {
+        detailedBlobValidation: true,
+        suggestAvailableFixes: true
+      },
+      {
+        currentBody,
+        expectedBody
+      } = cases.NOT_EXPECTED_IN_BODY__SINGLE,
+      mismatch = new BodyMismatch(error, currentBody, expectedBody, operation, false, options),
+      result = mismatch.getMismatch();
+    expect(result).to.be.deep.equal({
+      property: 'BODY',
+      reason: 'Element \'WRONGELEMENT\': This element is not expected',
+      reasonCode: 'INVALID_BODY',
+      schemaJsonPath: '//Test//xpath',
+      transactionJsonPath: '$.request.body',
+      suggestedFix: {
+        key: '//Subtract/ob',
+        actualValue: '<intA>100</intA>\n<WRONGELEMENT>100</WRONGELEMENT>',
+        suggestedValue: '<intA>100</intA>'
       }
     });
   });
