@@ -8,7 +8,7 @@ const expect = require('chai').expect,
   SEPARATED_FILES = '../data/separatedFiles',
   path = require('path');
 
-describe('merge and validate', function() {
+describe('merge convert and validate', function() {
 
   it('Merge convert validate counting', function() {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/counting'),

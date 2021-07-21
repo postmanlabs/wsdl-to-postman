@@ -38,6 +38,6 @@ npm run e2e-tests
 npm run convert-validation-tests
 
 # run merge convert validation tests
-npm run merge-convert-validate-tests
+npm run system-tests
 
 
