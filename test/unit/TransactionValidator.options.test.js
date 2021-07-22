@@ -19,6 +19,8 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
     require('./../data/transactionsValidation/getPlayedMatchesCollectionItemsWrongType.json'),
   calculatorCollectionItemsMissingCharacter =
     require('./../data/transactionsValidation/calculatorCollectionItemsMissing>.json'),
+  calculatorCollectionItemsWrongOrder =
+    require('./../data/transactionsValidation/calculatorCollectionItemsWrongOrder.json'),
   {
     expect
   } = require('chai'),
@@ -1059,6 +1061,61 @@ describe('validateBody method with options', function () {
           '//definitions//binding[@name=\"NumberConversionSoapBinding\"]//operation[@name=\"NumberToWords\"]',
           'INVALID_BODY'
         )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should return a mismatch when the body children are in wrong order', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        calculatorCollectionItemsWrongOrder,
+        calculatorWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: false,
+          detailedBlobValidation: false
+        }
+      ),
+      mismatchReason = 'The request body didn\'t match the specified schema',
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedCalculatorBase,
+        '96552d2b-2877-4cf1-ac6d-33846c17abd2',
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name=\"CalculatorSoap\"]//operation[@name=\"Subtract\"]',
+          'INVALID_BODY'
+        )
+      );
+    expect(result).to.be.an('object').and.to.deep.include(expected);
+  });
+
+  it('Should return a mismatch when the body children are in wrong order' +
+  ' detailedBlobValidation is true and suggestAvailableFixes is true', function () {
+    const transactionValidator = new TransactionValidator(),
+      result = transactionValidator.validateTransaction(
+        calculatorCollectionItemsWrongOrder,
+        calculatorWSDLObject, new XMLParser(),
+        {
+          suggestAvailableFixes: true,
+          detailedBlobValidation: true
+        }
+      ),
+      mismatchReason = 'Element \'intB\': This element is not expected. Expected is ( intA ).\n',
+      mismatch = withSuggestedFix(
+        bodyMismatchMockWithReason(
+          mismatchReason,
+          '//definitions//binding[@name=\"CalculatorSoap\"]//operation[@name=\"Subtract\"]',
+          'INVALID_BODY'
+        ),
+        {
+          key: '//Subtract',
+          actualValue: '<intB>200</intB>\n<intA>100</intA>',
+          suggestedValue: '<intA>100</intA>\n<intB>200</intB>'
+        }
+      ),
+      expected = getExpectedWithMismatchInEndpoint(
+        expectedCalculatorBase,
+        '96552d2b-2877-4cf1-ac6d-33846c17abd2',
+        mismatch
       );
     expect(result).to.be.an('object').and.to.deep.include(expected);
   });
