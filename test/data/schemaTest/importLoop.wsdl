@@ -1,0 +1,18 @@
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http"
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:types>
+        <xs:schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.xsd2jsonschema.org/example">
+            <xs:import namespace="http://www.xsd2jsonschema.org/example2"/>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.xsd2jsonschema.org/example2">
+        <xs:import namespace="http://www.xsd2jsonschema.org/example"/>
+    </xs:schema>
+    </wsdl:types>
+</wsdl:definitions>
