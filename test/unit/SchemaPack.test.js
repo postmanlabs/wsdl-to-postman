@@ -560,7 +560,7 @@ describe('merge and validate', function () {
   });
 
   it('Should create collection from folder send only file info principal prefix', function (done) {
-    let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3ExamplePrincipalPrefix'),
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/ServicesWithPrincipalPrefix'),
       array = [
         { fileName: folderPath + '/goodService.wsdl' },
         { fileName: folderPath + '/goodService-common.wsdl' }
