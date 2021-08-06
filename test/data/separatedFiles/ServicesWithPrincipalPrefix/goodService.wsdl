@@ -13,7 +13,7 @@
 
   <wsdl:types>
     <xsd:schema targetNamespace="http://test-soap.com/api/GoodService" elementFormDefault="qualified">
-      <xsd:import namespace="http://test-soap.com/api/GoodService/messages" schemaLocation="GoodService-messages.xsd"/>
+      <xsd:import namespace="http://test-soap.com/api/GoodService/messages" schemaLocation="goodService-messages.xsd"/>
     </xsd:schema>
   </wsdl:types>
 

@@ -563,7 +563,11 @@ describe('merge and validate', function () {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/ServicesWithPrincipalPrefix'),
       array = [
         { fileName: folderPath + '/goodService.wsdl' },
-        { fileName: folderPath + '/goodService-common.wsdl' }
+        { fileName: folderPath + '/goodService-common.wsdl' },
+        { fileName: folderPath + '/common-messages.xsd' },
+        { fileName: folderPath + '/common-types.xsd' },
+        { fileName: folderPath + '/goodService-messages-common.xsd' },
+        { fileName: folderPath + '/goodService-messages.xsd' }
       ];
     const schemaPack = new SchemaPack({ type: 'folder', data: array }, {});
     schemaPack.mergeAndValidate((err, status) => {
