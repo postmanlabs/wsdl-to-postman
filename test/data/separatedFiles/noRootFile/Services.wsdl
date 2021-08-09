@@ -16,9 +16,6 @@
             targetNamespace="http://namespace/2008"
             xmlns="http://namespace/2008" version="2021.0.05.1"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <!-- <xsd:import namespace="http://namespace/2008" schemaLocation="Types.xsd"/> -->
-            <xsd:include schemaLocation="Types.xsd" />
-
         </xsd:schema>
     </types>
 
