@@ -86,7 +86,7 @@ describe('validate', function () {
 });
 
 describe('merge and validate', function () {
-  it('Should send error', function () {
+  it('Should not send error', function () {
     let folderPath = path.join(__dirname, '../data/separatedFiles/W3Example'),
       files = [],
       array = [
