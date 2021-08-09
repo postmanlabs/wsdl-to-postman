@@ -8,6 +8,6 @@
     <xsd:documentation>Registration Messages</xsd:documentation>
   </xsd:annotation>
 
-  <xsd:include schemaLocation="registration-messages-common.xsd"/>
+  <xsd:include schemaLocation="goodService-messages-common.xsd"/>
 
 </xsd:schema>

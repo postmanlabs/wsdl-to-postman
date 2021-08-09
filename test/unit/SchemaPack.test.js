@@ -593,4 +593,70 @@ describe('merge and validate', function () {
       }
     });
   });
+
+  it('Should create collection from folder with files not XML send only file', function (done) {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/wsdlfolderextrafile'),
+      array = [
+        { fileName: folderPath + '/README.md' },
+        { fileName: folderPath + '/stockquote.xsd' },
+        { fileName: folderPath + '/stockquote.wsdl' },
+        { fileName: folderPath + '/stockquoteservice.wsdl' }
+      ];
+    const schemaPack = new SchemaPack({ type: 'folder', data: array }, {});
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      if (status.result) {
+        schemaPack.convert((error, result) => {
+          if (error) {
+            expect.fail(null, null, err);
+          }
+          expect(result.result).to.equal(true);
+          expect(result.output.length).to.equal(1);
+          expect(result.output[0].type).to.have.equal('collection');
+          expect(result.output[0].data).to.have.property('info');
+          expect(result.output[0].data).to.have.property('item');
+          expect(result.output[0].data.info.name).to.equal('StockQuoteService');
+          done();
+        });
+      }
+      else {
+        expect.fail(null, null, status.reason);
+      }
+    });
+  });
+
+  it('Should create collection from folder with files not WSDL send only file', function (done) {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/wsdlfolderextrafilexml'),
+      array = [
+        { fileName: folderPath + '/README.xml' },
+        { fileName: folderPath + '/stockquote.xsd' },
+        { fileName: folderPath + '/stockquote.wsdl' },
+        { fileName: folderPath + '/stockquoteservice.wsdl' }
+      ];
+    const schemaPack = new SchemaPack({ type: 'folder', data: array }, {});
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      if (status.result) {
+        schemaPack.convert((error, result) => {
+          if (error) {
+            expect.fail(null, null, err);
+          }
+          expect(result.result).to.equal(true);
+          expect(result.output.length).to.equal(1);
+          expect(result.output[0].type).to.have.equal('collection');
+          expect(result.output[0].data).to.have.property('info');
+          expect(result.output[0].data).to.have.property('item');
+          expect(result.output[0].data.info.name).to.equal('StockQuoteService');
+          done();
+        });
+      }
+      else {
+        expect.fail(null, null, status.reason);
+      }
+    });
+  });
 });
