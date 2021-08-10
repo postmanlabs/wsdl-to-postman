@@ -10,7 +10,10 @@ const expect = require('chai').expect,
     getBindingOperation,
     getElementsFromWSDL,
     getDocumentationStringFromNode,
-    getWSDLDocumentation
+    getWSDLDocumentation,
+    wsdlHasImports,
+    getWSDLImports,
+    getWSDLIncludes
   } = require('../../lib/WsdlParserCommon'),
   {
     WsdlInformationService11
@@ -258,7 +261,43 @@ whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
       <soap12:address location="https://www.dataaccess.com/webservicesserver/NumberConversion.wso"/>
     </port>
   </service>
-</definitions>`;
+</definitions>`,
+  WSDL_INCLUDES = `<?xml version="1.0" encoding="UTF-8"?>
+  <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+      xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+      xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+      xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+      xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+      xmlns:ns="http://www.w3.org/2001/XMLSchema"
+      xmlns:tns="http://namespace/2008"
+      targetNamespace="http://namespace/2008"> 
+      <types>
+          <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified"
+              targetNamespace="http://namespace/2008"
+              xmlns="http://namespace/2008" version="2021.0.05.1"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+              <xsd:include schemaLocation="Types.xsd"/>
+          </xsd:schema>
+      </types>`,
+  WSDL_IMPORTS = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+        xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+        xmlns:ns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://namespace/2008"
+        targetNamespace="http://namespace/2008"> 
+        <types>
+            <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified"
+                targetNamespace="http://namespace/2008"
+                xmlns="http://namespace/2008" version="2021.0.05.1"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                <xsd:import namespace="http://namespace/2008" schemaLocation="Types.xsd"/>
+            </xsd:schema>
+        </types>`;
 
 describe('WSDL parser common getNamespaceByKey', function () {
 
@@ -1886,5 +1925,71 @@ describe('WSDL parser common getWSDLDocumentation', function () {
     let wsdlObject = new WsdlObject();
     getWSDLDocumentation({}, '', wsdlObject);
     assert.equal(wsdlObject.log.errors.includes('Cannot get documentation from wsdl'), true);
+  });
+});
+
+describe('WSDL parser common wsdlHasImports', function () {
+  it('should get false when a document does not have the include tag', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_1_1),
+      result = wsdlHasImports(parsed, '', informationService.RootTagName);
+    expect(result).to.equal(false);
+  });
+
+  it('should get true when a document has the include tag', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_INCLUDES),
+      result = wsdlHasImports(parsed, '', informationService.RootTagName);
+    expect(result).to.equal(true);
+  });
+
+  it('should get true when a document has the import tag', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_IMPORTS),
+      result = wsdlHasImports(parsed, '', informationService.RootTagName);
+    expect(result).to.equal(true);
+  });
+});
+
+describe('WSDL parser common getWSDLImports', function () {
+  it('should get an empty array when a document does not have the import tag', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_1_1),
+      result = getWSDLImports(parsed, '', informationService.RootTagName);
+    expect(result).to.be.an('array');
+    expect(result.length).to.equal(0);
+  });
+
+  it('should get true when a document has the import tag', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_IMPORTS),
+      result = getWSDLImports(parsed, '', informationService.RootTagName);
+    expect(result).to.be.an('array');
+    expect(result.length).to.equal(1);
+  });
+});
+
+describe('WSDL parser common getWSDLIncludes', function () {
+  it('should get an empty array when a document does not have the include tag', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_1_1),
+      result = getWSDLIncludes(parsed, '', informationService.RootTagName);
+    expect(result).to.be.an('array');
+    expect(result.length).to.equal(0);
+  });
+
+  it('should get true when a document has the include tag', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_INCLUDES),
+      result = getWSDLIncludes(parsed, '', informationService.RootTagName);
+    expect(result).to.be.an('array');
+    expect(result.length).to.equal(1);
   });
 });

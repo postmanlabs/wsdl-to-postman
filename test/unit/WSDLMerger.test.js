@@ -926,7 +926,7 @@ describe('WSDLMerger merge', function() {
 
     merger.merge({ data: files, xmlFiles: processedInput }, new XMLParser())
       .then(() => {
-        expect.fail(null, null, status.reason);
+        expect.fail(null, null, 'Should throw error');
       })
       .catch((err) => {
         expect(err.message).to.equal(WSDL_DIFF_VERSION);
