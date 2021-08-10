@@ -10,7 +10,8 @@ const expect = require('chai').expect,
   async = require('async'),
   path = require('path'),
   {
-    MULTIPLE_ROOT_FILES
+    MULTIPLE_ROOT_FILES,
+    MISSING_ROOT_FILE
   } = require('../../lib/constants/messageConstants'),
   optionIds = [
     'folderStrategy',
@@ -657,6 +658,55 @@ describe('merge and validate', function () {
       else {
         expect.fail(null, null, status.reason);
       }
+    });
+  });
+
+
+  it('Should create from folder where targetnamespace is the same in imported schema than in wsdl', function (done) {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/sameTargetnamespace'),
+      array = [
+        { fileName: folderPath + '/Services.wsdl' },
+        { fileName: folderPath + '/Types.xsd' }
+      ];
+    const schemaPack = new SchemaPack({ type: 'folder', data: array }, {});
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      if (status.result) {
+        schemaPack.convert((error, result) => {
+          if (error) {
+            expect.fail(null, null, err);
+          }
+          expect(result.result).to.equal(true);
+          expect(result.output.length).to.equal(1);
+          expect(result.output[0].type).to.have.equal('collection');
+          expect(result.output[0].data).to.have.property('info');
+          expect(result.output[0].data).to.have.property('item');
+          expect(result.output[0].data.info.name).to.equal('LTSService');
+          done();
+        });
+      }
+      else {
+        expect.fail(null, null, status.reason);
+      }
+    });
+  });
+
+  it('Should throw an error when no root file found', function (done) {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/noRootFile'),
+      array = [
+        { fileName: folderPath + '/Services.wsdl' },
+        { fileName: folderPath + '/Types.xsd' }
+      ];
+    const schemaPack = new SchemaPack({ type: 'folder', data: array }, {});
+    schemaPack.mergeAndValidate((err, status) => {
+      if (err) {
+        expect.fail(null, null, err);
+      }
+      expect(status.result).to.equal(false);
+      expect(status.reason).to.equal(MISSING_ROOT_FILE);
+      done();
     });
   });
 });
