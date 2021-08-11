@@ -1,0 +1,68 @@
+<definitions targetNamespace="urn:microsoft-dynamics-schemas/page/service"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="urn:microsoft-dynamics-schemas/page/service">
+    <types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/page/service"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:simpleType name="EnumerationValue">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="_blank_"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="ComplexType1">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="Name_2" type="xsd:string"/>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="EnumerationValue" type="tns:EnumerationValue"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="Read">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="SomeStringParameter" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Read_Result">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="ComplexType1" type="tns:ComplexType1"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <message name="Read">
+        <part name="parameters" element="tns:Read"/>
+    </message>
+    <message name="Read_Result">
+        <part name="parameters" element="tns:Read_Result"/>
+    </message>
+    <portType name="ServicePort">
+        <operation name="Read">
+            <input name="Read" message="tns:Read"/>
+            <output name="Read_Result" message="tns:Read_Result"/>
+        </operation>
+    </portType>
+    <binding name="ServiceBinding" type="tns:ServicePort">
+        <binding transport="http://schemas.xmlsoap.org/soap/http"
+            xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        <operation name="Read">
+            <operation soapAction="urn:microsoft-dynamics-schemas/page/service:Read" style="document"
+                xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <input name="Read">
+                <body use="literal"
+                    xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </input>
+            <output name="Read_Result">
+                <body use="literal"
+                    xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="CoolService">
+        <port name="ServicePort" binding="tns:ServiceBinding">
+            <address location="https://example.com"
+                xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        </port>
+    </service>
+</definitions>
