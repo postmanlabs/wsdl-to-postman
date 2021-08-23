@@ -111,6 +111,14 @@ describe('Test validate Transactions method in SchemaPack', function () {
                 schemaJsonPath: 'schemaPathPrefix',
                 reasonCode: 'MISSING_IN_REQUEST',
                 reason: 'The header "Content-Type" was not found in the transaction'
+              },
+              {
+                property: 'HEADER',
+                transactionJsonPath: '$.request.header[0].value',
+                schemaJsonPath: 'schemaPathPrefix',
+                reasonCode: 'INVALID_TYPE',
+                reason: 'The header "SoapAction" needs to be "" but we found ' +
+                '"http://www.dataaccess.com/webservicesserver/NumberToWords" instead'
               }],
               responses: {
                 'd36c56cf-0cf6-4273-a34d-973e842bf80f': {
@@ -206,6 +214,14 @@ describe('Test validate Transactions method in SchemaPack', function () {
                 reasonCode: 'INVALID_TYPE',
                 reason: 'The header \"Content-Type\" needs to be \"text/xml\" or \"application/soap+xml\" but we ' +
                   'found \"text/plain; charset=utf-8\" instead'
+              },
+              {
+                property: 'HEADER',
+                transactionJsonPath: '$.request.header[1].value',
+                schemaJsonPath: 'schemaPathPrefix',
+                reasonCode: 'INVALID_TYPE',
+                reason: 'The header "SoapAction" needs to be "" but we found ' +
+                '"http://www.dataaccess.com/webservicesserver/NumberToWords" instead'
               }],
               responses: {
                 'd36c56cf-0cf6-4273-a34d-973e842bf80f': {

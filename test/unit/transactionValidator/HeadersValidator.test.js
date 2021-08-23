@@ -118,7 +118,7 @@ describe('HeadersValidator', function () {
   });
 
   it('Should return missing header when validateHeader option is on true' +
-  ' wsdl operation has SOAPAction and not soapAciton header is present', function () {
+  ' wsdl operation has SOAPAction and not SOAPAction header is present', function () {
     const options = getOptions({
         usage: ['VALIDATION']
       }),
@@ -222,6 +222,70 @@ describe('HeadersValidator', function () {
     numberToWordsWSDLObject.operationsArray[0]);
     expect(result).to.be.an('Array');
     expect(result.length).to.equal(0);
+  });
+
+  it('Should return missing header in schema when validateHeader option is on true' +
+  ' wsdl operation has SOAPAction and not SOAPAction header is present', function () {
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; }),
+      showMissingInSchemaErrorsOption = options.find((option) => { return option.id === 'showMissingInSchemaErrors'; });
+    let optionFromOptions = {},
+      validator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    optionFromOptions[`${showMissingInSchemaErrorsOption.id}`] = true;
+    validator = new HeadersValidator();
+    result = validator.validate([{
+      'key': 'Content-Type',
+      'value': 'application/soap+xml'
+    },
+    {
+      'key': 'SOAPAction',
+      'value': 'someSOAPAction'
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+    { soapAction: '' });
+    expect(result).to.be.an('Array');
+    expect(result[0]).to.be.an('object').and.to.deep.include({
+      property: 'HEADER',
+      transactionJsonPath: '$.request.header',
+      schemaJsonPath: 'schemaPathPrefix',
+      reasonCode: 'MISSING_IN_SCHEMA',
+      reason: 'The header "SoapAction" was not found in the schema'
+    });
+  });
+
+  it('Should not return missing header in schema when validateHeader option is on true wsdl operation has SOAPAction' +
+  '  and not SOAPAction header is present and show missing in schema errors is false', function () {
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; }),
+      showMissingInSchemaErrorsOption = options.find((option) => { return option.id === 'showMissingInSchemaErrors'; });
+    let optionFromOptions = {},
+      validator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    optionFromOptions[`${showMissingInSchemaErrorsOption.id}`] = false;
+    validator = new HeadersValidator();
+    result = validator.validate([{
+      'key': 'Content-Type',
+      'value': 'application/soap+xml'
+    },
+    {
+      'key': 'SOAPAction',
+      'value': 'someSOAPAction'
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+    { soapAction: '' });
+    expect(result).to.be.an('Array');
+    expect(result[0]).to.be.an('object').and.to.deep.include({
+      property: 'HEADER',
+      transactionJsonPath: '$.request.header[1].value',
+      schemaJsonPath: 'schemaPathPrefix',
+      reasonCode: 'INVALID_TYPE',
+      reason: 'The header "SoapAction" needs to be "" but we found "someSOAPAction" instead'
+    });
   });
 
 });
