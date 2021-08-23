@@ -4,6 +4,7 @@ const {
   {
     HeadersValidator
   } = require('../../../lib/transactionValidator/HeadersValidator'),
+  numberToWordsWSDLObject = require('../../data/transactionsValidation/wsdlObjects/numberToWords'),
   getOptions = require('../../../lib/utils/options').getOptions;
 
 describe('HeadersValidator', function () {
@@ -18,7 +19,8 @@ describe('HeadersValidator', function () {
       result;
     optionFromOptions[`${validateHeaderOption.id}`] = true;
     validator = new HeadersValidator();
-    result = validator.validate([], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
+    result = validator.validate([], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+      { soapAction: '' });
     expect(result).to.be.an('Array');
     expect(result[0]).to.be.an('object').and.to.deep.include({
       property: 'HEADER',
@@ -44,7 +46,8 @@ describe('HeadersValidator', function () {
     result = validator.validate([{
       'key': 'Content-Type',
       'value': 'text/plain; charset=utf-8'
-    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+    { soapAction: '' });
     expect(result).to.be.an('Array');
     expect(result[0]).to.be.an('object').and.to.deep.include({
       property: 'HEADER',
@@ -72,7 +75,7 @@ describe('HeadersValidator', function () {
       result = validator.validate([{
         'key': 'Content-Type',
         'value': 'text/plain; charset=utf-8'
-      }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', false, false, {});
+      }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', false, false, {}, { soapAction: '' });
     expect(result).to.be.an('array');
     expect(result.length).to.eq(0);
   });
@@ -90,7 +93,7 @@ describe('HeadersValidator', function () {
     result = validator.validate([{
       'key': 'Content-Type',
       'value': 'text/xml'
-    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions, { soapAction: '' });
     expect(result).to.be.an('Array');
     expect(result.length).to.equal(0);
   });
@@ -108,7 +111,115 @@ describe('HeadersValidator', function () {
     result = validator.validate([{
       'key': 'Content-Type',
       'value': 'application/soap+xml'
-    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions);
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+    { soapAction: '' });
+    expect(result).to.be.an('Array');
+    expect(result.length).to.equal(0);
+  });
+
+  it('Should return missing header when validateHeader option is on true' +
+  ' wsdl operation has SOAPAction and not soapAciton header is present', function () {
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      validator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    validator = new HeadersValidator();
+    result = validator.validate([{
+      'key': 'Content-Type',
+      'value': 'application/soap+xml'
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+    numberToWordsWSDLObject.operationsArray[0]);
+    expect(result).to.be.an('Array');
+    expect(result[0]).to.be.an('object').and.to.deep.include({
+      property: 'HEADER',
+      transactionJsonPath: '$.request.header',
+      schemaJsonPath: 'schemaPathPrefix',
+      reasonCode: 'MISSING_IN_REQUEST',
+      reason: 'The header "SoapAction" was not found in the transaction'
+    });
+  });
+
+  it('Should return bad header when validateHeader option is on true' +
+  ' wsdl operation has SOAPAction and are not equal', function () {
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      validator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    validator = new HeadersValidator();
+    result = validator.validate([{
+      'key': 'Content-Type',
+      'value': 'application/soap+xml'
+    },
+    {
+      'key': 'SOAPAction',
+      'value': 'NumberToWordsnotequal'
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+    numberToWordsWSDLObject.operationsArray[0]);
+    expect(result).to.be.an('Array');
+    expect(result[0]).to.be.an('object').and.to.deep.include({
+      property: 'HEADER',
+      transactionJsonPath: '$.request.header[1].value',
+      schemaJsonPath: 'schemaPathPrefix',
+      reasonCode: 'INVALID_TYPE',
+      reason: 'The header "SoapAction" needs to be "http://www.dataaccess.com/webservicesserver/NumberToWords"' +
+       ' but we found "NumberToWordsnotequal" instead'
+    });
+  });
+
+  it('Should not return missmatch when validateHeader option is on true' +
+  ' wsdl operation has SOAPAction and are equal', function () {
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; });
+    let optionFromOptions = {},
+      validator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    validator = new HeadersValidator();
+    result = validator.validate([{
+      'key': 'Content-Type',
+      'value': 'application/soap+xml'
+    },
+    {
+      'key': 'SOAPAction',
+      'value': 'http://www.dataaccess.com/webservicesserver/NumberToWords'
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+    numberToWordsWSDLObject.operationsArray[0]);
+    expect(result).to.be.an('Array');
+    expect(result.length).to.equal(0);
+  });
+
+  it('Should not return missmatch when validateHeader option is on true' +
+  ' wsdl operation has SOAPAction and SOAPAction value is PM var', function () {
+    const options = getOptions({
+        usage: ['VALIDATION']
+      }),
+      validateHeaderOption = options.find((option) => { return option.id === 'validateHeader'; }),
+      ignoreUnresolvedVariablesOption = options.find((option) => { return option.id === 'ignoreUnresolvedVariables'; });
+    let optionFromOptions = {},
+      validator,
+      result;
+    optionFromOptions[`${validateHeaderOption.id}`] = true;
+    optionFromOptions[`${ignoreUnresolvedVariablesOption.id}`] = true;
+    validator = new HeadersValidator();
+    result = validator.validate([{
+      'key': 'Content-Type',
+      'value': 'application/soap+xml'
+    },
+    {
+      'key': 'SOAPAction',
+      'value': '{{pmvar}}'
+    }], 'aebb36fc-1be3-44c3-8f4a-0b5042dc17d0', true, false, optionFromOptions,
+    numberToWordsWSDLObject.operationsArray[0]);
     expect(result).to.be.an('Array');
     expect(result.length).to.equal(0);
   });
