@@ -1211,12 +1211,12 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].children[0].name).to.equal('QueueUrl');
     expect(elements[0].children[0].type).to.equal('string');
 
-    expect(elements[2].name).to.equal('CreateQueueResponse');
-    expect(elements[2].type).to.equal('complex');
-    expect(elements[2].children[0].name).to.equal('tns:CreateQueueResult');
-    expect(elements[2].children[0].isComplex).to.equal(true);
-    expect(elements[2].children[0].children[0].name).to.equal('QueueUrl');
-    expect(elements[2].children[0].children[0].type).to.equal('string');
+    expect(elements[3].name).to.equal('CreateQueueResponse');
+    expect(elements[3].type).to.equal('complex');
+    expect(elements[3].children[0].name).to.equal('tns:CreateQueueResult');
+    expect(elements[3].children[0].isComplex).to.equal(true);
+    expect(elements[3].children[0].children[0].name).to.equal('QueueUrl');
+    expect(elements[3].children[0].children[0].type).to.equal('string');
 
   });
 

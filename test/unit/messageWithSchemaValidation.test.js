@@ -6,7 +6,10 @@ const expect = require('chai').expect,
     getBodyMessage,
     unwrapAndCleanBody
   } = require('./../../lib/utils/messageWithSchemaValidation'),
-  { XMLParser } = require('../../lib/XMLParser');
+  { XMLParser } = require('../../lib/XMLParser'),
+  fs = require('fs'),
+  validSchemaFolder = 'test/data/multipleSchemaValidation';
+
 
 describe('Tools from messageWithSchemaValidation', function () {
   describe('Test validateMessageWithSchema function', function () {
@@ -722,5 +725,22 @@ describe('Tools from messageWithSchemaValidation', function () {
       result = validateMessageWithSchema(message, schema);
     expect(result[0].message).to.be.equal('Error validating message');
     expect(result[0].code).to.be.equal(1);
+  });
+});
+
+describe('Validation multi schema', function () {
+  it('should return an empty array when message matches with schema', function () {
+    const docSource = fs.readFileSync(validSchemaFolder + '/chapter04.xml', 'utf8'),
+      schemaSource = fs.readFileSync(validSchemaFolder + '/chapter04ord1.xsd', 'utf8'),
+      validResult = validateMessageWithSchema(docSource, schemaSource);
+    expect(validResult).to.be.an('array').with.length(0);
+  });
+
+  it('should return an array with error when message does not match with schema', function () {
+    const docSource = fs.readFileSync(validSchemaFolder + '/chapter04InvalidMessage.xml', 'utf8'),
+      schemaSource = fs.readFileSync(validSchemaFolder + '/chapter04ord1.xsd', 'utf8'),
+      validResult = validateMessageWithSchema(docSource, schemaSource);
+    expect(validResult).to.be.an('array').with.length(1);
+    expect(validResult[0].code).to.equal(1824);
   });
 });

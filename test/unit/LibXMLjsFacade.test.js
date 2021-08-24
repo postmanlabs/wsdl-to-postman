@@ -2,6 +2,8 @@ const expect = require('chai').expect,
   {
     LibXMLjsFacade
   } = require('../../lib/xsdValidation/LibXMLjsFacade'),
+  fs = require('fs'),
+  validSchemaFolder = 'test/data/multipleSchemaValidation',
   XSD = `<?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 elementFormDefault="qualified">
@@ -51,5 +53,22 @@ describe('validate', function () {
     let res = validator.validate(XML_INVALID_1, XSD);
     expect(res).to.be.an('Array');
     expect(res.length).to.equal(1);
+  });
+
+  it('should return an empty array when message matches with schema', function () {
+    const docSource = fs.readFileSync(validSchemaFolder + '/chapter04.xml', 'utf8'),
+      schemaSource = fs.readFileSync(validSchemaFolder + '/chapter04ord1.xsd', 'utf8'),
+      validator = new LibXMLjsFacade(),
+      res = validator.validate(docSource, schemaSource);
+    expect(res).to.be.an('array').with.length(0);
+  });
+
+  it('should return array when message does not match with schema', function () {
+    const docSource = fs.readFileSync(validSchemaFolder + '/chapter04InvalidMessage.xml', 'utf8'),
+      schemaSource = fs.readFileSync(validSchemaFolder + '/chapter04ord1.xsd', 'utf8'),
+      validator = new LibXMLjsFacade(),
+      res = validator.validate(docSource, schemaSource);
+    expect(res).to.be.an('array').with.length(1);
+    expect(res[0].code).to.equal(1824);
   });
 });
