@@ -12,7 +12,10 @@
       "query": [],
       "variable": []
     },
-    "header": [],
+    "header": [{
+      "key": "SOAPAction",
+      "value": "http://www.dataaccess.com/webservicesserver/NumberToWords"
+    }],
     "method": "POST",
     "body": {
       "mode": "raw",

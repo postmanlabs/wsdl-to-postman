@@ -15,6 +15,10 @@
     "header": [{
       "key": "Content-Type",
       "value": "{{unresolvedVariable}}"
+    },
+    {
+      "key": "SOAPAction",
+      "value": "http://www.dataaccess.com/webservicesserver/NumberToWords"
     }],
     "method": "POST",
     "body": {
@@ -41,6 +45,10 @@
       "header": [{
         "key": "Content-Type",
         "value": "{{unresolvedVariable}}"
+      },
+      {
+        "key": "SOAPAction",
+        "value": "http://www.dataaccess.com/webservicesserver/NumberToWords"
       }],
       "method": "POST",
       "body": {
@@ -58,6 +66,10 @@
     "header": [{
       "key": "Content-Type",
       "value": "{{unresolvedVariable}}"
+    },
+    {
+      "key": "SOAPAction",
+      "value": "http://www.dataaccess.com/webservicesserver/NumberToWords"
     }],
     "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWordsResponse xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <NumberToWordsResult>place your string value here</NumberToWordsResult>\n    </NumberToWordsResponse>\n  </soap:Body>\n</soap:Envelope>\n",
     "cookie": [],

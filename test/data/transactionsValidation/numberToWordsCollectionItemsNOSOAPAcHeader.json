@@ -14,11 +14,7 @@
     },
     "header": [{
       "key": "Content-Type",
-      "value": "text/plain; charset=utf-8"
-    },
-    {
-      "key": "SOAPAction",
-      "value": "http://www.dataaccess.com/webservicesserver/NumberToWords"
+      "value": "text/xml; charset=utf-8"
     }],
     "method": "POST",
     "body": {
