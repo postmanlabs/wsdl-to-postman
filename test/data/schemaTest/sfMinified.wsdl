@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Salesforce.com Enterprise Web Services API Version 52.0
+Generated on 2021-07-27 09:27:12 +0000.
+
+Package Versions:
+Salesforce Connected Apps (Version: 1.7, Namespace: sf_com_apps)
+Salesforce and Chatter Apps (Version: 1.15, Namespace: sf_chttr_apps)
+Tableau Viz Lightning Web Component (Version: 1.1, Namespace: tab)
+
+Copyright 1999-2021 salesforce.com, inc.
+All Rights Reserved
+-->
+
+<definitions targetNamespace="urn:enterprise.soap.sforce.com"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="urn:enterprise.soap.sforce.com"
+             xmlns:fns="urn:fault.enterprise.soap.sforce.com"
+             xmlns:ens="urn:sobject.enterprise.soap.sforce.com">
+
+    <types>
+        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:sobject.enterprise.soap.sforce.com">
+            <import namespace="urn:enterprise.soap.sforce.com"/>
+
+
+            <!-- Base sObject (abstract) -->
+            <complexType name="sObject">
+                <sequence>
+                    <element name="fieldsToNull"       type="xsd:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                    <element name="Id"                 type="tns:ID" nillable="true" />
+                </sequence>
+            </complexType>
+
+            <complexType name="AIApplication">
+                <complexContent>
+                    <extension base="ens:sObject">
+                        <sequence>
+                        <element name="AiApplications" nillable="true" minOccurs="0" type="tns:QueryResult"/>
+                        <element name="CreatedBy" nillable="true" minOccurs="0" type="ens:User"/>
+                        <element name="CreatedById" nillable="true" minOccurs="0" type="tns:ID"/>
+                        <element name="CreatedDate" nillable="true" minOccurs="0" type="xsd:dateTime"/>
+                        <element name="DeveloperName" nillable="true" minOccurs="0" type="xsd:string"/>
+                        <element name="IsDeleted" nillable="true" minOccurs="0" type="xsd:boolean"/>
+                        <element name="Language" nillable="true" minOccurs="0" type="xsd:string"/>
+                        <element name="LastModifiedBy" nillable="true" minOccurs="0" type="ens:User"/>
+                        <element name="LastModifiedById" nillable="true" minOccurs="0" type="tns:ID"/>
+                        <element name="LastModifiedDate" nillable="true" minOccurs="0" type="xsd:dateTime"/>
+                        <element name="MasterLabel" nillable="true" minOccurs="0" type="xsd:string"/>
+                        <element name="MlPredictionDefinitions" nillable="true" minOccurs="0" type="tns:QueryResult"/>
+                        <element name="NamespacePrefix" nillable="true" minOccurs="0" type="xsd:string"/>
+                        <element name="Status" nillable="true" minOccurs="0" type="xsd:string"/>
+                        <element name="SystemModstamp" nillable="true" minOccurs="0" type="xsd:dateTime"/>
+                        <element name="Type" nillable="true" minOccurs="0" type="xsd:string"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+        </schema>
+
+        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:enterprise.soap.sforce.com">
+            <import namespace="urn:sobject.enterprise.soap.sforce.com"/>
+
+            <simpleType name="ID">
+                <restriction base="xsd:string">
+                    <length value="18"/>
+                    <pattern value='[a-zA-Z0-9]{18}'/>
+                </restriction>
+            </simpleType>
+            
+            <simpleType name="QueryLocator">
+                <restriction base="xsd:string"/>
+            </simpleType>
+
+            <!-- Shared Result Types -->
+            <complexType name="QueryResult">
+                <sequence>
+                    <element name="done"         type="xsd:boolean"/>
+                    <element name="queryLocator" type="tns:QueryLocator" nillable="true"/>
+                    <element name="records"      type="ens:sObject" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                    <element name="size"         type="xsd:int"/>
+                </sequence>
+            </complexType>
+
+            <element name="create">
+                <complexType>
+                    <sequence>
+                        <element name="sObjects" type="ens:sObject" minOccurs="0" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <simpleType name="OwnerChangeOptionType">
+                <restriction base="xsd:string">
+                    <enumeration value="EnforceNewOwnerHasReadAccess"/>
+                    <enumeration value="TransferOpenActivities"/>
+                    <enumeration value="TransferNotesAndAttachments"/>
+                    <enumeration value="TransferOthersOpenOpportunities"/>
+                    <enumeration value="TransferOwnedOpenOpportunities"/>
+                    <enumeration value="TransferOwnedClosedOpportunities"/>
+                    <enumeration value="TransferOwnedOpenCases"/>
+                    <enumeration value="TransferAllOwnedCases"/>
+                    <enumeration value="TransferContracts"/>
+                    <enumeration value="TransferOrders"/>
+                    <enumeration value="TransferContacts"/>
+                    <enumeration value="TransferArticleOwnedPublishedVersion"/>
+                    <enumeration value="TransferArticleOwnedArchivedVersions"/>
+                    <enumeration value="TransferArticleAllVersions"/>
+                    <enumeration value="KeepAccountTeam"/>
+                    <enumeration value="KeepSalesTeam"/>
+                    <enumeration value="KeepSalesTeamGrantCurrentOwnerReadWriteAccess"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name="OwnerChangeOption">
+                <sequence>
+                      <element name="type" type="tns:OwnerChangeOptionType"/>
+                      <element name="execute" type="xsd:boolean"/>
+                </sequence>
+            </complexType>
+
+            <complexType name="QueryResult">
+                <sequence>
+                    <element name="done"         type="xsd:boolean"/>
+                    <element name="queryLocator" type="tns:QueryLocator" nillable="true"/>
+                    <element name="records"      type="ens:sObject" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                    <element name="size"         type="xsd:int"/>
+                </sequence>
+            </complexType>
+
+            <complexType name="User">
+                <complexContent>
+                    <extension base="ens:sObject">
+                        <sequence>
+                            <element name="AboutMe" nillable="true" minOccurs="0" type="xsd:string"/>
+                            <element name="AcceptedEventRelations" nillable="true" minOccurs="0" type="tns:QueryResult"/>
+                            <element name="AccountCleanInfoReviewers" nillable="true" minOccurs="0" type="tns:QueryResult"/>
+                            <element name="AccountId" nillable="true" minOccurs="0" type="tns:ID"/>
+                            <element name="Address" nillable="true" minOccurs="0" type="tns:address"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+
+            <element name="AssignmentRuleHeader">
+                <complexType>
+                    <sequence>
+                        <element name="assignmentRuleId"    type="tns:ID"  nillable="true" />
+                        <element name="useDefaultRule"      type="xsd:boolean" nillable="true" />
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="LocaleOptions">
+                <complexType>
+                    <sequence>
+                        <element name="language"  type="xsd:string" minOccurs="0"/>
+
+                        <element name="localizeErrors" type="xsd:boolean" minOccurs="0"/>
+
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="AssignmentRuleHeader">
+                <complexType>
+                    <sequence>
+                        <element name="assignmentRuleId"    type="tns:ID"  nillable="true" />
+                        <element name="useDefaultRule"      type="xsd:boolean" nillable="true" />
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+
+        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:fault.enterprise.soap.sforce.com" xmlns:fns="urn:fault.enterprise.soap.sforce.com">
+            <import namespace="urn:enterprise.soap.sforce.com"/>
+              <simpleType name="ExceptionCode">
+                <restriction base="xsd:string">
+                    <enumeration value="ADAPTER_ERROR"/>
+                    <enumeration value="ADAPTER_VALIDATION_EXCEPTION"/>
+                    <enumeration value="APEX_REST_SERVICES_DISABLED"/>
+                    <enumeration value="APEX_TRIGGER_COUPLING_LIMIT"/>
+                    <enumeration value="API_CURRENTLY_DISABLED"/>
+                    <enumeration value="API_DISABLED_FOR_ORG"/>
+                    <enumeration value="ARGUMENT_OBJECT_PARSE_ERROR"/>
+                    <enumeration value="ASYNC_OPERATION_LOCATOR"/>
+                    <enumeration value="ASYNC_QUERY_UNSUPPORTED_QUERY"/>
+                    <enumeration value="BATCH_PROCESSING_HALTED"/>
+                    <enumeration value="BIG_OBJECT_UNSUPPORTED_OPERATION"/>
+                    <enumeration value="BILLING_ENTITIES_NO_ACCESS"/>
+                    <enumeration value="CANNOT_DELETE_ENTITY"/>
+                    <enumeration value="CANNOT_DELETE_OWNER"/>
+                    <enumeration value="CANT_ADD_STANDADRD_PORTAL_USER_TO_TERRITORY"/>
+                    <enumeration value="CANT_ADD_STANDARD_PORTAL_USER_TO_TERRITORY"/>
+                    <enumeration value="CATEGORY_NOT_FOUND"/>
+                    <enumeration value="CIRCULAR_OBJECT_GRAPH"/>
+                    <enumeration value="CLIENT_NOT_ACCESSIBLE_FOR_USER"/>
+                    <enumeration value="CLIENT_REQUIRE_UPDATE_FOR_USER"/>
+                    <enumeration value="CLONE_FIELD_INTEGRITY_EXCEPTION"/>
+                    <enumeration value="CLONE_NOT_SUPPORTED"/>
+                    <enumeration value="CONTENT_ALREADY_AN_ASSET_EXCEPTION"/>
+                    <enumeration value="CONTENT_CUSTOM_DOWNLOAD_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_AUTHENTICATION_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_FILE_DOWNLOAD_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_FILE_HAS_NO_URL_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_FILE_NOT_FOUND_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_INVALID_OBJECT_TYPE_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_INVALID_PAGE_NUMBER_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_INVALID_PAYLOAD"/>
+                    <enumeration value="CONTENT_HUB_INVALID_RENDITION_PAGE_NUMBER_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_ITEM_TYPE_NOT_FOUND_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_OBJECT_NOT_FOUND_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_OPERATION_NOT_SUPPORTED_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_SECURITY_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_TIMEOUT_EXCEPTION"/>
+                    <enumeration value="CONTENT_HUB_UNEXPECTED_EXCEPTION"/>
+                    <enumeration value="CONTENT_IMAGE_SCALING_INVALID_ARGUMENTS_EXCEPTION"/>
+                    <enumeration value="CONTENT_IMAGE_SCALING_INVALID_IMAGE_EXCEPTION"/>
+                    <enumeration value="CONTENT_IMAGE_SCALING_MAX_RENDITIONS_EXCEPTION"/>
+                    <enumeration value="CONTENT_IMAGE_SCALING_TIMEOUT_EXCEPTION"/>
+                    <enumeration value="CONTENT_IMAGE_SCALING_UNKNOWN_EXCEPTION"/>
+                    <enumeration value="CUSTOM_METADATA_LIMIT_EXCEEDED"/>
+                    <enumeration value="CUSTOM_SETTINGS_LIMIT_EXCEEDED"/>
+                    <enumeration value="DATACLOUD_API_CLIENT_EXCEPTION"/>
+                    <enumeration value="DATACLOUD_API_DISABLED_EXCEPTION"/>
+                    <enumeration value="DATACLOUD_API_INVALID_QUERY_EXCEPTION"/>
+                    <enumeration value="DATACLOUD_API_SERVER_BUSY_EXCEPTION"/>
+                    <enumeration value="DATACLOUD_API_SERVER_EXCEPTION"/>
+                    <enumeration value="DATACLOUD_API_TIMEOUT_EXCEPTION"/>
+                    <enumeration value="DATACLOUD_API_UNAVAILABLE"/>
+                    <enumeration value="DATA_INTEGRATION_INPUT_ERROR"/>
+                    <enumeration value="DATA_INTEGRATION_NOT_FOUND"/>
+                    <enumeration value="DATA_INTEGRATION_NO_ACCESS"/>
+                    <enumeration value="DATA_INTEGRATION_PACKAGE_ERROR"/>
+                    <enumeration value="DATA_INTEGRATION_SERVER_ERROR"/>
+                    <enumeration value="DATA_INTEGRATION_VENDOR_SETUP_ERROR"/>
+                    <enumeration value="DEPENDENCY_API_UNSUPPORTED_EXCEPTION"/>
+                    <enumeration value="DUPLICATE_ARGUMENT_VALUE"/>
+                    <enumeration value="DUPLICATE_VALUE"/>
+                    <enumeration value="EMAIL_BATCH_SIZE_LIMIT_EXCEEDED"/>
+                    <enumeration value="EMAIL_TO_CASE_INVALID_ROUTING"/>
+                    <enumeration value="EMAIL_TO_CASE_LIMIT_EXCEEDED"/>
+                    <enumeration value="EMAIL_TO_CASE_NOT_ENABLED"/>
+                    <enumeration value="ENTITY_NOT_QUERYABLE"/>
+                    <enumeration value="ENVIRONMENT_HUB_MEMBERSHIP_CONFLICT"/>
+                    <enumeration value="EXCEEDED_ID_LIMIT"/>
+                    <enumeration value="EXCEEDED_LEAD_CONVERT_LIMIT"/>
+                    <enumeration value="EXCEEDED_MAX_FILTER_ENTITIES"/>
+                    <enumeration value="EXCEEDED_MAX_SEMIJOIN_SUBSELECTS"/>
+                    <enumeration value="EXCEEDED_MAX_SIZE_REQUEST"/>
+                    <enumeration value="EXCEEDED_MAX_SOBJECTS"/>
+                    <enumeration value="EXCEEDED_MAX_TYPES_LIMIT"/>
+                    <enumeration value="EXCEEDED_QUOTA"/>
+                    <enumeration value="EXTERNAL_OBJECT_AUTHENTICATION_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_OBJECT_CONNECTION_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_OBJECT_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_OBJECT_UNSUPPORTED_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_SERVICE_AUTHENTICATION_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_SERVICE_CONNECTION_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_SERVICE_DATA_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_SERVICE_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_SERVICE_INVALID_STATE_EXCEPTION"/>
+                    <enumeration value="EXTERNAL_SERVICE_UNSUPPORTED_EXCEPTION"/>
+                    <enumeration value="FEDERATED_SEARCH_ERROR"/>
+                    <enumeration value="FEED_NOT_ENABLED_FOR_OBJECT"/>
+                    <enumeration value="FUNCTIONALITY_NOT_ENABLED"/>
+                    <enumeration value="FUNCTIONALITY_TEMPORARILY_UNAVAILABLE"/>
+                    <enumeration value="GMAIL_ROUTING_CREATION_NOT_ALLOWED"/>
+                    <enumeration value="ID_REQUIRED"/>
+                    <enumeration value="ILLEGAL_QUERY_PARAMETER_VALUE"/>
+                    <enumeration value="INACTIVE_OWNER_OR_USER"/>
+                    <enumeration value="INACTIVE_PORTAL"/>
+                    <enumeration value="INDEX_NOT_FOUND"/>
+                    <enumeration value="INSERT_UPDATE_DELETE_NOT_ALLOWED_DURING_MAINTENANCE"/>
+                    <enumeration value="INSTALL_KEY_INVALID"/>
+                    <enumeration value="INSTALL_KEY_REQUIRED"/>
+                    <enumeration value="INSUFFICIENT_ACCESS"/>
+                    <enumeration value="INSUFFICIENT_ACCESS_APEX_METADATA_DEPLOY"/>
+                    <enumeration value="INTERNAL_CANVAS_ERROR"/>
+                    <enumeration value="INVALID_ASSIGNMENT_RULE"/>
+                    <enumeration value="INVALID_AUTH_HEADER"/>
+                    <enumeration value="INVALID_BATCH_REQUEST"/>
+                    <enumeration value="INVALID_BATCH_SIZE"/>
+                    <enumeration value="INVALID_CLIENT"/>
+                    <enumeration value="INVALID_CROSS_REFERENCE_KEY"/>
+                    <enumeration value="INVALID_DATE_FORMAT"/>
+                    <enumeration value="INVALID_FIELD"/>
+                    <enumeration value="INVALID_FILTER_LANGUAGE"/>
+                    <enumeration value="INVALID_FILTER_VALUE"/>
+                    <enumeration value="INVALID_ID_FIELD"/>
+                    <enumeration value="INVALID_INPUT_COMBINATION"/>
+                    <enumeration value="INVALID_LOCALE_LANGUAGE"/>
+                    <enumeration value="INVALID_LOCATOR"/>
+                    <enumeration value="INVALID_LOGIN"/>
+                    <enumeration value="INVALID_MULTIPART_REQUEST"/>
+                    <enumeration value="INVALID_NEW_PASSWORD"/>
+                    <enumeration value="INVALID_OLD_PASSWORD"/>
+                    <enumeration value="INVALID_OPERATION"/>
+                    <enumeration value="INVALID_OPERATION_WITH_EXPIRED_PASSWORD"/>
+                    <enumeration value="INVALID_PACKAGE_VERSION"/>
+                    <enumeration value="INVALID_PAGING_OPTION"/>
+                    <enumeration value="INVALID_QUERY_FILTER_OPERATOR"/>
+                    <enumeration value="INVALID_QUERY_KEY"/>
+                    <enumeration value="INVALID_QUERY_LOCATOR"/>
+                    <enumeration value="INVALID_QUERY_SCOPE"/>
+                    <enumeration value="INVALID_QUERY_VALUE"/>
+                    <enumeration value="INVALID_REPLICATION_DATE"/>
+                    <enumeration value="INVALID_SEARCH"/>
+                    <enumeration value="INVALID_SEARCH_SCOPE"/>
+                    <enumeration value="INVALID_SESSION_ID"/>
+                    <enumeration value="INVALID_SOAP_HEADER"/>
+                    <enumeration value="INVALID_SORT_OPTION"/>
+                    <enumeration value="INVALID_SSO_GATEWAY_URL"/>
+                    <enumeration value="INVALID_TYPE"/>
+                    <enumeration value="INVALID_TYPE_FOR_OPERATION"/>
+                    <enumeration value="JIGSAW_ACTION_DISABLED"/>
+                    <enumeration value="JIGSAW_IMPORT_LIMIT_EXCEEDED"/>
+                    <enumeration value="JIGSAW_REQUEST_NOT_SUPPORTED"/>
+                    <enumeration value="JSON_PARSER_ERROR"/>
+                    <enumeration value="KEY_HAS_BEEN_DESTROYED"/>
+                    <enumeration value="LICENSING_DATA_ERROR"/>
+                    <enumeration value="LICENSING_UNKNOWN_ERROR"/>
+                    <enumeration value="LIMIT_EXCEEDED"/>
+                    <enumeration value="LOGIN_CHALLENGE_ISSUED"/>
+                    <enumeration value="LOGIN_CHALLENGE_PENDING"/>
+                    <enumeration value="LOGIN_DURING_RESTRICTED_DOMAIN"/>
+                    <enumeration value="LOGIN_DURING_RESTRICTED_TIME"/>
+                    <enumeration value="LOGIN_MUST_USE_SECURITY_TOKEN"/>
+                    <enumeration value="MALFORMED_ID"/>
+                    <enumeration value="MALFORMED_QUERY"/>
+                    <enumeration value="MALFORMED_SEARCH"/>
+                    <enumeration value="MISMATCHING_VERSIONS"/>
+                    <enumeration value="MISSING_ARGUMENT"/>
+                    <enumeration value="MISSING_RECORD"/>
+                    <enumeration value="MODIFIED"/>
+                    <enumeration value="MULTIPLE_RECORDS_FOUND"/>
+                    <enumeration value="MUTUAL_AUTHENTICATION_FAILED"/>
+                    <enumeration value="NOT_ACCEPTABLE"/>
+                    <enumeration value="NOT_MODIFIED"/>
+                    <enumeration value="NO_ACTIVE_DUPLICATE_RULE"/>
+                    <enumeration value="NO_RECIPIENTS"/>
+                    <enumeration value="NO_SOFTPHONE_LAYOUT"/>
+                    <enumeration value="NUMBER_OUTSIDE_VALID_RANGE"/>
+                    <enumeration value="OPERATION_TOO_LARGE"/>
+                    <enumeration value="ORDER_MANAGEMENT_ACTION_NOT_ALLOWED"/>
+                    <enumeration value="ORG_IN_MAINTENANCE"/>
+                    <enumeration value="ORG_IS_DOT_ORG"/>
+                    <enumeration value="ORG_IS_SIGNING_UP"/>
+                    <enumeration value="ORG_LOCKED"/>
+                    <enumeration value="ORG_NOT_OWNED_BY_INSTANCE"/>
+                    <enumeration value="PASSWORD_LOCKOUT"/>
+                    <enumeration value="PORTAL_NO_ACCESS"/>
+                    <enumeration value="POST_BODY_PARSE_ERROR"/>
+                    <enumeration value="PRODUCT_NOT_FOUND"/>
+                    <enumeration value="QAT_HETEROGENOUS_CONTEXT_IDS"/>
+                    <enumeration value="QAT_INVALID_CONTEXT_ID"/>
+                    <enumeration value="QAT_INVALID_QUICK_ACTION"/>
+                    <enumeration value="QUERY_TIMEOUT"/>
+                    <enumeration value="QUERY_TOO_COMPLICATED"/>
+                    <enumeration value="REALTIME_PROCESSING_TIME_EXCEEDED_LIMIT"/>
+                    <enumeration value="RECORD_NOT_FOUND"/>
+                    <enumeration value="REPORT_EXPORT_LIMIT_EXCEEDED"/>
+                    <enumeration value="REQUEST_LIMIT_EXCEEDED"/>
+                    <enumeration value="REQUEST_RUNNING_TOO_LONG"/>
+                    <enumeration value="SERVER_UNAVAILABLE"/>
+                    <enumeration value="SERVICE_DESK_NOT_ENABLED"/>
+                    <enumeration value="SOCIALCRM_FEEDSERVICE_API_CLIENT_EXCEPTION"/>
+                    <enumeration value="SOCIALCRM_FEEDSERVICE_API_SERVER_EXCEPTION"/>
+                    <enumeration value="SOCIALCRM_FEEDSERVICE_API_UNAVAILABLE"/>
+                    <enumeration value="SPECIFICATION_GENERATION_EXCEPTION"/>
+                    <enumeration value="SSO_SERVICE_DOWN"/>
+                    <enumeration value="SST_ADMIN_FILE_DOWNLOAD_EXCEPTION"/>
+                    <enumeration value="STATE_TRANSITION_NOT_ALLOWED"/>
+                    <enumeration value="TOO_MANY_APEX_REQUESTS"/>
+                    <enumeration value="TOO_MANY_JOBS"/>
+                    <enumeration value="TOO_MANY_RECIPIENTS"/>
+                    <enumeration value="TOO_MANY_RECORDS"/>
+                    <enumeration value="TRIAL_EXPIRED"/>
+                    <enumeration value="TXN_SECURITY_APEX_ERROR"/>
+                    <enumeration value="TXN_SECURITY_END_A_SESSION"/>
+                    <enumeration value="TXN_SECURITY_FAIL_CLOSE"/>
+                    <enumeration value="TXN_SECURITY_METERING_ERROR"/>
+                    <enumeration value="TXN_SECURITY_NO_ACCESS"/>
+                    <enumeration value="TXN_SECURITY_RUNTIME_ERROR"/>
+                    <enumeration value="TXN_SECURITY_TWO_FA_REQUIRED"/>
+                    <enumeration value="UNABLE_TO_LOCK_ROW"/>
+                    <enumeration value="UNKNOWN_ATTACHMENT_EXCEPTION"/>
+                    <enumeration value="UNKNOWN_EXCEPTION"/>
+                    <enumeration value="UNKNOWN_ORG_SETTING"/>
+                    <enumeration value="UNSUPPORTED_API_VERSION"/>
+                    <enumeration value="UNSUPPORTED_ATTACHMENT_ENCODING"/>
+                    <enumeration value="UNSUPPORTED_CLIENT"/>
+                    <enumeration value="UNSUPPORTED_MEDIA_TYPE"/>
+                    <enumeration value="WEBSTORE_NOT_FOUND"/>
+                    <enumeration value="XML_PARSER_ERROR"/>
+                </restriction>
+            </simpleType>
+
+
+
+            <!-- Fault -->
+            <complexType name="ApiFault">
+                <sequence>
+                    <element name="exceptionCode"    type="fns:ExceptionCode"/>
+                    <element name="exceptionMessage" type="xsd:string"/>
+
+
+                </sequence>
+            </complexType>
+
+            <element name="fault" type="fns:ApiFault" />
+        </schema>
+    </types>
+</definitions>
+

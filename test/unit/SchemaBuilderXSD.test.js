@@ -1415,6 +1415,146 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].children[0].type).to.equal('integer');
   });
 
+  it('Should not have any element\'s child with undefined or error type', function() {
+    const
+      fileContent = fs.readFileSync(validSchemaFolder + '/sfMinified.wsdl', 'utf8'),
+      parser = new XMLParser(),
+      wsdlObject = {
+        operationsArray: '',
+        targetNamespace: {
+          key: 'targetNamespace',
+          url: 'urn:enterprise.soap.sforce.com',
+          prefixFilter: 'targetNamespace:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        wsdlNamespace: {
+          key: 'xmlns',
+          url: 'http://schemas.xmlsoap.org/wsdl/',
+          prefixFilter: 'xmlns:',
+          isDefault: true,
+          tnsDefinitionURL: undefined
+        },
+        SOAPNamespace: {
+          key: 'soap',
+          url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+          prefixFilter: 'xmlns:soap:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        SOAP12Namespace: null,
+        HTTPNamespace: {
+          key: 'http',
+          url: undefined,
+          prefixFilter: 'xmlns:http:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        schemaNamespace: {
+          key: 'xsd',
+          url: 'http://www.w3.org/2001/XMLSchema',
+          prefixFilter: 'xsd:',
+          isDefault: false,
+          tnsDefinitionURL: 'urn:enterprise.soap.sforce.com'
+        },
+        tnsNamespace: {
+          key: 'tns',
+          url: 'urn:enterprise.soap.sforce.com',
+          prefixFilter: 'xmlns:tns:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        allNameSpaces: [
+          {
+            key: 'targetNamespace',
+            url: 'urn:enterprise.soap.sforce.com',
+            prefixFilter: 'targetNamespace:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'xmlns',
+            url: 'http://schemas.xmlsoap.org/wsdl/',
+            prefixFilter: 'xmlns:',
+            isDefault: true,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'soap',
+            url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+            prefixFilter: 'xmlns:soap:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'xsd',
+            url: 'http://www.w3.org/2001/XMLSchema',
+            prefixFilter: 'xmlns:xsd:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'tns',
+            url: 'urn:enterprise.soap.sforce.com',
+            prefixFilter: 'xmlns:tns:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'fns',
+            url: 'urn:fault.enterprise.soap.sforce.com',
+            prefixFilter: 'xmlns:fns:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'ens',
+            url: 'urn:sobject.enterprise.soap.sforce.com',
+            prefixFilter: 'xmlns:ens:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          }
+        ],
+        fileName: '',
+        securityPolicyArray: '',
+        log: {
+          errors: '\nThe specified document has no bindings or operations, the items were not created.'
+        },
+        xmlParsed: '',
+        version: '',
+        documentation: '',
+        localSchemaNamespaces: [
+          {
+            key: '',
+            url: undefined,
+            prefixFilter: '',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          }
+        ],
+        securityPolicyNamespace: null
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseToObject(fileContent),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', wsdlObject, parser.attributePlaceHolder),
+      errorElements = elements.filter((element) => {
+        return element.type === 'error';
+      }),
+      issuedElements = elements.filter((element) => {
+        return element.type === undefined;
+      }),
+      elementsWithIssuedChildren = elements.filter((element) => {
+        return element.children.filter((child) => {
+          return child.type === undefined;
+        }).length > 0;
+      });
+    expect(elements).to.be.an('array');
+    expect(errorElements.length === 0);
+    expect(issuedElements.length === 0);
+    expect(elementsWithIssuedChildren.length === 0);
+  });
+
 });
 
 describe('SchemaBuilderXSD parseObjectToXML', function () {
