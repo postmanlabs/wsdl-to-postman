@@ -1556,7 +1556,7 @@ describe('SchemaBuilderXSD getElements', function () {
   });
 
   it('should get elements when have same name', function () {
-    const simpleInput = `<wsdl:definitions targetNamespace="http://sap.com/xi/AP/LogisticsExecution/Global"
+    const simpleInput = `<wsdl:definitions targetNamespace="http://papas.com/xi/AP/LogisticsExecution/Global"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -1564,37 +1564,37 @@ describe('SchemaBuilderXSD getElements', function () {
     xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
     xmlns:rfc="urn:sap-com:sap:rfc:functions"
-    xmlns:tns="http://sap.com/xi/AP/LogisticsExecution/Global"
+    xmlns:tns="http://papas.com/xi/AP/LogisticsExecution/Global"
     xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
     xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
     xmlns:n1="http://xiTest.com/xi/test"
-    xmlns:n2="http://sap.com/xi/SAPGlobal20/Global"
-    xmlns:n3="http://sap.com/xi/AP/Common/Global"
-    xmlns:n4="http://sap.com/xi/AP/Common/GDT"
-    xmlns:n5="http://sap.com/xi/BASIS/Global">
+    xmlns:n2="http://papas.com/xi/papasGlobal20/Global"
+    xmlns:n3="http://papas.com/xi/AP/Common/Global"
+    xmlns:n4="http://papas.com/xi/AP/Common/GDT"
+    xmlns:n5="http://papas.com/xi/BASIS/Global">
     <wsdl:types>
-      <xsd:schema targetNamespace="http://sap.com/xi/SAPGlobal20/Global"
+      <xsd:schema targetNamespace="http://papas.com/xi/papasGlobal20/Global"
         xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0"
         xmlns:xi0="http://xiTest.com/xi/test"
-        xmlns:xi1="http://sap.com/xi/SAPGlobal20/Global"
-        xmlns:xi2="http://sap.com/xi/AP/Common/Global"
-        xmlns:xi3="http://sap.com/xi/AP/LogisticsExecution/Global"
-        xmlns:xi4="http://sap.com/xi/AP/Common/GDT"
-        xmlns:xi6="http://sap.com/xi/BASIS/Global"
-        xmlns="http://sap.com/xi/SAPGlobal20/Global">
-        <xsd:import namespace="http://sap.com/xi/AP/LogisticsExecution/Global"/>
+        xmlns:xi1="http://papas.com/xi/papasGlobal20/Global"
+        xmlns:xi2="http://papas.com/xi/AP/Common/Global"
+        xmlns:xi3="http://papas.com/xi/AP/LogisticsExecution/Global"
+        xmlns:xi4="http://papas.com/xi/AP/Common/GDT"
+        xmlns:xi6="http://papas.com/xi/BASIS/Global"
+        xmlns="http://papas.com/xi/papasGlobal20/Global">
+        <xsd:import namespace="http://papas.com/xi/AP/LogisticsExecution/Global"/>
         <xsd:element name="OutboundDeliveryExecutionConfirmation"
          type="xi3:OutboundDeliveryExecutionConfirmationMessage"/>
       </xsd:schema>
-      <xsd:schema targetNamespace="http://sap.com/xi/AP/LogisticsExecution/Global"
+      <xsd:schema targetNamespace="http://papas.com/xi/AP/LogisticsExecution/Global"
         xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:3.0"
         xmlns:xi0="http://xiTest.com/xi/test"
-        xmlns:xi1="http://sap.com/xi/SAPGlobal20/Global"
-        xmlns:xi2="http://sap.com/xi/AP/Common/Global"
-        xmlns:xi3="http://sap.com/xi/AP/LogisticsExecution/Global"
-        xmlns:xi4="http://sap.com/xi/AP/Common/GDT"
-        xmlns:xi6="http://sap.com/xi/BASIS/Global"
-        xmlns="http://sap.com/xi/AP/LogisticsExecution/Global">
+        xmlns:xi1="http://papas.com/xi/papasGlobal20/Global"
+        xmlns:xi2="http://papas.com/xi/AP/Common/Global"
+        xmlns:xi3="http://papas.com/xi/AP/LogisticsExecution/Global"
+        xmlns:xi4="http://papas.com/xi/AP/Common/GDT"
+        xmlns:xi6="http://papas.com/xi/BASIS/Global"
+        xmlns="http://papas.com/xi/AP/LogisticsExecution/Global">
         <xsd:complexType name="OutboundDeliveryExecutionConfirmation">
           <xsd:sequence>
             <xsd:element name="ID" type="string"/>
@@ -1621,7 +1621,7 @@ describe('SchemaBuilderXSD getElements', function () {
       tnsNamespace = {
         key: 'tns',
         prefixFilter: 'tns:',
-        url: 'http://sap.com/xi/AP/LogisticsExecution/Global',
+        url: 'http://papas.com/xi/AP/LogisticsExecution/Global',
         isDefault: false
       },
       builder = new SchemaBuilderXSD();
@@ -1639,6 +1639,54 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].isComplex).to.equal(true);
     expect(elements[0].type).to.equal('complex');
     expect(elements[0].children[0].name).to.equal('OutboundDeliveryExecution');
+  });
+
+  it('should not exceed size calls when complex type has self reference', function () {
+    const simpleInput = `<wsdl:definitions targetNamespace="http://Global"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    <wsdl:types>
+    <xs:schema elementFormDefault="qualified"
+     targetNamespace="http://www.org.org/xml/standard-V0000" 
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tns="http://www.org.org/xml/standard-V0000">
+        <xs:complexType name="HierarchyScopeType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="ToolID" type="tns:ToolIDType"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="ToolElementLevel" type="tns:ToolElementLevelType"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="HierarchyScope" type="tns:HierarchyScopeType"/>
+        </xs:sequence>
+      </xs:complexType>
+      </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="OutboundDeliveryExecutionConfirmation">
+      <wsdl:part name="OutboundDeliveryExecutionConfirmation" element="n2:OutboundDeliveryExecutionConfirmation"/>
+    </wsdl:message>
+  </wsdl:definitions>`,
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 'xs',
+        prefixFilter: 'xs:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      tnsNamespace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'http://Global',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      parser.attributePlaceHolder);
+
+    expect(elements).to.be.an('array');
+    expect(elements.length).to.equal(0);
   });
 
 });
