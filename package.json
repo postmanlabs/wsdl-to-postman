@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "ajv": "8.1.0",
+    "clone": "2.1.2",
     "fast-xml-parser": "3.18.0",
     "libxmljs": "0.19.7",
     "libxmljs2": "0.27.0",
