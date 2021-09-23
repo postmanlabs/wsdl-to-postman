@@ -27,10 +27,10 @@ The converter can be used as a CLI tool as well. The following [command line opt
   Used to pretty print the collection object while writing to a file
 
 - `-O`, `--options`
-  Used to supply options to the converter, for complete options details see [here](/OPTIONS.md)
+  Used to supply options to the converter
 
 - `-c`, `--options-config`  
-  Used to supply options to the converter through config file, for complete options details see [here](/OPTIONS.md)
+  Used to supply options to the converter through config file
 
 - `-h`, `--help`  
   Specifies all the options along with a few usage examples on the terminal
