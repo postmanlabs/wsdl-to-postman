@@ -20,7 +20,8 @@ const expect = require('chai').expect,
     'ignoreUnresolvedVariables',
     'detailedBlobValidation',
     'showMissingInSchemaErrors',
-    'suggestAvailableFixes'
+    'suggestAvailableFixes',
+    'resolveRemoteRefs'
   ];
 
 describe('SchemaPack convert unit test WSDL 1.1', function () {
@@ -201,7 +202,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode = document', function () {
     const options = SchemaPack.getOptions('document');
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(7);
+    expect(options.length).to.eq(8);
   });
 
   it('Should return external options when called with mode = use', function () {
@@ -243,13 +244,13 @@ describe('SchemaPack getOptions', function () {
       usage: ['CONVERSION']
     });
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(1);
+    expect(options.length).to.eq(2);
   });
 
   it('Should return external options when called with mode document and usage not an object', function () {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(7);
+    expect(options.length).to.eq(8);
   });
 
   it('Should return default empty array in validationPropertiesToIgnore', function () {
