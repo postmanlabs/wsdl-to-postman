@@ -2,7 +2,7 @@ const expect = require('chai').expect,
   {
     resolveRemoteRefs
   } = require('../../lib/utils/WSDLRemoteResolver'),
-  validWSDLs20 = 'test/data/separatedFiles/remoteRefs',
+  remoteRefs11 = 'test/data/separatedFiles/remoteRefs',
   fs = require('fs'),
   getOptions = require('../../lib/utils/options').getOptions,
   {
@@ -20,65 +20,53 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
   optionFromOptions[`${resolveRemoteRefsOption.id}`] = true;
 
   it('Should return the resolved references', function () {
-    let rootContent = fs.readFileSync(validWSDLs20 + '/remoteStockquoteservice.wsdl', 'utf8'),
-      expectedOutput = fs.readFileSync(validWSDLs20 + '/output.wsdl', 'utf8');
+    let rootContent = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8'),
+      expectedOutput = fs.readFileSync(remoteRefs11 + '/output.wsdl', 'utf8');
     resolveRemoteRefs(rootContent, new XMLParser(), optionFromOptions, (resolvedFile) => {
       expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
     });
-
-
   });
+
+  it('Should return the same string when "resolveRemoteRefs" option is set to false', function () {
+    const options = getOptions({ usage: ['CONVERSION'] }),
+      resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
+    let optionFromOptions = {},
+      rootContent;
+    optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
+
+    rootContent = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8');
+    localOption = optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
+    resolveRemoteRefs(rootContent, new XMLParser(), optionFromOptions, (resolvedFile) => {
+      expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
+    });
+  });
+
+  it('Should return the same string when "resolveRemoteRefs"option is not sent', function () {
+    const options = getOptions({ usage: ['CONVERSION'] }),
+      resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
+    let optionFromOptions = {},
+      rootContent;
+    optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
+
+    rootContent = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8');
+    localOption = optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
+    resolveRemoteRefs(rootContent, new XMLParser(), undefined, (resolvedFile) => {
+      expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
+    });
+  });
+
+  it('Should return the same string when "resolveRemoteRefs"option is empty object', function () {
+    const options = getOptions({ usage: ['CONVERSION'] }),
+      resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
+    let optionFromOptions = {},
+      rootContent;
+    optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
+
+    rootContent = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8');
+    localOption = optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
+    resolveRemoteRefs(rootContent, new XMLParser(), {}, (resolvedFile) => {
+      expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
+    });
+  });
+
 });
-
-
-// describe('WSDLRemoteResolver resolveRemoteReferences', function () {
-//   const options = getOptions({ usage: ['CONVERSION'] }),
-//     resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
-//   let optionFromOptions = {};
-//   optionFromOptions[`${resolveRemoteRefsOption.id}`] = true;
-
-//   it('Should return the resolved references', function () {
-//     let resolvedFile;
-//     rootContent = fs.readFileSync(validWSDLs20 + '/stockquoteservice.wsdl', 'utf8');
-
-//     resolvedFile = resolveRemoteReferences(rootContent, new XMLParser(), optionFromOptions);
-
-//     expect(resolvedFile).to.equal(rootContent);
-//     expect(resolvedFile).to.not.equal('');
-//   });
-// });
-
-// describe('WSDLRemoteResolver resolveRemoteReferences with options', function () {
-//   it('Should return the same string when "resolveRemoteRefs" option is set to false', function () {
-//     const options = getOptions({ usage: ['CONVERSION'] }),
-//       resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
-//     let optionFromOptions = {},
-//       resolvedFile;
-//     optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
-//     rootContent = fs.readFileSync(validWSDLs20 + '/stockquoteservice.wsdl', 'utf8');
-
-//     resolvedFile = resolveRemoteReferences(rootContent, new XMLParser(), optionFromOptions);
-
-//     expect(resolvedFile).to.equal(rootContent);
-//     expect(resolvedFile).to.not.equal('');
-//   });
-
-//   it('Should return the same string when "resolveRemoteRefs" option is not sent', function () {
-//     let resolvedFile;
-//     rootContent = fs.readFileSync(validWSDLs20 + '/stockquoteservice.wsdl', 'utf8');
-
-//     resolvedFile = resolveRemoteReferences(rootContent, new XMLParser());
-
-//     expect(resolvedFile).to.equal(rootContent);
-//     expect(resolvedFile).to.not.equal('');
-//   });
-
-//   it('Should return the same string when "resolveRemoteRefs" option is empty object', function () {
-//     let resolvedFile;
-//     rootContent = fs.readFileSync(validWSDLs20 + '/stockquoteservice.wsdl', 'utf8');
-//     resolvedFile = resolveRemoteReferences(rootContent, new XMLParser(), {});
-
-//     expect(resolvedFile).to.equal(rootContent);
-//     expect(resolvedFile).to.not.equal('');
-//   });
-// });

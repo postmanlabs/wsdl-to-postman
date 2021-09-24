@@ -5,6 +5,7 @@ const expect = require('chai').expect,
   validWSDLs = 'test/data/validWSDLs11',
   validWSDLs20 = 'test/data/validWSDLs20',
   SEPARATED_FILES = '../data/separatedFiles',
+  REMOTE_REFS = 'test/data/separatedFiles/remoteRefs',
   fs = require('fs'),
   getAllTransactionsFromCollection = require('../../lib/utils/getAllTransactions').getAllTransactionsFromCollection,
   async = require('async'),
@@ -22,7 +23,8 @@ const expect = require('chai').expect,
     'showMissingInSchemaErrors',
     'suggestAvailableFixes',
     'resolveRemoteRefs'
-  ];
+  ],
+  getOptions = require('../../lib/utils/options').getOptions;
 
 describe('SchemaPack convert unit test WSDL 1.1', function () {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
@@ -90,6 +92,28 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
     schemaPack.convert((error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object');
+    });
+  });
+
+  it('Should get a collection when send a file with remote refs and option is set to true', function () {
+    const options = getOptions({ usage: ['CONVERSION'] }),
+      resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
+    let optionFromOptions = {},
+      schemaPack;
+    fileContent = fs.readFileSync(REMOTE_REFS + '/remoteStockquoteservice.wsdl', 'utf8');
+    optionFromOptions[`${resolveRemoteRefsOption.id}`] = true;
+
+    schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, optionFromOptions);
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
     });
   });
 });
