@@ -5,8 +5,8 @@
     xmlns:defs="http://example.com/stockquote/definitions"
     xmlns="http://schemas.xmlsoap.org/wsdl/">
 
-    <import namespace="http://example.com/stockquote/definitions" 
-        location="https://github.com/postmanlabs/wsdl-to-postman/blob/development/test/data/separatedFiles/W3Example/stockquote.wsdl"/>
+    <import namespace="http://example.com/stockquote/definitions"
+        location="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/W3Example/stockquote.wsdl"/>
 
     <binding name="StockQuoteSoapBinding" type="defs:StockQuotePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
