@@ -6,7 +6,7 @@
     xmlns="http://schemas.xmlsoap.org/wsdl/">
 
     <import namespace="http://example.com/stockquote/definitions"
-        location="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/W3Example/stockquote.wsdl"/>
+        location="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefs/remoteStockquote.wsdl"/>
 
     <binding name="StockQuoteSoapBinding" type="defs:StockQuotePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
