@@ -1,6 +1,5 @@
 const expect = require('chai').expect,
   {
-    resolveRemoteReferences,
     resolveRemoteRefs
   } = require('../../lib/utils/WSDLRemoteResolver'),
   validWSDLs20 = 'test/data/separatedFiles/remoteRefs',
@@ -8,7 +7,10 @@ const expect = require('chai').expect,
   getOptions = require('../../lib/utils/options').getOptions,
   {
     XMLParser
-  } = require('../../lib/XMLParser');
+  } = require('../../lib/XMLParser'),
+  {
+    removeLineBreakTabsSpaces
+  } = require('../../lib/utils/textUtils');
 
 
 describe('WSDLRemoteResolver resolveRemoteRefs', function () {
@@ -18,9 +20,10 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
   optionFromOptions[`${resolveRemoteRefsOption.id}`] = true;
 
   it('Should return the resolved references', function () {
-    let rootContent = fs.readFileSync(validWSDLs20 + '/stockquoteservice.wsdl', 'utf8');
+    let rootContent = fs.readFileSync(validWSDLs20 + '/remoteStockquoteservice.wsdl', 'utf8'),
+      expectedOutput = fs.readFileSync(validWSDLs20 + '/output.wsdl', 'utf8');
     resolveRemoteRefs(rootContent, new XMLParser(), optionFromOptions, (resolvedFile) => {
-      expect(resolvedFile).to.equal(rootContent);
+      expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
     });
 
 
