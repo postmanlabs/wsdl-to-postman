@@ -189,7 +189,7 @@ describe('Parser Factory getWsdlVersion', function () {
   </user>`);
     }
     catch (error) {
-      expect(error.message).to.equal('Not WSDL Specification found in your document');
+      expect(error.message).to.equal('Provided document is not a valid WSDL specification');
     }
   });
 
@@ -354,7 +354,7 @@ describe('Parser Factory getParser', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Not WSDL Specification found in your document');
+      expect(error.message).to.equal('Provided document is not a valid WSDL specification');
     }
   });
 

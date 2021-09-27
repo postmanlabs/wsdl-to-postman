@@ -105,7 +105,7 @@ string`, function () {
     expect(validator.validate(input, new XMLParser()).valResult).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Not WSDL Specification found in your document'
+        reason: 'Provided document is not a valid WSDL specification'
       });
   });
 
