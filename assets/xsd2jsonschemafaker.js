@@ -16027,6 +16027,11 @@
       return true;
     }
   
+    schema(node, jsonSchema, xsd) {
+      jsonSchema.type = JSON_SCHEMA_TYPES.OBJECT;
+      return true;
+    }
+  
     /*
       // 3.3.2 boolean: http://www.w3.org/TR/xmlschema11-2/#boolean
       / **
@@ -16829,7 +16834,7 @@
       const typeName = XsdFile.getAttrValue(node, XsdAttributes.TYPE);
       // TODO: id, default, fixed, inheritable (TBD)
       var attributeJsonSchema;
-      const fixed = XsdFile.getAttrValue(node, 'tns:fixed');
+      const fixed = XsdFile.getAttrValue(node, XsdAttributes.FIXED);
   
       this.parsingState.pushSchema(this.workingJsonSchema);
       if (typeName !== undefined) {
@@ -22168,8 +22173,21 @@
   
     static getAttrValue(node, attrName) {
       var retval;
+      const prefixedAttributes = node.attributes ?
+        Object.values(node.attributes).filter((attribute) => {
+          return attribute.nodeValue && attribute.nodeName.includes(`:${attrName}`);
+        }) :
+        [];
       if (this.hasAttribute(node, attrName)) {
         retval = node.getAttribute(attrName);
+      }
+      else if (prefixedAttributes.length > 0) {
+        let foundPrefixedAttribute = prefixedAttributes.find((attribute) => {
+          return attribute.localName == attrName;
+        });
+        retval = foundPrefixedAttribute ?
+          foundPrefixedAttribute.nodeValue :
+          retval;
       }
       return retval;
     }
