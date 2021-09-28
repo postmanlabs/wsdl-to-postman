@@ -1139,7 +1139,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
         portName: 'SayHelloHttpSoap11Endpoint',
         serviceName: 'SayHello',
         xpathInfo: {
-          xpath: '//description//binding[@name="SayHelloSoap11Binding"]//operation[@ref="tns:hi"]',
+          xpath: '//description//binding[@name="SayHelloSoap11Binding"]//operation[@ref="ns:hi"]',
           wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
         }
       });
@@ -1153,7 +1153,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
         portName: 'SayHelloHttpSoap12Endpoint',
         serviceName: 'SayHello',
         xpathInfo: {
-          xpath: '//description//binding[@name="SayHelloSoap12Binding"]//operation[@ref="tns:hi"]',
+          xpath: '//description//binding[@name="SayHelloSoap12Binding"]//operation[@ref="ns:hi"]',
           wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
         }
       });
@@ -1167,7 +1167,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
         portName: 'SayHelloHttpEndpoint',
         serviceName: 'SayHello',
         xpathInfo: {
-          xpath: '//description//binding[@name="SayHelloHttpBinding"]//operation[@ref="tns:hi"]',
+          xpath: '//description//binding[@name="SayHelloHttpBinding"]//operation[@ref="ns:hi"]',
           wsdlNamespaceUrl: 'http://www.w3.org/ns/wsdl'
         }
       });
