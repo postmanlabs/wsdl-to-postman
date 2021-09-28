@@ -7,6 +7,7 @@ const expect = require('chai').expect,
     mergeAndValidate
   } = require('../../index'),
   validWSDLs = 'test/data/validWSDLs11',
+  invalidWSDLs = 'test/data/invalidWSDLs11',
   fs = require('fs'),
   path = require('path');
 
@@ -65,6 +66,20 @@ describe('convert', function () {
       expect(result.output).to.be.an('array');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].type).to.equal('collection');
+    });
+
+  });
+
+  it('Should return "Provided document is not a valid WSDL specification" with invalid file', function () {
+    const
+      VALID_WSDL_PATH = invalidWSDLs + '/calculator-invalid.wsdl';
+    convert({
+      type: 'file',
+      data: VALID_WSDL_PATH
+    }, {}, (error, result) => {
+      expect(error).to.be.null;
+      expect(result.result).to.equal(false);
+      expect(result.reason).to.equal('Provided document is not a valid WSDL specification');
     });
 
   });
