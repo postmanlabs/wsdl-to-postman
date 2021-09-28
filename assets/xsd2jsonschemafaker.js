@@ -16027,6 +16027,11 @@
       return true;
     }
   
+    schema(node, jsonSchema, xsd) {
+      jsonSchema.type = JSON_SCHEMA_TYPES.OBJECT;
+      return true;
+    }
+  
     /*
       // 3.3.2 boolean: http://www.w3.org/TR/xmlschema11-2/#boolean
       / **
@@ -16829,6 +16834,7 @@
       const typeName = XsdFile.getAttrValue(node, XsdAttributes.TYPE);
       // TODO: id, default, fixed, inheritable (TBD)
       var attributeJsonSchema;
+      const fixed = XsdFile.getAttrValue(node, 'tns:fixed');
   
       this.parsingState.pushSchema(this.workingJsonSchema);
       if (typeName !== undefined) {
@@ -16840,6 +16846,9 @@
         jsonSchema
           .getGlobalAttributesSchema()
           .setSubSchema(name, attributeJsonSchema);
+          if (fixed) {
+            attributeJsonSchema.addEnum(fixed);
+          }
         return this.builtInTypeConverter[qualifiedTypeName.getLocal()](
           node,
           attributeJsonSchema
