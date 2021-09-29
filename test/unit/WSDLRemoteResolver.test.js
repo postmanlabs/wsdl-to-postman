@@ -23,7 +23,7 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
     let rootContent = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8'),
       expectedOutput = fs.readFileSync(remoteRefs11 + '/output.wsdl', 'utf8');
     resolveRemoteRefs(rootContent, new XMLParser(), optionFromOptions, (resolvedFile) => {
-      expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
     });
   });
 
@@ -37,7 +37,7 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
     rootContent = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8');
     localOption = optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
     resolveRemoteRefs(rootContent, new XMLParser(), optionFromOptions, (resolvedFile) => {
-      expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
+      expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
     });
   });
 
@@ -51,7 +51,7 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
     rootContent = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8');
     localOption = optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
     resolveRemoteRefs(rootContent, new XMLParser(), undefined, (resolvedFile) => {
-      expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
+      expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
     });
   });
 
@@ -65,7 +65,7 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
     rootContent = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8');
     localOption = optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
     resolveRemoteRefs(rootContent, new XMLParser(), {}, (resolvedFile) => {
-      expect(removeLineBreakTabsSpaces(resolvedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
+      expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(rootContent));
     });
   });
 
