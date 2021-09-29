@@ -37,7 +37,8 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
 
         // postman application should substitute variables
         historyRequests.forEach((historyRequest) => {
-          historyRequest.request.url.host = collectionResult.output[0].data.variable[0].value;
+          let variable = collectionResult.output[0].data.variable[0];
+          historyRequest.request.url.host = variable ? variable.value : historyRequest.request.url.host;
         });
 
         schemaPack.validateTransaction(historyRequests, (error, result) => {

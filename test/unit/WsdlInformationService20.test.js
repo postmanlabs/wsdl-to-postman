@@ -154,20 +154,20 @@ describe('WSDL 2.0 parser getLocationFromBindingOperation', function () {
 });
 
 describe('WSDL 2.0 getElementFromInterfaceOperationFault', function () {
-  it('should get null when found element but not found ref', function () {
+  it('should get empty array when found element but not found ref', function () {
     const informationService = new WsdlInformationService20(),
       element = informationService.getElementFromInterfaceOperationFault({}, {
         outfault: {}
       }, null, '', 'outfault');
-    expect(element).to.eq(null);
+    expect(element).to.have.length(0);
   });
 });
 
 describe('WSDL 2.0 getElementFromInterfaceOperationInOut', function () {
-  it('should get null when not found element', function () {
+  it('should get empty array when not found element', function () {
     const informationService = new WsdlInformationService20(),
       element = informationService.getElementFromInterfaceOperationInOut({}, null, 'notfound', '');
-    expect(element).to.eq(null);
+    expect(element).to.have.length(0);
   });
 });
 

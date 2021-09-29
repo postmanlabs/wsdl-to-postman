@@ -1689,6 +1689,231 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements.length).to.equal(0);
   });
 
+  it('should return elements wheh have tag  <s:element ref="s:schema" />', function () {
+    const simpleInput = `<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:tns="XXXYYYZZZ" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    targetNamespace="XXXYYYZZZ" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"> 
+      <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="XXXYYYZZZ">
+          <s:element name="lista_komunikatowRequest">
+              <s:complexType>
+                  <s:sequence>
+                      <s:element minOccurs="0" maxOccurs="1" name="lista_komunikatow">
+                          <s:complexType>
+                              <s:sequence>
+                                  <s:element ref="s:schema" />
+                                  <s:any />
+                              </s:sequence>
+                          </s:complexType>
+                      </s:element>
+                  </s:sequence>
+              </s:complexType>
+          </s:element>
+          <s:element name="lista_komunikatowResponse">
+              <s:complexType>
+                  <s:sequence>
+                      <s:element minOccurs="0" maxOccurs="1" name="lista_komunikatowResult">
+                          <s:complexType>
+                              <s:sequence>
+                                  <s:element ref="s:schema" />
+                                  <s:any />
+                              </s:sequence>
+                          </s:complexType>
+                      </s:element>
+                  </s:sequence>
+              </s:complexType>
+          </s:element>
+      </s:schema>
+    </wsdl:types>
+  </wsdl:definitions>`,
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      tnsNamespace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'XXXYYYZZZ',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      parser.attributePlaceHolder);
+
+    expect(elements).to.be.an('array');
+    expect(elements.length).to.equal(2);
+  });
+
+  it('Should process elements that reference globalAttributes with fixed property correctly', function () {
+    const fileContent = fs.readFileSync(validSchemaFolder + '/attributeIssue.wsdl', 'utf8'),
+      parser = new XMLParser(),
+      parsedXml = parser.parseToObject(fileContent),
+      wsdlObject = {
+        operationsArray: '',
+        targetNamespace: {
+          key: 'targetNamespace',
+          url: 'http://tempuri.org/',
+          prefixFilter: 'targetNamespace:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        wsdlNamespace: {
+          key: 'wsdl',
+          url: 'http://schemas.xmlsoap.org/wsdl/',
+          prefixFilter: 'wsdl:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        SOAPNamespace: {
+          key: 'soap',
+          url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+          prefixFilter: 'xmlns:soap:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        SOAP12Namespace: {
+          key: 'soap12',
+          url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+          prefixFilter: 'soap12:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        HTTPNamespace: {
+          key: 'http',
+          url: 'http://schemas.xmlsoap.org/wsdl/http/',
+          prefixFilter: 'xmlns:http:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        schemaNamespace: {
+          key: 's',
+          url: 'http://www.w3.org/2001/XMLSchema',
+          prefixFilter: 's:',
+          isDefault: false,
+          tnsDefinitionURL: 'http://tempuri.org/'
+        },
+        tnsNamespace: {
+          key: 'tns',
+          url: 'http://tempuri.org/',
+          prefixFilter: 'xmlns:tns:',
+          isDefault: false,
+          tnsDefinitionURL: undefined
+        },
+        allNameSpaces: [
+          {
+            key: 'soap',
+            url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+            prefixFilter: 'xmlns:soap:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'tm',
+            url: 'http://microsoft.com/wsdl/mime/textMatching/',
+            prefixFilter: 'xmlns:tm:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'soapenc',
+            url: 'http://schemas.xmlsoap.org/soap/encoding/',
+            prefixFilter: 'xmlns:soapenc:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'mime',
+            url: 'http://schemas.xmlsoap.org/wsdl/mime/',
+            prefixFilter: 'xmlns:mime:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'tns',
+            url: 'http://tempuri.org/',
+            prefixFilter: 'xmlns:tns:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 's',
+            url: 'http://www.w3.org/2001/XMLSchema',
+            prefixFilter: 'xmlns:s:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'soap12',
+            url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+            prefixFilter: 'xmlns:soap12:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'http',
+            url: 'http://schemas.xmlsoap.org/wsdl/http/',
+            prefixFilter: 'xmlns:http:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'wsdl',
+            url: 'http://schemas.xmlsoap.org/wsdl/',
+            prefixFilter: 'xmlns:wsdl:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          },
+          {
+            key: 'targetNamespace',
+            url: 'http://tempuri.org/',
+            prefixFilter: 'targetNamespace:',
+            isDefault: false,
+            tnsDefinitionURL: undefined
+          }
+        ],
+        fileName: '',
+        securityPolicyArray: '',
+        log: {
+          errors: ''
+        },
+        xmlParsed: '',
+        version: '',
+        documentation: '',
+        localSchemaNamespaces: [
+        ],
+        securityPolicyNamespace: null
+      },
+      principalPrefix = 'wsdl:',
+      wsdlRoot = 'definitions',
+      parserPlaceholder = '@_',
+      builder = new SchemaBuilderXSD(),
+      elements = builder.getElements(
+        parsedXml,
+        principalPrefix,
+        wsdlRoot,
+        wsdlObject,
+        parserPlaceholder
+      ),
+      expectedFixedValue = 'v36.2',
+      expectedFixedAttributeName = '@version',
+      elementWithReferenceToGlobalAttribute = elements[7],
+      globalAttributeInElement = elementWithReferenceToGlobalAttribute.children[2],
+      attributeFixedValue = globalAttributeInElement.enum[0];
+    expect(globalAttributeInElement.name).to.be.equal(expectedFixedAttributeName);
+    expect(attributeFixedValue).to.be.equal(expectedFixedValue);
+  });
 });
 
 describe('SchemaBuilderXSD parseObjectToXML', function () {

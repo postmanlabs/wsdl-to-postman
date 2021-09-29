@@ -95,6 +95,33 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
     });
   });
 
+  it('Should generate a valid message with global attributes with fixed property', function () {
+    const
+      VALID_WSDL_PATH = validWSDLs + '/attributeIssue.wsdl',
+      schemaPack = new SchemaPack({
+        type: 'file',
+        data: VALID_WSDL_PATH
+      }, {}),
+      expectedBodyRaw = '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
+        '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n' +
+        '  <soap:Body>\n' +
+        '    <Add xmlns=\"http://tempuri.org/\" version=\"v36.2\">\n' +
+        '      <intA>100</intA>\n' +
+        '      <intB>100</intB>\n' +
+        '    </Add>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n'; 
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection'); 
+      expect(result.output[0].data.info.name).to.equal('Calculator');
+      expect(result.output[0].data.item[0].item[0].request.body.raw).to.equal(expectedBodyRaw); 
+    });
+
   it('Should get a collection when send a file with remote refs and option is set to true', function () {
     const options = getOptions({ usage: ['CONVERSION'] }),
       resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
