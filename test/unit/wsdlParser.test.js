@@ -779,7 +779,7 @@ provides functions that convert numbers into words or dollar amounts.</documenta
       });
     expect(wsdlObject.operationsArray[1].input).to.be.an('Array');
     expect(wsdlObject.operationsArray[1].output).to.be.an('Array');
-    expect(wsdlObject.operationsArray[1].fault).to.be.null;
+    expect(wsdlObject.operationsArray[1].fault).to.have.length(0);
 
     expect(wsdlObject.operationsArray[2]).to.be.an('object')
       .and.to.include({
