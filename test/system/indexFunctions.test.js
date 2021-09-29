@@ -17,7 +17,7 @@ describe('Test validate function in SchemaPack through Index', function() {
     expect(result).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Not WSDL Specification found in your document'
+        reason: 'Provided document is not a valid WSDL specification'
       });
   });
 
@@ -26,7 +26,7 @@ describe('Test validate function in SchemaPack through Index', function() {
     expect(result).to.be.an('object')
       .and.to.include({
         result: false,
-        reason: 'Not WSDL Specification found in your document'
+        reason: 'Provided document is not a valid WSDL specification'
       });
   });
 

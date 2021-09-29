@@ -4,7 +4,7 @@
   "description": "Convert a given WSDL specification (1.1) to Postman Collection",
   "main": "index.js",
   "bin": {
-    "openapi2postmanv2": "./bin/openapi2postmanv2.js"
+    "wsdl2postman": "./bin/wsdl2postman.js"
   },
   "scripts": {
     "test": "./scripts/test.sh",

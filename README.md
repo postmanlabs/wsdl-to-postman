@@ -3,6 +3,9 @@
 Enables Postman support of the WSDL specification
 browserify index.js --standalone xsd2jsonschemafaker > xsd2jsonschemafaker.js
 
+### Options:
+
+Check out complete list of options and their usage at [OPTIONS.md](/OPTIONS.md)
 
 ## Command Line Interface
 
@@ -27,10 +30,10 @@ The converter can be used as a CLI tool as well. The following [command line opt
   Used to pretty print the collection object while writing to a file
 
 - `-O`, `--options`
-  Used to supply options to the converter
+  Used to supply options to the converter, for complete options details see [here](/OPTIONS.md)
 
 - `-c`, `--options-config`  
-  Used to supply options to the converter through config file
+  Used to supply options to the converter through config file, for complete options details see [here](/OPTIONS.md)
 
 - `-h`, `--help`  
   Specifies all the options along with a few usage examples on the terminal

@@ -70,7 +70,7 @@ describe('convert', function () {
 
   });
 
-  it('Should return Not WSDL Specification found in your document whit invalid file', function () {
+  it('Should return "Provided document is not a valid WSDL specification" with invalid file', function () {
     const
       VALID_WSDL_PATH = invalidWSDLs + '/calculator-invalid.wsdl';
     convert({
@@ -79,7 +79,7 @@ describe('convert', function () {
     }, {}, (error, result) => {
       expect(error).to.be.null;
       expect(result.result).to.equal(false);
-      expect(result.reason).to.equal('Not WSDL Specification found in your document');
+      expect(result.reason).to.equal('Provided document is not a valid WSDL specification');
     });
 
   });

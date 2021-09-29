@@ -77,7 +77,7 @@ outputFile = options.output || false;
 testFlag = options.test || false;
 prettyPrintFlag = options.pretty || false;
 configFile = options.optionsConfig || false;
-definedOptions = (!(program.options instanceof Array) ? program.options : {});
+definedOptions = (!(options.options instanceof Array) ? options.options : {});
 wsdlData;
 
 
@@ -121,7 +121,7 @@ function convert(wsdlData) {
   }
 
   // override options provided via cli
-  if (definedOptions && definedOptions.length > 0) {
+  if (definedOptions && Object.keys(definedOptions).length > 0) {
     options = definedOptions;
   }
 
