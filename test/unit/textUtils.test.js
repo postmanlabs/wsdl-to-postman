@@ -1,7 +1,8 @@
 const expect = require('chai').expect,
   {
     getLastSegmentURL,
-    stringIsAValidUrl
+    stringIsAValidUrl,
+    stringIsValidURLFilePath
   } = require('../../lib/utils/textUtils');
 
 describe('Text Utils getLastSegmentURL', function () {
@@ -58,6 +59,41 @@ describe('Text Utils stringIsAValidUrl', function () {
 
   it('should get false when called with Types.xsd', function () {
     const result = stringIsAValidUrl('Types.xsd');
+    expect(result).to.equal(false);
+  });
+
+});
+
+
+describe('Text Utils stringIsValidURLFilePath', function () {
+
+  it('should get true when called with "http://tempuri.org/Add/some.wsdl"', function () {
+    const result = stringIsValidURLFilePath('http://tempuri.org/Add/some.wsdl', ['wsdl']);
+    expect(result).to.equal(true);
+  });
+
+  it('should get false when called with "http://tempuri.org/Add/some.wsdl" and only xsd files', function () {
+    const result = stringIsValidURLFilePath('http://tempuri.org/Add/some.wsdl', ['xsd']);
+    expect(result).to.equal(false);
+  });
+
+  it('should get true when called with "http://tempuri.org/Add/some.xsd"', function () {
+    const result = stringIsValidURLFilePath('http://tempuri.org/Add/some.xsd', ['xsd']);
+    expect(result).to.equal(true);
+  });
+
+  it('should get false when called with ../../test/data/multipleSchemaValidationLINT/chapter04ord2.xsd', function () {
+    const result = stringIsValidURLFilePath('../../test/data/multipleSchemaValidationLINT/chapter04ord2.xsd');
+    expect(result).to.equal(false);
+  });
+
+  it('should get false when called with Types.xsd', function () {
+    const result = stringIsValidURLFilePath('Types.xsd');
+    expect(result).to.equal(false);
+  });
+
+  it('should get false when called with "http://tempuri.org/Add" ', function () {
+    const result = stringIsValidURLFilePath('http://tempuri.org/Add');
     expect(result).to.equal(false);
   });
 
