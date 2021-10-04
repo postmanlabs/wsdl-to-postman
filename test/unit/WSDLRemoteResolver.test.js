@@ -5,6 +5,7 @@ const expect = require('chai').expect,
   } = require('../../lib/utils/WSDLRemoteResolver'),
   remoteRefs11 = 'test/data/separatedFiles/remoteRefs',
   remoteRefsIncludeTag = 'test/data/separatedFiles/includeTag',
+  remoteSameTargetNamespace = 'test/data/separatedFiles/sameTargetnamespace',
   remoteRefsServiceFinderQuery = 'test/data/separatedFiles/remoteRefsServiceFinderQuery',
   fs = require('fs'),
   getOptions = require('../../lib/utils/options').getOptions,
@@ -97,11 +98,24 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
     });
   });
 
-  it('Should return the resolved references with relative path and sourceURL', function (done) {
+  it('Should return the resolved references with relative path and sourceURL (include tag)', function (done) {
     let data = fs.readFileSync(remoteRefsIncludeTag + '/Services.wsdl', 'utf8'),
       expectedOutput = fs.readFileSync(remoteRefsIncludeTag + '/output.wsdl', 'utf8');
     optionFromOptions[`${sourceUrl.id}`] =
       'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/includeTag/';
+
+    resolveRemoteRefs({ data }, new XMLParser(), optionFromOptions, (resolvedFile) => {
+      expect(resolvedFile.err).to.be.undefined;
+      expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      done();
+    });
+  });
+
+  it('Should return the resolved references with relative path and sourceURL (import tag)', function (done) {
+    let data = fs.readFileSync(remoteSameTargetNamespace + '/Services.wsdl', 'utf8'),
+      expectedOutput = fs.readFileSync(remoteSameTargetNamespace + '/output.wsdl', 'utf8');
+    optionFromOptions[`${sourceUrl.id}`] = 'https://raw.githubusercontent.com/postmanlabs/' +
+    'wsdl-to-postman/development/test/data/separatedFiles/sameTargetnamespace/';
 
     resolveRemoteRefs({ data }, new XMLParser(), optionFromOptions, (resolvedFile) => {
       expect(resolvedFile.err).to.be.undefined;
