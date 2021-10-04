@@ -99,4 +99,42 @@ describe('Text Utils stringIsValidURLFilePath', function () {
 
 });
 
+describe('Text Utils getAbsoultePathFromRelativeAndBase', function () {
 
+  it('should https://raw.com/postmanlabs/wsdl-to-postman/Types.xsd when relative has no folder structure', function () {
+    const result = getAbsoultePathFromRelativeAndBase('https://raw.com/postmanlabs/wsdl-to-postman/',
+      'Types.xsd');
+    expect(result).to.equal('https://raw.com/postmanlabs/wsdl-to-postman/Types.xsd');
+  });
+
+  it('should https://raw.com/postmanlabs/wsdl-to-postman/schemas/Types.xsd when relative has folder structure',
+    function () {
+      const result = getAbsoultePathFromRelativeAndBase('https://raw.com/postmanlabs/wsdl-to-postman/wsdl/',
+        './../schemas/Types.xsd');
+      expect(result).to.equal('https://raw.com/postmanlabs/wsdl-to-postman/schemas/Types.xsd');
+    });
+
+  it('should https://raw.com/postmanlabs/wsdl-to-postman/schemas/Types.xsd when relative has folder structure' +
+  ' and base does not end with "/"',
+  function () {
+    const result = getAbsoultePathFromRelativeAndBase('https://raw.com/postmanlabs/wsdl-to-postman/wsdl',
+      './../schemas/Types.xsd');
+    expect(result).to.equal('https://raw.com/postmanlabs/wsdl-to-postman/schemas/Types.xsd');
+  });
+
+  it('should https://raw.com/postmanlabs/wsdl-to-postman/wsdl/Types.xsd when relative has folder structure Types.xsd',
+    function () {
+      const result = getAbsoultePathFromRelativeAndBase('https://raw.com/postmanlabs/wsdl-to-postman/wsdl/',
+        'Types.xsd');
+      expect(result).to.equal('https://raw.com/postmanlabs/wsdl-to-postman/wsdl/Types.xsd');
+    });
+
+  it('should https://raw.com/postmanlabs/wsdl-to-postman/wsdl/Types.xsd when relative has' +
+    ' folder structure ./Types.xsd',
+  function () {
+    const result = getAbsoultePathFromRelativeAndBase('https://raw.com/postmanlabs/wsdl-to-postman/wsdl/',
+      './Types.xsd');
+    expect(result).to.equal('https://raw.com/postmanlabs/wsdl-to-postman/wsdl/Types.xsd');
+  });
+
+});

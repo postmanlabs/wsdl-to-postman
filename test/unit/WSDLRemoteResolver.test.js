@@ -1,6 +1,7 @@
 const expect = require('chai').expect,
   {
-    resolveRemoteRefs
+    resolveRemoteRefs,
+    calculateDowloadPathAndParentBaseURL
   } = require('../../lib/utils/WSDLRemoteResolver'),
   remoteRefs11 = 'test/data/separatedFiles/remoteRefs',
   remoteRefsServiceFinderQuery = 'test/data/separatedFiles/remoteRefsServiceFinderQuery',
@@ -12,7 +13,6 @@ const expect = require('chai').expect,
   {
     removeLineBreakTabsSpaces
   } = require('../../lib/utils/textUtils');
-
 
 describe('WSDLRemoteResolver resolveRemoteRefs', function () {
   const options = getOptions({ usage: ['CONVERSION'] }),
@@ -65,7 +65,7 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
 
     data = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8');
     localOption = optionFromOptions[`${resolveRemoteRefsOption.id}`] = false;
-    resolveRemoteRefs({data}, new XMLParser(), undefined, (resolvedFile) => {
+    resolveRemoteRefs({ data }, new XMLParser(), undefined, (resolvedFile) => {
       expect(resolvedFile.err).to.be.undefined;
       expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(data));
       done();
@@ -93,6 +93,56 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
       expect(resolvedFile.err.message).to.equal('Empty input was proportionated');
       done();
     });
+  });
+
+});
+
+
+describe('WSDLRemoteResolver calculateDowloadPathAndParentBaseURL', function () {
+
+  it('Should return same path when is a valid xsd absolute path and parent should be the base of the url', function () {
+    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+      'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd', '', ''
+    );
+    expect(parentBaseURL).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/');
+    expect(downloadPath).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd');
+  });
+
+  it('Should return same path when is a valid xsd absolute path parent and process are set', function () {
+    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+      'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd',
+      'https://raw.com/', 'https://raw.war.com/'
+    );
+    expect(parentBaseURL).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/');
+    expect(downloadPath).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd');
+  });
+
+  it('Should return same path when is a valid xsd absolute path and parent' +
+  ' should be the base of the url even with processURL', function () {
+    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+      'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd', '',
+      'https://raw.githubusercontent.com/otherBasePath'
+    );
+    expect(parentBaseURL).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/');
+    expect(downloadPath).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd');
+  });
+
+  it('Should return resolved absolute path when send parent path and relative in the file', function () {
+    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+      'xsd0.xsd', 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/',
+      'https://raw.githubusercontent.com/otherBasePath'
+    );
+    expect(parentBaseURL).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/');
+    expect(downloadPath).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd');
+  });
+
+  it('Should return absolute path when there is no parent path and relative in the file take processURL', function () {
+    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+      'xsd0.xsd', '',
+      'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/'
+    );
+    expect(parentBaseURL).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/');
+    expect(downloadPath).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd');
   });
 
 });
