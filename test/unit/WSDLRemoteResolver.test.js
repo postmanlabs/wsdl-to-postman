@@ -4,6 +4,7 @@ const expect = require('chai').expect,
     calculateDowloadPathAndParentBaseURL
   } = require('../../lib/utils/WSDLRemoteResolver'),
   remoteRefs11 = 'test/data/separatedFiles/remoteRefs',
+  remoteRefsIncludeTag = 'test/data/separatedFiles/includeTag',
   remoteRefsServiceFinderQuery = 'test/data/separatedFiles/remoteRefsServiceFinderQuery',
   fs = require('fs'),
   getOptions = require('../../lib/utils/options').getOptions,
@@ -16,7 +17,8 @@ const expect = require('chai').expect,
 
 describe('WSDLRemoteResolver resolveRemoteRefs', function () {
   const options = getOptions({ usage: ['CONVERSION'] }),
-    resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
+    resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; }),
+    sourceUrl = options.find((option) => { return option.id === 'sourceUrl'; });
   let optionFromOptions = {};
   optionFromOptions[`${resolveRemoteRefsOption.id}`] = true;
 
@@ -91,6 +93,19 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
   it('Should propagates errors', function (done) {
     resolveRemoteRefs('', new XMLParser(), optionFromOptions, (resolvedFile) => {
       expect(resolvedFile.err.message).to.equal('Empty input was proportionated');
+      done();
+    });
+  });
+
+  it('Should return the resolved references with relative path and sourceURL', function (done) {
+    let data = fs.readFileSync(remoteRefsIncludeTag + '/Services.wsdl', 'utf8'),
+      expectedOutput = fs.readFileSync(remoteRefsIncludeTag + '/output.wsdl', 'utf8');
+    optionFromOptions[`${sourceUrl.id}`] =
+      'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/includeTag/';
+
+    resolveRemoteRefs({ data }, new XMLParser(), optionFromOptions, (resolvedFile) => {
+      expect(resolvedFile.err).to.be.undefined;
+      expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
       done();
     });
   });
