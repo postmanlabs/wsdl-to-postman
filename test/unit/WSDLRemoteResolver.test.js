@@ -6,6 +6,7 @@ const expect = require('chai').expect,
   remoteRefs11 = 'test/data/separatedFiles/remoteRefs',
   remoteRefsIncludeTag = 'test/data/separatedFiles/includeTag',
   remoteSameTargetNamespace = 'test/data/separatedFiles/sameTargetnamespace',
+  remoteNotFound = 'test/data/separatedFiles/remoteNotFound',
   remoteRefsServiceFinderQuery = 'test/data/separatedFiles/remoteRefsServiceFinderQuery',
   fs = require('fs'),
   getOptions = require('../../lib/utils/options').getOptions,
@@ -116,6 +117,18 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
       expectedOutput = fs.readFileSync(remoteSameTargetNamespace + '/output.wsdl', 'utf8');
     optionFromOptions[`${sourceUrl.id}`] = 'https://raw.githubusercontent.com/postmanlabs/' +
     'wsdl-to-postman/development/test/data/separatedFiles/sameTargetnamespace/';
+
+    resolveRemoteRefs({ data }, new XMLParser(), optionFromOptions, (resolvedFile) => {
+      expect(resolvedFile.err).to.be.undefined;
+      expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      done();
+    });
+  });
+
+  it('Should not fail when does not found a document', function (done) {
+    let data = fs.readFileSync(remoteNotFound + '/Services.wsdl', 'utf8'),
+      expectedOutput = fs.readFileSync(remoteNotFound + '/output.wsdl', 'utf8');
+    optionFromOptions[`${sourceUrl.id}`] = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman';
 
     resolveRemoteRefs({ data }, new XMLParser(), optionFromOptions, (resolvedFile) => {
       expect(resolvedFile.err).to.be.undefined;
