@@ -159,15 +159,15 @@ describe('XMLparser parseObjectToXML', function () {
       },
       expectedOutput =
         '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
-        ' <soap:Body>\n' +
-        '  <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
-        '   <ubiNum>500</ubiNum>\n' +
-        '  </NumberToWords>\n' +
-        ' </soap:Body>\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>500</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap:Body>\n' +
         '</soap:Envelope>\n';
 
     let processOptions = {};
-    processOptions[`${indentCharacter.id}`] = ' ';
+    processOptions[`${indentCharacter.id}`] = '  ';
     localParser = new XMLParser(processOptions);
     parsed = localParser.parseObjectToXML(simpleInput);
     expect(parsed).to.be.an('string');
