@@ -2,6 +2,7 @@ const expect = require('chai').expect,
   {
     XMLParser
   } = require('../../lib/XMLParser'),
+  getOptions = require('./../../lib/utils/options').getOptions,
   UNCLEAN_INPUT_XML = `This XML file does not appear to have any style information associated with it.
   The document tree is shown below. this text should be ignored while parsing
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
@@ -43,15 +44,14 @@ name="CountryInfoService" targetNamespace="http://www.oorsprong.org/websamples.c
 </definitions>`;
 
 describe('XMLparser parseToObject', function () {
-
+  const xmlParser = new XMLParser({});
   it('should get an object in memory representing xml object with valid input', function () {
     const simpleInput = `<user is='great'>
         <name>Tobias</name>
         <familyName>Nickel</familyName>
         <profession>Software Developer</profession>
         <location>Shanghai / China</location>
-        </user>`,
-      xmlParser = new XMLParser();
+        </user>`;
     let parsed = xmlParser.parseToObject(simpleInput);
     expect(parsed).to.be.an('object');
     expect(parsed).to.have.own.property('user');
@@ -61,14 +61,12 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should ignore extra data before xml tag', function () {
-    const xmlParser = new XMLParser();
     let parsed = xmlParser.parseToObject(UNCLEAN_INPUT_XML);
     expect(parsed).to.be.an('object');
     expect(parsed).to.have.own.property('definitions');
   });
 
   it('should throw an error when input is an empty string', function () {
-    const xmlParser = new XMLParser();
     try {
       xmlParser.parseToObject('');
       assert.fail('we expected an error');
@@ -79,7 +77,6 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should throw an error when input is null', function () {
-    const xmlParser = new XMLParser();
     try {
       xmlParser.parseToObject(null);
       assert.fail('we expected an error');
@@ -90,7 +87,6 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should throw an error when input is undefined', function () {
-    const xmlParser = new XMLParser();
     try {
       xmlParser.parseToObject(undefined);
       assert.fail('we expected an error');
@@ -101,7 +97,6 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should throw an error when input is empty', function () {
-    const xmlParser = new XMLParser();
     try {
       xmlParser.parseToObject();
       assert.fail('we expected an error');
@@ -112,7 +107,6 @@ describe('XMLparser parseToObject', function () {
   });
 
   it('should throw an error when input is not xml', function () {
-    const xmlParser = new XMLParser();
     try {
       xmlParser.parseToObject('this is not an xml');
       assert.fail('we expected an error');
@@ -123,4 +117,90 @@ describe('XMLparser parseToObject', function () {
   });
 });
 
+describe('XMLparser parseObjectToXML', function () {
+  const xmlParser = new XMLParser({});
+  it('should get xml string with valid input default indentation', function () {
+    const simpleInput = {
+        'soap:Envelope': {
+          '@_xmlns:soap': 'http://schemas.xmlsoap.org/soap/envelope/',
+          'soap:Body': {
+            'NumberToWords': {
+              '@_xmlns': 'http://www.dataaccess.com/webservicesserver/',
+              'ubiNum': 500
+            }
+          }
+        }
+      },
+      expectedOutput = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+      '  <soap:Body>\n' +
+      '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+      '      <ubiNum>500</ubiNum>\n' +
+      '    </NumberToWords>\n' +
+      '  </soap:Body>\n' +
+      '</soap:Envelope>\n',
+      parsed = xmlParser.parseObjectToXML(simpleInput);
+    expect(parsed).to.be.an('string');
+    expect(parsed).to.equal(expectedOutput);
+  });
 
+  it('should get xml string with valid input specify indentation', function () {
+    const options = getOptions({ usage: ['CONVERSION'] }),
+      indentCharacter = options.find((option) => { return option.id === 'indentCharacter'; }),
+      simpleInput = {
+        'soap:Envelope': {
+          '@_xmlns:soap': 'http://schemas.xmlsoap.org/soap/envelope/',
+          'soap:Body': {
+            'NumberToWords': {
+              '@_xmlns': 'http://www.dataaccess.com/webservicesserver/',
+              'ubiNum': 500
+            }
+          }
+        }
+      },
+      expectedOutput =
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '  <soap:Body>\n' +
+        '    <NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '      <ubiNum>500</ubiNum>\n' +
+        '    </NumberToWords>\n' +
+        '  </soap:Body>\n' +
+        '</soap:Envelope>\n';
+
+    let processOptions = {};
+    processOptions[`${indentCharacter.id}`] = '  ';
+    localParser = new XMLParser(processOptions);
+    parsed = localParser.parseObjectToXML(simpleInput);
+    expect(parsed).to.be.an('string');
+    expect(parsed).to.equal(expectedOutput);
+  });
+
+  it('should get xml string with valid input specify indentation as "\t"', function () {
+    const options = getOptions({ usage: ['CONVERSION'] }),
+      indentCharacter = options.find((option) => { return option.id === 'indentCharacter'; }),
+      simpleInput = {
+        'soap:Envelope': {
+          '@_xmlns:soap': 'http://schemas.xmlsoap.org/soap/envelope/',
+          'soap:Body': {
+            'NumberToWords': {
+              '@_xmlns': 'http://www.dataaccess.com/webservicesserver/',
+              'ubiNum': 500
+            }
+          }
+        }
+      },
+      expectedOutput = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n' +
+        '\t<soap:Body>\n' +
+        '\t\t<NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">\n' +
+        '\t\t\t<ubiNum>500</ubiNum>\n' +
+        '\t\t</NumberToWords>\n' +
+        '\t</soap:Body>\n</soap:Envelope>\n';
+
+    let processOptions = {};
+    processOptions[`${indentCharacter.id}`] = '\t';
+    localParser = new XMLParser(processOptions);
+    parsed = localParser.parseObjectToXML(simpleInput);
+    expect(parsed).to.be.an('string');
+    expect(parsed).to.equal(expectedOutput);
+  });
+
+});
