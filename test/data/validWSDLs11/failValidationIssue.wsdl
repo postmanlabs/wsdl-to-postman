@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+  xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources" 
+  xmlns:wd="urn:com.workday/bsvc" 
+  xmlns:nyw="urn:com.netyourwork/aod" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/" 
+  xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/"
+  name="Human_Resources" 
+  targetNamespace="urn:com.workday/bsvc/Human_Resources">
+  <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
+      <xsd:element name="Worker_Profile_Get" type="wd:Worker_Profile_GetType"/>
+      <xsd:element name="Workday_Common_Header" type="wd:Workday_Common_HeaderType"/>
+
+      <xsd:complexType name="External_Integration_ID_Reference_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Integration ID reference is used as a unique identifier for integratable objects in the Workday system.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="ID" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display name inside the Workday system.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Worker_Profile_GetType">
+        <xsd:annotation>
+          <xsd:documentation>Utilize the following Reference element (and other optional attributes) to retrieve an instance of Worker and his/her summarized Personal and Employment/Contract information.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Employee_Reference" type="wd:Employee_ReferenceType"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Employee_ReferenceType">
+        <xsd:annotation>
+          <xsd:documentation>Reference element representing a unique instance of Employee.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>A valid instance of Employee must exist for the given Integration ID Reference.</xsd:documentation>
+              <wd:Validation_Message>Employee Reference Integration ID does not exist!</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Integration_ID_Reference" type="wd:External_Integration_ID_Reference_DataType"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Workday_Common_HeaderType">
+        <xsd:sequence>
+          <xsd:element name="Include_Reference_Descriptors_In_Response" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="Worker_Profile_GetInputMsg">
+    <wsdl:part name="body" element="wd:Worker_Profile_Get"/>
+  </wsdl:message>
+
+  <wsdl:message name="Workday_Common_HeaderMsg">
+    <wsdl:part name="header" element="wd:Workday_Common_Header"/>
+  </wsdl:message>
+
+  
+
+  <!-- <wsdl:message name="Dissolve_Organization_StructureOutputMsg"/> -->
+
+  <wsdl:portType name="Human_ResourcesPort">
+    
+    <!-- <wsdl:operation name="Dissolve_Organization_Structure">
+      <wsdl:documentation>This operation will dissolve an Organization structure (e.g. disconnect the subordinate and contained organizations).</wsdl:documentation>
+      <wsdl:input name="Dissolve_Organization_StructureInput" message="wd-wsdl:Worker_Profile_GetInputMsg"/>
+      <wsdl:output name="Dissolve_Organization_StructureOutput" message="wd-wsdl:Dissolve_Organization_StructureOutputMsg"/>
+    </wsdl:operation> -->
+
+    <wsdl:operation name="Get_Worker_Profile">
+      <wsdl:documentation>
+        This operation retrieves a subset of data related to a Worker (e.g. Employee and Contingent Worker) and his/her Employment/Contract, Personal and Compensation information.</wsdl:documentation>
+      <wsdl:input name="Get_Worker_ProfileInput" message="wd-wsdl:Worker_Profile_GetInputMsg"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
+    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <wsdl:operation name="Get_Worker_Profile">
+      <soapbind:operation style="document"/>
+      <wsdl:input name="Get_Worker_ProfileInput">
+        <soapbind:body use="literal"/>
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <wsdl:service name="Human_ResourcesService">
+    <wsdl:port name="Human_Resources" binding="wd-wsdl:Human_ResourcesBinding">
+      <soapbind:address location="Human_Resources"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

@@ -114,4 +114,65 @@ describe('SchemaBuilderXSD parseSchemas', function () {
     expect(parsedSchema.length).to.equal(2);
   });
 
+  it('Should parse appinfo as an element type appinfo in parent\'s oneOf property', function() {
+    const schemaStrings = [
+        `<xsd:schema 
+      elementFormDefault=\"qualified\" 
+      attributeFormDefault=\"qualified\" 
+      targetNamespace=\"urn:com.workday/bsvc\" 
+      xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" 
+      xmlns:wd=\"urn:com.workday/bsvc\">
+      <xsd:complexType name=\"Organization_ReferenceType\">
+        <xsd:annotation>
+          <xsd:documentation>Reference element representing a unique instance of Organization.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>
+                This is documentation
+              <wd:Validation_Message>Organization Reference Integration ID does not exist!</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>This is documentation</xsd:documentation>
+              <wd:Validation_Message>Thi is custom content</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name=\"Integration_ID_Reference\" type=\"xsd:string\"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    `
+      ],
+      parser = new XSDToJsonSchemaParser(),
+      parsedSchema = parser.parseAllSchemas(schemaStrings),
+      expectedString = '<xsd:appinfo xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n' +
+      '            <wd:Validation xmlns:wd=\"urn:com.workday/bsvc\">\n' +
+      '              <xsd:documentation>\n' +
+      '                This is documentation\n' +
+      '              <wd:Validation_Message>Organization Reference Integration ID does not exist!' +
+      '</wd:Validation_Message>\n' +
+      '            \n' +
+      '            <wd:Validation>\n' +
+      '              <xsd:documentation>This is documentation</xsd:documentation>\n' +
+      '              <wd:Validation_Message>Thi is custom content</wd:Validation_Message>\n' +
+      '            </wd:Validation>\n' +
+      '          \n' +
+      '        \n' +
+      '        <xsd:sequence>\n' +
+      '          <xsd:element name=\"Integration_ID_Reference\" type=\"xsd:string\"/>\n' +
+      '        </xsd:sequence>\n' +
+      '      \n' +
+      '    </xsd:documentation></wd:Validation></xsd:appinfo>';
+    expect(parsedSchema).to.be.an('array');
+    expect(
+      parsedSchema[0]
+        .definitions.Organization_ReferenceType
+        .oneOf[0].description).to.be.equal(expectedString);
+    expect(
+      parsedSchema[0]
+        .definitions.Organization_ReferenceType
+        .oneOf[0].type).to.be.equal('appinfo');
+  });
+
 });
