@@ -244,20 +244,6 @@
         </xsd:sequence>
       </xsd:complexType>
 
-      <xsd:complexType name="External_Integration_ID_Reference_DataType">
-        <xsd:annotation>
-          <xsd:documentation>Integration ID reference is used as a unique identifier for integratable objects in the Workday system.</xsd:documentation>
-        </xsd:annotation>
-        <xsd:sequence>
-          <xsd:element name="ID" type="wd:IDType"/>
-        </xsd:sequence>
-        <xsd:attribute name="Descriptor" type="xsd:string">
-          <xsd:annotation>
-            <xsd:documentation>Display name inside the Workday system.</xsd:documentation>
-          </xsd:annotation>
-        </xsd:attribute>
-      </xsd:complexType>
-
       <xsd:complexType name="Workday_Common_HeaderType">
         <xsd:sequence>
           <xsd:element name="Include_Reference_Descriptors_In_Response" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
@@ -267,10 +253,13 @@
   </wsdl:types>
 
   <wsdl:message name="Business_Site_FindInputMsg"><wsdl:part name="body" element="wd:Business_Site_Find"/></wsdl:message>
+  <wsdl:message name="Business_Site_ReferencesOutputMsg"><wsdl:part name="body" element="wd:Business_Site_Find"/></wsdl:message>
   <wsdl:message name="Validation_FaultMsg"><wsdl:part name="body" element="wd:Validation_Fault"/></wsdl:message>
   <wsdl:message name="Processing_FaultMsg"><wsdl:part name="body" element="wd:Processing_Fault"/></wsdl:message>
   <wsdl:message name="Contingent_Worker_Contract_Info_GetInputMsg"><wsdl:part name="body" element="wd:Contingent_Worker_Contract_Info_Get"/></wsdl:message>
+  <wsdl:message name="Contingent_Worker_Contract_InfoOutputMsg"><wsdl:part name="body" element="wd:Contingent_Worker_Contract_Info_Get"/></wsdl:message>
   <wsdl:message name="Worker_Profile_GetInputMsg"><wsdl:part name="body" element="wd:Worker_Profile_Get"/></wsdl:message>
+  <wsdl:message name="Worker_ProfileOutputMsg"><wsdl:part name="body" element="wd:Worker_Profile_Get"/></wsdl:message>
   <wsdl:message name="Workday_Common_HeaderMsg">
     <wsdl:part name="header" element="wd:Workday_Common_Header"/>
   </wsdl:message>
@@ -282,6 +271,7 @@
       This operation responds with a set of references to Business Sites that match the criteria specified in the request element.<wd:Deprecated>1</wd:Deprecated>
       </wsdl:documentation>
       <wsdl:input name="Find_Business_SiteInput" message="wd-wsdl:Business_Site_FindInputMsg"/>
+      <wsdl:output name="Find_Business_SiteOutput" message="wd-wsdl:Business_Site_ReferencesOutputMsg" />
       <wsdl:fault name="Validation_Fault" message="wd-wsdl:Validation_FaultMsg"/>
       <wsdl:fault name="Processing_Fault" message="wd-wsdl:Processing_FaultMsg"/>
     </wsdl:operation>
@@ -289,38 +279,70 @@
     <wsdl:operation name="Get_Contingent_Worker_Contract_Info">
       <wsdl:documentation>This operation retrieves data related to a Contingent Worker and his/her Contract information.</wsdl:documentation>
       <wsdl:input name="Get_Contingent_Worker_Contract_InfoInput" message="wd-wsdl:Contingent_Worker_Contract_Info_GetInputMsg"/>
+      <wsdl:output name="Get_Contingent_Worker_Contract_InfoOutput" message="wd-wsdl:Contingent_Worker_Contract_InfoOutputMsg"/>
     </wsdl:operation>
 
     <wsdl:operation name="Get_Worker_Profile">
       <wsdl:documentation>This operation retrieves a subset of data related to a Worker (e.g. Employee and Contingent Worker) and his/her Employment/Contract, Personal and Compensation information.</wsdl:documentation>
       <wsdl:input name="Get_Worker_ProfileInput" message="wd-wsdl:Worker_Profile_GetInputMsg"/>
+      <wsdl:output name="Get_Worker_ProfileOutput" message="wd-wsdl:Worker_ProfileOutputMsg" />
     </wsdl:operation>
   </wsdl:portType>
 
   <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
     <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <soapbind:operation style="document"/>
-    <wsdl:input name="Find_Business_SiteInput">
-      <soapbind:body use="literal"/>
-      <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal"/>
-    </wsdl:input>
-
-    <wsdl:operation name="Dissolve_Organization_Structure">
-      <soapbind:operation style="document"/>
-      <wsdl:input name="Dissolve_Organization_StructureInput">
-        <soapbind:body use="literal"/>
-        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal"/>
+    <wsdl:operation name="Find_Business_Site">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Find_Business_SiteInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
       </wsdl:input>
-      <wsdl:output name="Dissolve_Organization_StructureOutput">
-        <soapbind:body use="literal"/>
+      <wsdl:output name="Find_Business_SiteOutput">
+        <soapbind:body use="literal" />
       </wsdl:output>
       <wsdl:fault name="Processing_Fault">
-        <soapbind:fault name="Processing_Fault" use="literal"/>
+        <soapbind:fault name="Processing_Fault" use="literal" />
       </wsdl:fault>
       <wsdl:fault name="Validation_Fault">
-        <soapbind:fault name="Validation_Fault" use="literal"/>
+        <soapbind:fault name="Validation_Fault" use="literal" />
       </wsdl:fault>
     </wsdl:operation>
+
+
+    <wsdl:operation name="Get_Contingent_Worker_Contract_Info">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Get_Contingent_Worker_Contract_InfoInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_Contingent_Worker_Contract_InfoOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Processing_Fault">
+        <soapbind:fault name="Processing_Fault" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="Validation_Fault">
+        <soapbind:fault name="Validation_Fault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="Get_Worker_Profile">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Get_Worker_ProfileInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_Worker_ProfileOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Processing_Fault">
+        <soapbind:fault name="Processing_Fault" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="Validation_Fault">
+        <soapbind:fault name="Validation_Fault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+
   </wsdl:binding>
 
   <wsdl:service name="Human_ResourcesService">

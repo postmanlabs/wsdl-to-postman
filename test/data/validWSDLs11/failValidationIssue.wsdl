@@ -65,7 +65,9 @@
   <wsdl:message name="Worker_Profile_GetInputMsg">
     <wsdl:part name="body" element="wd:Worker_Profile_Get"/>
   </wsdl:message>
-
+  <wsdl:message name="Worker_ProfileOutputMsg">
+    <wsdl:part name="body" element="wd:Worker_Profile_Get" />
+  </wsdl:message>
   <wsdl:message name="Workday_Common_HeaderMsg">
     <wsdl:part name="header" element="wd:Workday_Common_Header"/>
   </wsdl:message>
@@ -86,6 +88,7 @@
       <wsdl:documentation>
         This operation retrieves a subset of data related to a Worker (e.g. Employee and Contingent Worker) and his/her Employment/Contract, Personal and Compensation information.</wsdl:documentation>
       <wsdl:input name="Get_Worker_ProfileInput" message="wd-wsdl:Worker_Profile_GetInputMsg"/>
+      <wsdl:output name="Get_Worker_ProfileOutput" message="wd-wsdl:Worker_ProfileOutputMsg" />
     </wsdl:operation>
   </wsdl:portType>
 
@@ -98,6 +101,9 @@
         <soapbind:body use="literal"/>
         <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal"/>
       </wsdl:input>
+      <wsdl:output name="Get_Worker_ProfileOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
 
   </wsdl:binding>
