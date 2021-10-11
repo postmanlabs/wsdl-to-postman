@@ -13,6 +13,7 @@
   <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
   <wsdl:types>
     <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
+      <xsd:attribute name="version" type="xsd:string" wd:fixed="v36.2" />
       <xsd:element name="Worker_Profile_Get" type="wd:Worker_Profile_GetType"/>
       <xsd:element name="Workday_Common_Header" type="wd:Workday_Common_HeaderType"/>
 
@@ -35,7 +36,7 @@
           <xsd:documentation>Utilize the following Reference element (and other optional attributes) to retrieve an instance of Worker and his/her summarized Personal and Employment/Contract information.</xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-          <xsd:element name="Employee_Reference" type="wd:Employee_ReferenceType"/>
+          <xsd:element name="Employee_Reference" type="wd:Organization_ReferenceRootType"/>
         </xsd:sequence>
       </xsd:complexType>
 
@@ -52,6 +53,14 @@
         <xsd:sequence>
           <xsd:element name="Integration_ID_Reference" type="wd:External_Integration_ID_Reference_DataType"/>
         </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Organization_ReferenceRootType">
+        <xsd:complexContent>
+          <xsd:extension base="wd:Organization_ReferenceType">
+            <xsd:attribute ref="wd:version" />
+          </xsd:extension>
+        </xsd:complexContent>
       </xsd:complexType>
 
       <xsd:complexType name="Workday_Common_HeaderType">
