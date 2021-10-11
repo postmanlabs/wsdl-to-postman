@@ -126,10 +126,12 @@ describe('SOAPMessageHelper convertInputToMessage ', function () {
         type: 'complex',
         namespace: 'http://www.dataaccess.com/webservicesserver/'
       },
+      cacheKey = parametersUtils.getHashedKey(node, [], 'soap', parametersUtils.getCompundKey,
+        parametersUtils.concatString),
       xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap', new XMLParser());
     expect(xmlParameters).to.be.an('string');
     expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
-
+    expect(parametersUtils.cache.getFromCache(cacheKey)).to.be.an('string');
   });
 
   it('should get an string representing the xml of the corresponding nodes ex2', function () {
@@ -360,5 +362,42 @@ describe('SOAPMessageHelper getSOAPNamespaceFromProtocol', function () {
     expect(url).to.be.an('string');
     expect(url).to.equal('http://schemas.xmlsoap.org/soap/envelope/');
 
+  });
+});
+
+describe('SOAPMessageHelper  cache', function () {
+  it('should get second element from cache', function () {
+    const parametersUtils = new SOAPMessageHelper(),
+      xmlOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+        '<soap:Body>' +
+        '<NumberToWords xmlns="http://www.dataaccess.com/webservicesserver/">' +
+        '<ubiNum>10</ubiNum>' +
+        '</NumberToWords>' +
+        '</soap:Body>' +
+        '</soap:Envelope>',
+      child = {
+        children: [],
+        name: 'ubiNum',
+        isComplex: false,
+        type: 'integer',
+        maximum: 10,
+        minimum: 10
+      },
+      node = {
+        children: [child],
+        name: 'NumberToWords',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/'
+      },
+      cacheKey = parametersUtils.getHashedKey(node, [], 'soap', parametersUtils.getCompundKey,
+        parametersUtils.concatString),
+      xmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap', new XMLParser()),
+      secondXmlParameters = parametersUtils.convertInputToMessage(node, [], 'soap', new XMLParser());
+    expect(xmlParameters).to.be.an('string');
+    expect(xmlParameters).to.equal(secondXmlParameters);
+    expect(xmlParameters.replace(/[\r\n\s]+/g, '')).to.equal(xmlOutput.replace(/[\r\n\s]+/g, ''));
+    expect(parametersUtils.cache.getFromCache(cacheKey)).to.be.an('string');
   });
 });

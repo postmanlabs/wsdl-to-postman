@@ -2,8 +2,10 @@ const expect = require('chai').expect,
   {
     getLastSegmentURL,
     stringIsAValidUrl,
-    stringIsValidURLFilePath
-  } = require('../../lib/utils/textUtils');
+    stringIsValidURLFilePath,
+    hash
+  } = require('../../lib/utils/textUtils'),
+  crypto = require('crypto');
 
 describe('Text Utils getLastSegmentURL', function () {
   it('should get Add when called with "http://tempuri.org/Add"', function () {
@@ -137,4 +139,13 @@ describe('Text Utils getAbsoultePathFromRelativeAndBase', function () {
     expect(result).to.equal('https://raw.com/postmanlabs/wsdl-to-postman/wsdl/Types.xsd');
   });
 
+});
+
+describe('Text Utils hash', function () {
+  it('should get a correct hash in ', function () {
+    expect(hash('textToHash', 'sha1',
+      'base64')).to.equal(crypto.createHash('sha1').update('textToHash').digest('base64'));
+    const result = stringIsAValidUrl('http://tempuri.org/Add');
+    expect(result).to.equal(true);
+  });
 });
