@@ -5,6 +5,7 @@ const expect = require('chai').expect,
   validWSDLs = 'test/data/validWSDLs11',
   validWSDLs20 = 'test/data/validWSDLs20',
   SEPARATED_FILES = '../data/separatedFiles',
+  REMOTE_REFS = 'test/data/separatedFiles/remoteRefs',
   fs = require('fs'),
   getAllTransactionsFromCollection = require('../../lib/utils/getAllTransactions').getAllTransactionsFromCollection,
   async = require('async'),
@@ -20,8 +21,12 @@ const expect = require('chai').expect,
     'ignoreUnresolvedVariables',
     'detailedBlobValidation',
     'showMissingInSchemaErrors',
-    'suggestAvailableFixes'
-  ];
+    'suggestAvailableFixes',
+    'resolveRemoteRefs',
+    'sourceUrl',
+    'indentCharacter'
+  ],
+  getOptions = require('../../lib/utils/options').getOptions;
 
 describe('SchemaPack convert unit test WSDL 1.1', function () {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
@@ -119,6 +124,28 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       expect(result.output[0].data.item[0].item[0].request.body.raw).to.equal(expectedBodyRaw);
     });
   });
+
+  it('Should get a collection when send a file with remote refs and option is set to true', function () {
+    const options = getOptions({ usage: ['CONVERSION'] }),
+      resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; });
+    let optionFromOptions = {},
+      schemaPack;
+    fileContent = fs.readFileSync(REMOTE_REFS + '/remoteStockquoteservice.wsdl', 'utf8');
+    optionFromOptions[`${resolveRemoteRefsOption.id}`] = true;
+
+    schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, optionFromOptions);
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+    });
+  });
 });
 
 describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
@@ -184,6 +211,26 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
     });
   });
 
+  it('Should get an object representing PM Collection with tabs in message', function () {
+    let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
+    const options = { folderStrategy: 'Port/Endpoint', indentCharacter: '\t' },
+      schemaPack = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, options);
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data.item).to.be.an('array');
+      expect(result.output[0].data.item.length).to.equal(2);
+      expect(result.output[0].data.item[0].item[0].request.body.raw.includes('\t')).to.equal(true);
+
+    });
+  });
 });
 
 describe('SchemaPack convert unit test WSDL 2.0', function () {
@@ -229,7 +276,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode = document', function () {
     const options = SchemaPack.getOptions('document');
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(7);
+    expect(options.length).to.eq(10);
   });
 
   it('Should return external options when called with mode = use', function () {
@@ -271,13 +318,13 @@ describe('SchemaPack getOptions', function () {
       usage: ['CONVERSION']
     });
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(1);
+    expect(options.length).to.eq(4);
   });
 
   it('Should return external options when called with mode document and usage not an object', function () {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(7);
+    expect(options.length).to.eq(10);
   });
 
   it('Should return default empty array in validationPropertiesToIgnore', function () {
