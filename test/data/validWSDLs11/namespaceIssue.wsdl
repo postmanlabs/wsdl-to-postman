@@ -3,7 +3,7 @@
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
   xmlns:wd-wsdl="some/url/Human_Resources" 
   xmlns:wd="some/url" 
-  xmlns:nyw="urn:com.netyourwork/aod" 
+  xmlns:nyw="nywurl/aod" 
   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
   xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" 
   xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/" 
