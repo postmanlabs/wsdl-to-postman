@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <wsdl:definitions 
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-  xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources" 
-  xmlns:wd="urn:com.workday/bsvc" 
+  xmlns:wd-wsdl="some/url/Human_Resources" 
+  xmlns:wd="some/url" 
   xmlns:nyw="urn:com.netyourwork/aod" 
   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
   xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" 
   xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/" 
   xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/"
   name="Human_Resources" 
-  targetNamespace="urn:com.workday/bsvc/Human_Resources">
+  targetNamespace="some/url/Human_Resources">
   <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
   <wsdl:types>
-    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="some/url">
       <xsd:element name="Business_Site_Find" type="wd:Business_Site_FindType"/>
       <xsd:element name="Validation_Fault" type="wd:Validation_FaultType"/>
       <xsd:element name="Processing_Fault" type="wd:Processing_FaultType"/>
