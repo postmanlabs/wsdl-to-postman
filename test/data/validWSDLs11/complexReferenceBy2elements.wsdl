@@ -1,0 +1,508 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources"
+    xmlns:wd="urn:com.workday/bsvc"
+    xmlns:nyw="urn:com.netyourwork/aod"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/"
+    name="Human_Resources"
+    targetNamespace="urn:com.workday/bsvc/Human_Resources">
+  <wsdl:documentation>
+    The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
+      <xsd:element name="Put_Location_Request" type="wd:Put_Location_RequestType" />
+      <xsd:attribute name="version" type="xsd:string" wd:fixed="v36.2" />
+      <xsd:complexType name="Put_Location_RequestType">
+        <xsd:sequence>
+          <xsd:element name="Location_Data" type="wd:Location_iDataType">
+            <xsd:annotation>
+              <xsd:documentation>Element containing all Location data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+ 
+      <xsd:complexType name="Location_iDataType">
+        <xsd:sequence>
+          <xsd:element name="Contact_Data" type="wd:Contact_Information_DataType" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:complexType>
+  
+       
+      <xsd:complexType name="Contact_Information_DataType">
+        <xsd:sequence>
+          <xsd:element name="Address_Data" type="wd:Address_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Address information</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Phone_Data" type="wd:Phone_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Phone Information</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Address_Information_DataType">
+        <xsd:sequence>
+          <xsd:element name="Usage_Data" type="wd:Communication_Method_Usage_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Method_Usage_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Type_Data" type="wd:Communication_Usage_Type_DataType" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for the communication usage type.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Use_For_Reference" type="wd:Communication_Usage_BehaviorObjectType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for communication usage behavior.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Comments" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Description of the  address, phone, email, instant messenger, or web address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Usage_Type_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Reference ID for the communication usage type.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Type_Reference" type="wd:Communication_Usage_TypeObjectType">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for the communication usage type.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Primary" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Indicates if the communication method is primary.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Usage_TypeObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Communication_Usage_TypeObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Usage_TypeObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Communication_Usage_TypeReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+   
+     
+
+      <xsd:simpleType name="Communication_Usage_TypeReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Communication_Usage_Type_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:simpleType name="Communication_Usage_BehaviorReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Communication_Usage_Behavior_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Communication_Usage_BehaviorObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Communication_Usage_BehaviorReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Usage_BehaviorObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Communication_Usage_BehaviorObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Address_ReferenceReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Address_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Address_ReferenceObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Address_ReferenceReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Address_ReferenceObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Address_ReferenceObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Phone_ReferenceReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Phone_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Phone_ReferenceObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Phone_ReferenceReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Phone_ReferenceObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Phone_ReferenceObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Phone_Device_TypeReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Phone_Device_Type_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Phone_Device_TypeObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Phone_Device_TypeReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Phone_Device_TypeObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Phone_Device_TypeObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Phone_Information_DataType">
+        <xsd:sequence>
+          <xsd:element name="Usage_Data" type="wd:Communication_Method_Usage_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="E164_Formatted_Phone" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The formatted E164 Phone number with Extension. This data is not used in inbound requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Workday_Traditional_Formatted_Phone" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The formatted Workday Traditional Phone number with Extension. This data is not used in inbound requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Delete" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Set this flag to true in order to delete the referenced communication method. If this flag is set, the Reference ID field becomes required, and all other communication method fields that would otherwise be required will be optional and meaningless.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Do_Not_Replace_All" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>This flag controls whether or not existing non-primary phone data will be replaced. A value of true means only the referenced phone will be updated, or created if it does not exist or no reference was provided. This behavior is used if the flag is set to true for ANY email address in the request.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+ 
+
+      <xsd:complexType name="IDType">
+        <xsd:annotation>
+          <xsd:documentation>External ID that uniquely identifies the integratable object within the context of the integration system identified by the System ID attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="System_ID" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>Integration system identifier, part of a two part key (including the text value of the ID element) that uniquely identify integratable object.</xsd:documentation>
+                <xsd:appinfo>
+                  <wd:Validation>
+                    <xsd:documentation>A valid instance of Integration ID must exist for the given System ID.</xsd:documentation>
+                    <wd:Validation_Message>Integration System ID does not exist.</wd:Validation_Message>
+                  </wd:Validation>
+                </xsd:appinfo>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="External_Integration_ID_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Integration ID Help Text</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:IDType" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Location_HierarchyReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Organization_Reference_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+
+      <xsd:complexType name="Location_HierarchyObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Location_HierarchyReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Location_HierarchyObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Location_HierarchyObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Integration_Document_FieldReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Integration_Document_Field_Name" />
+              <wd:enumeration value="Workday_Integration_Document_Field_Name" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Integration_Document_FieldObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Integration_Document_FieldReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="parent_id" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>For types that require a parent reference, contains a unique identifier for an instance of a parent object.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="parent_type">
+              <xsd:annotation>
+                <xsd:documentation>For types that require a parent reference, the unique identifier type of a parent object.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:annotation>
+                    <xsd:appinfo>
+                      <wd:enumeration value="WID" />
+                      <wd:enumeration value="Integration_Document_Name" />
+                      <wd:enumeration value="Workday_Integration_Document_Name" />
+                    </xsd:appinfo>
+                  </xsd:annotation>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Integration_Document_FieldObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Integration_Document_FieldObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Document_Field_Result_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Result of the evaluation of an External Field based on a contextual instance.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Field_Reference" type="wd:Integration_Document_FieldObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Integration Document Field Reference.  Eligibility Criteria element is used in conjunction with Workday delivered integrations.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Value" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Value</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="Put_Location_RequestInputMsg">
+    <wsdl:part name="body" element="wd:Put_Location_Request" />
+  </wsdl:message>
+  <wsdl:message name="Put_Location_ResponseOutputMsg">
+    <wsdl:part name="body" element="wd:Put_Location_Request" />
+  </wsdl:message>
+  <wsdl:portType name="Human_ResourcesPort">
+    <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
+    <wsdl:operation name="Put_Location">
+      <wsdl:documentation>This operation adds or updates a Location. Location Addresses, Usages, Email Addresses, Phone Numbers, Time Profile data, Location Attributes, Location Superior and Location Hierarchies to include location in can also be added and updated with this operation. Effective date must be blank for new locations to be consistent with new locations created in the UI. When effective date is blank, the value is effective as of the beginning of time. The Effective Date applies to these fields only: Location Name, Inactive, and Location Hierarchy Reference. If Location Hierarchy Reference is left blank for an existing location, location will be removed from all location hierarchies it is included in as of the effective date specified. If these fields are left blank, existing values will be removed: Altitude, Latitude, Longitude, Trade Name, Worksite Identification Code, Locale, User Language, Location Attribute, Location Type, Time Profile, Time Zone, Superior Location.</wsdl:documentation>
+      <wsdl:input name="Put_LocationInput" message="wd-wsdl:Put_Location_RequestInputMsg" />
+      <wsdl:output name="Put_LocationOutput" message="wd-wsdl:Put_Location_ResponseOutputMsg" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
+    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Put_Location">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Put_LocationInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Put_LocationOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Human_ResourcesService">
+    <wsdl:port name="Human_Resources" binding="wd-wsdl:Human_ResourcesBinding">
+      <soapbind:address location="Human_Resources" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

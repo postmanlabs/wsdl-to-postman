@@ -1914,6 +1914,57 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(globalAttributeInElement.name).to.be.equal(expectedFixedAttributeName);
     expect(attributeFixedValue).to.be.equal(expectedFixedValue);
   });
+
+  it('should get restriction of number of digits', function () {
+    const simpleInput = `<?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+    xmlns:tns="http://www.dataaccess.com/webservicesserver/" 
+    name="NumberConversion" targetNamespace="https://geoservices.tamu.edu/">
+        <types>
+            <s:schema elementFormDefault="qualified" targetNamespace="https://geoservices.tamu.edu/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://geoservices.tamu.edu/">
+                <s:element name="password">
+                  <s:simpleType>
+                    <s:restriction base="s:decimal">
+                      <s:totalDigits value="2"></s:totalDigits>
+                      <s:minInclusive value="0"></s:minInclusive>
+                      <s:fractionDigits value="0"></s:fractionDigits>
+                    </s:restriction>
+                </s:simpleType>
+                </s:element>
+            </s:schema>
+        </types>
+    </definitions>`,
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 's',
+        prefixFilter: 's:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      tnsNamespace = {
+        key: 'tns',
+        prefixFilter: 'tns:',
+        url: 'https://geoservices.tamu.edu/',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD();
+    let parsedXml = parser.parseToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, '', 'definitions', {
+        schemaNamespace,
+        tnsNamespace
+      },
+      parser.attributePlaceHolder);
+
+    expect(elements).to.be.an('array');
+    expect(elements[0].name).to.equal('password');
+    expect(elements[0].isComplex).to.equal(false);
+    expect(elements[0].type).to.equal('number');
+    expect(elements[0].maximum).to.equal(99);
+  });
 });
 
 describe('SchemaBuilderXSD parseObjectToXML', function () {
