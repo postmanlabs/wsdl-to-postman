@@ -1,17 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources"
-    xmlns:wd="urn:com.workday/bsvc"
-    xmlns:nyw="urn:com.netyourwork/aod"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
-    xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/"
-    xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/"
-    name="Human_Resources"
-    targetNamespace="urn:com.workday/bsvc/Human_Resources">
-  <wsdl:documentation>
-    The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.
-  </wsdl:documentation>
+  xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources"
+  xmlns:wd="urn:com.workday/bsvc"
+  xmlns:nyw="urn:com.netyourwork/aod"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/"
+  xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/" name="Human_Resources" targetNamespace="urn:com.workday/bsvc/Human_Resources">
   <wsdl:types>
     <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
       <xsd:element name="Put_Location_Request" type="wd:Put_Location_RequestType" />
@@ -369,36 +364,4 @@
       </xsd:complexType>
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="Put_Location_RequestInputMsg">
-    <wsdl:part name="body" element="wd:Put_Location_Request" />
-  </wsdl:message>
-  <wsdl:message name="Put_Location_ResponseOutputMsg">
-    <wsdl:part name="body" element="wd:Put_Location_Request" />
-  </wsdl:message>
-  <wsdl:portType name="Human_ResourcesPort">
-    <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
-    <wsdl:operation name="Put_Location">
-      <wsdl:documentation>This operation adds or updates a Location. Location Addresses, Usages, Email Addresses, Phone Numbers, Time Profile data, Location Attributes, Location Superior and Location Hierarchies to include location in can also be added and updated with this operation. Effective date must be blank for new locations to be consistent with new locations created in the UI. When effective date is blank, the value is effective as of the beginning of time. The Effective Date applies to these fields only: Location Name, Inactive, and Location Hierarchy Reference. If Location Hierarchy Reference is left blank for an existing location, location will be removed from all location hierarchies it is included in as of the effective date specified. If these fields are left blank, existing values will be removed: Altitude, Latitude, Longitude, Trade Name, Worksite Identification Code, Locale, User Language, Location Attribute, Location Type, Time Profile, Time Zone, Superior Location.</wsdl:documentation>
-      <wsdl:input name="Put_LocationInput" message="wd-wsdl:Put_Location_RequestInputMsg" />
-      <wsdl:output name="Put_LocationOutput" message="wd-wsdl:Put_Location_ResponseOutputMsg" />
-    </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
-    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="Put_Location">
-      <soapbind:operation style="document" />
-      <wsdl:input name="Put_LocationInput">
-        <soapbind:body use="literal" />
-        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
-      </wsdl:input>
-      <wsdl:output name="Put_LocationOutput">
-        <soapbind:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:service name="Human_ResourcesService">
-    <wsdl:port name="Human_Resources" binding="wd-wsdl:Human_ResourcesBinding">
-      <soapbind:address location="Human_Resources" />
-    </wsdl:port>
-  </wsdl:service>
 </wsdl:definitions>

@@ -1966,6 +1966,48 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].maximum).to.equal(99);
     expect(elements[0].minimum).to.equal(0);
   });
+
+  it('should get 2 elements with all properties of the complex children', function () {
+    const simpleInput = fs.readFileSync(validSchemaFolder + '/cmplxRefBy2El.wsdl', 'utf8'),
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 'xsd',
+        prefixFilter: 'xsd:',
+        url: 'http://www.w3.org/2001/XMLSchema',
+        isDefault: false
+      },
+      tnsNamespace = {
+        key: 'wd',
+        prefixFilter: 'wd:',
+        url: 'urn:com.workday/bsvc',
+        isDefault: false
+      },
+      builder = new SchemaBuilderXSD(),
+      mockedWSDLObject = { schemaNamespace,
+        tnsNamespace,
+        allNameSpaces: [{
+          key: 'wd',
+          prefixFilter: 'wd:',
+          url: 'urn:com.workday/bsvc',
+          isDefault: false
+        }]
+      };
+    let parsedXml = parser.parseToObject(simpleInput),
+
+      elements = builder.getElements(parsedXml, 'wsdl:', 'definitions', mockedWSDLObject,
+        parser.attributePlaceHolder);
+
+    expect(elements).to.be.an('array');
+    expect(elements[0].name).to.equal('Put_Location_Request');
+    expect(elements[0].isComplex).to.equal(true);
+    expect(elements[0].type).to.equal('complex');
+    expect(elements[0].children[0].children[0].children[0].children[0].children[0].name).to.equal('Type_Data');
+    expect(elements[0].children[0].children[0].children[0].children[0].children[1].name).to.equal('Use_For_Reference');
+    expect(elements[0].children[0].children[0].children[0].children[0].children[2].name).to.equal('Comments');
+    expect(elements[0].children[0].children[0].children[1].children[0].children[0].name).to.equal('Type_Data');
+    expect(elements[0].children[0].children[0].children[1].children[0].children[1].name).to.equal('Use_For_Reference');
+    expect(elements[0].children[0].children[0].children[1].children[0].children[2].name).to.equal('Comments');
+  });
 });
 
 describe('SchemaBuilderXSD parseObjectToXML', function () {
