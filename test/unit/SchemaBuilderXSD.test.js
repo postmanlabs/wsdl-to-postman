@@ -1964,6 +1964,7 @@ describe('SchemaBuilderXSD getElements', function () {
     expect(elements[0].isComplex).to.equal(false);
     expect(elements[0].type).to.equal('number');
     expect(elements[0].maximum).to.equal(99);
+    expect(elements[0].minimum).to.equal(0);
   });
 });
 
