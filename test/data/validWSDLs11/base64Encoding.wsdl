@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources"
+    xmlns:wd="urn:com.workday/bsvc"
+    xmlns:nyw="urn:com.netyourwork/aod"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/"
+    name="Human_Resources"
+    targetNamespace="urn:com.workday/bsvc/Human_Resources">
+  <wsdl:documentation>
+    The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
+    <xsd:element name="Contingent_Worker_Contract_Info" type="wd:Contingent_Worker_Contract_InfoType" />
+
+    <xsd:complexType name="Contingent_Worker_Contract_InfoType">
+      <xsd:sequence> 
+        <xsd:element name="File" type="xsd:base64Binary" minOccurs="0" maxOccurs="1">
+          <xsd:annotation>
+            <xsd:documentation>The filedata associated to the attachment in Base64 encoding</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+
+
+    </xsd:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="Contingent_Worker_Contract_Info_GetInputMsg">
+    <wsdl:part name="body" element="wd:Contingent_Worker_Contract_Info" />
+  </wsdl:message>
+  <wsdl:message name="Contingent_Worker_Contract_InfoOutputMsg">
+    <wsdl:part name="body" element="wd:Contingent_Worker_Contract_Info" />
+  </wsdl:message>
+
+  <wsdl:portType name="Human_ResourcesPort">
+    <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
+   
+
+    <wsdl:operation name="Get_Contingent_Worker_Contract_Info">
+      <wsdl:documentation>This operation retrieves data related to a Contingent Worker and his/her Contract information.</wsdl:documentation>
+      <wsdl:input name="Get_Contingent_Worker_Contract_InfoInput" message="wd-wsdl:Contingent_Worker_Contract_Info_GetInputMsg" />
+      <wsdl:output name="Get_Contingent_Worker_Contract_InfoOutput" message="wd-wsdl:Contingent_Worker_Contract_InfoOutputMsg" />
+    </wsdl:operation>
+
+  </wsdl:portType>
+  <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
+    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    
+    
+    <wsdl:operation name="Get_Contingent_Worker_Contract_Info">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Get_Contingent_Worker_Contract_InfoInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_Contingent_Worker_Contract_InfoOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+
+    
+  </wsdl:binding>
+  <wsdl:service name="Human_ResourcesService">
+    <wsdl:port name="Human_Resources" binding="wd-wsdl:Human_ResourcesBinding">
+      <soapbind:address location="Human_Resources" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -288,6 +288,18 @@ describe('knownTypes getValueExample', function () {
     let example = getValueExample(element);
     expect(example).to.equal('default value');
   });
+
+  it('should get a string when called with "string" and encodign base64', function () {
+    const element = new Element(),
+      expected = Buffer.from('content').toString('base64');
+
+    element.type = 'string';
+    element.contentEncoding = 'base64';
+    let example = getValueExample(element);
+
+    expect(example).to.equal(expected);
+    expect(Buffer.from(example, 'base64').toString('ascii')).to.equal('content');
+  });
 });
 
 describe('knownTypes isKnownType', function () {

@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources"
+    xmlns:wd="urn:com.workday/bsvc"
+    xmlns:nyw="urn:com.netyourwork/aod"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/"
+    name="Human_Resources"
+    targetNamespace="urn:com.workday/bsvc/Human_Resources">
+  <wsdl:documentation>
+    The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
+ 
+      <xsd:element name="Employee_Personal_Info_Get" type="wd:Employee_Personal_InfoType" /> 
+      <xsd:element name="Employee_Personal_Info" type="wd:Employee_Personal_InfoType" />
+
+
+      <xsd:complexType name="License_Identifier_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Encapsulating element for all License Identifier data.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="License_ID" type="xsd:string" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Text attribute identifying License ID.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          
+          <xsd:element name="License_Class" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Text attribute identifying License Class.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Issued_Date" type="xsd:date" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Date the License ID was issued.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Expiration_Date" type="xsd:date" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Date the License ID expires.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Verification_Date" type="xsd:date" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Date the License ID was verified.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:choice>
+            <xsd:element name="Country_Reference" type="wd:Country_ReferenceType" minOccurs="0" />
+            <xsd:element name="Country_Region_Reference" type="wd:Country_Region_ReferenceType" minOccurs="0" />
+            <xsd:element name="Authority_Reference" type="wd:Authority_ReferenceType" minOccurs="0" />
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:complexType> 
+
+
+      <xsd:complexType name="Country_ReferenceType">
+        <xsd:annotation>
+          <xsd:documentation>Country ISO code. If the Country ISO code is specified, then this ISO code will be used to determine the Country Phone Code for (eliminate space between f and o) the phone. Pass this ISO code to distinguish between multiple countries sharing the same Country Phone Code. (For example, 1 is the Country Phone Code that is shared by USA, Canada, Dominican Republic, Bermuda, Jamaica, and Puerto Rico.)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Country_ISO_Code" type="xsd:string" maxOccurs="1">
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Country_Region_ReferenceType">
+        <xsd:sequence>
+          <xsd:element name="Country_Reference" type="wd:Country_ReferenceType" />
+          <xsd:element name="Country_Region_Name" type="xsd:string" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>A name uniquely identifying a Country Region (a geographic or governmental subdivision).</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+          
+      <xsd:complexType name="Authority_ReferenceType">
+        <xsd:sequence>
+          <xsd:element name="Authority_Name" type="xsd:string" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Along with Organization (defines Regulatory Region), unique attribute name/description identifying a valid instance of Authority.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+     
+ 
+     <xsd:complexType name="Employee_Personal_InfoType">
+        <xsd:annotation>
+          <xsd:documentation>Response element containing an instance of Employee and his/her Personal Information.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence> 
+          <xsd:element name="License_ID_Data" type="wd:License_Identifier_DataType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="As_Of_Date" type="xsd:date">
+        </xsd:attribute>
+      </xsd:complexType>
+      
+    </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="Employee_Personal_InfoOutputMsg">
+    <wsdl:part name="body" element="wd:Employee_Personal_Info" />
+  </wsdl:message>
+  <wsdl:message name="Employee_Personal_Info_GetInputMsg">
+    <wsdl:part name="body" element="wd:Employee_Personal_Info_Get" />
+  </wsdl:message>
+
+  <wsdl:portType name="Human_ResourcesPort">
+    <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
+
+    <wsdl:operation name="Get_Employee_Personal_Info">
+      <wsdl:documentation>This operation retrieves data related to an Employee and his/her Personal (e.g. Biographic, Demographic, etc.) information.</wsdl:documentation>
+      <wsdl:input name="Get_Employee_Personal_InfoInput" message="wd-wsdl:Employee_Personal_Info_GetInputMsg" />
+      <wsdl:output name="Get_Employee_Personal_InfoOutput" message="wd-wsdl:Employee_Personal_InfoOutputMsg" /> 
+    </wsdl:operation>
+    
+  </wsdl:portType>
+  <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
+    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+  
+    <wsdl:operation name="Get_Employee_Personal_Info">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Get_Employee_Personal_InfoInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_Employee_Personal_InfoOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+
+  </wsdl:binding>
+  <wsdl:service name="Human_ResourcesService">
+    <wsdl:port name="Human_Resources" binding="wd-wsdl:Human_ResourcesBinding">
+      <soapbind:address location="Human_Resources" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

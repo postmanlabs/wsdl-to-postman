@@ -72,7 +72,7 @@
   module.exports.State = State;
   module.exports.ForwardReference = ForwardReference;
   
-  },{"./src/baseSpecialCaseIdentifier":89,"./src/builtInTypeConverter":90,"./src/constants":91,"./src/converterDraft04":92,"./src/converterDraft06":93,"./src/converterDraft07":94,"./src/depthFirstTraversal":95,"./src/forwardReference":96,"./src/jsonschema/jsonSchemaFile":97,"./src/jsonschema/jsonSchemaFileDraft04":98,"./src/jsonschema/jsonSchemaFileDraft06":99,"./src/jsonschema/jsonSchemaFileDraft07":100,"./src/jsonschema/jsonSchemaFormats":101,"./src/jsonschema/jsonSchemaRef":102,"./src/jsonschema/jsonSchemaTypes":105,"./src/namespaceManager":106,"./src/parsingState":107,"./src/processor":108,"./src/propertyDefinable":109,"./src/visitors/baseConversionVisitor":113,"./src/visitors/defaultConversionVisitor":114,"./src/visitors/xmlUsageVisitor":116,"./src/visitors/xmlUsageVisitorSum":117,"./src/xmlschema/xsdAttributeValues":118,"./src/xmlschema/xsdAttributes":119,"./src/xmlschema/xsdElements":120,"./src/xmlschema/xsdFileXmlDom":121,"./src/xmlschema/xsdNodeTypes":122,"./src/xsd2JsonSchema":123}],2:[function(require,module,exports){
+  },{"./src/baseSpecialCaseIdentifier":89,"./src/builtInTypeConverter":90,"./src/constants":91,"./src/converterDraft04":92,"./src/converterDraft06":93,"./src/converterDraft07":94,"./src/depthFirstTraversal":95,"./src/forwardReference":96,"./src/jsonschema/jsonSchemaFile":97,"./src/jsonschema/jsonSchemaFileDraft04":98,"./src/jsonschema/jsonSchemaFileDraft06":99,"./src/jsonschema/jsonSchemaFileDraft07":100,"./src/jsonschema/jsonSchemaFormats":101,"./src/jsonschema/jsonSchemaRef":102,"./src/jsonschema/jsonSchemaTypes":106,"./src/namespaceManager":107,"./src/parsingState":108,"./src/processor":109,"./src/propertyDefinable":110,"./src/visitors/baseConversionVisitor":114,"./src/visitors/defaultConversionVisitor":115,"./src/visitors/xmlUsageVisitor":117,"./src/visitors/xmlUsageVisitorSum":118,"./src/xmlschema/xsdAttributeValues":119,"./src/xmlschema/xsdAttributes":120,"./src/xmlschema/xsdElements":121,"./src/xmlschema/xsdFileXmlDom":122,"./src/xmlschema/xsdNodeTypes":123,"./src/xsd2JsonSchema":124}],2:[function(require,module,exports){
   (function (Buffer){(function (){
   var clone = (function() {
   'use strict';
@@ -333,7 +333,7 @@
   }
   
   }).call(this)}).call(this,require("buffer").Buffer)
-  },{"buffer":125}],3:[function(require,module,exports){
+  },{"buffer":126}],3:[function(require,module,exports){
   (function (process){(function (){
   "use strict";
   
@@ -517,7 +517,7 @@
   
   
   }).call(this)}).call(this,require('_process'))
-  },{"./common":4,"_process":128}],4:[function(require,module,exports){
+  },{"./common":4,"_process":129}],4:[function(require,module,exports){
   "use strict";
   
   /**
@@ -1922,7 +1922,7 @@
   module.exports = posix;
   
   }).call(this)}).call(this,require('_process'))
-  },{"_process":128}],8:[function(require,module,exports){
+  },{"_process":129}],8:[function(require,module,exports){
   (function (global){(function (){
   (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -15953,7 +15953,7 @@
   
   module.exports = BaseSpecialCaseIdentifier;
   
-  },{"./xmlschema/xsdAttributeValues":118,"./xmlschema/xsdAttributes":119,"./xmlschema/xsdElements":120,"./xmlschema/xsdFileXmlDom":121,"./xmlschema/xsdNodeTypes":122,"debug":3}],90:[function(require,module,exports){
+  },{"./xmlschema/xsdAttributeValues":119,"./xmlschema/xsdAttributes":120,"./xmlschema/xsdElements":121,"./xmlschema/xsdFileXmlDom":122,"./xmlschema/xsdNodeTypes":123,"debug":3}],90:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:BuiltInTypeConverter');
@@ -16546,7 +16546,7 @@
   
   module.exports = BuiltInTypeConverter;
   
-  },{"./constants":91,"./jsonschema/jsonSchemaFileDraft04":98,"./jsonschema/jsonSchemaFormats":101,"./jsonschema/jsonSchemaTypes":105,"debug":3}],91:[function(require,module,exports){
+  },{"./constants":91,"./jsonschema/jsonSchemaFileDraft04":98,"./jsonschema/jsonSchemaFormats":101,"./jsonschema/jsonSchemaTypes":106,"debug":3}],91:[function(require,module,exports){
   'use strict';
   
   /**
@@ -18047,7 +18047,7 @@
   
   module.exports = ConverterDraft04;
   
-  },{"./baseSpecialCaseIdentifier":89,"./jsonschema/jsonSchemaFile":97,"./jsonschema/jsonSchemaTypes":105,"./namespaceManager":106,"./processor":108,"./qname":110,"./specialCases":111,"./utils":112,"./xmlschema/xsdAttributeValues":118,"./xmlschema/xsdAttributes":119,"./xmlschema/xsdElements":120,"./xmlschema/xsdFileXmlDom":121,"./xmlschema/xsdNodeTypes":122,"debug":3,"urijs":11}],93:[function(require,module,exports){
+  },{"./baseSpecialCaseIdentifier":89,"./jsonschema/jsonSchemaFile":97,"./jsonschema/jsonSchemaTypes":106,"./namespaceManager":107,"./processor":109,"./qname":111,"./specialCases":112,"./utils":113,"./xmlschema/xsdAttributeValues":119,"./xmlschema/xsdAttributes":120,"./xmlschema/xsdElements":121,"./xmlschema/xsdFileXmlDom":122,"./xmlschema/xsdNodeTypes":123,"debug":3,"urijs":11}],93:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:ConverterDraft06')
@@ -18085,7 +18085,7 @@
   }
   
   module.exports = ConverterDraft06;
-  },{"./converterDraft04":92,"./xmlschema/xsdFileXmlDom":121,"debug":3}],94:[function(require,module,exports){
+  },{"./converterDraft04":92,"./xmlschema/xsdFileXmlDom":122,"debug":3}],94:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:ConverterDraft07')
@@ -18192,7 +18192,7 @@
   }
   
   module.exports = DepthFirstTraversal;
-  },{"./xmlschema/xsdFileXmlDom":121}],96:[function(require,module,exports){
+  },{"./xmlschema/xsdFileXmlDom":122}],96:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:ForwardReference')
@@ -19112,7 +19112,7 @@
   
   module.exports = JsonSchemaFile;
   }).call(this)}).call(this,require('_process'))
-  },{"../constants":91,"../propertyDefinable":109,"../utils":112,"../xmlschema/xsdAttributeValues":118,"./jsonSchemaTypes":105,"_process":128,"clone":2,"debug":3,"deep-eql":5,"path":127,"path-browserify":7,"urijs":11}],98:[function(require,module,exports){
+  },{"../constants":91,"../propertyDefinable":110,"../utils":113,"../xmlschema/xsdAttributeValues":119,"./jsonSchemaTypes":106,"_process":129,"clone":2,"debug":3,"deep-eql":5,"path":128,"path-browserify":7,"urijs":11}],98:[function(require,module,exports){
   (function (process){(function (){
   'use strict';
   
@@ -19184,7 +19184,7 @@
   
   module.exports = JsonSchemaFileDraft04;
   }).call(this)}).call(this,require('_process'))
-  },{"./jsonSchemaFile":97,"./jsonSchemaSerializerDraft04":103,"_process":128,"debug":3,"path":127,"path-browserify":7,"urijs":11}],99:[function(require,module,exports){
+  },{"./jsonSchemaFile":97,"./jsonSchemaSerializerDraft04":103,"_process":129,"debug":3,"path":128,"path-browserify":7,"urijs":11}],99:[function(require,module,exports){
   (function (process){(function (){
   'use strict';
   
@@ -19265,7 +19265,7 @@
   
   module.exports = JsonSchemaFileDraft06;
   }).call(this)}).call(this,require('_process'))
-  },{"./jsonSchemaFileDraft04":98,"./jsonSchemaSerializerDraft06":104,"_process":128,"debug":3,"path":127,"path-browserify":7,"urijs":11}],100:[function(require,module,exports){
+  },{"./jsonSchemaFileDraft04":98,"./jsonSchemaSerializerDraft06":104,"_process":129,"debug":3,"path":128,"path-browserify":7,"urijs":11}],100:[function(require,module,exports){
   (function (process){(function (){
   'use strict';
   
@@ -19274,6 +19274,7 @@
   const path = (process && typeof process.platform === 'string') ? require('path') : require('path-browserify');
   const URI = require('urijs');
   const JsonSchemaFileDraft06 = require('./jsonSchemaFileDraft06');
+  const JsonSchemaSerializerDraft07 = require('./jsonSchemaSerializerDraft07');
   
   /**
    * JSON Schema file operations.  This is based on the JSON Schema meta-schema located at http://json-schema.org/draft-04/schema#.  
@@ -19315,6 +19316,18 @@
       }
     }
   
+    /**
+     * Returns a POJO of this jsonSchema.  Items are added in the order we wouild like them to appear in the resulting JsonSchema.
+     * 
+     * @returns {Object} - POJO of this jsonSchema.
+     */
+     getJsonSchema(serializer) {
+      if (serializer == undefined) {
+        serializer = new JsonSchemaSerializerDraft07();
+      }
+      return super.getJsonSchema(serializer);
+    }
+  
     toString() {
       return JSON.stringify(this.getJsonSchema(), null, '\t');
     }
@@ -19322,7 +19335,7 @@
   
   module.exports = JsonSchemaFileDraft07;
   }).call(this)}).call(this,require('_process'))
-  },{"./jsonSchemaFileDraft06":99,"_process":128,"debug":3,"path":127,"path-browserify":7,"urijs":11}],101:[function(require,module,exports){
+  },{"./jsonSchemaFileDraft06":99,"./jsonSchemaSerializerDraft07":105,"_process":129,"debug":3,"path":128,"path-browserify":7,"urijs":11}],101:[function(require,module,exports){
   
   'use strict';
   
@@ -19819,7 +19832,7 @@
   }
   
   module.exports = JsonSchemaSerializerDraft04;
-  },{"../propertyDefinable":109,"debug":3}],104:[function(require,module,exports){
+  },{"../propertyDefinable":110,"debug":3}],104:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:JsonSchemaFile');
@@ -19895,6 +19908,75 @@
   },{"./jsonSchemaSerializerDraft04":103,"debug":3}],105:[function(require,module,exports){
   'use strict';
   
+  const debug = require('debug')('xsd2jsonschema:JsonSchemaFile');
+  
+  const JsonSchemaSerializerDraft06 = require('./jsonSchemaSerializerDraft06');
+  
+  const DEFAULT_DRAFT07_ORDER = [
+      '$ref',
+      'id',
+      'subSchemas',
+      '$schema',
+      'title',
+      'description',
+      'default',
+      'format',
+      'multipleOf',
+      'maximum',
+      'exclusiveMaximum',
+      'minimum',
+      'exclusiveMinimum',
+      'maxLength',
+      'minLength',
+      'pattern',
+      'additionalItems',
+      'items',
+      'maxItems',
+      'minItems',
+      'uniqueItems',
+      'maxProperties',
+      'minProperties',
+      'required',
+      'additionalProperties',
+      'properties',
+      'patternProperties',
+      'dependencies',
+      'enum',
+      'type',
+      'allOf',
+      'anyOf',
+      'oneOf',
+      'not',
+      'definitions',
+      'contentEncoding'
+  ];
+  
+  /**
+   * Class representing a serializer for an instance of JsonSchemaFileDraft06.
+   */
+  class JsonSchemaSerializerDraft07 extends JsonSchemaSerializerDraft06 {
+      constructor() {
+          super();
+          super.defineObjectProperty('jsonSchemaPojo');
+          this.jsonSchemaPojo = {};
+      }
+  
+      serialize(jsonSchema, customOrder) {
+          const order = customOrder == undefined ? DEFAULT_DRAFT07_ORDER : customOrder;
+          return super.serialize(jsonSchema, order);
+      }
+  
+      contentEncoding(jsonSchema) {
+          if (!jsonSchema.isEmpty(jsonSchema.contentEncoding)) {
+              this.jsonSchemaPojo.contentEncoding = jsonSchema.contentEncoding;
+          }
+      }
+  }
+  
+  module.exports = JsonSchemaSerializerDraft07;
+  },{"./jsonSchemaSerializerDraft06":104,"debug":3}],106:[function(require,module,exports){
+  'use strict';
+  
   /**
    * Defines constants for the JSON Schema primitive types.  For more information please see
    * {@link http://json-schema.org/latest/json-schema-core.html#rfc.section.4.2}
@@ -19932,7 +20014,7 @@
      */
     STRING: 'string'
   }
-  },{}],106:[function(require,module,exports){
+  },{}],107:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:NamespaceManager');
@@ -20676,7 +20758,7 @@
   
   module.exports = NamespaceManager;
   
-  },{"./constants":91,"./forwardReference":96,"./jsonschema/jsonSchemaFileDraft04":98,"./jsonschema/jsonSchemaFileDraft06":99,"./jsonschema/jsonSchemaFileDraft07":100,"./qname":110,"./xmlschema/xsdAttributes":119,"debug":3,"urijs":11}],107:[function(require,module,exports){
+  },{"./constants":91,"./forwardReference":96,"./jsonschema/jsonSchemaFileDraft04":98,"./jsonschema/jsonSchemaFileDraft06":99,"./jsonschema/jsonSchemaFileDraft07":100,"./qname":111,"./xmlschema/xsdAttributes":120,"debug":3,"urijs":11}],108:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:ParsingState');
@@ -20874,7 +20956,7 @@
   module.exports.ParsingState = ParsingState;
   module.exports.State = State;
   
-  },{"./xmlschema/xsdElements":120,"./xmlschema/xsdFileXmlDom":121,"./xmlschema/xsdNodeTypes":122,"debug":3}],108:[function(require,module,exports){
+  },{"./xmlschema/xsdElements":121,"./xmlschema/xsdFileXmlDom":122,"./xmlschema/xsdNodeTypes":123,"debug":3}],109:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:Processor');
@@ -20975,7 +21057,7 @@
   
   module.exports = Processor;
   
-  },{"./parsingState":107,"./xmlschema/xsdFileXmlDom":121,"./xmlschema/xsdNodeTypes":122,"debug":3}],109:[function(require,module,exports){
+  },{"./parsingState":108,"./xmlschema/xsdFileXmlDom":122,"./xmlschema/xsdNodeTypes":123,"debug":3}],110:[function(require,module,exports){
   'use strict';
   
   /**
@@ -21203,7 +21285,7 @@
   
   module.exports = PropertyDefinable;
   
-  },{}],110:[function(require,module,exports){
+  },{}],111:[function(require,module,exports){
   /**
    * New node file
    */
@@ -21238,7 +21320,7 @@
   
   module.exports = Qname;
   
-  },{}],111:[function(require,module,exports){
+  },{}],112:[function(require,module,exports){
   'use strict';
   
   /**
@@ -21253,7 +21335,7 @@
       OPTIONAL_CHOICE : 'fixOptionalChoice',
       OPTIONAL_SEQUENCE : 'fixOptionalSequence'
   }
-  },{}],112:[function(require,module,exports){
+  },{}],113:[function(require,module,exports){
   /**
    *  Utility methods.
    */
@@ -21323,7 +21405,7 @@
       return str.trim();
     }
   }
-  },{"url":133,"validator":13}],113:[function(require,module,exports){
+  },{"url":134,"validator":13}],114:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:BaseConversionVisitor');
@@ -21430,7 +21512,7 @@
   }
   
   module.exports = BaseConversionVisitor;
-  },{"./../parsingState":107,"./../xmlschema/xsdElements":120,"./visitor":115,"debug":3}],114:[function(require,module,exports){
+  },{"./../parsingState":108,"./../xmlschema/xsdElements":121,"./visitor":116,"debug":3}],115:[function(require,module,exports){
   'use strict';
   
   var ConverterDraft07 = require('./../converterDraft07');
@@ -21456,7 +21538,7 @@
   }
   
   module.exports = DefaultConversionVisitor;
-  },{"./../converterDraft07":94,"./baseConversionVisitor":113}],115:[function(require,module,exports){
+  },{"./../converterDraft07":94,"./baseConversionVisitor":114}],116:[function(require,module,exports){
   'use strict'
   
   const debug = require('debug')('xsd2jsonschema:Visitor');
@@ -21528,7 +21610,7 @@
   }
   
   module.exports = Visitor;
-  },{"./../processor":108,"./../xmlschema/xsdFileXmlDom":121,"debug":3}],116:[function(require,module,exports){
+  },{"./../processor":109,"./../xmlschema/xsdFileXmlDom":122,"debug":3}],117:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:XmlUsageVisitor');
@@ -21627,7 +21709,7 @@
   }
   
   module.exports = XmlUsageVisitor;
-  },{"./../xmlschema/xsdAttributes":119,"./../xmlschema/xsdFileXmlDom":121,"./baseConversionVisitor":113,"debug":3}],117:[function(require,module,exports){
+  },{"./../xmlschema/xsdAttributes":120,"./../xmlschema/xsdFileXmlDom":122,"./baseConversionVisitor":114,"debug":3}],118:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:XmlUsageVisitorSum');
@@ -21719,7 +21801,7 @@
   
   module.exports = XmlUsageVisitorSum;
   
-  },{"./../xmlschema/xsdAttributes":119,"./../xmlschema/xsdFileXmlDom":121,"./baseConversionVisitor":113,"debug":3}],118:[function(require,module,exports){
+  },{"./../xmlschema/xsdAttributes":120,"./../xmlschema/xsdFileXmlDom":122,"./baseConversionVisitor":114,"debug":3}],119:[function(require,module,exports){
   'use strict';
   
   /**
@@ -21737,7 +21819,7 @@
       REQUIRED: 'required'
   }
   
-  },{}],119:[function(require,module,exports){
+  },{}],120:[function(require,module,exports){
   'use strict';
   
   /**
@@ -21800,7 +21882,7 @@
     XPATH_DEFAULT_NAMESPACE: 'xpathDefaultNamespace'
   }
   
-  },{}],120:[function(require,module,exports){
+  },{}],121:[function(require,module,exports){
   'use strict';
   
   /**
@@ -21860,7 +21942,7 @@
     UNIQUE: 'unique',
     WHITESPACE: 'whitespace'
   }
-  },{}],121:[function(require,module,exports){
+  },{}],122:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:XsdFile');
@@ -22349,7 +22431,7 @@
   
   module.exports = XsdFile;
   
-  },{"../constants":91,"./xsdAttributeValues":118,"./xsdAttributes":119,"./xsdElements":120,"./xsdNodeTypes":122,"debug":3,"urijs":11,"xmldom":84,"xpath":88}],122:[function(require,module,exports){
+  },{"../constants":91,"./xsdAttributeValues":119,"./xsdAttributes":120,"./xsdElements":121,"./xsdNodeTypes":123,"debug":3,"urijs":11,"xmldom":84,"xpath":88}],123:[function(require,module,exports){
   'use strict';
   
   /**
@@ -22376,7 +22458,7 @@
           return Object.keys(obj).find((key) => obj[key] === value);
       }
   }
-  },{}],123:[function(require,module,exports){
+  },{}],124:[function(require,module,exports){
   'use strict';
   
   const debug = require('debug')('xsd2jsonschema:Xsd2JsonSchema');
@@ -22715,7 +22797,7 @@
   
   module.exports = Xsd2JsonSchema;
   
-  },{"./baseSpecialCaseIdentifier":89,"./builtInTypeConverter":90,"./constants":91,"./converterDraft04":92,"./converterDraft06":93,"./converterDraft07":94,"./depthFirstTraversal":95,"./namespaceManager":106,"./visitors/baseConversionVisitor":113,"./xmlschema/xsdFileXmlDom":121,"debug":3,"urijs":11}],124:[function(require,module,exports){
+  },{"./baseSpecialCaseIdentifier":89,"./builtInTypeConverter":90,"./constants":91,"./converterDraft04":92,"./converterDraft06":93,"./converterDraft07":94,"./depthFirstTraversal":95,"./namespaceManager":107,"./visitors/baseConversionVisitor":114,"./xmlschema/xsdFileXmlDom":122,"debug":3,"urijs":11}],125:[function(require,module,exports){
   'use strict'
   
   exports.byteLength = byteLength
@@ -22867,7 +22949,7 @@
     return parts.join('')
   }
   
-  },{}],125:[function(require,module,exports){
+  },{}],126:[function(require,module,exports){
   (function (Buffer){(function (){
   /*!
    * The buffer module from node.js, for the browser.
@@ -24648,7 +24730,7 @@
   }
   
   }).call(this)}).call(this,require("buffer").Buffer)
-  },{"base64-js":124,"buffer":125,"ieee754":126}],126:[function(require,module,exports){
+  },{"base64-js":125,"buffer":126,"ieee754":127}],127:[function(require,module,exports){
   /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
   exports.read = function (buffer, offset, isLE, mLen, nBytes) {
     var e, m
@@ -24735,9 +24817,9 @@
     buffer[offset + i - d] |= s * 128
   }
   
-  },{}],127:[function(require,module,exports){
+  },{}],128:[function(require,module,exports){
   arguments[4][7][0].apply(exports,arguments)
-  },{"_process":128,"dup":7}],128:[function(require,module,exports){
+  },{"_process":129,"dup":7}],129:[function(require,module,exports){
   // shim for using process in browser
   var process = module.exports = {};
   
@@ -24923,7 +25005,7 @@
   };
   process.umask = function() { return 0; };
   
-  },{}],129:[function(require,module,exports){
+  },{}],130:[function(require,module,exports){
   (function (global){(function (){
   /*! https://mths.be/punycode v1.4.1 by @mathias */
   ;(function(root) {
@@ -25460,7 +25542,7 @@
   }(this));
   
   }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-  },{}],130:[function(require,module,exports){
+  },{}],131:[function(require,module,exports){
   // Copyright Joyent, Inc. and other Node contributors.
   //
   // Permission is hereby granted, free of charge, to any person obtaining a
@@ -25546,7 +25628,7 @@
     return Object.prototype.toString.call(xs) === '[object Array]';
   };
   
-  },{}],131:[function(require,module,exports){
+  },{}],132:[function(require,module,exports){
   // Copyright Joyent, Inc. and other Node contributors.
   //
   // Permission is hereby granted, free of charge, to any person obtaining a
@@ -25633,13 +25715,13 @@
     return res;
   };
   
-  },{}],132:[function(require,module,exports){
+  },{}],133:[function(require,module,exports){
   'use strict';
   
   exports.decode = exports.parse = require('./decode');
   exports.encode = exports.stringify = require('./encode');
   
-  },{"./decode":130,"./encode":131}],133:[function(require,module,exports){
+  },{"./decode":131,"./encode":132}],134:[function(require,module,exports){
   // Copyright Joyent, Inc. and other Node contributors.
   //
   // Permission is hereby granted, free of charge, to any person obtaining a
@@ -26373,7 +26455,7 @@
     if (host) this.hostname = host;
   };
   
-  },{"./util":134,"punycode":129,"querystring":132}],134:[function(require,module,exports){
+  },{"./util":135,"punycode":130,"querystring":133}],135:[function(require,module,exports){
   'use strict';
   
   module.exports = {
