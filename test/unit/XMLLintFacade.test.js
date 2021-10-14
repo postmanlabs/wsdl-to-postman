@@ -52,4 +52,23 @@ describe('validate', function () {
     expect(res).to.be.an('object');
     expect(res.errors.length).to.equal(1);
   });
+
+  it('should validate time correctly', function () {
+    const validator = new XMLLintFacade(),
+      res = validator.validate(`<Summary_Compensation_Data> 
+      <Meal_Out>07:34:57</Meal_Out>
+  </Summary_Compensation_Data>`, `<xsd:schema  xmlns:xsd="http://www.w3.org/2001/XMLSchema" > 
+      <xsd:element name="Summary_Compensation_Data" type="Compensation_Summary_DataType"/>
+        <xsd:complexType name="Compensation_Summary_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Encapsulating element containg a brief summary of Compensation data.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        <xsd:element name="Meal_Out" type="xsd:time" maxOccurs="1">
+              </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>`);
+    expect(res.errors).to.equal(null);
+  });
 });

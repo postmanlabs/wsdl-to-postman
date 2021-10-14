@@ -114,7 +114,7 @@ describe('SchemaBuilderXSD parseSchemas', function () {
     expect(parsedSchema.length).to.equal(2);
   });
 
-  it('Should parse appinfo as an element type appinfo in parent\'s oneOf property', function() {
+  it('Should parse appinfo as and not fail', function() {
     const schemaStrings = [
         `<xsd:schema 
       elementFormDefault=\"qualified\" 
@@ -145,34 +145,8 @@ describe('SchemaBuilderXSD parseSchemas', function () {
     `
       ],
       parser = new XSDToJsonSchemaParser(),
-      parsedSchema = parser.parseAllSchemas(schemaStrings),
-      expectedString = '<xsd:appinfo xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n' +
-      '            <wd:Validation xmlns:wd=\"urn:com.workday/bsvc\">\n' +
-      '              <xsd:documentation>\n' +
-      '                This is documentation\n' +
-      '              <wd:Validation_Message>Organization Reference Integration ID does not exist!' +
-      '</wd:Validation_Message>\n' +
-      '            \n' +
-      '            <wd:Validation>\n' +
-      '              <xsd:documentation>This is documentation</xsd:documentation>\n' +
-      '              <wd:Validation_Message>Thi is custom content</wd:Validation_Message>\n' +
-      '            </wd:Validation>\n' +
-      '          \n' +
-      '        \n' +
-      '        <xsd:sequence>\n' +
-      '          <xsd:element name=\"Integration_ID_Reference\" type=\"xsd:string\"/>\n' +
-      '        </xsd:sequence>\n' +
-      '      \n' +
-      '    </xsd:documentation></wd:Validation></xsd:appinfo>';
+      parsedSchema = parser.parseAllSchemas(schemaStrings);
     expect(parsedSchema).to.be.an('array');
-    expect(
-      parsedSchema[0]
-        .definitions.Organization_ReferenceType
-        .oneOf[0].description).to.be.equal(expectedString);
-    expect(
-      parsedSchema[0]
-        .definitions.Organization_ReferenceType
-        .oneOf[0].type).to.be.equal('appinfo');
   });
 
 });

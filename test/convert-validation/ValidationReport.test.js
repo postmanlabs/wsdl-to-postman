@@ -60,12 +60,10 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
               }
             });
             console.error(`Test Failed ${file} errors ${onlyErrors.length}`);
-            console.error(`Test Failed ${file}`);
-
             fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify(
-              { amount: onlyErrors.length, erors: result }));
+              { amount: onlyErrors.length, errors: result }));
             fs.writeFileSync(outputDirectory + file + '-validationResultErrors.json',
-              JSON.stringify({ amount: onlyErrors.length, erors: onlyErrors }));
+              JSON.stringify({ amount: onlyErrors.length, errors: onlyErrors }));
             fs.writeFileSync(outputDirectory + file + '-collection.json',
               JSON.stringify(collectionResult.output[0].data));
           }
