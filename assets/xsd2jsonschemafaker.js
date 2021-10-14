@@ -16783,14 +16783,14 @@
     appinfo(node, jsonSchema, xsd) {
       // TODO: source
       // (TBD)
-      if(! this.workingJsonSchema.$ref){
-        let appInfoJsonSchema = this.workingJsonSchema.newJsonSchemaFile();
-        appInfoJsonSchema.description = node.toString();
-        appInfoJsonSchema.type = 'appinfo';
-        this.workingJsonSchema.oneOf.push(appInfoJsonSchema);
-        this.parsingState.pushSchema(this.workingJsonSchema);
-        this.workingJsonSchema = appInfoJsonSchema;
-      }
+      // if(! this.workingJsonSchema.$ref && !this.isBuiltInType(this.workingJsonSchema.type)){
+      //   let appInfoJsonSchema = this.workingJsonSchema.newJsonSchemaFile();
+      //   appInfoJsonSchema.description = node.toString();
+      //   appInfoJsonSchema.type = 'appinfo';
+      //   this.workingJsonSchema.oneOf.push(appInfoJsonSchema);
+      //   this.parsingState.pushSchema(this.workingJsonSchema);
+      //   this.workingJsonSchema = appInfoJsonSchema;
+      // }
       return true;
     }
   
