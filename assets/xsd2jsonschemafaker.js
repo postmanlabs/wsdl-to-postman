@@ -16783,14 +16783,6 @@
     appinfo(node, jsonSchema, xsd) {
       // TODO: source
       // (TBD)
-      // if(! this.workingJsonSchema.$ref && !this.isBuiltInType(this.workingJsonSchema.type)){
-      //   let appInfoJsonSchema = this.workingJsonSchema.newJsonSchemaFile();
-      //   appInfoJsonSchema.description = node.toString();
-      //   appInfoJsonSchema.type = 'appinfo';
-      //   this.workingJsonSchema.oneOf.push(appInfoJsonSchema);
-      //   this.parsingState.pushSchema(this.workingJsonSchema);
-      //   this.workingJsonSchema = appInfoJsonSchema;
-      // }
       return true;
     }
   
@@ -17552,8 +17544,7 @@
     }
   
     fractionDigits(node, jsonSchema, xsd) {
-      // TODO: id, value, fixed
-      // do nothing - there is no coresponding functionality in JSON Schema
+       
       return true;
     }
   
@@ -17995,19 +17986,17 @@
   
     totalDigits(node, jsonSchema, xsd) {
       // TODO: id, fixed
-       const len = XsdFile.getValueAttrAsNumber(node);
+       let len = XsdFile.getValueAttrAsNumber(node);
+       if(len > 10)
+       {
+         len = 10;
+       }
        let max = '';
-       let min ='1';
        for (let index = 0; index < len; index++) {
           max += '9'
        }
   
-       for (let index = 0; index < len -1; index++) {
-           min += '0'
-       }
-  
        this.workingJsonSchema.maximum = max * 1;
-       this.workingJsonSchema.minimum = min * 1;
        return true;
     }
   
