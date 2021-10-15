@@ -23,7 +23,7 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
       const schemaPack = new SchemaPack({
         data: fileContent,
         type: 'string'
-      }, {});
+      }, { });
 
       schemaPack.convert((error, collectionResult) => {
         expect(error).to.be.null;
@@ -50,7 +50,20 @@ describe('SchemaPack convert and validate report missmatches WSDL 1.1', function
           }
           if ((!error && !result.matched) || result.missingEndpoints.length > 0) {
             console.error(`Test Failed ${file}`);
-            fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify({ erors: result }));
+            let onlyErrors = [];
+
+            Object.keys(result.requests).forEach((key) => {
+              let endpoints = result.requests[key].endpoints,
+                badEndpints = endpoints.filter((endpoint) => { return endpoint.matched === false; });
+              if (badEndpints.length > 0) {
+                onlyErrors.push(result.requests[key]);
+              }
+            });
+            console.error(`Test Failed ${file} errors ${onlyErrors.length}`);
+            fs.writeFileSync(outputDirectory + file + '-validationResult.json', JSON.stringify(
+              { amount: onlyErrors.length, errors: result }));
+            fs.writeFileSync(outputDirectory + file + '-validationResultErrors.json',
+              JSON.stringify({ amount: onlyErrors.length, errors: onlyErrors }));
             fs.writeFileSync(outputDirectory + file + '-collection.json',
               JSON.stringify(collectionResult.output[0].data));
           }

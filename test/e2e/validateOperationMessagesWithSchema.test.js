@@ -28,7 +28,7 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
         schemaToValidate = getCleanSchema(xmlParsed, wsdlObject, version, xmlParser);
 
       let errors = validateOperationMessagesWithSchema(wsdlObject, schemaToValidate.cleanSchema,
-        schemaToValidate.isSchemaXSDDefault);
+        schemaToValidate.isSchemaXSDDefault, schemaToValidate.schemaTargetNamespace);
       expect(errors).to.be.an('array');
       expect(errors.length).to.be.equal(0);
     });
@@ -45,7 +45,7 @@ describe('Validating wsdlObject bodyMessages using validateOperationMessagesWith
         xmlParsed = xmlParser.parseToObject(xmlDocumentContent),
         schemaToValidate = getCleanSchema(xmlParsed, wsdlObject, version, xmlParser);
       let errors = validateOperationMessagesWithSchema(wsdlObject, schemaToValidate.cleanSchema,
-        schemaToValidate.isSchemaXSDDefault);
+        schemaToValidate.isSchemaXSDDefault, schemaToValidate.schemaTargetNamespace);
       expect(errors).to.be.an('array');
       expect(errors.length).to.be.equal(0);
     });
