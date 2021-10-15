@@ -300,6 +300,41 @@ describe('knownTypes getValueExample', function () {
     expect(example).to.equal(expected);
     expect(Buffer.from(example, 'base64').toString('ascii')).to.equal('content');
   });
+
+  it('should get a string when called with "string" and encodign base16', function () {
+    const element = new Element(),
+      expected = Buffer.from('content').toString('hex');
+
+    element.type = 'string';
+    element.contentEncoding = 'base16';
+    let example = getValueExample(element);
+
+    expect(example).to.equal(expected);
+    expect(Buffer.from(example, 'hex').toString('ascii')).to.equal('content');
+  });
+
+  it('should get a string when called with "string" and encodign binary', function () {
+    const element = new Element(),
+      expected = Buffer.from('content').toString('binary');
+
+    element.type = 'string';
+    element.contentEncoding = 'binary';
+    let example = getValueExample(element);
+
+    expect(example).to.equal(expected);
+    expect(Buffer.from(example, 'binary').toString('ascii')).to.equal('content');
+  });
+
+  it('should get a string "could not encode with that encoding value" notSupported', function () {
+    const element = new Element();
+
+    element.type = 'string';
+    element.contentEncoding = 'notSupported';
+    let example = getValueExample(element);
+
+    expect(example).to.include('could not encode with that encoding value');
+  });
+
 });
 
 describe('knownTypes isKnownType', function () {
