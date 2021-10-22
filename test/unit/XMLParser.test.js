@@ -196,7 +196,7 @@ describe('XMLparser parseObjectToXML', function () {
         '\t</soap:Body>\n</soap:Envelope>\n';
 
     let processOptions = {};
-    processOptions[`${indentCharacter.id}`] = '\t';
+    processOptions[`${indentCharacter.id}`] = 'Tab';
     localParser = new XMLParser(processOptions);
     parsed = localParser.parseObjectToXML(simpleInput);
     expect(parsed).to.be.an('string');
