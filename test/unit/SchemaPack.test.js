@@ -213,7 +213,7 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
 
   it('Should get an object representing PM Collection with tabs in message', function () {
     let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
-    const options = { folderStrategy: 'Port/Endpoint', indentCharacter: '\t' },
+    const options = { folderStrategy: 'Port/Endpoint', indentCharacter: 'Tab' },
       schemaPack = new SchemaPack({
         data: fileContent,
         type: 'string'
