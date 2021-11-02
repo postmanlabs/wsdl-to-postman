@@ -879,7 +879,6 @@ describe('merge and validate', function () {
           expect(result.output[0].type).to.have.equal('collection');
           expect(result.output[0].data).to.have.property('info');
           expect(result.output[0].data).to.have.property('item');
-          fs.writeFileSync('coll.json', JSON.stringify(result.output[0].data));
         });
         done();
       }
