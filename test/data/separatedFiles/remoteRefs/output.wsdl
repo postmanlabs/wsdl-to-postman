@@ -23,18 +23,6 @@
       <soap:address location="http://example.com/stockquote"/>
     </port>
   </service>
-  <message name="GetLastTradePriceInput">
-    <part name="body" element="xsd1:TradePriceRequest"/>
-  </message>
-  <message name="GetLastTradePriceOutput">
-    <part name="body" element="xsd1:TradePrice"/>
-  </message>
-  <portType name="StockQuotePortType">
-    <operation name="GetLastTradePrice">
-      <input message="tns:GetLastTradePriceInput"/>
-      <output message="tns:GetLastTradePriceOutput"/>
-    </operation>
-  </portType>
   <types>
     <schema targetNamespace="http://example.com/stockquote/schemas"
       xmlns="http://www.w3.org/2001/XMLSchema">
@@ -54,4 +42,16 @@
       </element>
     </schema>
   </types>
+  <message name="GetLastTradePriceInput">
+    <part name="body" element="xsd1:TradePriceRequest"/>
+  </message>
+  <message name="GetLastTradePriceOutput">
+    <part name="body" element="xsd1:TradePrice"/>
+  </message>
+  <portType name="StockQuotePortType">
+    <operation name="GetLastTradePrice">
+      <input message="tns:GetLastTradePriceInput"/>
+      <output message="tns:GetLastTradePriceOutput"/>
+    </operation>
+  </portType>
 </definitions>
