@@ -181,6 +181,13 @@ describe('validate xmllint', function () {
     expect(res[0].message).to.equal('Element \'UpdateTimeStamp\':' +
     ' Character content is not allowed, because the content type is empty.\n');
   });
+
+  it('should not get any error for anySimpleType data-type', function () {
+    const validator = new XMLXSDValidator('xmllint');
+    let res = validator.validate(XML_VALID_ANYSIMPLETYPE, XSD_ANYSIMPLETYPE);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(0);
+  });
 });
 
 describe('validate libxmljs', function () {
@@ -252,6 +259,12 @@ describe('validate libxmljs', function () {
     ' because the content type is empty.\n');
   });
 
+  it('should not get any error for anySimpleType data-type', function () {
+    const validator = new XMLXSDValidator('libxmljs');
+    let res = validator.validate(XML_VALID_ANYSIMPLETYPE, XSD_ANYSIMPLETYPE);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(0);
+  });
 });
 
 
