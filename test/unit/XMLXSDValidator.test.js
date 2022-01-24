@@ -89,7 +89,28 @@ elementFormDefault="qualified">
 </UpdateTimeStamp>
 </item>
 </getMatchDetailsResult>
-</getMatchDetailsResponse>`;
+</getMatchDetailsResponse>`,
+  XML_VALID_ANYSIMPLETYPE = `<?xml version="1.0"?>  
+<AccountHolderDetails>
+  <address>
+    <city>Bengaluru</city>
+    <state>Kannada</state>
+  </address>
+</AccountHolderDetails>`,
+  XSD_ANYSIMPLETYPE = `<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="AccountHolderDetails">
+  <xsd:complexType>
+      <xsd:sequence>
+           <xsd:element minOccurs="0" name="address" nillable="true" type="Address" />
+      </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+<xsd:complexType name="Address">
+  <xsd:sequence>
+    <xsd:element minOccurs="0" name="city" nillable="true" type="xsd:anySimpleType" />
+    <xsd:element minOccurs="0" name="state" nillable="true" type="xsd:anyAtomicType" />
+  </xsd:sequence>
+</xsd:complexType></xsd:schema>`;
 
 describe('XMLLintFacade constructor', function () {
   it('should get an object of type XSDValidXML', function () {
@@ -296,4 +317,10 @@ describe('validate libxmljs2', function () {
     ' because the content type is empty.\n');
   });
 
+  it('should not get any error for anySimpleType data-type', function () {
+    const validator = new XMLXSDValidator('libxmljs2');
+    let res = validator.validate(XML_VALID_ANYSIMPLETYPE, XSD_ANYSIMPLETYPE);
+    expect(res).to.be.an('Array');
+    expect(res.length).to.equal(0);
+  });
 });
