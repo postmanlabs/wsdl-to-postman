@@ -156,8 +156,8 @@ describe('Text Utils fixComments', function () {
   <xsd:complexType>
     <!-->> ROOT DICTIONARY TYPES <<-->
       <xsd:sequence>
-           <!-->> ISO DICTIONARY TYPES <<-->
-           <xsd:element minOccurs="0" name="address" nillable="true" type="Address" />
+          <!-->> ISO DICTIONARY TYPES <<-->
+          <xsd:element minOccurs="0" name="address" nillable="true" type="Address" />
       </xsd:sequence>
   </xsd:complexType>
 </xsd:element>`;
@@ -167,8 +167,8 @@ describe('Text Utils fixComments', function () {
   <xsd:complexType>
     <!-- >> ROOT DICTIONARY TYPES << -->
       <xsd:sequence>
-            <!-- >> ISO DICTIONARY TYPES << -->
-            <xsd:element minOccurs="0" name="address" nillable="true" type="Address" />
+          <!-- >> ISO DICTIONARY TYPES << -->
+          <xsd:element minOccurs="0" name="address" nillable="true" type="Address" />
       </xsd:sequence>
   </xsd:complexType>
 </xsd:element>`);
