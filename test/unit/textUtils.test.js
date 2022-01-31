@@ -3,7 +3,8 @@ const expect = require('chai').expect,
     getLastSegmentURL,
     stringIsAValidUrl,
     stringIsValidURLFilePath,
-    hash
+    hash,
+    fixComments
   } = require('../../lib/utils/textUtils'),
   crypto = require('crypto');
 
@@ -147,5 +148,29 @@ describe('Text Utils hash', function () {
       'base64')).to.equal(crypto.createHash('sha1').update('textToHash').digest('base64'));
     const result = stringIsAValidUrl('http://tempuri.org/Add');
     expect(result).to.equal(true);
+  });
+});
+
+describe('Text Utils fixComments', function () {
+  let xmlData = `<xsd:element name="AccountHolderDetails">
+  <xsd:complexType>
+    <!-->> ROOT DICTIONARY TYPES <<-->
+      <xsd:sequence>
+          <!-->> ISO DICTIONARY TYPES <<-->
+          <xsd:element minOccurs="0" name="address" nillable="true" type="Address" />
+      </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>`;
+
+  it('should get a correct parsed XML data (without comments polluted nodes)', function () {
+    expect(fixComments(xmlData)).to.eql(`<xsd:element name="AccountHolderDetails">
+  <xsd:complexType>
+    <!-- >> ROOT DICTIONARY TYPES << -->
+      <xsd:sequence>
+          <!-- >> ISO DICTIONARY TYPES << -->
+          <xsd:element minOccurs="0" name="address" nillable="true" type="Address" />
+      </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>`);
   });
 });
