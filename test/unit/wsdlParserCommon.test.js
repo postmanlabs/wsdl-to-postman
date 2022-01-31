@@ -297,7 +297,67 @@ whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
                 <xsd:import namespace="http://namespace/2008" schemaLocation="Types.xsd"/>
             </xsd:schema>
-        </types>`;
+        </types>`,
+  WSDL_IMPORTS_MULTIPLE = `<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:client="http://schemas.com/Hello/04"
+  xmlns:ns3="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:req="http://schemas.com/Hello/04/Req"
+  xmlns:rpy="http://schemas.com/Hello/04/Rpy"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  name="Hello" targetNamespace="http://schemas.com/Hello/04">
+	<types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://schemas.com/Hello/04/Req" schemaLocation="Hello_04_Req.xsd"/>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://schemas.com/Hello/04/Rpy" schemaLocation="Hello_04_Rpy.xsd"/>
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:client="http://schemas.com/Hello/04"
+      targetNamespace="http://schemas.com/Hello/04">
+			<xsd:element name="DummyPart" type="xsd:string"/>
+		</xsd:schema>
+	</types>
+	<message name="HelloResponseMessage">
+		<part name="payload" element="rpy:Hello04Rpy"/>
+	</message>
+	<message name="HelloRequestMessage">
+		<part name="payload" element="req:Hello04Req"/>
+	</message>
+	<message name="SOAPFaultDummyPart">
+		<part name="DummyPart" element="client:DummyPart"/>
+	</message>
+	<portType name="Hello">
+		<operation name="Hello">
+			<input message="client:HelloRequestMessage"/>
+			<output message="client:HelloResponseMessage"/>
+			<fault name="SOAPFault" message="client:SOAPFaultDummyPart"/>
+		</operation>
+	</portType>
+	<binding name="HelloBinding" type="client:Hello">
+		<wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="Hello">
+			<wsoap12:operation soapAction="Hello" style="document"/>
+			<input>
+				<wsoap12:body use="literal"/>
+			</input>
+			<output>
+				<wsoap12:body use="literal"/>
+			</output>
+			<fault name="SOAPFault">
+				<wsoap12:fault name="SOAPFault" use="literal"/>
+			</fault>
+		</operation>
+	</binding>
+	<service name="Hello">
+		<port name="HelloPort" binding="client:HelloBinding">
+			<wsoap12:address location="https://schemas.com/Hello/04"/>
+		</port>
+	</service>
+</definitions>
+`;
 
 describe('WSDL parser common getNamespaceByKey', function () {
 
@@ -1971,6 +2031,16 @@ describe('WSDL parser common getWSDLImports', function () {
       result = getWSDLImports(parsed, '', informationService.RootTagName);
     expect(result).to.be.an('array');
     expect(result.length).to.equal(1);
+  });
+
+  it('should get correct imports for specification with multiple imports under same namespace' +
+    'in different elements', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_IMPORTS_MULTIPLE),
+      result = getWSDLImports(parsed, '', informationService.RootTagName);
+    expect(result).to.be.an('array');
+    expect(result.length).to.equal(2);
   });
 });
 
