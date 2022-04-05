@@ -1,0 +1,126 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+  xmlns:tns="http://tempuri.org/"
+  xmlns:s1="http://microsoft.com/wsdl/types/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+    <s:import namespace="http://microsoft.com/wsdl/types/"/>
+    <s:element name="returnLiveDeedsSearchResponse">
+      <s:complexType>
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="returnLiveDeedsSearchResult" type="tns:DeedsResult"/>
+        </s:sequence>
+      </s:complexType>
+    </s:element>
+      <s:complexType name="DeedsResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ReportId" type="s1:guid"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Persons" type="tns:ArrayOfDeedsPerson"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Properties" type="tns:ArrayOfDeedsProperty"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Trustees" type="tns:ArrayOfDeedsTrust"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDeedsPerson">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeedsPerson" nillable="true" type="tns:DeedsPerson"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeedsPerson">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PersonID" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Properties" type="tns:ArrayOfDeedsProperty"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDeedsProperty">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeedsProperty" nillable="true" type="tns:DeedsProperty"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeedsProperty">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PropertyId" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Owners" type="tns:ArrayOfDeedsPerson"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDeedsTrust">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeedsTrust" nillable="true" type="tns:DeedsTrust"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeedsTrust">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="EntityType" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="TrustNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="TrustName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="HighCourt" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="EffectiveDate" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Trustees" type="tns:ArrayOfDeedsTrustee"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDeedsTrustee">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeedsTrustee" nillable="true" type="tns:DeedsTrustee"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeedsTrustee">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="InferredIDNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="GivenNames" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="PersonalData" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Age" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="DateOfBirth" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="returnLiveDeedsSearchHttpGetIn">
+    <wsdl:part name="user_id" type="s:string"/>
+    <wsdl:part name="searchtype" type="s:string"/>
+    <wsdl:part name="deedsofficeid" type="s:string"/>
+    <wsdl:part name="criteria1" type="s:string"/>
+    <wsdl:part name="reportid" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="returnLiveDeedsSearchHttpGetOut">
+    <wsdl:part name="Body" element="tns:returnLiveDeedsSearchResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="PropertiesSoap">
+    <wsdl:operation name="returnLiveDeedsSearch">
+      <wsdl:input message="tns:returnLiveDeedsSearchHttpGetIn"/>
+      <wsdl:output message="tns:returnLiveDeedsSearchHttpGetOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PropertiesSoap" type="tns:PropertiesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="returnLiveDeedsSearch">
+      <soap:operation soapAction="http://tempuri.org/returnLiveDeedsSearch" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Properties">
+    <wsdl:port name="PropertiesSoap" binding="tns:PropertiesSoap">
+      <soap:address location="https://server/avm/webservices/properties.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
