@@ -46,7 +46,25 @@
       <s:complexType name="DeedsPerson">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="PersonID" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="PersonTypeCode" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MaidenName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="IDNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="OwnerType" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Share" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="TitleDeedNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MaritalStatus" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="PurchaseDate" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="PurchasePrice" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="RegistrationDate" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MultiProperty" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MultiOwner" type="s:string"/>
           <s:element minOccurs="0" maxOccurs="1" name="Properties" type="tns:ArrayOfDeedsProperty"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Bonds" type="tns:ArrayOfDeedsBond"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Contracts" type="tns:ArrayOfDeedsContract"/>
         </s:sequence>
       </s:complexType>
       <s:complexType name="ArrayOfDeedsProperty">
@@ -57,7 +75,78 @@
       <s:complexType name="DeedsProperty">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="PropertyId" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="DeedsOffice" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="DeedsOfficeId" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="PropertyType" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Province" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Municipality" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Township" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Erf" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Portion" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="SectionalScheme" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="SectionalSchemeNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Unit" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="FarmName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="RegisteredSize" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="CadSize" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="TitleDeedNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MultiProperty" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MultiOwner" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Share" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="RegistrationDate" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="PurchaseDate" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="PurchasePrice" type="s:string"/>
           <s:element minOccurs="0" maxOccurs="1" name="Owners" type="tns:ArrayOfDeedsPerson"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Endorsements" type="tns:ArrayOfDeedsBond"/>
+          <s:element minOccurs="0" maxOccurs="1" name="History" type="tns:ArrayOfDeedsHistory"/>
+          <s:element minOccurs="0" maxOccurs="1" name="StreetAddress" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="LpiCode" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="PreviousDescription" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDeedsHistory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeedsHistory" nillable="true" type="tns:DeedsHistory"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeedsHistory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MicroFilmReferenceNumber" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDeedsBond">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeedsBond" nillable="true" type="tns:DeedsBond"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeedsBond">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="BondNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Institution" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="RegistrationDate" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="ActiveIndicator" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDeedsContract">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeedsContract" nillable="true" type="tns:DeedsContract"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DeedsContract">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="DeedsOfficeID" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="MicroFilmReferenceNumber" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="OtherParty" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
         </s:sequence>
       </s:complexType>
       <s:complexType name="ArrayOfDeedsTrust">
