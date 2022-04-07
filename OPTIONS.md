@@ -1,6 +1,6 @@
 id|type|available options|default|description|usage
 |---|---|---|---|---|---|
-folderStrategy|enum|No folders, Port/Endpoint, Service|Port/Endpoint|Select whether to create folders according to the WSDL port/endpoing service or without folders|CONVERSION
+folderStrategy|enum|No folders, Port/Endpoint, Service|Port/Endpoint|Select whether to create folders according to the WSDL port/endpoint service or without folders|CONVERSION
 resolveRemoteRefs|boolean|-|false|Select whether to resolve remote references.|CONVERSION
 sourceUrl|string|-||Specify source URL of definition to resolve remote references mentioned in it.|CONVERSION
 indentCharacter|enum|Space, Tab|Space|Option for setting indentation character|CONVERSION
