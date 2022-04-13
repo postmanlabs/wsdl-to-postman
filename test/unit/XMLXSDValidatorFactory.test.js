@@ -6,9 +6,6 @@ const expect = require('chai').expect,
     LibXMLjs2Facade
   } = require('../../lib/xsdValidation/LibXMLjs2Facade'),
   {
-    LibXMLjsFacade
-  } = require('../../lib/xsdValidation/LibXMLjsFacade'),
-  {
     XMLLintFacade
   } = require('../../lib/xsdValidation/XMLLintFacade');
 
@@ -30,13 +27,6 @@ describe('XMLXSDValidatorFactory getValidator', function () {
     const validatorFactory = new XMLXSDValidatorFactory(),
       validator = validatorFactory.getValidator('libxmljs2');
     expect(validator instanceof LibXMLjs2Facade).to.be.true;
-  });
-
-
-  it('should get an object of type XMLXSDValidatorFactory with libxmljs', function () {
-    const validatorFactory = new XMLXSDValidatorFactory(),
-      validator = validatorFactory.getValidator('libxmljs');
-    expect(validator instanceof LibXMLjsFacade).to.be.true;
   });
 
   it('should get an object of type XMLXSDValidatorFactory with xmllint', function () {
