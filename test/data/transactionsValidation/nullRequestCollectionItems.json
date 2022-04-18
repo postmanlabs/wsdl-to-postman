@@ -1,0 +1,58 @@
+[
+  {
+    "id": "r1",
+    "request": null,
+    "response": [
+      {
+        "id": "r1s1",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": "{\"name\": \"pig\"}",
+        "code": 200
+      },
+      {
+        "id": "r1s2",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": "{\"name\": \"pig\"}",
+        "code": 403
+      }
+    ]
+  },
+  {
+    "id": "r2",
+    "request": null,
+    "response": [
+      {
+        "id": "r2s1",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": "{\"name\": \"dog\"}",
+        "code": 200
+      },
+      {
+        "id": "r2s2",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": "{\"name\": \"dog\"}",
+        "code": 403
+      }
+    ]
+  }
+]

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://www.dataaccess.com/webservicesserver/" name="TextCasing" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+      <xs:element name="TitleCaseWordsWithToken">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sText" type="xs:string"/>
+            <xs:element name="sToken" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TitleCaseWordsWithTokenResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="TitleCaseWordsWithTokenResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InvertStringCase">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sAString" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InvertStringCaseResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="InvertStringCaseResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InvertCaseFirstAdjustStringToPrevious">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sAString" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InvertCaseFirstAdjustStringToPreviousResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="InvertCaseFirstAdjustStringToPreviousResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InvertCaseFirstAdjustStringToCurrent">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sAString" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InvertCaseFirstAdjustStringToCurrentResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="InvertCaseFirstAdjustStringToCurrentResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AllUppercaseWithToken">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sAString" type="xs:string"/>
+            <xs:element name="sToken" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AllUppercaseWithTokenResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="AllUppercaseWithTokenResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AllLowercaseWithToken">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sAString" type="xs:string"/>
+            <xs:element name="sToken" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AllLowercaseWithTokenResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="AllLowercaseWithTokenResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UppercaseWordsWithToken">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sAString" type="xs:string"/>
+            <xs:element name="sToken" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UppercaseWordsWithTokenResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="UppercaseWordsWithTokenResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LowercaseWordsWithToken">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sAString" type="xs:string"/>
+            <xs:element name="sToken" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LowercaseWordsWithTokenResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LowercaseWordsWithTokenResult" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="TitleCaseWordsWithTokenSoapRequest">
+    <part name="parameters" element="tns:TitleCaseWordsWithToken"/>
+  </message>
+  <message name="TitleCaseWordsWithTokenSoapResponse">
+    <part name="parameters" element="tns:TitleCaseWordsWithTokenResponse"/>
+  </message>
+  <message name="InvertStringCaseSoapRequest">
+    <part name="parameters" element="tns:InvertStringCase"/>
+  </message>
+  <message name="InvertStringCaseSoapResponse">
+    <part name="parameters" element="tns:InvertStringCaseResponse"/>
+  </message>
+  <message name="InvertCaseFirstAdjustStringToPreviousSoapRequest">
+    <part name="parameters" element="tns:InvertCaseFirstAdjustStringToPrevious"/>
+  </message>
+  <message name="InvertCaseFirstAdjustStringToPreviousSoapResponse">
+    <part name="parameters" element="tns:InvertCaseFirstAdjustStringToPreviousResponse"/>
+  </message>
+  <message name="InvertCaseFirstAdjustStringToCurrentSoapRequest">
+    <part name="parameters" element="tns:InvertCaseFirstAdjustStringToCurrent"/>
+  </message>
+  <message name="InvertCaseFirstAdjustStringToCurrentSoapResponse">
+    <part name="parameters" element="tns:InvertCaseFirstAdjustStringToCurrentResponse"/>
+  </message>
+  <message name="AllUppercaseWithTokenSoapRequest">
+    <part name="parameters" element="tns:AllUppercaseWithToken"/>
+  </message>
+  <message name="AllUppercaseWithTokenSoapResponse">
+    <part name="parameters" element="tns:AllUppercaseWithTokenResponse"/>
+  </message>
+  <message name="AllLowercaseWithTokenSoapRequest">
+    <part name="parameters" element="tns:AllLowercaseWithToken"/>
+  </message>
+  <message name="AllLowercaseWithTokenSoapResponse">
+    <part name="parameters" element="tns:AllLowercaseWithTokenResponse"/>
+  </message>
+  <message name="UppercaseWordsWithTokenSoapRequest">
+    <part name="parameters" element="tns:UppercaseWordsWithToken"/>
+  </message>
+  <message name="UppercaseWordsWithTokenSoapResponse">
+    <part name="parameters" element="tns:UppercaseWordsWithTokenResponse"/>
+  </message>
+  <message name="LowercaseWordsWithTokenSoapRequest">
+    <part name="parameters" element="tns:LowercaseWordsWithToken"/>
+  </message>
+  <message name="LowercaseWordsWithTokenSoapResponse">
+    <part name="parameters" element="tns:LowercaseWordsWithTokenResponse"/>
+  </message>
+  <portType name="TextCasingSoapType">
+    <operation name="TitleCaseWordsWithToken">
+      <input message="tns:TitleCaseWordsWithTokenSoapRequest"/>
+      <output message="tns:TitleCaseWordsWithTokenSoapResponse"/>
+    </operation>
+    <operation name="InvertStringCase">
+      <documentation>Uppercase letters that are lowercase and lowercase letters that are uppercase.</documentation>
+      <input message="tns:InvertStringCaseSoapRequest"/>
+      <output message="tns:InvertStringCaseSoapResponse"/>
+    </operation>
+    <operation name="InvertCaseFirstAdjustStringToPrevious">
+      <documentation>Invert the casing of the first letter and adjust the string to conform with the previous casing of first letter.</documentation>
+      <input message="tns:InvertCaseFirstAdjustStringToPreviousSoapRequest"/>
+      <output message="tns:InvertCaseFirstAdjustStringToPreviousSoapResponse"/>
+    </operation>
+    <operation name="InvertCaseFirstAdjustStringToCurrent">
+      <documentation>Invert the casing of the first letter and adjust the string to conform with the current casing of first letter.</documentation>
+      <input message="tns:InvertCaseFirstAdjustStringToCurrentSoapRequest"/>
+      <output message="tns:InvertCaseFirstAdjustStringToCurrentSoapResponse"/>
+    </operation>
+    <operation name="AllUppercaseWithToken">
+      <documentation>Change string to uppercase adding token between characters.</documentation>
+      <input message="tns:AllUppercaseWithTokenSoapRequest"/>
+      <output message="tns:AllUppercaseWithTokenSoapResponse"/>
+    </operation>
+    <operation name="AllLowercaseWithToken">
+      <documentation>Change string to lowercase adding token between characters.</documentation>
+      <input message="tns:AllLowercaseWithTokenSoapRequest"/>
+      <output message="tns:AllLowercaseWithTokenSoapResponse"/>
+    </operation>
+    <operation name="UppercaseWordsWithToken">
+      <documentation>Change string to uppercase adding token between characters of each word.</documentation>
+      <input message="tns:UppercaseWordsWithTokenSoapRequest"/>
+      <output message="tns:UppercaseWordsWithTokenSoapResponse"/>
+    </operation>
+    <operation name="LowercaseWordsWithToken">
+      <documentation>Change string to lowercase adding token between characters of each word.</documentation>
+      <input message="tns:LowercaseWordsWithTokenSoapRequest"/>
+      <output message="tns:LowercaseWordsWithTokenSoapResponse"/>
+    </operation>
+  </portType>
+  <binding name="TextCasingSoapBinding" type="tns:TextCasingSoapType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="TitleCaseWordsWithToken">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="InvertStringCase">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="InvertCaseFirstAdjustStringToPrevious">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="InvertCaseFirstAdjustStringToCurrent">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="AllUppercaseWithToken">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="AllLowercaseWithToken">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="UppercaseWordsWithToken">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="LowercaseWordsWithToken">
+      <soap:operation soapAction="" style="document"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="TextCasingSoapBinding12" type="tns:TextCasingSoapType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="TitleCaseWordsWithToken">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="InvertStringCase">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="InvertCaseFirstAdjustStringToPrevious">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="InvertCaseFirstAdjustStringToCurrent">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="AllUppercaseWithToken">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="AllLowercaseWithToken">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="UppercaseWordsWithToken">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="LowercaseWordsWithToken">
+      <soap12:operation soapAction="" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="TextCasing">
+    <documentation>The Text Casing Web Service, implemented with Visual DataFlex, provides functions to change text casing in different ways.</documentation>
+    <port name="TextCasingSoap" binding="tns:TextCasingSoapBinding">
+      <soap:address location="https://www.dataaccess.com/webservicesserver/TextCasing.wso"/>
+    </port>
+    <port name="TextCasingSoap12" binding="tns:TextCasingSoapBinding12">
+      <soap12:address location="https://www.dataaccess.com/webservicesserver/TextCasing.wso"/>
+    </port>
+  </service>
+</definitions>

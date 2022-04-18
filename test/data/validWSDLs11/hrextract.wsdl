@@ -1,0 +1,2907 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources"
+    xmlns:wd="urn:com.workday/bsvc"
+    xmlns:nyw="urn:com.netyourwork/aod"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/"
+    name="Human_Resources"
+    targetNamespace="urn:com.workday/bsvc/Human_Resources">
+  <wsdl:documentation>
+    The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
+      <xsd:element name="Put_Location_Request" type="wd:Put_Location_RequestType" />
+      <xsd:attribute name="version" type="xsd:string" wd:fixed="v36.2" />
+      <xsd:complexType name="Put_Location_RequestType">
+        <xsd:annotation>
+          <xsd:documentation>Contains data for adding or updating a Location.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <wd:Validation_Message>Location already exists.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Location_Reference" type="wd:LocationObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Reference to an existing Location. Only needed when updating the Reference ID for the Location.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Location_Data" type="wd:Location_iDataType">
+            <xsd:annotation>
+              <xsd:documentation>Element containing all Location data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Add_Only" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Add Only Flag.  Indicates that the service is an add only, not an update.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute ref="wd:version" />
+      </xsd:complexType>
+
+
+      <xsd:simpleType name="Time_ProfileReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Time_Profile_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Location_iDataType">
+        <xsd:annotation>
+          <xsd:documentation>Element containing all Location data.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>Location Name is required when creating a new Location.</xsd:documentation>
+              <wd:Validation_Message>Location Name is required when creating a new Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Time Profile is required for a location whose usages include Business Site.</xsd:documentation>
+              <wd:Validation_Message>Time Profile is required for a location whose usages include Business Site.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Usage Type is Invalid for this Contactable.</xsd:documentation>
+              <wd:Validation_Message>Usage Type is Invalid for this Contactable.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Validates that the code provided matches one of the locale codes in the Workday system.</xsd:documentation>
+              <wd:Validation_Message>Invalid Locale Code.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You must choose a Workday-supported User Language that has been enabled in this tenant.</xsd:documentation>
+              <wd:Validation_Message>You must choose a Workday-supported User Language that has been enabled in this tenant.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Locations must be uniquely assigned to a location hierarchy.  A location can be assigned to one or more location hierarchy organizations, but can only be assigned to one organization in a hierarchy.</xsd:documentation>
+              <wd:Validation_Message>Locations must be uniquely assigned to a location hierarchy.  A location can be assigned to one or more location hierarchy organizations, but can only be assigned to one organization in a hierarchy.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>A Work Space Location cannot be a Business Site at the same time.</xsd:documentation>
+              <wd:Validation_Message>A Work Space Location cannot be a Business Site at the same time.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>A Business Site cannot be a subordinate of a Work Space.</xsd:documentation>
+              <wd:Validation_Message>A Business Site cannot be a subordinate of a Work Space.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Work Space Locations must be a subordinate of Work Space or Business site, it cannot be a top-level Location.</xsd:documentation>
+              <wd:Validation_Message>Work Space Locations must be a subordinate of Work Space or Business site, it cannot be a top-level Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Another location already exists with the same latitude, longitude, and altitude.</xsd:documentation>
+              <wd:Validation_Message>Another location already exists with the same latitude, longitude, and altitude.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Worksite ID Code must be unique within a US State. Please change the Worksite ID Code.</xsd:documentation>
+              <wd:Validation_Message>Worksite ID Code must be unique within a US State. Please change the Worksite ID Code.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Worksite ID Code and Trade Name are valid only for Locations based in US.</xsd:documentation>
+              <wd:Validation_Message>Worksite ID Code and Trade Name are valid only for Locations based in US.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address is required for a location used as a business site without address defined.</xsd:documentation>
+              <wd:Validation_Message>Address is required for a location used as a business site without address defined.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>This location cannot be inactivated as it is the primary location on at least 1 active supervisory organization.</xsd:documentation>
+              <wd:Validation_Message>This location cannot be inactivated as it is the primary location on at least 1 active supervisory organization.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>An Instructional Site Location cannot be a Campus at the same time.</xsd:documentation>
+              <wd:Validation_Message>An Instructional Site Location cannot be a Campus at the same time.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Owning organization is required for an instructional location.</xsd:documentation>
+              <wd:Validation_Message>Owning organization is required for an instructional location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address is required for a Par Location.</xsd:documentation>
+              <wd:Validation_Message>Address is required for a Par Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>A selected Location Attribute is marked as inactive.</xsd:documentation>
+              <wd:Validation_Message>A selected Location Attribute is marked as inactive.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>The Location Usages of the Location Attributes must match the usages on the Location.</xsd:documentation>
+              <wd:Validation_Message>The Location Usages of the Location Attributes must match the usages on the Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Effective Date cannot be specified when creating a new location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You can't select both Business Site and Job Posting in the Location Usage field. Remove 1 of them.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Address is required for a Job Posting Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Global Location Number must be exactly 13 digits long.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Global Location number (GLN) check digit is invalid. It must pass the modulo 10 check digit calculation</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>A location cannot have a Location Usage of both Business Site and Off-Site Recruiting. Remove one of the usages.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Enter locations that don't have a Ship-To usage in the Associated Deliver-To field.</xsd:documentation>
+              <wd:Validation_Message>Enter locations that don't have a Ship-To usage in the Associated Deliver-To field.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address is required for a Ship-to Location.</xsd:documentation>
+              <wd:Validation_Message>Address is required for a Ship-to Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Default Ship-To location is only valid for locations that don't already have a Ship-To usage.</xsd:documentation>
+              <wd:Validation_Message>Default Ship-To location is only valid for locations that don't already have a Ship-To usage.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Associated Deliver-To’s is only valid for locations that have a usage of Ship-To.</xsd:documentation>
+              <wd:Validation_Message>Associated Deliver-To’s is only valid for locations that have a usage of Ship-To.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Enter a location with a Ship-To usage in the Default Ship-To field.</xsd:documentation>
+              <wd:Validation_Message>Enter a location with a Ship-To usage in the Default Ship-To field.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Location with usage type of housing must supply an Academic Unit on element Student Housing Assignment Data</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Inactive Ship-To Location cannot be Default Ship-To Location of current Location.</xsd:documentation>
+              <wd:Validation_Message>Inactive Ship-To Location cannot be Default Ship-To Location of current Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Inactive Deliver-To Location(s) cannot be associated with Ship-To Location.</xsd:documentation>
+              <wd:Validation_Message>Inactive Deliver-To Location(s) cannot be associated with Ship-To Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Default Ship-To Location cannot be associated with Inactive Deliver-To Location.</xsd:documentation>
+              <wd:Validation_Message>Default Ship-To Location cannot be associated with Inactive Deliver-To Location.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Deliver-To Locations cannot be associated to Inactive Ship-To Location</xsd:documentation>
+              <wd:Validation_Message>Deliver-To Locations cannot be associated to Inactive Ship-To Location</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When you specify Training Room for Location Usages, you need to specify a Superior Location that's a business site.</xsd:documentation>
+              <wd:Validation_Message>When you specify Training Room for Location Usages, you need to specify a Superior Location that's a business site.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't specify Location Usages of Training Room and Business Site at the same time.</xsd:documentation>
+              <wd:Validation_Message>You can't specify Location Usages of Training Room and Business Site at the same time.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can only add training room data when one of the Location Usage values is Training Room.</xsd:documentation>
+              <wd:Validation_Message>You can only add training room data when one of the Location Usage values is Training Room.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>A zone already exists in the location chain.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Location_ID" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The unique location ID.  The organization, position and hire tabs will reference location ID.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Effective_Date" type="xsd:date" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Specifies the Effective Date for updates to these fields only: Location Name, Inactive, and Location Hierarchy Reference. Blank means these field values will be effective as of the beginning of time. Must be blank for new locations.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Location_Name" type="xsd:string" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The name of the Location.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Location_Usage_Reference" type="wd:Location_UsageObjectType" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Reference to the usage of the Location. (e.g. Business Site, Work Space, etc.)</xsd:documentation>
+              <xsd:appinfo>
+                <wd:Validation>
+                  <wd:Validation_Message>Business Asset is currently in use and cannot be unchecked at this time.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Business Site is currently in use in [usage_count] places and cannot be unchecked unless all usages are removed. Places to check where it may be in use include: current and historical assignment to an active position, primary location on a supervisory organization, hiring restriction, bank routing rule, employee contract, payroll usage including result lines, custom report filter, or a condition rule.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Work Space is currently in use and cannot be unchecked at this time. Places to check where it may be in use include: assignment to an active position, primary location on a supervisory organization, hiring restriction, custom report filter, or a condition rule.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>A Location that has a Work Space Location as subordinate must be a Business Site or a Work Space Location.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>A Work Space Location cannot have a Business Site Location as Subordinate.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Inventory is currently in use and cannot be unchecked at this time.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>You can't remove Job Posting as the Location Usage because it's being used [count] times as the Default Job Posting Location in other Business Site type locations.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Payroll Tax location usage may not be removed as payroll tax mappings exist.</wd:Validation_Message>
+                </wd:Validation>
+              </xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Location_Type_Reference" type="wd:Location_TypeObjectType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>The location type associated with the location that ties to the usage that has been setup. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Location_Attribute_Reference" type="wd:Location_AttributeObjectType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>The Location Attributes associated with this Location. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Superior_Location_Reference" type="wd:LocationObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Superior Location Reference. Reference to another Location that is Superior. If left blank, existing values will be removed.</xsd:documentation>
+              <xsd:appinfo>
+                <wd:Validation>
+                  <wd:Validation_Message>You can't assign a superior location that will result in 2 inventory sites in the same location chain.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Both Editing Location and Its superior cannot be Inventory Sites</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Assigning this superior location would create a circular reference.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <xsd:documentation>Unable to assign the superior location because the editing location has Inventory Transaction and its Inventory Site is different than the Inventory Site of the Superior Location</xsd:documentation>
+                  <wd:Validation_Message>Unable to assign the superior location because the editing location has Inventory Transaction and its Inventory Site is different than the Inventory Site of the Superior Location</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <xsd:documentation>Unable to remove the Superior Location because the editing location contain Inventory Transaction</xsd:documentation>
+                  <wd:Validation_Message>Unable to remove the Superior Location because the editing location contain Inventory Transaction</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <xsd:documentation>Unable to assign this superior location because the editing location is an Inventory Site and the superior location is or contain Inventory Site within the location chain hierarchy.</xsd:documentation>
+                  <wd:Validation_Message>Unable to assign this superior location because the editing location is an Inventory Site and the superior location is or contain Inventory Site within the location chain hierarchy.</wd:Validation_Message>
+                </wd:Validation>
+              </xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Inactive" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Boolean attribute indicates if the Location is inactive.</xsd:documentation>
+              <xsd:appinfo>
+                <wd:Validation>
+                  <wd:Validation_Message>Unable to inactivate location when Tax Location Mapping Exists.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Remove associated Default Ship-To Location before you inactivate this Location.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Remove all associated Deliver-To Locations before you inactivate this Ship-To Location.</wd:Validation_Message>
+                </wd:Validation>
+              </xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Latitude" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The Latitude for a Coordinate. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:decimal">
+                <xsd:totalDigits value="8" />
+                <xsd:fractionDigits value="6" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Longitude" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The Longitude for a Coordinate. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:decimal">
+                <xsd:totalDigits value="9" />
+                <xsd:fractionDigits value="6" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Altitude" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The Altitude for a Coordinate. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:decimal">
+                <xsd:totalDigits value="10" />
+                <xsd:fractionDigits value="6" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Time_Profile_Reference" type="wd:Time_ProfileObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The time profile associated with the location. This ties to the time profile description that has been set up. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Locale_Reference" type="wd:LocaleObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Reference to the Locale used by the Location. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Display_Language_Reference" type="wd:User_LanguageObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Reference to the Default Display Language for the Location. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Time_Zone_Reference" type="wd:Time_ZoneObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Reference to the Time Zone of the Location. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Default_Currency_Reference" type="wd:CurrencyObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Reference to the Default Currency for the Location. In 'Put_Location', if the specified currency is different from the default currency of the country of the location's primary address then it is populated in this field as an override and displayed in the UI as 'Location Default Currency Override'. In 'Get_Locations', the override currency will be returned if there is one, otherwise the default currency of the country of the location's primary address will be returned.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="External_Name" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>An alternate name for the primary location when the job details display on the Recruiting External Career Sites.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Default_Job_Posting_Location_Reference" type="wd:LocationObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Define the location that's used when posting jobs for this business site location. This can be overridden by entering a different Job Posting Location Override on the Job Requisition.</xsd:documentation>
+              <xsd:appinfo>
+                <wd:Validation>
+                  <wd:Validation_Message>Cannot specify a location as a Default Job Posting Location for itself.</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Locations used as a Default Job Posting Location must have a Location Usage of Job Posting or Business Site.</wd:Validation_Message>
+                </wd:Validation>
+              </xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Trade_Name" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The division or subsidiary name of the establishment. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="35" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Worksite_ID_Code" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>A unique alpha/numeric identifier that identifies the business at this physical location. If left blank, existing values will be removed.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="21" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Global_Location_Number" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The Global Location Number of the location.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Location_Identifier" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The location identifier of the location.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Default_Ship-To_Location_Reference" type="wd:LocationObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Shipping Location with an address associated to this Deliver-To location.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Associate_Deliver-To_Location_Reference" type="wd:LocationObjectType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Deliver-To location that can be associated with a Location with Ship-to usage.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Instructional_Site_Data" type="wd:Location_Instructional_Site_DataType" minOccurs="0" />
+          <xsd:element name="Student_Housing_Assignment_Data" type="wd:Location_Student_Housing_Assignment_DataType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Wrapper element for the Student Housing Assignment Data</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Location_Training_Room_Data" type="wd:Location_Training_Room_DataType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Wrapper element for the Training Room data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Contact_Data" type="wd:Contact_Information_DataType" minOccurs="0" />
+          <xsd:element name="Integration_ID_Data" type="wd:External_Integration_ID_DataType" minOccurs="0" />
+          <xsd:element name="Location_Hierarchy_Reference" type="wd:Location_HierarchyObjectType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Reference to a Location Hierarchy the includes this Location. If left blank, location will be removed from all location hierarchies it is included in as of effective date specified.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Integration_Field_Override_Data" type="wd:Document_Field_Result_DataType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="LocaleReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Locale_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="LocationObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:LocationObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+      <xsd:complexType name="LocationObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:LocationReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:simpleType name="LocationReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Location_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Location_UsageObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Location_UsageObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Location_UsageObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Location_UsageReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:simpleType name="Location_UsageReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Location_Usage_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Location_TypeObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Location_TypeObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+      <xsd:complexType name="Location_TypeObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Location_TypeReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:simpleType name="Location_TypeReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Location_Type_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Location_AttributeObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Location_AttributeObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+      <xsd:complexType name="Location_AttributeObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Location_AttributeReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:simpleType name="Location_AttributeReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Location_Attribute_ID" />
+              <wd:enumeration value="Location_Attribute_Name_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Time_ProfileObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Time_ProfileObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+      <xsd:complexType name="Time_ProfileObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Time_ProfileReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:complexType name="LocaleObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:LocaleReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:complexType name="LocaleObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:LocaleObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="User_LanguageReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="User_Language_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="User_LanguageObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:User_LanguageReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Time_ZoneReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Time_Zone_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="User_LanguageObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:User_LanguageObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Time_ZoneObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Time_ZoneReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Time_ZoneObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Time_ZoneObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="CurrencyReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Currency_ID" />
+              <wd:enumeration value="Currency_Numeric_Code" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+
+      <xsd:complexType name="CurrencyObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:CurrencyReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="CurrencyObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:CurrencyObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Academic_UnitReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Academic_Unit_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Academic_UnitObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Academic_UnitReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Academic_UnitObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Academic_UnitObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Location_Instructional_Site_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Wrapper element for the Instructional Location data.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Academic_Unit_Reference" type="wd:Academic_UnitObjectType">
+            <xsd:annotation>
+              <xsd:documentation>Academic Unit</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Instructional_Site_Data_Capacity" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Capacity</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:decimal">
+                <xsd:totalDigits value="6" />
+                <xsd:minInclusive value="0" />
+                <xsd:fractionDigits value="0" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Off-Site" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Off-site</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Instructional_Use_Only" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instructional Use Only</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Location_Student_Housing_Assignment_DataType">
+        <xsd:annotation>
+          <xsd:documentation>The Location Student Housing Assignment Data Wrapper for the Location iData Element</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Academic_Unit_Reference" type="wd:Academic_UnitObjectType">
+            <xsd:annotation>
+              <xsd:documentation>The Academic Unit Reference for a Student Housing Assignment</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Location_Training_Room_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Wrapper element for the Training Room data.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Link" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>A URL link that directs you to the training room location such as a map or PDF.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Capacity" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The number of people that the training room can accommodate.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:decimal">
+                <xsd:totalDigits value="6" />
+                <xsd:minInclusive value="0" />
+                <xsd:fractionDigits value="0" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Directions" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The directions to the training room location.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Equipment" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The equipment available in the training room.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Reservation_Details" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The details required to reserve the training room. Example: A contact person or information about a room booking system.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Video_Conference_Details" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The video conferencing details such as the meeting ID, URL, and telephone numbers.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Additional_Details" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Additional details about the training room location.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Instant_Messenger_TypeReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Instant_Messenger_Type_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Instant_Messenger_TypeObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Instant_Messenger_TypeReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+
+      <xsd:complexType name="Instant_Messenger_TypeObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Instant_Messenger_TypeObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Instant_Messenger_ReferenceReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Instant_Messenger_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Instant_Messenger_ReferenceObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Instant_Messenger_ReferenceReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+
+      <xsd:complexType name="Instant_Messenger_ReferenceObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Instant_Messenger_ReferenceObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+
+      <xsd:complexType name="Instant_Messenger_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Instant Messenger Address.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>Invalid Usage Type and Use For combination for Instant Messenger Address.</xsd:documentation>
+              <wd:Validation_Message>Invalid Usage Type and Use For combination for Instant Messenger Address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You cannot specify the same usage type more than once for an address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't change the Usage Type of an existing Instant Messenger</xsd:documentation>
+              <wd:Validation_Message>You can't change the Usage Type of an existing Instant Messenger</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Primary Instant Messenger can't be deleted when there are additional instant messengers with the same Usage Type or the instant messenger reference does not belong to the processing record.</xsd:documentation>
+              <wd:Validation_Message>Primary Instant Messenger can't be deleted when there are additional instant messengers with the same Usage Type or the instant messenger reference does not belong to the processing record.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't change a primary instant messenger to an additional instant messenger or an additional instant messenger to a primary instant messenger</xsd:documentation>
+              <wd:Validation_Message>You can't change a primary instant messenger to an additional instant messenger or an additional instant messenger to a primary instant messenger</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Instant Messenger Data and Usage Data is required unless you are deleting an Instant Messenger.</xsd:documentation>
+              <wd:Validation_Message>Instant Messenger Data and Usage Data is required unless you are deleting an Instant Messenger.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When Do Not Replace All is False for all Instant Messenger elements, Delete can't be True.</xsd:documentation>
+              <wd:Validation_Message>When Do Not Replace All is False for all Instant Messenger elements, Delete can't be True.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Invalid Instant Messenger Reference or the Instant Messenger with this Reference has been deleted.</xsd:documentation>
+              <wd:Validation_Message>Invalid Instant Messenger Reference or the Instant Messenger with this Reference has been deleted.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When Do Not Replace All is False for all Instant Messenger elements, you can't pass an Instant Messenger Reference.</xsd:documentation>
+              <wd:Validation_Message>When Do Not Replace All is False for all Instant Messenger elements, you can't pass an Instant Messenger Reference.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Instant Messenger Reference is required when you delete an instant messenger.</xsd:documentation>
+              <wd:Validation_Message>Instant Messenger Reference is required when you delete an instant messenger.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Instant Messenger is required unless you are deleting an instant messenger.</xsd:documentation>
+              <wd:Validation_Message>Instant Messenger is required unless you are deleting an instant messenger.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>The Instant Messenger ID field is for updating the value of the Instant Messenger Reference. It cannot be the same as another existing instant messenger.</xsd:documentation>
+              <wd:Validation_Message>Instant Messenger "[ID]" is already in use by another instant messenger (possibly on another contactable). Please choose a different Instant Messenger ID.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Instant_Messenger_Address" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instant Messenger Address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Instant_Messenger_Type_Reference" type="wd:Instant_Messenger_TypeObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for the instant messenger type.</xsd:documentation>
+              <xsd:appinfo>
+                <wd:Validation>
+                  <wd:Validation_Message>You must provide an Instant Messenger Type.</wd:Validation_Message>
+                </wd:Validation>
+              </xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Instant_Messenger_Comment" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Instant messenger comment.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Usage_Data" type="wd:Communication_Method_Usage_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Instant_Messenger_Reference" type="wd:Instant_Messenger_ReferenceObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The Instant Messenger Reference</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="ID" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>New ID value used in instant messenger updates. The ID cannot already be in use by another instant messenger.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Delete" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Set this flag to true in order to delete the referenced instant messenger. If this flag is set, the Reference ID field becomes required, and all other instant messenger fields that would otherwise be required will be optional and meaningless.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Do_Not_Replace_All" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>This flag controls whether or not existing non-primary instant messenger data will be replaced. A value of true means only the referenced instant messenger will be updated, or created if it does not exist or no reference was provided. This behavior is used if the flag is set to true for ANY instant messenger in the request.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Web_Address_ReferenceReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Web_Address_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Web_Address_ReferenceObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Web_Address_ReferenceReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Web_Address_ReferenceObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Web_Address_ReferenceObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+
+      <xsd:complexType name="Web_Address_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Web Address Information</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>Invalid Usage Type and Use For combination for Web Address.</xsd:documentation>
+              <wd:Validation_Message>Invalid Usage Type and Use For combination for Web Address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You cannot specify the same usage type more than once for an address.</xsd:documentation>
+              <wd:Validation_Message>You cannot specify the same usage type more than once for an address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Usage Data is required unless you are deleting a Web Address.</xsd:documentation>
+              <wd:Validation_Message>Usage Data is required unless you are deleting a Web Address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Primary Web Address can't be deleted when there are additional web addresses with the same Usage Type or the web address reference does not belong to the processing record.</xsd:documentation>
+              <wd:Validation_Message>Primary Web Address can't be deleted when there are additional web addresses with the same Usage Type or the web address reference does not belong to the processing record.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When Do Not Replace All is False for all web address elements, you can't pass a Web Address Reference.</xsd:documentation>
+              <wd:Validation_Message>When Do Not Replace All is False for all web address elements, you can't pass a Web Address Reference.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't change a primary web address to an additional web address or an additional web address to a primary web address.</xsd:documentation>
+              <wd:Validation_Message>You can't change a primary web address to an additional web address or an additional web address to a primary web address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When Do Not Replace All is False for all web address elements, Delete can't be True.</xsd:documentation>
+              <wd:Validation_Message>When Do Not Replace All is False for all web address elements, Delete can't be True.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Invalid Web Address Reference or the Web Address with this Reference has been deleted.</xsd:documentation>
+              <wd:Validation_Message>Invalid Web Address Reference or the Web Address with this Reference has been deleted.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Web Address Reference is required when you delete a web address.</xsd:documentation>
+              <wd:Validation_Message>Web Address Reference is required when you delete a web address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Web Address is required unless you are deleting a web address.</xsd:documentation>
+              <wd:Validation_Message>Web Address is required unless you are deleting a web address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't change the Usage Type of an existing Web Address</xsd:documentation>
+              <wd:Validation_Message>You can't change the Usage Type of an existing Web Address</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Invalid HTTP address entered.  HTTP addresses must be in one of the following formats:
+                  - http://...
+                  - https://...</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>The Web Address ID field is for updating the value of the Web Address Reference. It cannot be the same as another existing web address.</xsd:documentation>
+              <wd:Validation_Message>Web Address "[ID]" is already in use by another web address (possibly on another contactable). Please choose a different Web Address ID.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Web_Address" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Web address (Example: URL).</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Web_Address_Comment" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Web address comment.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Usage_Data" type="wd:Communication_Method_Usage_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Web_Address_Reference" type="wd:Web_Address_ReferenceObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The Web Address Reference Instance</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="ID" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>New ID value used in web address updates. The ID cannot already be in use by another web address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Delete" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Set this flag to true in order to delete the referenced communication method. If this flag is set, the Reference ID field becomes required, and all other communication method fields that would otherwise be required will be optional and meaningless.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Do_Not_Replace_All" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>This flag controls whether or not existing non-primary web address data will be replaced. A value of true means only the referenced web address will be updated, or created if it does not exist or no reference was provided. This behavior is used if the flag is set to true for ANY web address in the request.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+
+      <xsd:complexType name="Contact_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>All of the person's contact data (address, phone, email, instant messenger, web address).</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>One and only one work web address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one work web address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one home web address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one home web address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one business web address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one business web address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one work instant messenger address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one work instant messenger address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one home instant messenger address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one home instant messenger address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one  business instant messenger address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one  business instant messenger address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one work address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one work address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one home address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one home address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one lockbox address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one lockbox address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary home web address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary home web address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary business web address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary business web address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary work web address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary work web address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary home email address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary home email address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary work email address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary work email address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary business email address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary business email address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary home address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary home address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary work address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary work address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary business address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary business address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary lockbox address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary lockbox address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary home instant messenger address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary home instant messenger address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary work instant messenger address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary work instant messenger address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary business instant messenger address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary business instant messenger address in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary home phone number in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request.</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary home phone number in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary work phone number in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary work phone number in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subject worker must have exactly one primary business phone number in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</xsd:documentation>
+              <wd:Validation_Message>Subject worker must have exactly one primary business phone number in order to submit non-primary entries. The primary contact information may be either previously entered or included within this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one Institutional email address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one Institutional email address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one Institutional phone must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one Institutional phone must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one Institutional address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one Institutional address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one Institutional instant messenger address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one Institutional instant messenger address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one Institutional web address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one Institutional web address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Only one address of type International Assignment is allowed for a country.</xsd:documentation>
+              <wd:Validation_Message>Only one address of type International Assignment is allowed for a country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Only one address of type work from home is allowed.</xsd:documentation>
+              <wd:Validation_Message>Only one address of type work from home is allowed.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one business phone must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one business phone must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>At least one Primary Email must be specified in order to add an Additional Email</xsd:documentation>
+              <wd:Validation_Message>At least one Primary Email must be specified in order to add an Additional Email</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one work phone must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one work phone must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one business email address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one business email address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one home phone must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one home phone must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one work email address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one work email address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one home email address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one home email address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>At least one Primary Phone must be specified in order to add an Additional Phone</xsd:documentation>
+              <wd:Validation_Message>At least one Primary Phone must be specified in order to add an Additional Phone</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Either a phone number, or an email address must be specified for an emergency contact.</xsd:documentation>
+              <wd:Validation_Message>Either a phone number, or an email address must be specified for an emergency contact.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Primary address on Ship-To location must have a use of that maps to Shipping.</xsd:documentation>
+              <wd:Validation_Message>Primary address on Ship-To location must have a use of [Shipping]</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one academic contact address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one academic contact address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one academic contact phone must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one academic contact phone must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one academic contact email address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one academic contact email address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one academic contact web address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one academic contact web address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>One and only one business address must be marked as primary.</xsd:documentation>
+              <wd:Validation_Message>One and only one business address must be marked as primary.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Address_Data" type="wd:Address_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Address information</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Phone_Data" type="wd:Phone_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Phone Information</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Email_Address_Data" type="wd:Email_Address_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Email Address Information</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Instant_Messenger_Data" type="wd:Instant_Messenger_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Instant Messenger Information</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Web_Address_Data" type="wd:Web_Address_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Web Address Information</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:simpleType name="CountryReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="ISO_3166-1_Alpha-2_Code" />
+              <wd:enumeration value="ISO_3166-1_Alpha-3_Code" />
+              <wd:enumeration value="ISO_3166-1_Numeric-3_Code" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="CountryObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:CountryReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="CountryObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:CountryObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Address_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Address information</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>Postal Code is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Postal Code is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Municipality is not a valid address component for certain countries .</xsd:documentation>
+              <wd:Validation_Message>Municipality is not a valid address component for certain countries .</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Postal Code is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Postal Code is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Municipality is required for  certain countries.</xsd:documentation>
+              <wd:Validation_Message>Municipality is required for  certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Region Name must be valid for the specified Country.</xsd:documentation>
+              <wd:Validation_Message>Region Name must be valid for the specified Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Usage Type and Use For combination must be valid for Address.</xsd:documentation>
+              <wd:Validation_Message>Usage Type and Use For combination must be valid for Address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Second Address Line is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Second Address Line is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Third Address Line is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Third Address Line is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Fourth Address Line is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Fourth Address Line is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subregion is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Subregion is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Second Subregion is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Second Subregion is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Submunicipality (or City Subdivision - Local if configured on Tenant Setup Global) is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Submunicipality (or City Subdivision - Local if configured on Tenant Setup Global) is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Second Submunicipality is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Second Submunicipality is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Second Address Line is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Second Address Line is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Third Address Line is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Third Address Line is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Fourth Address Line is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Fourth Address Line is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subregion is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Subregion is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Second Subregion is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Second Subregion is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Submunicipality is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Submunicipality is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Second Submunicipality is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Second Submunicipality is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>A maximum of four Submunicipalities are allowed in an address.</xsd:documentation>
+              <wd:Validation_Message>A maximum of four Submunicipalities are allowed in an address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>A maximum of four Subregions are allowed in an address.</xsd:documentation>
+              <wd:Validation_Message>A maximum of four Subregions are allowed in an address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>A maximum of four Address Lines are allowed in an address.</xsd:documentation>
+              <wd:Validation_Message>A maximum of four Address Lines are allowed in an address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Region is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Region is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Home addresses which are not additionally used as work addresses cannot be marked as public.</xsd:documentation>
+              <wd:Validation_Message>Home addresses which are not additionally used as work addresses cannot be marked as public.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Postal Code must be valid for the Region.</xsd:documentation>
+              <wd:Validation_Message>[postal code] is not a valid postal code for [region]</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 1 (or Address Line 1 - Local if configured on Tenant Setup Global) is Required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 1 (or Address Line 1 - Local if configured on Tenant Setup Global) is Required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 1 is not valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 1 is not valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 2  (or Address Line 2 - Local if configured on Tenant Setup Global) is Required in this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 2  (or Address Line 2 - Local if configured on Tenant Setup Global) is Required in this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 2 not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 2 not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 3 (or Address Line 3 - Local if configured on Tenant Setup Global) is Required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 3 (or Address Line 3 - Local if configured on Tenant Setup Global) is Required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 3 is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 3 is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 4 (or Address Line 4 - Local if configured on Tenant Setup Global) is Required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 4 (or Address Line 4 - Local if configured on Tenant Setup Global) is Required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 4 is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 4 is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 5 (or Address Line 5 - Local if configured on Tenant Setup Global) is Required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 5 (or Address Line 5 - Local if configured on Tenant Setup Global) is Required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 5 is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 5 is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 6 (or Address Line 6 - Local if configured on Tenant Setup Global) is Required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 6 (or Address Line 6 - Local if configured on Tenant Setup Global) is Required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 6 is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 6 is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 7 (or Address Line 7 - Local if configured on Tenant Setup Global) is Required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 7 (or Address Line 7 - Local if configured on Tenant Setup Global) is Required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 7 is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 7 is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 8 (or Address Line 8 - Local if configured on Tenant Setup Global) is Required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 8 (or Address Line 8 - Local if configured on Tenant Setup Global) is Required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 8 is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 8 is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 9 (or Address Line 9 - Local if configured on Tenant Setup Global) is Required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 9 (or Address Line 9 - Local if configured on Tenant Setup Global) is Required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 9 is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 9 is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You cannot specify the same usage type more than once for an address.</xsd:documentation>
+              <wd:Validation_Message>You cannot specify the same usage type more than once for an address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 1 - Local is not valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 1 - Local is not valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Municipality - Local is not a valid address component for certain countries .</xsd:documentation>
+              <wd:Validation_Message>Municipality - Local is not a valid address component for certain countries .</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 2 - Local is not valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 2 - Local is not valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 3 - Local is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 3 - Local is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 9 - Local is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 9 - Local is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 8 - Local is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 8 - Local is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 7 - Local is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 7 - Local is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 6 is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 6 is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 5 - Local is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 5 - Local is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line 4 - Local is not Valid for this Country.</xsd:documentation>
+              <wd:Validation_Message>Address Line 4 - Local is not Valid for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>City Subdivision 1 - Local is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>City Subdivision 1 - Local is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>City Subdivision 2 - Local is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>City Subdivision 2 - Local is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Region Subdivision 1 - Local is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Region Subdivision 1 - Local is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Region Subdivision 2 - Local is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Region Subdivision 2 - Local is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Region Subdivision 2 is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Region Subdivision 2 is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>City Subdivision 2 is not a valid address component for certain countries.</xsd:documentation>
+              <wd:Validation_Message>City Subdivision 2 is not a valid address component for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Submunicipality ("City Subdivision 1", or "City Subdivision 1 - Local" if Local Script configured on tenant setup global) is required in this country.</xsd:documentation>
+              <wd:Validation_Message>Submunicipality ("City Subdivision 1", or "City Subdivision 1 - Local" if Local Script configured on tenant setup global) is required in this country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Submunicipality (City Subdivision 2 or City Subdivision 2 - Local if Local Scripts configured on Tenant Setup - Global) are required for this Country.</xsd:documentation>
+              <wd:Validation_Message>Submunicipality (City Subdivision 2 or City Subdivision 2 - Local if Local Scripts configured on Tenant Setup - Global) are required for this Country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subregion 1 (or Subregion 1 - Local if Local Scripts configured on Tenant Setup - Global) is required for this country.</xsd:documentation>
+              <wd:Validation_Message>Subregion 1 (or Subregion 1 - Local if Local Scripts configured on Tenant Setup - Global) is required for this country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Subregion 2 (or Subregion 2 - Local if Local Scripts configured on Tenant Setup - Global) is required for this country.</xsd:documentation>
+              <wd:Validation_Message>Subregion 2 (or Subregion 2 - Local if Local Scripts configured on Tenant Setup - Global) is required for this country.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>If one local script address field is submitted, all required local script address fields must be submitted.</xsd:documentation>
+              <wd:Validation_Message>If one local script address field is submitted, all required local script address fields must be submitted.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Reference is required when deleting an address</xsd:documentation>
+              <wd:Validation_Message>Address Reference is required when deleting an address</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Usage Data is required unless address is being deleted</xsd:documentation>
+              <wd:Validation_Message>Usage Data is required unless address is being deleted</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Country Reference is required unless address is being deleted</xsd:documentation>
+              <wd:Validation_Message>Country Reference is required unless address is being deleted</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address deletion is not supported in this web service request</xsd:documentation>
+              <wd:Validation_Message>Address deletion is not supported in this web service request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>If one western script field is submitted, all required western script address fields must be submitted.</xsd:documentation>
+              <wd:Validation_Message>If one western script field is submitted, all required western script address fields must be submitted.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Reference must match an existing (and not deleted) address in use by the worker subject of this request</xsd:documentation>
+              <wd:Validation_Message>Address Reference must match an existing (and not deleted) address in use by the worker subject of this request</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>The Address ID field is for updating the value of the Address Reference. It cannot be the same as another existing address.</xsd:documentation>
+              <wd:Validation_Message>Use a unique Address Reference ID for each address.  [ID] is already used on another address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You can only update addresses that belong to this customer.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You can't use an existing address for a new customer.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Existing addresses can't be future dated. Select an effective date that is on or before today, or create a new address with a future date.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You can't use an existing address for a new customer request.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You can't use an existing address for a new prospect.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You can only update addresses that belong to this customer request.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You can only update addresses that belong to this prospect.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Enter a postal code in the valid format: [PostalCodeValidationMessage]</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Postal Code is required for [countryWithMustHavePostalCode]</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>One or more addresses are missing a Country City reference. This field is required because the City Prompt localization is active for: [countryref].</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Enter a Country City reference that is valid for: [countryref]. You entered this Country City reference: [countrycityref].</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>Only Address reference belonging to the Customer tied to the Customer Contact can be shared by the Customer Contact</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>International Assignment is only valid for Non-Primary Home Addresses</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Number of Days cannot be greater than 7.</xsd:documentation>
+              <wd:Validation_Message>Number of Days cannot be greater than 7.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Number of Days is not allowed for the country specified.</xsd:documentation>
+              <wd:Validation_Message>Number of Days is not allowed for the country specified.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You must enter a Country City reference instead of a text element because the City Prompt localization is active for: [countryref]. You entered this text element: [cityattrib] [citylocalattrib].</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You entered this Country City reference: [countrycityref]. To use this Country City reference, you must activate the City Prompt localization for: [countryref].
+                Perform either one of these actions:
+                Activate the City Prompt localization.
+                Enter a municipality instead of a Country City reference.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Address Line is required for certain countries.</xsd:documentation>
+              <wd:Validation_Message>Address Line is required for certain countries.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>The Address ID field is for updating the value of the Address Reference. It cannot be the same as another existing address.</xsd:documentation>
+              <wd:Validation_Message>Address "[ID]" is already in use by another address (possibly on another contactable). Please choose a different Address ID.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Country_Reference" type="wd:CountryObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Country for the address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Last_Modified" type="xsd:dateTime" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The moment when the address was last modified.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Address_Line_Data" type="wd:Address_Line_Information_DataType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="Municipality" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>City part of the address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Country_City_Reference" type="wd:Country_CityObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Country city for the address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Submunicipality_Data" type="wd:Submunicipality_Information_DataType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="Country_Region_Reference" type="wd:Country_RegionObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The region part of the address. Typically this contains the state/province information.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Country_Region_Descriptor" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The region part of the address. Typically this contains the state/province information.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Subregion_Data" type="wd:Subregion_Information_DataType" minOccurs="0" maxOccurs="unbounded" />
+          <xsd:element name="Postal_Code" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>The postal code part of the address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Usage_Data" type="wd:Communication_Method_Usage_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Number_of_Days" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Tracks the number of days an employee works from home per week.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:decimal">
+                <xsd:totalDigits value="1" />
+                <xsd:minInclusive value="0" />
+                <xsd:fractionDigits value="0" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Municipality_Local" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>City in local script part of the address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Address_Reference" type="wd:Address_ReferenceObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The address Reference ID.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Address_ID" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>New ID value used in address updates. The ID cannot already be in use by another address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Formatted_Address" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Returns the formatted address in the format specified for the country. This data is not used for inbound requests and any data provided in this element will be ignored.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Address_Format_Type" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The format type of the address.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Defaulted_Business_Site_Address" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Set to 1 if the address is a defaulted location address. If this value is 1, this address will not be processed for inbound web services.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Delete" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Set this flag to true in order to delete the referenced address. If this flag is set, the Reference ID field becomes required, and all other address fields that would otherwise be required will be optional and meaningless.</xsd:documentation>
+            <xsd:appinfo>
+              <wd:Validation>
+                <xsd:documentation>The referenced address is in use as a primary home address and cannot be deleted.</xsd:documentation>
+                <wd:Validation_Message>The referenced address is in use as a primary home address and cannot be deleted.</wd:Validation_Message>
+              </wd:Validation>
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Do_Not_Replace_All" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>This flag controls whether or not existing non-primary address data will be replaced. A value of true means only the referenced address will be updated, or created if it does not exist or no reference was provided. This behavior is used if the flag is set to true for ANY address in the request.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Effective_Date" type="xsd:date">
+          <xsd:annotation>
+            <xsd:documentation>Effective date of address.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+
+      <xsd:complexType name="Address_Line_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>The address line for the address. This typically contains Street name, street number, apartment, suite number.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>A value is required on internal element 'Address Line Data'. If you do not want to set a value for a non-required type such as ADDRESS_LINE_2, remove it completely from the web service request.</xsd:documentation>
+              <wd:Validation_Message>A value is required on internal element 'Address Line Data'. If you do not want to set a value for a non-required type such as ADDRESS_LINE_2, remove it completely from the web service request.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Type is required when you submit an Address Line Data.</xsd:documentation>
+              <wd:Validation_Message>Type is required when you submit an Address Line Data.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>The Type isn't valid. Valid types include: ADDRESS_LINE_1 to ADDRESS_LINE_9, ADDRESS_LINE_1_LOCAL to ADDRESS_LINE_9_LOCAL, CITY, CITY_LOCAL, CITY_SUBDIVISION_1 or CITY_SUBDIVISION_2, CITY_SUBDIVISION_1_LOCAL or CITY_SUBDIVISION_2_LOCAL, POSTAL_CODE, REGION, REGION_SUBDIVISION_1 or REGION_SUBDIVISION_2, REGION_SUBDIVISION_1_LOCAL or REGION_SUBDIVISION_2_LOCAL.</xsd:documentation>
+              <wd:Validation_Message>The Type isn't valid. Valid types include: ADDRESS_LINE_1 to ADDRESS_LINE_9, ADDRESS_LINE_1_LOCAL to ADDRESS_LINE_9_LOCAL, CITY, CITY_LOCAL, CITY_SUBDIVISION_1 or CITY_SUBDIVISION_2, CITY_SUBDIVISION_1_LOCAL or CITY_SUBDIVISION_2_LOCAL, POSTAL_CODE, REGION, REGION_SUBDIVISION_1 or REGION_SUBDIVISION_2, REGION_SUBDIVISION_1_LOCAL or REGION_SUBDIVISION_2_LOCAL.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="Descriptor" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>The descriptor is an optional serialized attribute that shows the text Override Label (such as Apartment Number or Building Number)  that helps describe the usage of the type (such as ADDRESS_LINE_5 and ADDRESS_LINE_6) for each country.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="Type" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>Enter the address line type, such as ADDRESS_LINE_1, or ADDRESS_LINE_2.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Country_CityReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Country_Subregion_Code_In_Country" />
+              <wd:enumeration value="Country_Subregion_Internal_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Country_CityObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Country_CityReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="parent_id" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>For types that require a parent reference, contains a unique identifier for an instance of a parent object.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="parent_type">
+              <xsd:annotation>
+                <xsd:documentation>For types that require a parent reference, the unique identifier type of a parent object.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:annotation>
+                    <xsd:appinfo>
+                      <wd:enumeration value="WID" />
+                      <wd:enumeration value="ISO_3166-1_Alpha-2_Code" />
+                      <wd:enumeration value="ISO_3166-1_Alpha-3_Code" />
+                      <wd:enumeration value="ISO_3166-1_Numeric-3_Code" />
+                    </xsd:appinfo>
+                  </xsd:annotation>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Country_CityObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Country_CityObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Submunicipality_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>The submunicipality of the address.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="Address_Component_Name" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>The descriptor is an optional serialized attribute that shows the text Override Label (such as Municipality or District)  that helps describe the usage of the type (such as CITY_SUBDIVISION_1 or CITY_SUBDIVISION_2) for each country.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="Type" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>The city subdivision part of the address.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Country_RegionReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Country_Region_ID" />
+              <wd:enumeration value="ISO_3166-2_Code" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Country_RegionObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Country_RegionReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Country_RegionObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Country_RegionObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Subregion_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>The subregion part of the address.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="Descriptor" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>The descriptor is an optional serialized attribute that shows the text Override Label (such as Municipality or District)  that helps describe the usage of the type (such as REGION_SUBDIVISION_1 or REGION_SUBDIVISION_2) for each country.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="Type" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>Enter the region subdivision type, such as REGION_SUBDIVISION_1, or REGION_SUBDIVISION_2.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Communication_Usage_TypeReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Communication_Usage_Type_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Communication_Usage_TypeObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Communication_Usage_TypeReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Usage_TypeObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Communication_Usage_TypeObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Usage_Type_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Reference ID for the communication usage type.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Type_Reference" type="wd:Communication_Usage_TypeObjectType">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for the communication usage type.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Primary" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Indicates if the communication method is primary.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+
+      <xsd:complexType name="Communication_Method_Usage_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Type_Data" type="wd:Communication_Usage_Type_DataType" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for the communication usage type.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Use_For_Reference" type="wd:Communication_Usage_BehaviorObjectType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for communication usage behavior.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Use_For_Tenanted_Reference" type="wd:Communication_Usage_Behavior_TenantedObjectType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for communication usage behavior tenanted.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Comments" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Description of the  address, phone, email, instant messenger, or web address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Public" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Indicates if the address is public.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Communication_Usage_BehaviorReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Communication_Usage_Behavior_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Communication_Usage_BehaviorObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Communication_Usage_BehaviorReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Usage_BehaviorObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Communication_Usage_BehaviorObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Communication_Usage_Behavior_TenantedReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Communication_Usage_Behavior_Tenanted_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Communication_Usage_Behavior_TenantedObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Communication_Usage_Behavior_TenantedReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Communication_Usage_Behavior_TenantedObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Communication_Usage_Behavior_TenantedObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Address_ReferenceReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Address_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Address_ReferenceObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Address_ReferenceReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Address_ReferenceObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Address_ReferenceObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Phone_ReferenceReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Phone_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Phone_ReferenceObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Phone_ReferenceReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Phone_ReferenceObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Phone_ReferenceObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Phone_Device_TypeReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Phone_Device_Type_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Phone_Device_TypeObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Phone_Device_TypeReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Phone_Device_TypeObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Phone_Device_TypeObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Phone_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Phone Information</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>Invalid Usage Type and Use For combination for Phone.</xsd:documentation>
+              <wd:Validation_Message>Invalid Usage Type and Use For combination for Phone.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>[country code] is not a valid country code for [country iso code]</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>[country iso code] is not a valid country code</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You cannot specify the same usage type more than once for an address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Usage Data is required unless you are deleting a phone number.</xsd:documentation>
+              <wd:Validation_Message>Usage Data is required unless you are deleting a phone number.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Phone Reference is required when you delete a phone number.</xsd:documentation>
+              <wd:Validation_Message>Phone Reference is required when you delete a phone number.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't change a primary phone to an additional phone or an additional phone to a primary phone.</xsd:documentation>
+              <wd:Validation_Message>You can't change a primary phone to an additional phone or an additional phone to a primary phone.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Phone Number is required unless you are deleting a phone number.</xsd:documentation>
+              <wd:Validation_Message>Phone Number is required unless you are deleting a phone number.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't change the Usage Type of an existing phone.</xsd:documentation>
+              <wd:Validation_Message>You can't change the Usage Type of an existing phone.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When Do Not Replace All is False for all phone elements, Delete can't be True.</xsd:documentation>
+              <wd:Validation_Message>When Do Not Replace All is False for all phone elements, Delete can't be True.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Invalid Phone Reference or the phone number with this Phone Reference has been deleted.</xsd:documentation>
+              <wd:Validation_Message>Invalid Phone Reference or the phone number with this Phone Reference has been deleted.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Primary Phone can't be deleted when there are additional phones with the same Usage Type or the phone reference does not belong to the processing record.</xsd:documentation>
+              <wd:Validation_Message>Primary Phone can't be deleted when there are additional phones with the same Usage Type or the phone reference does not belong to the processing record.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When Do Not Replace All is False for all phone elements, you can't pass a Phone Reference.</xsd:documentation>
+              <wd:Validation_Message>When Do Not Replace All is False for all phone elements, you can't pass a Phone Reference.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Element Content 'Phone Device Type Reference' is required, on internal element 'Phone Information Data'</xsd:documentation>
+              <wd:Validation_Message>Element Content 'Phone Device Type Reference' is required, on internal element 'Phone Information Data'</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Either 'Country ISO Code' or 'International Phone Code' must be included on internal element 'Phone Information Data'</xsd:documentation>
+              <wd:Validation_Message>Either 'Country ISO Code' or 'International Phone Code' must be included on internal element 'Phone Information Data'</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>The Phone ID field is for updating the value of the Phone Reference. It cannot be the same as another existing phone.</xsd:documentation>
+              <wd:Validation_Message>Phone "[ID]" is already in use by another phone (possibly on another contactable). Please choose a different Phone ID.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Country_ISO_Code" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Country ISO code. If the Country ISO code is specified, then this ISO code will be used to determine the Country Phone Code for (eliminate space between f and o) the phone. Pass this ISO code to distinguish between multiple countries sharing the same Country Phone Code. (For example, 1 is the Country Phone Code that is shared by USA, Canada, Dominican Republic, Bermuda, Jamaica, and Puerto Rico.)</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="3" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="International_Phone_Code" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>International phone code number.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Phone_Number" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Full phone number.</xsd:documentation>
+              <xsd:appinfo>
+                <wd:Validation>
+                  <wd:Validation_Message>Invalid number: [PhoneValidationMessage]</wd:Validation_Message>
+                </wd:Validation>
+                <wd:Validation>
+                  <wd:Validation_Message>Only Numbers are allowed for Phone Number field when the Country associated with the Phone is listed in the 'Allowed Phone Validations' field in Tenant Setup - Global</wd:Validation_Message>
+                </wd:Validation>
+              </xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Phone_Extension" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Phone extension.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Phone_Device_Type_Reference" type="wd:Phone_Device_TypeObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Reference ID for Phone Device Type.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Usage_Data" type="wd:Communication_Method_Usage_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Phone_Reference" type="wd:Phone_ReferenceObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The Phone Reference ID.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="ID" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>New ID value used in phone updates. The ID cannot already be in use by another phone.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Area_Code" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Area code number.</xsd:documentation>
+            <xsd:appinfo>
+              <wd:Validation>
+                <wd:Validation_Message>Enter an area code in the valid format: [AreaCodeValidationMessage]</wd:Validation_Message>
+              </wd:Validation>
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Tenant_Formatted_Phone" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The Phone Number formatted according to tenant setup. This data is not used in inbound requests. Any data provided  for this attribute will be ignored.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="International_Formatted_Phone" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The formatted International Phone number with Extension. This data is not used in inbound requests. Any data provided  for this attribute will be ignored.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Phone_Number_Without_Area_Code" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The Phone number. This data is not used in inbound requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="National_Formatted_Phone" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The formatted National Phone number with Extension. This data is not used in inbound requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="E164_Formatted_Phone" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The formatted E164 Phone number with Extension. This data is not used in inbound requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Workday_Traditional_Formatted_Phone" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>The formatted Workday Traditional Phone number with Extension. This data is not used in inbound requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Delete" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Set this flag to true in order to delete the referenced communication method. If this flag is set, the Reference ID field becomes required, and all other communication method fields that would otherwise be required will be optional and meaningless.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Do_Not_Replace_All" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>This flag controls whether or not existing non-primary phone data will be replaced. A value of true means only the referenced phone will be updated, or created if it does not exist or no reference was provided. This behavior is used if the flag is set to true for ANY email address in the request.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Email_ReferenceReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Email_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Email_ReferenceObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Email_ReferenceReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Email_ReferenceObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Email_ReferenceObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Email_Address_Information_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Email Address Information</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>Invalid Usage Type and Use For combination for Email Address.</xsd:documentation>
+              <wd:Validation_Message>Invalid Usage Type and Use For combination for Email Address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <wd:Validation_Message>You cannot specify the same usage type more than once for an address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Email Reference is required when you delete an email address</xsd:documentation>
+              <wd:Validation_Message>Email Reference is required when you delete an email address</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Usage Data is required unless you are deleting an email address.</xsd:documentation>
+              <wd:Validation_Message>Usage Data is required unless you are deleting an email address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Email Address is required unless you are deleting an email address.</xsd:documentation>
+              <wd:Validation_Message>Email Address is required unless you are deleting an email address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When Do Not Replace All is False for all email elements, you can't pass an Email Reference.</xsd:documentation>
+              <wd:Validation_Message>When Do Not Replace All is False for all email elements, you can't pass an Email Reference.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>When Do Not Replace All is False for all email elements, Delete can't be True.</xsd:documentation>
+              <wd:Validation_Message>When Do Not Replace All is False for all email elements, Delete can't be True.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't change a primary email to an additional email or an additional email to a primary email.</xsd:documentation>
+              <wd:Validation_Message>You can't change a primary email to an additional email or an additional email to a primary email.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>You can't change the Usage Type of an existing email address.</xsd:documentation>
+              <wd:Validation_Message>You can't change the Usage Type of an existing email address.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Primary Email Address can't be deleted when there are additional email addresses with the same Usage Type or the email address reference does not belong to the processing record.</xsd:documentation>
+              <wd:Validation_Message>Primary Email Address can't be deleted when there are additional email addresses with the same Usage Type or the email address reference does not belong to the processing record.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>Invalid Email Reference or the email with this Email Reference has been deleted.</xsd:documentation>
+              <wd:Validation_Message>Invalid Email Reference or the email with this Email Reference has been deleted.</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>The Email ID field is for updating the value of the Email Reference. It cannot be the same as another existing email.</xsd:documentation>
+              <wd:Validation_Message>Email "[ID]" is already in use by another email address (possibly on another contactable). Please choose a different Email ID.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Email_Address" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Email Address Information</xsd:documentation>
+              <xsd:appinfo>
+                <wd:Validation>
+                  <wd:Validation_Message>Email addresses must be in the format of 'xxx@yy.com'.  Valid examples: john.doe@aol.com, jane@aol.com.</wd:Validation_Message>
+                </wd:Validation>
+              </xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Email_Comment" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Email comments.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Usage_Data" type="wd:Communication_Method_Usage_Information_DataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation>Encapsulating element for all Communication Method Usage data.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Email_Reference" type="wd:Email_ReferenceObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The email Reference ID.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="ID" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>New ID value used in email address updates. The ID cannot already be in use by another email address.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="Delete" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>Set this flag to true in order to delete the referenced email. If this flag is set, the Reference ID field becomes required, and all other email fields that would otherwise be required will be optional and meaningless.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Do_Not_Replace_All" type="xsd:boolean">
+          <xsd:annotation>
+            <xsd:documentation>This flag controls whether or not existing non-primary email address data will be replaced. A value of true means only the referenced email address will be updated, or created if it does not exist or no reference was provided. This behavior is used if the flag is set to true for ANY email address in the request.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="IDType">
+        <xsd:annotation>
+          <xsd:documentation>External ID that uniquely identifies the integratable object within the context of the integration system identified by the System ID attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="System_ID" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>Integration system identifier, part of a two part key (including the text value of the ID element) that uniquely identify integratable object.</xsd:documentation>
+                <xsd:appinfo>
+                  <wd:Validation>
+                    <xsd:documentation>A valid instance of Integration ID must exist for the given System ID.</xsd:documentation>
+                    <wd:Validation_Message>Integration System ID does not exist.</wd:Validation_Message>
+                  </wd:Validation>
+                </xsd:appinfo>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="External_Integration_ID_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Integration ID Help Text</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:IDType" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Location_HierarchyReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Organization_Reference_ID" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+
+      <xsd:complexType name="Location_HierarchyObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Location_HierarchyReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Location_HierarchyObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Location_HierarchyObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:simpleType name="Integration_Document_FieldReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID" />
+              <wd:enumeration value="Integration_Document_Field_Name" />
+              <wd:enumeration value="Workday_Integration_Document_Field_Name" />
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Integration_Document_FieldObjectIDType">
+        <xsd:annotation>
+          <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="type" type="wd:Integration_Document_FieldReferenceEnumeration" use="required">
+              <xsd:annotation>
+                <xsd:documentation>The unique identifier type. Each "ID" for an instance of an object contains a type and a value. A single instance of an object can have multiple "ID" but only a single "ID" per "type".  Some "types" require a reference to a parent instance.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="parent_id" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>For types that require a parent reference, contains a unique identifier for an instance of a parent object.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="parent_type">
+              <xsd:annotation>
+                <xsd:documentation>For types that require a parent reference, the unique identifier type of a parent object.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:annotation>
+                    <xsd:appinfo>
+                      <wd:enumeration value="WID" />
+                      <wd:enumeration value="Integration_Document_Name" />
+                      <wd:enumeration value="Workday_Integration_Document_Name" />
+                    </xsd:appinfo>
+                  </xsd:annotation>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Integration_Document_FieldObjectType">
+        <xsd:annotation />
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:Integration_Document_FieldObjectIDType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display information used to describe an instance of an object. This 'optional' information is for outbound descriptive purposes only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+
+      <xsd:complexType name="Document_Field_Result_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Result of the evaluation of an External Field based on a contextual instance.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Field_Reference" type="wd:Integration_Document_FieldObjectType" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>Integration Document Field Reference.  Eligibility Criteria element is used in conjunction with Workday delivered integrations.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="Value" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Value</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="Put_Location_RequestInputMsg">
+    <wsdl:part name="body" element="wd:Put_Location_Request" />
+  </wsdl:message>
+  <wsdl:message name="Put_Location_ResponseOutputMsg">
+    <wsdl:part name="body" element="wd:Put_Location_Request" />
+  </wsdl:message>
+  <wsdl:portType name="Human_ResourcesPort">
+    <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
+    <wsdl:operation name="Put_Location">
+      <wsdl:documentation>This operation adds or updates a Location. Location Addresses, Usages, Email Addresses, Phone Numbers, Time Profile data, Location Attributes, Location Superior and Location Hierarchies to include location in can also be added and updated with this operation. Effective date must be blank for new locations to be consistent with new locations created in the UI. When effective date is blank, the value is effective as of the beginning of time. The Effective Date applies to these fields only: Location Name, Inactive, and Location Hierarchy Reference. If Location Hierarchy Reference is left blank for an existing location, location will be removed from all location hierarchies it is included in as of the effective date specified. If these fields are left blank, existing values will be removed: Altitude, Latitude, Longitude, Trade Name, Worksite Identification Code, Locale, User Language, Location Attribute, Location Type, Time Profile, Time Zone, Superior Location.</wsdl:documentation>
+      <wsdl:input name="Put_LocationInput" message="wd-wsdl:Put_Location_RequestInputMsg" />
+      <wsdl:output name="Put_LocationOutput" message="wd-wsdl:Put_Location_ResponseOutputMsg" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
+    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Put_Location">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Put_LocationInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Put_LocationOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Human_ResourcesService">
+    <wsdl:port name="Human_Resources" binding="wd-wsdl:Human_ResourcesBinding">
+      <soapbind:address location="Human_Resources" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

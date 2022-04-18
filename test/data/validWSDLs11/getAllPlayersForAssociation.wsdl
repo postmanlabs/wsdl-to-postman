@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://{{url}}/soap/services/getAllPlayersForAssociation.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getAllPlayersForAssociation" targetNamespace="http://{{url}}/soap/services/getAllPlayersForAssociation.php">
+    <types>
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getAllPlayersForAssociation.php">
+            <xsd:element name="getAllPlayersForAssociation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="Player">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="rs_nr" type="xsd:int" nillable="true"/>
+                    <xsd:element name="last_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="first_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_club_ids_licenced" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_club_id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="sex" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_year" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_date" type="xsd:date" nillable="true"/>
+                    <xsd:element name="ranking_points" type="xsd:string" nillable="true"/>
+                    <xsd:element name="ranking_placement" type="xsd:string" nillable="true"/>
+                    <xsd:element name="contract_club_ids" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfPlayer">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:Player" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getAllPlayersForAssociationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getAllPlayersForAssociationResult" type="tns:ArrayOfPlayer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getAllPlayersForAssociationPort">
+        <operation name="getAllPlayersForAssociation">
+            <documentation>Used by Associations only</documentation>
+            <input message="tns:getAllPlayersForAssociationIn"/>
+            <output message="tns:getAllPlayersForAssociationOut"/>
+        </operation>
+    </portType>
+    <binding name="getAllPlayersForAssociationBinding" type="tns:getAllPlayersForAssociationPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getAllPlayersForAssociation">
+            <soap:operation soapAction="http://{{url}}/soap/services/getAllPlayersForAssociation.php#getAllPlayersForAssociation"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getAllPlayersForAssociationService">
+        <port name="getAllPlayersForAssociationPort" binding="tns:getAllPlayersForAssociationBinding">
+            <soap:address location="http://{{url}}/soap/services/getAllPlayersForAssociation.php"/>
+        </port>
+    </service>
+    <message name="getAllPlayersForAssociationIn">
+        <part name="parameters" element="tns:getAllPlayersForAssociation"/>
+    </message>
+    <message name="getAllPlayersForAssociationOut">
+        <part name="parameters" element="tns:getAllPlayersForAssociationResponse"/>
+    </message>
+</definitions>

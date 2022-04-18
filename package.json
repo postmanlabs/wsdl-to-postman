@@ -1,0 +1,72 @@
+{
+  "name": "wsdl-to-postman",
+  "version": "1.0.0",
+  "description": "Convert a given WSDL specification (1.1) to Postman Collection",
+  "main": "index.js",
+  "bin": {
+    "wsdl2postman": "./bin/wsdl2postman.js"
+  },
+  "scripts": {
+    "test": "./scripts/test.sh",
+    "unit-tests": "./node_modules/mocha/bin/mocha \"test/unit/**/**.test.js\"",
+    "e2e-tests": "./node_modules/mocha/bin/mocha test/e2e/**.test.js --timeout 5000",
+    "convert-validation-tests": "./node_modules/mocha/bin/mocha test/convert-validation/**.test.js --timeout 10000",
+    "system-tests": "./node_modules/mocha/bin/mocha test/system/**.test.js --timeout 5000",
+    "lint": "eslint ./lib/** ./test/**/*.js",
+    "coverage": "nyc --reporter=text npm run unit-tests"
+  },
+  "com_postman_plugin": {
+    "plugin_type": "importer",
+    "name": "WSDL",
+    "source_format": "WSDL",
+    "source_format_name": "WSDL",
+    "sample_input": {
+      "type": "string",
+      "data": "<wsdl:definitions xmlns:soap=\"http://schemas.xmlsoap.org/wsdl/soap/\"\n    xmlns:tns=\"http://tempuri.org/\"\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n    xmlns:http=\"http://schemas.microsoft.com/ws/06/2004/policy/http\"\n    xmlns:msc=\"http://schemas.microsoft.com/ws/2005/12/wsdl/contract\"\n    xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2004/09/policy\"\n    xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\"\n    xmlns:wsam=\"http://www.w3.org/2007/05/addressing/metadata\"\n    xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\" targetNamespace=\"http://tempuri.org/\" name=\"ISampleService\">\n    <wsdl:types>\n        <xsd:schema elementFormDefault=\"qualified\" targetNamespace=\"http://tempuri.org/\">\n            <xsd:import namespace=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\" />\n            <xsd:import namespace=\"http://schemas.datacontract.org/2004/07/System\" />\n            <xsd:element name=\"DoSomething\">\n                <xsd:complexType />\n            </xsd:element>\n            <xsd:element name=\"DoSomethingResponse\">\n                <xsd:complexType />\n            </xsd:element>\n        </xsd:schema>\n    </wsdl:types>\n    <wsdl:message name=\"ISampleService_DoSomething_InputMessage\">\n        <wsdl:part name=\"parameters\" element=\"tns:DoSomething\" />\n    </wsdl:message>\n    <wsdl:message name=\"ISampleService_DoSomething_OutputMessage\">\n        <wsdl:part name=\"parameters\" element=\"tns:DoSomethingResponse\" />\n    </wsdl:message>\n    <wsdl:portType name=\"ISampleService\">\n        <wsdl:operation name=\"DoSomething\">\n            <wsdl:input message=\"tns:ISampleService_DoSomething_InputMessage\" />\n            <wsdl:output message=\"tns:ISampleService_DoSomething_OutputMessage\" />\n        </wsdl:operation>\n    </wsdl:portType>\n    <wsdl:binding name=\"BasicHttpBinding\" type=\"tns:ISampleService\">\n        <soap:binding transport=\"http://schemas.xmlsoap.org/soap/http\" />\n        <wsdl:operation name=\"DoSomething\">\n            <soap:operation soapAction=\"http://tempuri.org/ISampleService/DoSomething\" style=\"document\" />\n            <wsdl:input>\n                <soap:body use=\"literal\" />\n            </wsdl:input>\n            <wsdl:output>\n                <soap:body use=\"literal\" />\n            </wsdl:output>\n        </wsdl:operation>\n    </wsdl:binding>\n    <wsdl:service name=\"ISampleService\">\n        <wsdl:port name=\"BasicHttpBinding\" binding=\"tns:BasicHttpBinding\">\n            <soap:address location=\"https://localhost:5001/Service.asmx\" />\n        </wsdl:port>\n    </wsdl:service>\n</wsdl:definitions>\n"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/postmanlabs/wsdl-to-postman.git"
+  },
+  "keywords": [
+    "wsdl",
+    "postman",
+    "api"
+  ],
+  "author": "Postman Labs <help@getpostman.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/postmanlabs/wsdl-to-postman/issues"
+  },
+  "homepage": "https://github.com/postmanlabs/wsdl-to-postman#readme",
+  "devDependencies": {
+    "async": "3.2.0",
+    "babel-eslint": "10.1.0",
+    "chai": "4.3.0",
+    "eslint": "7.19.0",
+    "eslint-plugin-jsdoc": "31.6.1",
+    "eslint-plugin-mocha": "8.0.0",
+    "eslint-plugin-security": "1.4.0",
+    "mocha": "8.2.0",
+    "nyc": "15.1.0"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "ajv": "8.1.0",
+    "clone": "2.1.2",
+    "commander": "8.2.0",
+    "fast-xml-parser": "3.18.0",
+    "libxmljs2": "0.27.0",
+    "node-fetch": "2.6.5",
+    "path-browserify": "1.0.1",
+    "postman-collection": "3.6.9",
+    "randexp": "0.5.3",
+    "traverse": "0.6.6",
+    "xmldom": "0.6.0",
+    "xmllint": "0.1.1",
+    "xpath": "0.0.32"
+  }
+}

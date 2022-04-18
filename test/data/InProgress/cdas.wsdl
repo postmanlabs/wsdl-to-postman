@@ -1,0 +1,813 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://cdaweb.gsfc.nasa.gov/WS/CDASWS" xmlns:ns2="http://java.sun.com/jax-rpc-ri/internal" xmlns:ns3="http://cdaweb.gsfc.nasa.gov/WS/types/CDASWS" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="CDASWS" targetNamespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS">
+  <types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://java.sun.com/jax-rpc-ri/internal" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://java.sun.com/jax-rpc-ri/internal">
+      <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+      <import namespace="http://cdaweb.gsfc.nasa.gov/WS/types/CDASWS"/>
+      <complexType name="set">
+        <complexContent>
+          <extension base="tns:collection">
+            <sequence/></extension></complexContent></complexType>
+      <complexType name="collection">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="anyType[]"/></restriction></complexContent></complexType>
+      <complexType name="list">
+        <complexContent>
+          <extension base="tns:collection">
+            <sequence/></extension></complexContent></complexType></schema>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://cdaweb.gsfc.nasa.gov/WS/types/CDASWS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://cdaweb.gsfc.nasa.gov/WS/types/CDASWS">
+      <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+      <import namespace="http://java.sun.com/jax-rpc-ri/internal"/>
+      <complexType name="ArrayOfInstrumentDescription">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:InstrumentDescription[]"/></restriction></complexContent></complexType>
+      <complexType name="InstrumentDescription">
+        <sequence>
+          <element name="longDescription" type="string"/>
+          <element name="name" type="string"/>
+          <element name="nssdcId" type="string"/>
+          <element name="providerId" type="string"/>
+          <element name="shortDescription" type="string"/>
+          <element name="spaseId" type="string"/></sequence></complexType>
+      <complexType name="ArrayOfstring">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="string[]"/></restriction></complexContent></complexType>
+      <complexType name="ArrayOfArrayOfstring">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:ArrayOfstring[]"/></restriction></complexContent></complexType>
+      <complexType name="ArrayOfViewDescription">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:ViewDescription[]"/></restriction></complexContent></complexType>
+      <complexType name="ViewDescription">
+        <sequence>
+          <element name="endpointAddress" type="string"/>
+          <element name="id" type="string"/>
+          <element name="noticeUrl" type="string"/>
+          <element name="overview" type="string"/>
+          <element name="publicAccess" type="boolean"/>
+          <element name="subtitle" type="string"/>
+          <element name="title" type="string"/>
+          <element name="underConstruction" type="boolean"/></sequence></complexType>
+      <complexType name="ArrayOfTimeInterval">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:TimeInterval[]"/></restriction></complexContent></complexType>
+      <complexType name="TimeInterval">
+        <sequence>
+          <element name="end" type="dateTime"/>
+          <element name="start" type="dateTime"/></sequence></complexType>
+      <complexType name="ResultDescription">
+        <sequence>
+          <element name="errors" type="tns:ArrayOfstring"/>
+          <element name="messages" type="tns:ArrayOfstring"/>
+          <element name="statuses" type="tns:ArrayOfstring"/>
+          <element name="thumbnailDescription" type="tns:ThumbnailDescription"/>
+          <element name="urls" type="tns:ArrayOfstring"/>
+          <element name="warnings" type="tns:ArrayOfstring"/></sequence></complexType>
+      <complexType name="ThumbnailDescription">
+        <sequence>
+          <element name="dataCdfs" type="tns:ArrayOfstring"/>
+          <element name="dataset" type="string"/>
+          <element name="endTime" type="dateTime"/>
+          <element name="masterCdf" type="string"/>
+          <element name="name" type="string"/>
+          <element name="numCols" type="int"/>
+          <element name="numFrames" type="int"/>
+          <element name="numRows" type="int"/>
+          <element name="options" type="long"/>
+          <element name="startRecord" type="int"/>
+          <element name="startTime" type="dateTime"/>
+          <element name="thumbnailHeight" type="int"/>
+          <element name="thumbnailWidth" type="int"/>
+          <element name="titleHeight" type="int"/>
+          <element name="type" type="string"/>
+          <element name="varName" type="string"/></sequence></complexType>
+      <complexType name="ArrayOfFileDescription">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:FileDescription[]"/></restriction></complexContent></complexType>
+      <complexType name="FileDescription">
+        <sequence>
+          <element name="endTime" type="dateTime"/>
+          <element name="lastModified" type="dateTime"/>
+          <element name="length" type="long"/>
+          <element name="mimeType" type="string"/>
+          <element name="name" type="string"/>
+          <element name="startTime" type="dateTime"/></sequence></complexType>
+      <complexType name="ArrayOfGraphVariableDescription">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:GraphVariableDescription[]"/></restriction></complexContent></complexType>
+      <complexType name="GraphVariableDescription">
+        <sequence>
+          <element name="dataset" type="string"/>
+          <element name="variables" type="tns:ArrayOfstring"/></sequence></complexType>
+      <complexType name="ArrayOfDatasetDescription">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:DatasetDescription[]"/></restriction></complexContent></complexType>
+      <complexType name="DatasetDescription">
+        <sequence>
+          <element name="endTime" type="dateTime"/>
+          <element name="id" type="string"/>
+          <element name="label" type="string"/>
+          <element name="links" type="tns:ArrayOfDatasetLink"/>
+          <element name="notesUrl" type="string"/>
+          <element name="piAffiliation" type="string"/>
+          <element name="piName" type="string"/>
+          <element name="startTime" type="dateTime"/></sequence></complexType>
+      <complexType name="ArrayOfDatasetLink">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:DatasetLink[]"/></restriction></complexContent></complexType>
+      <complexType name="DatasetLink">
+        <sequence>
+          <element name="text" type="string"/>
+          <element name="title" type="string"/>
+          <element name="url" type="string"/></sequence></complexType>
+      <complexType name="InventoryDescription">
+        <sequence>
+          <element name="id" type="string"/>
+          <element name="inventory" type="ns2:list"/>
+          <element name="status" type="int"/></sequence></complexType>
+      <complexType name="ArrayOfMissionGroupDescription">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:MissionGroupDescription[]"/></restriction></complexContent></complexType>
+      <complexType name="MissionGroupDescription">
+        <sequence>
+          <element name="name" type="string"/>
+          <element name="sources" type="ns2:list"/></sequence></complexType>
+      <complexType name="ArrayOfSourceDescription">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:SourceDescription[]"/></restriction></complexContent></complexType>
+      <complexType name="SourceDescription">
+        <sequence>
+          <element name="longDescription" type="string"/>
+          <element name="name" type="string"/>
+          <element name="nssdcId" type="string"/>
+          <element name="providerId" type="string"/>
+          <element name="shortDescription" type="string"/>
+          <element name="spaseId" type="string"/></sequence></complexType>
+      <complexType name="ArrayOfVariableDescription">
+        <complexContent>
+          <restriction base="soap11-enc:Array">
+            <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:VariableDescription[]"/></restriction></complexContent></complexType>
+      <complexType name="VariableDescription">
+        <sequence>
+          <element name="children" type="ns2:list"/>
+          <element name="longDescription" type="string"/>
+          <element name="name" type="string"/>
+          <element name="parent" type="string"/>
+          <element name="shortDescription" type="string"/></sequence></complexType></schema></types>
+  <message name="CoordinatedDataAnalysisSystem_getAllInstrumentDescriptions"/>
+  <message name="CoordinatedDataAnalysisSystem_getAllInstrumentDescriptionsResponse">
+    <part name="result" type="ns3:ArrayOfInstrumentDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getAllInstrumentTypes"/>
+  <message name="CoordinatedDataAnalysisSystem_getAllInstrumentTypesResponse">
+    <part name="result" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getAllInstruments"/>
+  <message name="CoordinatedDataAnalysisSystem_getAllInstrumentsResponse">
+    <part name="result" type="ns3:ArrayOfArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getAllMissionGroups"/>
+  <message name="CoordinatedDataAnalysisSystem_getAllMissionGroupsResponse">
+    <part name="result" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getAllViewDescriptions"/>
+  <message name="CoordinatedDataAnalysisSystem_getAllViewDescriptionsResponse">
+    <part name="result" type="ns3:ArrayOfViewDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdasDataFile">
+    <part name="String_1" type="xsd:string"/>
+    <part name="arrayOfTimeInterval_2" type="ns3:ArrayOfTimeInterval"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdasDataFileResponse">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdasDataFile2">
+    <part name="String_1" type="xsd:string"/>
+    <part name="arrayOfTimeInterval_2" type="ns3:ArrayOfTimeInterval"/>
+    <part name="arrayOfString_3" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdasDataFile2Response">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdasDataFile3">
+    <part name="String_1" type="xsd:string"/>
+    <part name="arrayOfTimeInterval_2" type="ns3:ArrayOfTimeInterval"/>
+    <part name="arrayOfString_3" type="ns3:ArrayOfstring"/>
+    <part name="int_4" type="xsd:int"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdasDataFile3Response">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdasDataFile4">
+    <part name="String_1" type="xsd:string"/>
+    <part name="arrayOfTimeInterval_2" type="ns3:ArrayOfTimeInterval"/>
+    <part name="int_3" type="xsd:int"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdasDataFile4Response">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdfmlDataFiles">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/>
+    <part name="int_5" type="xsd:int"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdfmlDataFilesResponse">
+    <part name="result" type="ns3:ArrayOfFileDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdfmlDataFiles2">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="int_4" type="xsd:int"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdfmlDataFiles2Response">
+    <part name="result" type="ns3:ArrayOfFileDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdfmlDataUrls">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/>
+    <part name="int_5" type="xsd:int"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdfmlDataUrlsResponse">
+    <part name="result" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdfmlDataUrls2">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="int_4" type="xsd:int"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getCdfmlDataUrls2Response">
+    <part name="result" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataAsText">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataAsTextResponse">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataAsText2">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/>
+    <part name="Set_5" type="ns2:set"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataAsText2Response">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataFiles">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataFilesResponse">
+    <part name="result" type="ns3:ArrayOfFileDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataFiles2">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataFiles2Response">
+    <part name="result" type="ns3:ArrayOfFileDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataFiles3">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/>
+    <part name="int_5" type="xsd:int"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataFiles3Response">
+    <part name="result" type="ns3:ArrayOfFileDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataFiles4">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="Date_4" type="xsd:dateTime"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataFiles4Response">
+    <part name="result" type="ns3:ArrayOfFileDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataGraph">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataGraphResponse">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataGraph2">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/>
+    <part name="long_5" type="xsd:long"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataGraph2Response">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataGraph3">
+    <part name="Date_1" type="xsd:dateTime"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="arrayOfGraphVariableDescription_3" type="ns3:ArrayOfGraphVariableDescription"/>
+    <part name="long_4" type="xsd:long"/>
+    <part name="arrayOfString_5" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataGraph3Response">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataUrls">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataUrlsResponse">
+    <part name="result" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataUrls2">
+    <part name="String_1" type="xsd:string"/>
+    <part name="Date_2" type="xsd:dateTime"/>
+    <part name="Date_3" type="xsd:dateTime"/>
+    <part name="arrayOfString_4" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDataUrls2Response">
+    <part name="result" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetVariables">
+    <part name="String_1" type="xsd:string"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetVariablesResponse">
+    <part name="result" type="ns3:ArrayOfArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasets">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/>
+    <part name="arrayOfString_2" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsResponse">
+    <part name="result" type="ns3:ArrayOfDatasetDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasets2">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/>
+    <part name="arrayOfString_2" type="ns3:ArrayOfstring"/>
+    <part name="TimeInterval_3" type="ns3:TimeInterval"/>
+    <part name="String_4" type="xsd:string"/>
+    <part name="String_5" type="xsd:string"/>
+    <part name="String_6" type="xsd:string"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasets2Response">
+    <part name="result" type="ns3:ArrayOfDatasetDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsByInstrument">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/>
+    <part name="arrayOfString_2" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsByInstrumentResponse">
+    <part name="result" type="ns3:ArrayOfDatasetDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsByInstrument2">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/>
+    <part name="arrayOfString_2" type="ns3:ArrayOfstring"/>
+    <part name="TimeInterval_3" type="ns3:TimeInterval"/>
+    <part name="String_4" type="xsd:string"/>
+    <part name="String_5" type="xsd:string"/>
+    <part name="String_6" type="xsd:string"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsByInstrument2Response">
+    <part name="result" type="ns3:ArrayOfDatasetDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsBySource">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/>
+    <part name="arrayOfString_2" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsBySourceResponse">
+    <part name="result" type="ns3:ArrayOfDatasetDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsBySource2">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/>
+    <part name="arrayOfString_2" type="ns3:ArrayOfstring"/>
+    <part name="TimeInterval_3" type="ns3:TimeInterval"/>
+    <part name="String_4" type="xsd:string"/>
+    <part name="String_5" type="xsd:string"/>
+    <part name="String_6" type="xsd:string"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getDatasetsBySource2Response">
+    <part name="result" type="ns3:ArrayOfDatasetDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInstrTypesForGroups">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInstrTypesForGroupsResponse">
+    <part name="result" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInstrumentDescriptions">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInstrumentDescriptionsResponse">
+    <part name="result" type="ns3:ArrayOfInstrumentDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInstrumentTypes">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInstrumentTypesResponse">
+    <part name="result" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInstruments">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInstrumentsResponse">
+    <part name="result" type="ns3:ArrayOfArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInventory">
+    <part name="String_1" type="xsd:string"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getInventoryResponse">
+    <part name="result" type="ns3:InventoryDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getMissionGroupDescriptions"/>
+  <message name="CoordinatedDataAnalysisSystem_getMissionGroupDescriptionsResponse">
+    <part name="result" type="ns3:ArrayOfMissionGroupDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getSourceDescriptions">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getSourceDescriptionsResponse">
+    <part name="result" type="ns3:ArrayOfSourceDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getSourceDescriptionsByInstrument">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getSourceDescriptionsByInstrumentResponse">
+    <part name="result" type="ns3:ArrayOfSourceDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getSources">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getSourcesResponse">
+    <part name="result" type="ns3:ArrayOfArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getSourcesByInstrument">
+    <part name="arrayOfString_1" type="ns3:ArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getSourcesByInstrumentResponse">
+    <part name="result" type="ns3:ArrayOfArrayOfstring"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getThumbnailExpansion">
+    <part name="ThumbnailDescription_1" type="ns3:ThumbnailDescription"/>
+    <part name="int_2" type="xsd:int"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getThumbnailExpansionResponse">
+    <part name="result" type="ns3:ResultDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getVariableDescriptions">
+    <part name="String_1" type="xsd:string"/></message>
+  <message name="CoordinatedDataAnalysisSystem_getVariableDescriptionsResponse">
+    <part name="result" type="ns3:ArrayOfVariableDescription"/></message>
+  <message name="CoordinatedDataAnalysisSystem_updateMetadataIndex"/>
+  <message name="CoordinatedDataAnalysisSystem_updateMetadataIndexResponse"/>
+  <portType name="CoordinatedDataAnalysisSystem">
+    <operation name="getAllInstrumentDescriptions">
+      <input message="tns:CoordinatedDataAnalysisSystem_getAllInstrumentDescriptions"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getAllInstrumentDescriptionsResponse"/></operation>
+    <operation name="getAllInstrumentTypes">
+      <input message="tns:CoordinatedDataAnalysisSystem_getAllInstrumentTypes"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getAllInstrumentTypesResponse"/></operation>
+    <operation name="getAllInstruments">
+      <input message="tns:CoordinatedDataAnalysisSystem_getAllInstruments"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getAllInstrumentsResponse"/></operation>
+    <operation name="getAllMissionGroups">
+      <input message="tns:CoordinatedDataAnalysisSystem_getAllMissionGroups"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getAllMissionGroupsResponse"/></operation>
+    <operation name="getAllViewDescriptions">
+      <input message="tns:CoordinatedDataAnalysisSystem_getAllViewDescriptions"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getAllViewDescriptionsResponse"/></operation>
+    <operation name="getCdasDataFile" parameterOrder="String_1 arrayOfTimeInterval_2">
+      <input message="tns:CoordinatedDataAnalysisSystem_getCdasDataFile"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getCdasDataFileResponse"/></operation>
+    <operation name="getCdasDataFile2" parameterOrder="String_1 arrayOfTimeInterval_2 arrayOfString_3">
+      <input message="tns:CoordinatedDataAnalysisSystem_getCdasDataFile2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getCdasDataFile2Response"/></operation>
+    <operation name="getCdasDataFile3" parameterOrder="String_1 arrayOfTimeInterval_2 arrayOfString_3 int_4">
+      <input message="tns:CoordinatedDataAnalysisSystem_getCdasDataFile3"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getCdasDataFile3Response"/></operation>
+    <operation name="getCdasDataFile4" parameterOrder="String_1 arrayOfTimeInterval_2 int_3">
+      <input message="tns:CoordinatedDataAnalysisSystem_getCdasDataFile4"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getCdasDataFile4Response"/></operation>
+    <operation name="getCdfmlDataFiles" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4 int_5">
+      <input message="tns:CoordinatedDataAnalysisSystem_getCdfmlDataFiles"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getCdfmlDataFilesResponse"/></operation>
+    <operation name="getCdfmlDataFiles2" parameterOrder="String_1 Date_2 Date_3 int_4">
+      <input message="tns:CoordinatedDataAnalysisSystem_getCdfmlDataFiles2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getCdfmlDataFiles2Response"/></operation>
+    <operation name="getCdfmlDataUrls" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4 int_5">
+      <input message="tns:CoordinatedDataAnalysisSystem_getCdfmlDataUrls"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getCdfmlDataUrlsResponse"/></operation>
+    <operation name="getCdfmlDataUrls2" parameterOrder="String_1 Date_2 Date_3 int_4">
+      <input message="tns:CoordinatedDataAnalysisSystem_getCdfmlDataUrls2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getCdfmlDataUrls2Response"/></operation>
+    <operation name="getDataAsText" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataAsText"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataAsTextResponse"/></operation>
+    <operation name="getDataAsText2" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4 Set_5">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataAsText2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataAsText2Response"/></operation>
+    <operation name="getDataFiles" parameterOrder="String_1 Date_2 Date_3">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataFiles"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataFilesResponse"/></operation>
+    <operation name="getDataFiles2" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataFiles2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataFiles2Response"/></operation>
+    <operation name="getDataFiles3" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4 int_5">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataFiles3"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataFiles3Response"/></operation>
+    <operation name="getDataFiles4" parameterOrder="String_1 Date_2 Date_3 Date_4">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataFiles4"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataFiles4Response"/></operation>
+    <operation name="getDataGraph" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataGraph"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataGraphResponse"/></operation>
+    <operation name="getDataGraph2" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4 long_5">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataGraph2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataGraph2Response"/></operation>
+    <operation name="getDataGraph3" parameterOrder="Date_1 Date_2 arrayOfGraphVariableDescription_3 long_4 arrayOfString_5">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataGraph3"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataGraph3Response"/></operation>
+    <operation name="getDataUrls" parameterOrder="String_1 Date_2 Date_3">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataUrls"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataUrlsResponse"/></operation>
+    <operation name="getDataUrls2" parameterOrder="String_1 Date_2 Date_3 arrayOfString_4">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDataUrls2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDataUrls2Response"/></operation>
+    <operation name="getDatasetVariables" parameterOrder="String_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDatasetVariables"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDatasetVariablesResponse"/></operation>
+    <operation name="getDatasets" parameterOrder="arrayOfString_1 arrayOfString_2">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDatasets"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDatasetsResponse"/></operation>
+    <operation name="getDatasets2" parameterOrder="arrayOfString_1 arrayOfString_2 TimeInterval_3 String_4 String_5 String_6">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDatasets2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDatasets2Response"/></operation>
+    <operation name="getDatasetsByInstrument" parameterOrder="arrayOfString_1 arrayOfString_2">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDatasetsByInstrument"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDatasetsByInstrumentResponse"/></operation>
+    <operation name="getDatasetsByInstrument2" parameterOrder="arrayOfString_1 arrayOfString_2 TimeInterval_3 String_4 String_5 String_6">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDatasetsByInstrument2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDatasetsByInstrument2Response"/></operation>
+    <operation name="getDatasetsBySource" parameterOrder="arrayOfString_1 arrayOfString_2">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDatasetsBySource"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDatasetsBySourceResponse"/></operation>
+    <operation name="getDatasetsBySource2" parameterOrder="arrayOfString_1 arrayOfString_2 TimeInterval_3 String_4 String_5 String_6">
+      <input message="tns:CoordinatedDataAnalysisSystem_getDatasetsBySource2"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getDatasetsBySource2Response"/></operation>
+    <operation name="getInstrTypesForGroups" parameterOrder="arrayOfString_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getInstrTypesForGroups"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getInstrTypesForGroupsResponse"/></operation>
+    <operation name="getInstrumentDescriptions" parameterOrder="arrayOfString_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getInstrumentDescriptions"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getInstrumentDescriptionsResponse"/></operation>
+    <operation name="getInstrumentTypes" parameterOrder="arrayOfString_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getInstrumentTypes"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getInstrumentTypesResponse"/></operation>
+    <operation name="getInstruments" parameterOrder="arrayOfString_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getInstruments"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getInstrumentsResponse"/></operation>
+    <operation name="getInventory" parameterOrder="String_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getInventory"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getInventoryResponse"/></operation>
+    <operation name="getMissionGroupDescriptions">
+      <input message="tns:CoordinatedDataAnalysisSystem_getMissionGroupDescriptions"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getMissionGroupDescriptionsResponse"/></operation>
+    <operation name="getSourceDescriptions" parameterOrder="arrayOfString_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getSourceDescriptions"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getSourceDescriptionsResponse"/></operation>
+    <operation name="getSourceDescriptionsByInstrument" parameterOrder="arrayOfString_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getSourceDescriptionsByInstrument"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getSourceDescriptionsByInstrumentResponse"/></operation>
+    <operation name="getSources" parameterOrder="arrayOfString_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getSources"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getSourcesResponse"/></operation>
+    <operation name="getSourcesByInstrument" parameterOrder="arrayOfString_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getSourcesByInstrument"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getSourcesByInstrumentResponse"/></operation>
+    <operation name="getThumbnailExpansion" parameterOrder="ThumbnailDescription_1 int_2">
+      <input message="tns:CoordinatedDataAnalysisSystem_getThumbnailExpansion"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getThumbnailExpansionResponse"/></operation>
+    <operation name="getVariableDescriptions" parameterOrder="String_1">
+      <input message="tns:CoordinatedDataAnalysisSystem_getVariableDescriptions"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_getVariableDescriptionsResponse"/></operation>
+    <operation name="updateMetadataIndex">
+      <input message="tns:CoordinatedDataAnalysisSystem_updateMetadataIndex"/>
+      <output message="tns:CoordinatedDataAnalysisSystem_updateMetadataIndexResponse"/></operation></portType>
+  <binding name="CoordinatedDataAnalysisSystemBinding" type="tns:CoordinatedDataAnalysisSystem">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+    <operation name="getAllInstrumentDescriptions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getAllInstrumentTypes">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getAllInstruments">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getAllMissionGroups">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getAllViewDescriptions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getCdasDataFile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getCdasDataFile2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getCdasDataFile3">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getCdasDataFile4">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getCdfmlDataFiles">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getCdfmlDataFiles2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getCdfmlDataUrls">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getCdfmlDataUrls2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataAsText">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataAsText2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataFiles">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataFiles2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataFiles3">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataFiles4">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataGraph">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataGraph2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataGraph3">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataUrls">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDataUrls2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDatasetVariables">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDatasets">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDatasets2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDatasetsByInstrument">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDatasetsByInstrument2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDatasetsBySource">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getDatasetsBySource2">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getInstrTypesForGroups">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getInstrumentDescriptions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getInstrumentTypes">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getInstruments">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getInventory">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getMissionGroupDescriptions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getSourceDescriptions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getSourceDescriptionsByInstrument">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getSources">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getSourcesByInstrument">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getThumbnailExpansion">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="getVariableDescriptions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation>
+    <operation name="updateMetadataIndex">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded" namespace="http://cdaweb.gsfc.nasa.gov/WS/CDASWS"/></output></operation></binding>
+  <service name="CDASWS">
+    <port name="CoordinatedDataAnalysisSystemPort" binding="tns:CoordinatedDataAnalysisSystemBinding">
+      <soap:address location="https://cdaweb.gsfc.nasa.gov:443/WS/jaxrpc" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"/></port></service></definitions>

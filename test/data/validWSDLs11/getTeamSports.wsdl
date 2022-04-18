@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://{{url}}/soap/services/getTeamSports.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTeamSports" targetNamespace="http://{{url}}/soap/services/getTeamSports.php">
+    <types>
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getTeamSports.php">
+            <xsd:element name="getTeamSports">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="organizationId" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="TeamSports">
+                <xsd:sequence>
+                    <xsd:element name="AssociationId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="AssociationName" type="xsd:string" nillable="true"/>
+                    <xsd:element name="TeamSportId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="TeamSportName" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfTeamSports">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:TeamSports" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getTeamSportsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getTeamSportsResult" type="tns:ArrayOfTeamSports"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getTeamSportsPort">
+        <operation name="getTeamSports">
+            <documentation>Used by Association only.</documentation>
+            <input message="tns:getTeamSportsIn"/>
+            <output message="tns:getTeamSportsOut"/>
+        </operation>
+    </portType>
+    <binding name="getTeamSportsBinding" type="tns:getTeamSportsPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getTeamSports">
+            <soap:operation soapAction="http://{{url}}/soap/services/getTeamSports.php#getTeamSports"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getTeamSportsService">
+        <port name="getTeamSportsPort" binding="tns:getTeamSportsBinding">
+            <soap:address location="http://{{url}}/soap/services/getTeamSports.php"/>
+        </port>
+    </service>
+    <message name="getTeamSportsIn">
+        <part name="parameters" element="tns:getTeamSports"/>
+    </message>
+    <message name="getTeamSportsOut">
+        <part name="parameters" element="tns:getTeamSportsResponse"/>
+    </message>
+</definitions>

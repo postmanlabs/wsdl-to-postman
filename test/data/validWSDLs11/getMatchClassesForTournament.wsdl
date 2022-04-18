@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://{{url}}/soap/services/getMatchClassesForTournament.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getMatchClassesForTournament" targetNamespace="http://{{url}}/soap/services/getMatchClassesForTournament.php">
+    <types>
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getMatchClassesForTournament.php">
+            <xsd:element name="getMatchClassesForTournament">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="competitionId" type="xsd:string" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="MatchGroup">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="MatchClassId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="IsPlayoffLeague" type="xsd:boolean" nillable="true"/>
+                    <xsd:element name="IsPlayoff" type="xsd:boolean" nillable="true"/>
+                    <xsd:element name="PlayoffId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="EndGameLevel" type="xsd:int" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfMatchGroup">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:MatchGroup" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="MatchClass">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="Code" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Gender" type="xsd:string" nillable="true"/>
+                    <xsd:element name="PeriodLengthInMinutes" type="xsd:string" nillable="true"/>
+                    <xsd:element name="HideTable" type="xsd:string" nillable="true"/>
+                    <xsd:element name="HideResults" type="xsd:string" nillable="true"/>
+                    <xsd:element name="NumberOfPeriodsInMatch" type="xsd:string" nillable="true"/>
+                    <xsd:element name="MatchGroups" type="tns:ArrayOfMatchGroup" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfMatchClass">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:MatchClass" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getMatchClassesForTournamentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getMatchClassesForTournamentResult" type="tns:ArrayOfMatchClass"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getMatchClassesForTournamentPort">
+        <operation name="getMatchClassesForTournament">
+            <documentation>Returns the MatchClasses in a tournament</documentation>
+            <input message="tns:getMatchClassesForTournamentIn"/>
+            <output message="tns:getMatchClassesForTournamentOut"/>
+        </operation>
+    </portType>
+    <binding name="getMatchClassesForTournamentBinding" type="tns:getMatchClassesForTournamentPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getMatchClassesForTournament">
+            <soap:operation soapAction="http://{{url}}/soap/services/getMatchClassesForTournament.php#getMatchClassesForTournament"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getMatchClassesForTournamentService">
+        <port name="getMatchClassesForTournamentPort" binding="tns:getMatchClassesForTournamentBinding">
+            <soap:address location="http://{{url}}/soap/services/getMatchClassesForTournament.php"/>
+        </port>
+    </service>
+    <message name="getMatchClassesForTournamentIn">
+        <part name="parameters" element="tns:getMatchClassesForTournament"/>
+    </message>
+    <message name="getMatchClassesForTournamentOut">
+        <part name="parameters" element="tns:getMatchClassesForTournamentResponse"/>
+    </message>
+</definitions>

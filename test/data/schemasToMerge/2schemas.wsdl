@@ -1,0 +1,23 @@
+<wsdl:definitions xmlns:ns1="http://common.services.adyen.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="http://account.marketplace.services.adyen.com">
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" 
+      targetNamespace="http://account.marketplace.services.adyen.com">
+      <xsd:import namespace="http://common.services.adyen.com" />
+      <xsd:element name="AccountHolderDetails">
+        	<xsd:complexType>
+            	<xsd:sequence>
+                	 <xsd:element minOccurs="0" name="address" nillable="true" type="Address" />
+            	</xsd:sequence>
+        	</xsd:complexType>
+   	 </xsd:element>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://common.services.adyen.com">
+      <xsd:complexType name="Address">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="city" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+</wsdl:definitions>

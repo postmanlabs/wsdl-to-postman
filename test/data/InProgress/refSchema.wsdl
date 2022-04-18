@@ -1,0 +1,66 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="XXXYYYZZZ" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="XXXYYYZZZ" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <s:import namespace="http://www.w3.org/2001/XMLSchema" schemaLocation="http://www.w3.org/2001/XMLSchema.xsd" />
+        <s:schema elementFormDefault="qualified" targetNamespace="XXXYYYZZZ">
+            <s:element name="lista_komunikatowRequest">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="lista_komunikatow">
+                            <s:complexType>
+                                <s:sequence>
+                                    <s:element ref="s:schema" />
+                                    <s:any />
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="lista_komunikatowResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="lista_komunikatowResult">
+                            <s:complexType>
+                                <s:sequence>
+                                    <s:element ref="s:schema" />
+                                    <s:any />
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="lista_komunikatowSoapIn">
+        <wsdl:part name="parameters" element="tns:lista_komunikatowRequest" />
+    </wsdl:message>
+    <wsdl:message name="lista_komunikatowSoapOut">
+        <wsdl:part name="parameters" element="tns:lista_komunikatowResponse" />
+    </wsdl:message>
+    <wsdl:portType name="ivrSoap">
+        <wsdl:operation name="lista_komunikatow">
+            <wsdl:input message="tns:lista_komunikatowSoapIn" />
+            <wsdl:output message="tns:lista_komunikatowSoapOut" />
+        </wsdl:operation>
+
+    </wsdl:portType>
+    <wsdl:binding name="ivrSoap" type="tns:ivrSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="lista_komunikatow">
+            <soap:operation soapAction="XXXYYYZZZ/lista_komunikatow" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ivr">
+        <wsdl:port name="ivrSoap" binding="tns:ivrSoap">
+            <soap:address location="http://192.168.1.246/ws/ivr.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

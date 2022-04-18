@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://{{url}}/soap/services/getTournamentRegistrations.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTournamentRegistrations" targetNamespace="http://{{url}}/soap/services/getTournamentRegistrations.php">
+    <types>
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getTournamentRegistrations.php">
+            <xsd:complexType name="ClubKey">
+                <xsd:sequence>
+                    <xsd:element name="club_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_licence" type="xsd:string" nillable="true"/>
+                    <xsd:element name="application_key" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getTournamentRegistrations">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ClubKey" type="tns:ClubKey"/>
+                        <xsd:element name="TournamentId" type="xsd:int" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="TournamentTeamPlayer">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="first_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="last_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_number" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_sports_id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_ranking_points" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_ranking_highest_points" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_ranking_highest_points_period" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_entry_points" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_entry_highest_points" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_entry_highest_points_period" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_club_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_club_id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_sex" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_licence" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_group_number" type="xsd:string" nillable="true"/>
+                    <xsd:element name="player_group_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="function" type="xsd:string" nillable="true"/>
+                    <xsd:element name="shirt_number" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_year" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_date" type="xsd:string" nillable="true"/>
+                    <xsd:element name="email" type="xsd:string" nillable="true"/>
+                    <xsd:element name="telephone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="mobile_phone" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfTournamentTeamPlayer">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:TournamentTeamPlayer" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TournamentTeamOrder">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="Fee_id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="optional_sub_choice" type="xsd:string" nillable="true"/>
+                    <xsd:element name="number_of_items" type="xsd:string" nillable="true"/>
+                    <xsd:element name="price_per_item" type="xsd:string" nillable="true"/>
+                    <xsd:element name="order_total_price" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfTournamentTeamOrder">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:TournamentTeamOrder" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TournamentTeamPayment">
+                <xsd:sequence>
+                    <xsd:element name="class_participant_fee" type="xsd:string" nillable="true"/>
+                    <xsd:element name="class_participant_fee_with_team_discount" type="xsd:string" nillable="true"/>
+                    <xsd:element name="class_participant_fee_registrered_payments_for_team" type="xsd:string" nillable="true"/>
+                    <xsd:element name="orders_sum_total" type="xsd:string" nillable="true"/>
+                    <xsd:element name="orders_registrered_payments_for_team" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TournamentTeamMisc">
+                <xsd:sequence>
+                    <xsd:element name="description" type="xsd:string" nillable="true"/>
+                    <xsd:element name="value" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfTournamentTeamMisc">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:TournamentTeamMisc" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TournamentTeamRegistration">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="team_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_class_code" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_arrival_travel_method" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_arrival_time_freetext" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_arrival_comment" type="xsd:string" nillable="true"/>
+                    <xsd:element name="waiting_list" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_discount" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_discount_cause" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_extrainfo" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_global_id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_shirt_colour" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_shorts_colour" type="xsd:string" nillable="true"/>
+                    <xsd:element name="team_status" type="xsd:string" nillable="true"/>
+                    <xsd:element name="deleted_at" type="xsd:string" nillable="true"/>
+                    <xsd:element name="TournamentTeamPlayers" type="tns:ArrayOfTournamentTeamPlayer" nillable="true"/>
+                    <xsd:element name="TournamentTeamOrders" type="tns:ArrayOfTournamentTeamOrder" nillable="true"/>
+                    <xsd:element name="TournamentTeamPayment" type="tns:TournamentTeamPayment" nillable="true"/>
+                    <xsd:element name="TournamentTeamMiscList" type="tns:ArrayOfTournamentTeamMisc" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfTournamentTeamRegistration">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:TournamentTeamRegistration" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TournamentClubRegistration">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="club_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_name_abbreviation" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_contact" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_contact_street_address" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_contact_postal_code" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_contact_postal_town" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_contact_telephone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_contact_mobile_phone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_contact_email" type="xsd:string" nillable="true"/>
+                    <xsd:element name="shirt_colour" type="xsd:string" nillable="true"/>
+                    <xsd:element name="shorts_colour" type="xsd:string" nillable="true"/>
+                    <xsd:element name="region" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_postal_code" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_land" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_gid" type="xsd:string" nillable="true"/>
+                    <xsd:element name="club_region_id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="country_id" type="xsd:string" nillable="true"/>
+                    <xsd:element name="TournamentTeamRegistrations" type="tns:ArrayOfTournamentTeamRegistration" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfTournamentClubRegistration">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:TournamentClubRegistration" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TournamentRegistration">
+                <xsd:sequence>
+                    <xsd:element name="TournamentClubRegistrations" type="tns:ArrayOfTournamentClubRegistration" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getTournamentRegistrationsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getTournamentRegistrationsResult" type="tns:TournamentRegistration"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getTournamentRegistrationsPort">
+        <operation name="getTournamentRegistrations">
+            <documentation>Returns registred clubs and teams and  for a tournament.</documentation>
+            <input message="tns:getTournamentRegistrationsIn"/>
+            <output message="tns:getTournamentRegistrationsOut"/>
+        </operation>
+    </portType>
+    <binding name="getTournamentRegistrationsBinding" type="tns:getTournamentRegistrationsPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getTournamentRegistrations">
+            <soap:operation soapAction="http://{{url}}/soap/services/getTournamentRegistrations.php#getTournamentRegistrations"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getTournamentRegistrationsService">
+        <port name="getTournamentRegistrationsPort" binding="tns:getTournamentRegistrationsBinding">
+            <soap:address location="http://{{url}}/soap/services/getTournamentRegistrations.php"/>
+        </port>
+    </service>
+    <message name="getTournamentRegistrationsIn">
+        <part name="parameters" element="tns:getTournamentRegistrations"/>
+    </message>
+    <message name="getTournamentRegistrationsOut">
+        <part name="parameters" element="tns:getTournamentRegistrationsResponse"/>
+    </message>
+</definitions>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://{{url}}/soap/services/getTeamContactsForSeason.php"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="getTeamContactsForSeason" targetNamespace="http://{{url}}/soap/services/getTeamContactsForSeason.php">
+    <types>
+        <xsd:schema targetNamespace="http://{{url}}/soap/services/getTeamContactsForSeason.php">
+            <xsd:element name="getTeamContactsForSeason">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="application_key" type="xsd:string"/>
+                        <xsd:element name="association" type="xsd:string" nillable="true"/>
+                        <xsd:element name="seasonID" type="xsd:int" nillable="true"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="Person">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int" nillable="true"/>
+                    <xsd:element name="last_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="first_name" type="xsd:string" nillable="true"/>
+                    <xsd:element name="gender" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_year" type="xsd:string" nillable="true"/>
+                    <xsd:element name="birth_date" type="xsd:date" nillable="true"/>
+                    <xsd:element name="phone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="email" type="xsd:string" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfPerson">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:Person" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="GlobalTeamWithContacts">
+                <xsd:sequence>
+                    <xsd:element name="TeamGlobalId" type="xsd:string" nillable="true"/>
+                    <xsd:element name="TeamName" type="xsd:string" nillable="true"/>
+                    <xsd:element name="TeamEmail" type="xsd:string" nillable="true"/>
+                    <xsd:element name="TeamPhone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="ClubGlobalId" type="xsd:int" nillable="true"/>
+                    <xsd:element name="ClubEmail" type="xsd:string" nillable="true"/>
+                    <xsd:element name="ClubPhone" type="xsd:string" nillable="true"/>
+                    <xsd:element name="ClubContactName" type="xsd:string" nillable="true"/>
+                    <xsd:element name="TeamContactPerson" type="tns:ArrayOfPerson" nillable="true"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfGlobalTeamWithContacts">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:GlobalTeamWithContacts" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getTeamContactsForSeasonResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="getTeamContactsForSeasonResult" type="tns:ArrayOfGlobalTeamWithContacts"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <portType name="getTeamContactsForSeasonPort">
+        <operation name="getTeamContactsForSeason">
+            <documentation>Used by Associations only</documentation>
+            <input message="tns:getTeamContactsForSeasonIn"/>
+            <output message="tns:getTeamContactsForSeasonOut"/>
+        </operation>
+    </portType>
+    <binding name="getTeamContactsForSeasonBinding" type="tns:getTeamContactsForSeasonPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getTeamContactsForSeason">
+            <soap:operation soapAction="http://{{url}}/soap/services/getTeamContactsForSeason.php#getTeamContactsForSeason"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="getTeamContactsForSeasonService">
+        <port name="getTeamContactsForSeasonPort" binding="tns:getTeamContactsForSeasonBinding">
+            <soap:address location="http://{{url}}/soap/services/getTeamContactsForSeason.php"/>
+        </port>
+    </service>
+    <message name="getTeamContactsForSeasonIn">
+        <part name="parameters" element="tns:getTeamContactsForSeason"/>
+    </message>
+    <message name="getTeamContactsForSeasonOut">
+        <part name="parameters" element="tns:getTeamContactsForSeasonResponse"/>
+    </message>
+</definitions>

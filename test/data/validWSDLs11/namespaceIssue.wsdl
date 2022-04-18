@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+  xmlns:wd-wsdl="some/url/Human_Resources" 
+  xmlns:wd="some/url" 
+  xmlns:nyw="nywurl/aod" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/" 
+  xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/"
+  name="Human_Resources" 
+  targetNamespace="some/url/Human_Resources">
+  <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="some/url">
+      <xsd:element name="Business_Site_Find" type="wd:Business_Site_FindType"/>
+      <xsd:element name="Validation_Fault" type="wd:Validation_FaultType"/>
+      <xsd:element name="Processing_Fault" type="wd:Processing_FaultType"/>
+      <xsd:element name="Organization_Reference" type="wd:Organization_ReferenceRootType"/>
+      <xsd:element name="Contingent_Worker_Contract_Info_Get" type="wd:Contingent_Worker_Contract_Info_GetType"/>
+      <xsd:element name="Worker_Profile_Get" type="wd:Worker_Profile_GetType"/>
+      <xsd:element name="Workday_Common_Header" type="wd:Workday_Common_HeaderType"/>
+      <xsd:attribute name="version" type="xsd:string" wd:fixed="v36.2"/>
+      <xsd:simpleType name="RichText">
+        <xsd:restriction base="xsd:string"/>
+      </xsd:simpleType>
+    
+  
+      <xsd:simpleType name="RoleReferenceEnumeration">
+        <xsd:restriction base="xsd:string">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <wd:enumeration value="WID"/>
+              <wd:enumeration value="Academic_Affiliate_ID"/>
+              <wd:enumeration value="Academic_Contact_ID"/>
+              <wd:enumeration value="Academic_Person_ID"/>
+              <wd:enumeration value="Applicant_ID"/>
+              <wd:enumeration value="Beneficiary_ID"/>
+              <wd:enumeration value="Business_Entity_Contact_ID"/>
+              <wd:enumeration value="Candidate_ID"/>
+              <wd:enumeration value="Company_Reference_ID"/>
+              <wd:enumeration value="Contingent_Worker_ID"/>
+              <wd:enumeration value="Cost_Center_Reference_ID"/>
+              <wd:enumeration value="Custom_Organization_Reference_ID"/>
+              <wd:enumeration value="Dependent_ID"/>
+              <wd:enumeration value="Emergency_Contact_ID"/>
+              <wd:enumeration value="Employee_ID"/>
+              <wd:enumeration value="Extended_Enterprise_Learner_ID"/>
+              <wd:enumeration value="External_Committee_Member_ID"/>
+              <wd:enumeration value="External_Learning_Instructor_ID"/>
+              <wd:enumeration value="External_Learning_User_ID"/>
+              <wd:enumeration value="Former_Worker_ID"/>
+              <wd:enumeration value="Instructor_ID"/>
+              <wd:enumeration value="Learning_Assessor_ID"/>
+              <wd:enumeration value="Learning_Instructor_ID"/>
+              <wd:enumeration value="LearningUserName"/>
+              <wd:enumeration value="Notification_System_Account_Reference_ID"/>
+              <wd:enumeration value="Organization_Reference_ID"/>
+              <wd:enumeration value="Recruiting_Agency_User_ID"/>
+              <wd:enumeration value="RecruitingUserName"/>
+              <wd:enumeration value="Referee_ID"/>
+              <wd:enumeration value="Region_Reference_ID"/>
+              <wd:enumeration value="Service_Center_Representative_ID"/>
+              <wd:enumeration value="Student_ID"/>
+              <wd:enumeration value="Student_Proxy_ID"/>
+              <wd:enumeration value="Student_Recruiter_ID"/>
+              <wd:enumeration value="StudentUserName"/>
+              <wd:enumeration value="SupplierUserName"/>
+              <wd:enumeration value="System_User_ID"/>
+              <wd:enumeration value="System_User_OpenID"/>
+              <wd:enumeration value="System_User_OpenID_Connect_Internal"/>
+              <wd:enumeration value="System_User_OpenID_Internal"/>
+              <wd:enumeration value="WorkdayUserName"/>
+            </xsd:appinfo>
+          </xsd:annotation>
+        </xsd:restriction>
+      </xsd:simpleType>
+
+      <xsd:complexType name="Instance_IDType">
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="parent_id" type="xsd:string"/>
+            <xsd:attribute name="parent_type" type="xsd:string"/>
+            <xsd:attribute name="type" type="xsd:string"/>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:complexType name="Business_Site_FindType">
+        <xsd:annotation>
+          <xsd:documentation>Utilize the following criteria options to search for Locations within the Workday system.  The Location references that are returned are those that satisfy ALL criteria included in the request.  Therefore, the result set will become more limited with every criteria that is populated.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Location_Name" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>If specified, this search criterium will return those references with an exact match.  The search index used to query on this value is not case-sensitive.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute ref="wd:version"/>
+      </xsd:complexType>
+      <xsd:complexType name="Validation_FaultType">
+        <xsd:sequence>
+          <xsd:element name="Validation_Error" type="wd:Validation_ErrorType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Validation_ErrorType">
+        <xsd:sequence>
+          <xsd:element name="Message" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="Detail_Message" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="Xpath" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Processing_FaultType">
+        <xsd:sequence>
+          <xsd:element name="Detail_Message" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Organization_ReferenceRootType">
+        <xsd:complexContent>
+          <xsd:extension base="wd:Organization_ReferenceType">
+            <xsd:attribute ref="wd:version"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Contingent_Worker_Contract_Info_GetType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Utilize the following Reference element (and other optional attributes) to retrieve an instance of Contingent Worker and his/her Contract Information.</xsd:documentation></xsd:annotation><xsd:sequence><xsd:element name="Contingent_Worker_Reference" type="wd:Contingent_Worker_Reference_DataType"/></xsd:sequence><xsd:attribute name="As_Of_Date" type="xsd:date"><xsd:annotation><xsd:documentation>Defines the As Of Date to be used for any application effective dated data within the Workday system.  For "Find" operations, the "As Of Date" determines what data to be used within the search logic.  For "Get" operations, the response element will only include data that is the most effective as of the "As Of Date".</xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute name="As_Of_Moment" type="xsd:dateTime"><xsd:annotation><xsd:documentation>Defines the latest moment (e.g. datetime) data was entered into the Workday system.  For "Find" operations, the "As Of Moment" determines what data to be used within the search logic.  For "Get" operations, the response element will only include data entered into Workday before the "As Of Moment".
+          </xsd:documentation>
+        </xsd:annotation>
+        </xsd:attribute><xsd:attribute ref="wd:version"/>
+      </xsd:complexType>
+
+      <xsd:complexType name="Organization_ReferenceType">
+        <xsd:annotation>
+          <xsd:documentation>Reference element representing a unique instance of Organization.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>A valid instance of Organization must exist for the given Integration ID Reference.</xsd:documentation>
+              <wd:Validation_Message>Organization Reference Integration ID does not exist!</wd:Validation_Message>
+            </wd:Validation>
+            <wd:Validation>
+              <xsd:documentation>A valid instance of Organization also infers that the Organization is in an Active status.</xsd:documentation>
+              <wd:Validation_Message>Organization Reference references an Inactive Organization.</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Integration_ID_Reference" type="wd:External_Integration_ID_Reference_DataType"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="External_Integration_ID_Reference_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Integration ID reference is used as a unique identifier for integratable objects in the Workday system.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="ID" type="wd:IDType"/>
+        </xsd:sequence>
+        <xsd:attribute name="Descriptor" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Display name inside the Workday system.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:complexType>
+      <xsd:complexType name="IDType">
+        <xsd:annotation>
+          <xsd:documentation>External ID that uniquely identifies the integratable object within the context of the integration system identified by the System ID attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="System_ID" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>Integration system identifier, part of a two part key (including the text value of the ID element) that uniquely identify integratable object.</xsd:documentation>
+                <xsd:appinfo>
+                  <wd:Validation>
+                    <xsd:documentation>A valid instance of Integration ID must exist for the given System ID.</xsd:documentation>
+                    <wd:Validation_Message>Integration System ID does not exist.</wd:Validation_Message>
+                  </wd:Validation>
+                </xsd:appinfo>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:complexType name="Worker_Profile_GetType">
+        <xsd:annotation>
+          <xsd:documentation>Utilize the following Reference element (and other optional attributes) to retrieve an instance of Worker and his/her summarized Personal and Employment/Contract information.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Worker_Reference" type="wd:Worker_ReferenceType"/>
+        </xsd:sequence>
+        <xsd:attribute name="As_Of_Date" type="xsd:date">
+          <xsd:annotation>
+            <xsd:documentation>Defines the As Of Date to be used for any application effective dated data within the Workday system.  For "Find" operations, the "As Of Date" determines what data to be used within the search logic.  For "Get" operations, the response element will only include data that is the most effective as of the "As Of Date".</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+          <xsd:attribute name="As_Of_Moment" type="xsd:dateTime">
+          <xsd:annotation>
+            <xsd:documentation>Defines the latest moment (e.g. datetime) data was entered into the Workday system.  For "Find" operations, the "As Of Moment" determines what data to be used within the search logic.  For "Get" operations, the response element will only include data entered into Workday before the "As Of Moment".</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute ref="wd:version"/>
+      </xsd:complexType>
+
+      <xsd:complexType name="Worker_ReferenceType">
+        <xsd:annotation>
+          <xsd:documentation>Reference element representing a unique instance of Worker (e.g. Employee or Contingent Worker).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="Employee_Reference" type="wd:Employee_ReferenceType"/>
+            <xsd:element name="Contingent_Worker_Reference" type="wd:Contingent_Worker_Reference_DataType"/>
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Employee_ReferenceType">
+        <xsd:annotation>
+          <xsd:documentation>Reference element representing a unique instance of Employee.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>A valid instance of Employee must exist for the given Integration ID Reference.</xsd:documentation>
+              <wd:Validation_Message>Employee Reference Integration ID does not exist!</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Integration_ID_Reference" type="wd:External_Integration_ID_Reference_DataType"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Contingent_Worker_Reference_DataType">
+        <xsd:annotation>
+          <xsd:documentation>Reference element representing a unique instance of Contingent Worker.</xsd:documentation>
+          <xsd:appinfo>
+            <wd:Validation>
+              <xsd:documentation>A valid instance of Contingent Worker must exist for the given Integration ID Reference.</xsd:documentation>
+              <wd:Validation_Message>Contingent Worker Reference Integration ID does not exist!</wd:Validation_Message>
+            </wd:Validation>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Integration_ID_Reference" type="wd:External_Integration_ID_Reference_DataType"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="Workday_Common_HeaderType">
+        <xsd:sequence>
+          <xsd:element name="Include_Reference_Descriptors_In_Response" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="Business_Site_FindInputMsg"><wsdl:part name="body" element="wd:Business_Site_Find"/></wsdl:message>
+  <wsdl:message name="Business_Site_ReferencesOutputMsg"><wsdl:part name="body" element="wd:Business_Site_Find"/></wsdl:message>
+  <wsdl:message name="Validation_FaultMsg"><wsdl:part name="body" element="wd:Validation_Fault"/></wsdl:message>
+  <wsdl:message name="Processing_FaultMsg"><wsdl:part name="body" element="wd:Processing_Fault"/></wsdl:message>
+  <wsdl:message name="Contingent_Worker_Contract_Info_GetInputMsg"><wsdl:part name="body" element="wd:Contingent_Worker_Contract_Info_Get"/></wsdl:message>
+  <wsdl:message name="Contingent_Worker_Contract_InfoOutputMsg"><wsdl:part name="body" element="wd:Contingent_Worker_Contract_Info_Get"/></wsdl:message>
+  <wsdl:message name="Worker_Profile_GetInputMsg"><wsdl:part name="body" element="wd:Worker_Profile_Get"/></wsdl:message>
+  <wsdl:message name="Worker_ProfileOutputMsg"><wsdl:part name="body" element="wd:Worker_Profile_Get"/></wsdl:message>
+  <wsdl:message name="Workday_Common_HeaderMsg">
+    <wsdl:part name="header" element="wd:Workday_Common_Header"/>
+  </wsdl:message>
+
+  <wsdl:portType name="Human_ResourcesPort">
+    <wsdl:operation name="Find_Business_Site">
+      <wsdl:documentation>DEPRECATED: This w  eb service operation is deprecated. Please use the Get Locations web service operation instead.  
+
+      This operation responds with a set of references to Business Sites that match the criteria specified in the request element.<wd:Deprecated>1</wd:Deprecated>
+      </wsdl:documentation>
+      <wsdl:input name="Find_Business_SiteInput" message="wd-wsdl:Business_Site_FindInputMsg"/>
+      <wsdl:output name="Find_Business_SiteOutput" message="wd-wsdl:Business_Site_ReferencesOutputMsg" />
+      <wsdl:fault name="Validation_Fault" message="wd-wsdl:Validation_FaultMsg"/>
+      <wsdl:fault name="Processing_Fault" message="wd-wsdl:Processing_FaultMsg"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="Get_Contingent_Worker_Contract_Info">
+      <wsdl:documentation>This operation retrieves data related to a Contingent Worker and his/her Contract information.</wsdl:documentation>
+      <wsdl:input name="Get_Contingent_Worker_Contract_InfoInput" message="wd-wsdl:Contingent_Worker_Contract_Info_GetInputMsg"/>
+      <wsdl:output name="Get_Contingent_Worker_Contract_InfoOutput" message="wd-wsdl:Contingent_Worker_Contract_InfoOutputMsg"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="Get_Worker_Profile">
+      <wsdl:documentation>This operation retrieves a subset of data related to a Worker (e.g. Employee and Contingent Worker) and his/her Employment/Contract, Personal and Compensation information.</wsdl:documentation>
+      <wsdl:input name="Get_Worker_ProfileInput" message="wd-wsdl:Worker_Profile_GetInputMsg"/>
+      <wsdl:output name="Get_Worker_ProfileOutput" message="wd-wsdl:Worker_ProfileOutputMsg" />
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
+    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Find_Business_Site">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Find_Business_SiteInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Find_Business_SiteOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Processing_Fault">
+        <soapbind:fault name="Processing_Fault" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="Validation_Fault">
+        <soapbind:fault name="Validation_Fault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+
+
+    <wsdl:operation name="Get_Contingent_Worker_Contract_Info">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Get_Contingent_Worker_Contract_InfoInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_Contingent_Worker_Contract_InfoOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Processing_Fault">
+        <soapbind:fault name="Processing_Fault" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="Validation_Fault">
+        <soapbind:fault name="Validation_Fault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="Get_Worker_Profile">
+      <soapbind:operation style="document" />
+      <wsdl:input name="Get_Worker_ProfileInput">
+        <soapbind:body use="literal" />
+        <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_Worker_ProfileOutput">
+        <soapbind:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Processing_Fault">
+        <soapbind:fault name="Processing_Fault" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="Validation_Fault">
+        <soapbind:fault name="Validation_Fault" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <wsdl:service name="Human_ResourcesService">
+    <wsdl:port name="Human_Resources" binding="wd-wsdl:Human_ResourcesBinding">
+      <soapbind:address location="Human_Resources"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

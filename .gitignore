@@ -1,0 +1,18 @@
+# PLATFORM
+# ========
+# All exclusions that are specific to the NPM, GIT, IDE and Operating Systems.
+
+# - Do not allow installed node modules to be committed. Doing `npm install -d` will bring them in root or other places.
+node_modules
+# - Do not allow nyc output folder to be commited
+.nyc_output
+# - Do not allow output files to be commited
+temp3.xml
+# - Do not allow package-lock.json to be uploaded
+package-lock.json
+# - Do not allow IDE conf to be uploaded
+.vscode
+# - Mac OS files
+.DS_Store
+
+/test/convert-validation/output
