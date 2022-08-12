@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="server2.Business.User.ReadUserSecurityProfile"
+    targetNamespace="http://www.server.com/soapservice/server2.Business.User.ReadUserSecurityProfile/wsdl"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.server.com/soapservice/server2.Business.User.ReadUserSecurityProfile/wsdl"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.server.com/soapservice/xsd1">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified" targetNamespace="http://www.server.com/soapservice/xsd1">
+            <element name="ReadUserSecurityProfile">
+                <complexType>
+                    <sequence>
+                        <element minOccurs="0"
+                            name="ReadUserSecurityProfile" type="xsd1:ReadUserSecurityProfile"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="ReadUserSecurityProfile">
+                <sequence>
+                    <element minOccurs="0" name="UserId" type="xsd1:UserId"/>
+                    <element minOccurs="0" name="Name" type="xsd1:Name"/>
+                    <element minOccurs="0" name="Facility" type="xsd1:Facility"/>
+                    <element minOccurs="0"
+                        name="DisplayAllProfileDetailFacilityIsBlank" type="boolean"/>
+                </sequence>
+            </complexType>
+            <simpleType name="UserId">
+                <restriction base="string">
+                    <maxLength value="8"/>
+                </restriction>
+            </simpleType>
+            <complexType name="Name">
+                <sequence>
+                    <element minOccurs="0" name="First" type="xsd1:First"/>
+                    <element minOccurs="0" name="Last" type="xsd1:Last"/>
+                </sequence>
+            </complexType>
+            <simpleType name="First">
+                <restriction base="string">
+                    <maxLength value="15"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="Last">
+                <restriction base="string">
+                    <maxLength value="20"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="Facility">
+                <restriction base="string">
+                    <maxLength value="3"/>
+                </restriction>
+            </simpleType>
+            <element name="ReadUserSecurityProfileResult">
+                <complexType>
+                    <sequence>
+                        <element minOccurs="0"
+                            name="ReadUserSecurityProfileResponse" type="xsd1:ReadUserSecurityProfileResponse"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="ReadUserSecurityProfileResponse">
+                <sequence>
+                    <element minOccurs="0" name="UserId" type="xsd1:UserId"/>
+                    <element minOccurs="0" name="Name" type="xsd1:Name2"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="ReadSecurityProfilesDetails" type="xsd1:ReadSecurityProfilesDetails"/>
+                    <element minOccurs="0" name="StandardReply" type="xsd1:StandardReply"/>
+                </sequence>
+            </complexType>
+            <complexType name="Name2">
+                <sequence>
+                    <element minOccurs="0" name="Last" type="xsd1:Last"/>
+                    <element minOccurs="0" name="First" type="xsd1:First"/>
+                    <element minOccurs="0" name="Initial" type="xsd1:Initial"/>
+                </sequence>
+            </complexType>
+            <simpleType name="Initial">
+                <restriction base="string">
+                    <maxLength value="1"/>
+                </restriction>
+            </simpleType>
+            <complexType name="ReadSecurityProfilesDetails">
+                <sequence>
+                    <element minOccurs="0" name="SecurityProfile" type="xsd1:SecurityProfile"/>
+                    <element minOccurs="0" name="Facility" type="xsd1:Facility"/>
+                    <element minOccurs="0" name="View" type="xsd1:View"/>
+                    <element minOccurs="0" name="SecurityEvent" type="xsd1:UserId"/>
+                    <element minOccurs="0" name="StartDate" type="date"/>
+                    <element minOccurs="0" name="EndDate" type="date"/>
+                    <element minOccurs="0" name="SecurityEventType" type="xsd1:Initial"/>
+                    <element minOccurs="0" name="PrimUnconditional" type="xsd1:Initial"/>
+                    <element minOccurs="0" name="PrimaryFacility" type="xsd1:Initial"/>
+                    <element minOccurs="0" name="SecondaryFacility" type="xsd1:Initial"/>
+                    <element minOccurs="0" name="SecondaryOther" type="xsd1:Initial"/>
+                    <element minOccurs="0" name="Description" type="xsd1:Description"/>
+                    <element name="SequenceNbr" type="long"/>
+                    <element minOccurs="0" name="TimeStamp" type="xsd1:TimeStamp"/>
+                </sequence>
+            </complexType>
+            <simpleType name="SecurityProfile">
+                <restriction base="string">
+                    <maxLength value="12"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="View">
+                <restriction base="string">
+                    <maxLength value="2"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="Description">
+                <restriction base="string">
+                    <maxLength value="40"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="TimeStamp">
+                <restriction base="string">
+                    <maxLength value="26"/>
+                </restriction>
+            </simpleType>
+            <complexType name="StandardReply">
+                <sequence>
+                    <element minOccurs="0" name="ReplyMessages" type="xsd1:ReplyMessages"/>
+                </sequence>
+            </complexType>
+            <complexType name="ReplyMessages">
+                <sequence>
+                    <element name="ReturnCode" type="long"/>
+                    <element name="ErrorMsgCount" type="long"/>
+                    <element name="WarningMsgCount" type="long"/>
+                    <element name="InfoMsgCount" type="long"/>
+                    <element maxOccurs="unbounded" name="MessageEntry" type="xsd1:MessageEntry"/>
+                </sequence>
+            </complexType>
+            <complexType name="MessageEntry">
+                <sequence>
+                    <element minOccurs="0" name="Type" type="string"/>
+                    <element minOccurs="0" name="Code" type="string"/>
+                    <element minOccurs="0" name="Text" type="string"/>
+                </sequence>
+            </complexType>
+        </schema>
+    </types>
+    <message name="ReadUserSecurityProfileRequest">
+        <part element="xsd1:ReadUserSecurityProfile" name="ReadUserSecurityProfile"/>
+    </message>
+    <message name="ReadUserSecurityProfileResponse">
+        <part element="xsd1:ReadUserSecurityProfileResult" name="ReadUserSecurityProfileResult"/>
+    </message>
+    <portType name="server2.Business.User.ReadUserSecurityProfileSoapPort">
+        <operation name="ReadUserSecurityProfile">
+            <input message="tns:ReadUserSecurityProfileRequest"/>
+            <output message="tns:ReadUserSecurityProfileResponse"/>
+        </operation>
+    </portType>
+    <binding
+        name="server2.Business.User.ReadUserSecurityProfileSoapBinding" type="tns:server2.Business.User.ReadUserSecurityProfileSoapPort">
+        <soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="ReadUserSecurityProfile">
+            <soap:operation
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="urn:doc?in=ReadUserSecurityProfile?out=ReadUserSecurityProfileResult?path=server2.Business.User.ReadUserSecurityProfile"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="server2.Business.User.ReadUserSecurityProfile">
+        <port
+            binding="tns:server2.Business.User.ReadUserSecurityProfileSoapBinding" name="server2.Business.User.ReadUserSecurityProfilePort">
+            <soap:address
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="http://1.2.3.4/as/fa/serverServer"/>
+        </port>
+    </service>
+</definitions>
