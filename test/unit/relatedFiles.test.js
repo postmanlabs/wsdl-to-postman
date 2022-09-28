@@ -11,12 +11,15 @@ const { getAdjacentAndMissing,
   COUNTING_SEPARATED = '../data/separatedFiles/counting',
   ALL_IMPORT_PRESENT = '../data/separatedFiles/allImportPresent',
   INCLUDE_TAG = '../data/separatedFiles/includeTag',
+  MISSING_IMPORT = '../data/separatedFiles/missingImport',
   ALL_P_SERVICE = path.join(__dirname, ALL_IMPORT_PRESENT + '/CountingCategoryService.wsdl'),
   ALL_P_DATA = path.join(__dirname, ALL_IMPORT_PRESENT + '/CountingCategoryData.xsd'),
   C_C_SERVICE = path.join(__dirname, COUNTING_SEPARATED + '/CountingCategoryService.wsdl'),
   C_C_DATA = path.join(__dirname, COUNTING_SEPARATED + '/CountingCategoryData.xsd'),
   I_T_SERVICE = path.join(__dirname, INCLUDE_TAG + '/Services.wsdl'),
-  I_T_TYPES = path.join(__dirname, INCLUDE_TAG + '/Types.xsd');
+  I_T_TYPES = path.join(__dirname, INCLUDE_TAG + '/Types.xsd'),
+  M_I_SERVICE = path.join(__dirname, MISSING_IMPORT + '/CountingCategoryService.wsdl'),
+  M_I_DATA = path.join(__dirname, MISSING_IMPORT + '/CountingCategoryData.xsd');
 
 describe('getReferences function', function () {
   it('should return one reference for CC service file"', function () {
@@ -181,6 +184,24 @@ describe('getRelatedFiles function ', function () {
   // });
 
   it('should return adjacent and missing nodes', function () {
+    const cCService = fs.readFileSync(M_I_SERVICE, 'utf8'),
+      cCData = fs.readFileSync(M_I_DATA, 'utf8'),
+      rootNode = {
+        fileName: '/CountingCategoryService.wsdl',
+        content: cCService
+      },
+      inputData = [{
+        fileName: '/CountingCategoryData.xsd',
+        content: cCData
+      }],
+      { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData, xmlParser);
+    expect(relatedFiles.length).to.equal(1);
+    expect(relatedFiles[0].path).to.equal('/CountingCategoryData.xsd');
+    expect(missingRelatedFiles.length).to.equal(1);
+    expect(missingRelatedFiles[0].path).to.equal('/CommonData.xsd');
+  });
+
+  it('should return adjacent and missing nodes with schema location property', function () {
     const cCService = fs.readFileSync(C_C_SERVICE, 'utf8'),
       cCData = fs.readFileSync(C_C_DATA, 'utf8'),
       rootNode = {
@@ -197,21 +218,5 @@ describe('getRelatedFiles function ', function () {
     expect(missingRelatedFiles.length).to.equal(1);
     expect(missingRelatedFiles[0].schemaLocation).to.equal('../../../common/v1/CommonData.xsd');
   });
-
-  // it('should return missing nodes with $ref property', function () {
-  //   const contentFileMissedRef = fs.readFileSync(missedRefOut, 'utf8'),
-  //     rootNode = {
-  //       fileName: '/missedRef.yaml',
-  //       content: contentFileMissedRef
-  //     },
-  //     inputData = [],
-  //     { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData);
-  //   expect(relatedFiles.length).to.equal(0);
-  //   expect(missingRelatedFiles.length).to.equal(2);
-  //   expect(missingRelatedFiles[0].path).to.equal('/Pet.yaml');
-  //   expect(missingRelatedFiles[0].$ref).to.be.undefined;
-  //   expect(missingRelatedFiles[1].path).to.equal(null);
-  //   expect(missingRelatedFiles[1].$ref).to.equal('../../common/Error.yaml');
-  // });
 
 });
