@@ -1,4 +1,8 @@
-const { getAdjacentAndMissing, getReferences } = require('./../../lib/relatedFiles'),
+const { getAdjacentAndMissing,
+    getReferences,
+    calculatePath,
+    calculatePathMissing,
+    getRelatedFiles } = require('./../../lib/relatedFiles'),
   expect = require('chai').expect,
   fs = require('fs'),
   path = require('path'),
@@ -31,6 +35,56 @@ describe('getReferences function', function () {
   });
 });
 
+describe('calculatePath function', function () {
+  it('should return the path relative to the parent', function () {
+    const result = calculatePath('sf/newpet.yaml', '../error.yaml');
+    expect(result).to.equal('error.yaml');
+  });
+  it('should return the path relative to the parent inside a folder', function () {
+    const result = calculatePath('sf/spec/newpet.yaml', '../common/error.yaml');
+    expect(result).to.equal('sf/common/error.yaml');
+  });
+});
+
+describe('calculatePathMissing function', function () {
+
+  it('should calculate path and schemaLocation for absolut and relative paths', function () {
+    const result = calculatePathMissing('newpet.yaml', '../../../common/error.yaml'),
+      result1 = calculatePathMissing('sf/newpet.yaml', '../../../common/error.yaml'),
+      result2 = calculatePathMissing('/sf/newpet.yaml', '../../../common/error.yaml'),
+      result3 = calculatePathMissing('/newpet.yaml', '../../../../common/error.yaml'),
+      result4 = calculatePathMissing('newpet.yaml', '/common/error.yaml'),
+      result5 = calculatePathMissing('/missedRef.yaml', 'Pet.yaml'),
+      result6 = calculatePathMissing('/newpet.yaml', '/common/error.yaml'),
+      result7 = calculatePathMissing('/a/sf/newpet.yaml', '../common/error.yaml');
+
+    expect(result.path).to.be.undefined;
+    expect(result.schemaLocation).to.equal('../../../common/error.yaml');
+
+    expect(result1.path).to.be.undefined;
+    expect(result1.schemaLocation).to.equal('../../../common/error.yaml');
+
+    expect(result2.path).to.be.undefined;
+    expect(result2.schemaLocation).to.equal('../../../common/error.yaml');
+
+    expect(result3.path).to.be.undefined;
+    expect(result3.schemaLocation).to.equal('../../../../common/error.yaml');
+
+    expect(result4.schemaLocation).to.be.undefined;
+    expect(result4.path).to.equal('common/error.yaml');
+
+    expect(result5.schemaLocation).to.be.undefined;
+    expect(result5.path).to.equal('/Pet.yaml');
+
+    expect(result6.schemaLocation).to.be.undefined;
+    expect(result6.path).to.equal('/common/error.yaml');
+
+    expect(result7.schemaLocation).to.be.undefined;
+    expect(result7.path).to.equal('/a/common/error.yaml');
+
+  });
+
+});
 
 describe('getAdjacentAndMissing function', function () {
   it('should return adjacent and no missing nodes', function () {
@@ -84,5 +138,80 @@ describe('getAdjacentAndMissing function', function () {
     expect(graphAdj[0].fileName).to.equal('/Types.xsd');
     expect(missingNodes.length).to.equal(0);
   });
+
+});
+
+describe('getRelatedFiles function ', function () {
+
+  // it('should return related in a folder structure with local pointers in $ref', function () {
+  //   const swaggerRootContent = fs.readFileSync(swaggerRoot, 'utf8'),
+  //     petContent = fs.readFileSync(petstoreSeparatedPet, 'utf8'),
+  //     parametersContent = fs.readFileSync(petstoreSeparatedPet, 'utf8'),
+  //     newPetContent = fs.readFileSync(newPet, 'utf8'),
+  //     errorContent = fs.readFileSync(petstoreSeparatedError, 'utf8'),
+  //     rootNode = {
+  //       fileName: 'spec/swagger.yaml',
+  //       content: swaggerRootContent
+  //     },
+  //     inputData = [
+  //       {
+  //         fileName: 'spec/Pet.yaml',
+  //         content: petContent
+  //       },
+  //       {
+  //         fileName: 'spec/parameters.yaml',
+  //         content: parametersContent
+  //       },
+  //       {
+  //         fileName: 'spec/NewPet.yaml',
+  //         content: newPetContent
+  //       },
+  //       {
+  //         fileName: 'common/Error.yaml',
+  //         content: errorContent
+  //       }
+  //     ],
+  //     { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData);
+  //   expect(relatedFiles.length).to.equal(4);
+  //   expect(relatedFiles[0].path).to.equal('spec/NewPet.yaml');
+  //   expect(relatedFiles[1].path).to.equal('spec/Pet.yaml');
+  //   expect(relatedFiles[2].path).to.equal('common/Error.yaml');
+  //   expect(relatedFiles[3].path).to.equal('spec/parameters.yaml');
+  //   expect(missingRelatedFiles.length).to.equal(0);
+  // });
+
+  it('should return adjacent and missing nodes', function () {
+    const cCService = fs.readFileSync(C_C_SERVICE, 'utf8'),
+      cCData = fs.readFileSync(C_C_DATA, 'utf8'),
+      rootNode = {
+        fileName: '/CountingCategoryService.wsdl',
+        content: cCService
+      },
+      inputData = [{
+        fileName: '/CountingCategoryData.xsd',
+        content: cCData
+      }],
+      { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData, xmlParser);
+    expect(relatedFiles.length).to.equal(1);
+    expect(relatedFiles[0].path).to.equal('/CountingCategoryData.xsd');
+    expect(missingRelatedFiles.length).to.equal(1);
+    expect(missingRelatedFiles[0].schemaLocation).to.equal('../../../common/v1/CommonData.xsd');
+  });
+
+  // it('should return missing nodes with $ref property', function () {
+  //   const contentFileMissedRef = fs.readFileSync(missedRefOut, 'utf8'),
+  //     rootNode = {
+  //       fileName: '/missedRef.yaml',
+  //       content: contentFileMissedRef
+  //     },
+  //     inputData = [],
+  //     { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData);
+  //   expect(relatedFiles.length).to.equal(0);
+  //   expect(missingRelatedFiles.length).to.equal(2);
+  //   expect(missingRelatedFiles[0].path).to.equal('/Pet.yaml');
+  //   expect(missingRelatedFiles[0].$ref).to.be.undefined;
+  //   expect(missingRelatedFiles[1].path).to.equal(null);
+  //   expect(missingRelatedFiles[1].$ref).to.equal('../../common/Error.yaml');
+  // });
 
 });
