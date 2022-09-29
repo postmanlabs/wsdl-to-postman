@@ -12,6 +12,8 @@ const { getAdjacentAndMissing,
   ALL_IMPORT_PRESENT = '../data/separatedFiles/allImportPresent',
   INCLUDE_TAG = '../data/separatedFiles/includeTag',
   MISSING_IMPORT = '../data/separatedFiles/missingImport',
+  NESTED_FOLDERS = '../data/separatedFiles/nestedFolders',
+  EXTRA_FILE = '../data/separatedFiles/wsdlfolderextrafilelocal',
   ALL_P_SERVICE = path.join(__dirname, ALL_IMPORT_PRESENT + '/CountingCategoryService.wsdl'),
   ALL_P_DATA = path.join(__dirname, ALL_IMPORT_PRESENT + '/CountingCategoryData.xsd'),
   C_C_SERVICE = path.join(__dirname, COUNTING_SEPARATED + '/CountingCategoryService.wsdl'),
@@ -19,7 +21,14 @@ const { getAdjacentAndMissing,
   I_T_SERVICE = path.join(__dirname, INCLUDE_TAG + '/Services.wsdl'),
   I_T_TYPES = path.join(__dirname, INCLUDE_TAG + '/Types.xsd'),
   M_I_SERVICE = path.join(__dirname, MISSING_IMPORT + '/CountingCategoryService.wsdl'),
-  M_I_DATA = path.join(__dirname, MISSING_IMPORT + '/CountingCategoryData.xsd');
+  M_I_DATA = path.join(__dirname, MISSING_IMPORT + '/CountingCategoryData.xsd'),
+  NESTED_F_TYPES = path.join(__dirname, NESTED_FOLDERS + '/schemas/Types.xsd'),
+  NESTED_F_SERVICES = path.join(__dirname, NESTED_FOLDERS + '/wsdl/Services.wsdl'),
+  E_F_STOCK_WSDL = path.join(__dirname, EXTRA_FILE + '/stockquote.wsdl'),
+  E_F_STOCK_XSD = path.join(__dirname, EXTRA_FILE + '/stockquote.xsd'),
+  E_F_STOCK_SERVICE = path.join(__dirname, EXTRA_FILE + '/stockquoteservice.wsdl'),
+  E_F_STOCK_README = path.join(__dirname, EXTRA_FILE + '/README.xml');
+
 
 describe('getReferences function', function () {
   it('should return one reference for CC service file"', function () {
@@ -146,42 +155,24 @@ describe('getAdjacentAndMissing function', function () {
 
 describe('getRelatedFiles function ', function () {
 
-  // it('should return related in a folder structure with local pointers in $ref', function () {
-  //   const swaggerRootContent = fs.readFileSync(swaggerRoot, 'utf8'),
-  //     petContent = fs.readFileSync(petstoreSeparatedPet, 'utf8'),
-  //     parametersContent = fs.readFileSync(petstoreSeparatedPet, 'utf8'),
-  //     newPetContent = fs.readFileSync(newPet, 'utf8'),
-  //     errorContent = fs.readFileSync(petstoreSeparatedError, 'utf8'),
-  //     rootNode = {
-  //       fileName: 'spec/swagger.yaml',
-  //       content: swaggerRootContent
-  //     },
-  //     inputData = [
-  //       {
-  //         fileName: 'spec/Pet.yaml',
-  //         content: petContent
-  //       },
-  //       {
-  //         fileName: 'spec/parameters.yaml',
-  //         content: parametersContent
-  //       },
-  //       {
-  //         fileName: 'spec/NewPet.yaml',
-  //         content: newPetContent
-  //       },
-  //       {
-  //         fileName: 'common/Error.yaml',
-  //         content: errorContent
-  //       }
-  //     ],
-  //     { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData);
-  //   expect(relatedFiles.length).to.equal(4);
-  //   expect(relatedFiles[0].path).to.equal('spec/NewPet.yaml');
-  //   expect(relatedFiles[1].path).to.equal('spec/Pet.yaml');
-  //   expect(relatedFiles[2].path).to.equal('common/Error.yaml');
-  //   expect(relatedFiles[3].path).to.equal('spec/parameters.yaml');
-  //   expect(missingRelatedFiles.length).to.equal(0);
-  // });
+  it('should return related in a folder nested structure', function () {
+    const services = fs.readFileSync(NESTED_F_SERVICES, 'utf8'),
+      types = fs.readFileSync(NESTED_F_TYPES, 'utf8'),
+      rootNode = {
+        fileName: 'wsdl/Services.wsdl',
+        content: services
+      },
+      inputData = [
+        {
+          fileName: 'schemas/Types.xsd',
+          content: types
+        }
+      ],
+      { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData, xmlParser);
+    expect(relatedFiles.length).to.equal(1);
+    expect(relatedFiles[0].path).to.equal('schemas/Types.xsd');
+    expect(missingRelatedFiles.length).to.equal(0);
+  });
 
   it('should return adjacent and missing nodes', function () {
     const cCService = fs.readFileSync(M_I_SERVICE, 'utf8'),
@@ -217,6 +208,36 @@ describe('getRelatedFiles function ', function () {
     expect(relatedFiles[0].path).to.equal('/CountingCategoryData.xsd');
     expect(missingRelatedFiles.length).to.equal(1);
     expect(missingRelatedFiles[0].schemaLocation).to.equal('../../../common/v1/CommonData.xsd');
+  });
+
+  it('should return related in a folder with files that are not wsdl', function () {
+    const otherWsdl = fs.readFileSync(E_F_STOCK_WSDL, 'utf8'),
+      types = fs.readFileSync(E_F_STOCK_XSD, 'utf8'),
+      services = fs.readFileSync(E_F_STOCK_SERVICE, 'utf8'),
+      readme = fs.readFileSync(E_F_STOCK_README, 'utf8'),
+      rootNode = {
+        fileName: 'stockquoteservice.wsdl',
+        content: services
+      },
+      inputData = [
+        {
+          fileName: 'stockquote.xsd',
+          content: types
+        },
+        {
+          fileName: 'stockquote.wsdl',
+          content: otherWsdl
+        },
+        {
+          fileName: 'README.xml',
+          content: readme
+        }
+      ],
+      { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData, xmlParser);
+    expect(relatedFiles.length).to.equal(2);
+    expect(relatedFiles[0].path).to.equal('stockquote.wsdl');
+    expect(relatedFiles[1].path).to.equal('stockquote.xsd');
+    expect(missingRelatedFiles.length).to.equal(0);
   });
 
 });
