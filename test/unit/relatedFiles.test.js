@@ -103,16 +103,16 @@ describe('getAdjacentAndMissing function', function () {
     const cCService = fs.readFileSync(ALL_P_SERVICE, 'utf8'),
       cCData = fs.readFileSync(ALL_P_DATA, 'utf8'),
       inputNode = {
-        fileName: '/CountingCategoryService.wsdl',
+        path: '/CountingCategoryService.wsdl',
         content: cCService
       },
       inputData = [{
-        fileName: '/CountingCategoryData.xsd',
+        path: '/CountingCategoryData.xsd',
         content: cCData
       }],
       { graphAdj, missingNodes } = getAdjacentAndMissing(inputNode, inputData, inputNode, xmlParser);
     expect(graphAdj.length).to.equal(1);
-    expect(graphAdj[0].fileName).to.equal('/CountingCategoryData.xsd');
+    expect(graphAdj[0].path).to.equal('/CountingCategoryData.xsd');
     expect(missingNodes.length).to.equal(0);
   });
 
@@ -120,16 +120,16 @@ describe('getAdjacentAndMissing function', function () {
     const cCService = fs.readFileSync(C_C_SERVICE, 'utf8'),
       cCData = fs.readFileSync(C_C_DATA, 'utf8'),
       inputNode = {
-        fileName: '/CountingCategoryService.wsdl',
+        path: '/CountingCategoryService.wsdl',
         content: cCService
       },
       inputData = [{
-        fileName: '/CountingCategoryData.xsd',
+        path: '/CountingCategoryData.xsd',
         content: cCData
       }],
       { graphAdj, missingNodes } = getAdjacentAndMissing(inputNode, inputData, inputNode, xmlParser);
     expect(graphAdj.length).to.equal(1);
-    expect(graphAdj[0].fileName).to.equal('/CountingCategoryData.xsd');
+    expect(graphAdj[0].path).to.equal('/CountingCategoryData.xsd');
     expect(missingNodes.length).to.equal(1);
     expect(missingNodes[0].schemaLocation).to.equal('../../../common/v1/CommonData.xsd');
   });
@@ -138,16 +138,16 @@ describe('getAdjacentAndMissing function', function () {
     const iTService = fs.readFileSync(I_T_SERVICE, 'utf8'),
       iTTypes = fs.readFileSync(I_T_TYPES, 'utf8'),
       inputNode = {
-        fileName: '/Services.wsdl',
+        path: '/Services.wsdl',
         content: iTService
       },
       inputData = [{
-        fileName: '/Types.xsd',
+        path: '/Types.xsd',
         content: iTTypes
       }],
       { graphAdj, missingNodes } = getAdjacentAndMissing(inputNode, inputData, inputNode, xmlParser);
     expect(graphAdj.length).to.equal(1);
-    expect(graphAdj[0].fileName).to.equal('/Types.xsd');
+    expect(graphAdj[0].path).to.equal('/Types.xsd');
     expect(missingNodes.length).to.equal(0);
   });
 
@@ -159,12 +159,12 @@ describe('getRelatedFiles function ', function () {
     const services = fs.readFileSync(NESTED_F_SERVICES, 'utf8'),
       types = fs.readFileSync(NESTED_F_TYPES, 'utf8'),
       rootNode = {
-        fileName: 'wsdl/Services.wsdl',
+        path: 'wsdl/Services.wsdl',
         content: services
       },
       inputData = [
         {
-          fileName: 'schemas/Types.xsd',
+          path: 'schemas/Types.xsd',
           content: types
         }
       ],
@@ -178,11 +178,11 @@ describe('getRelatedFiles function ', function () {
     const cCService = fs.readFileSync(M_I_SERVICE, 'utf8'),
       cCData = fs.readFileSync(M_I_DATA, 'utf8'),
       rootNode = {
-        fileName: '/CountingCategoryService.wsdl',
+        path: '/CountingCategoryService.wsdl',
         content: cCService
       },
       inputData = [{
-        fileName: '/CountingCategoryData.xsd',
+        path: '/CountingCategoryData.xsd',
         content: cCData
       }],
       { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData, xmlParser);
@@ -196,11 +196,11 @@ describe('getRelatedFiles function ', function () {
     const cCService = fs.readFileSync(C_C_SERVICE, 'utf8'),
       cCData = fs.readFileSync(C_C_DATA, 'utf8'),
       rootNode = {
-        fileName: '/CountingCategoryService.wsdl',
+        path: '/CountingCategoryService.wsdl',
         content: cCService
       },
       inputData = [{
-        fileName: '/CountingCategoryData.xsd',
+        path: '/CountingCategoryData.xsd',
         content: cCData
       }],
       { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData, xmlParser);
@@ -216,20 +216,20 @@ describe('getRelatedFiles function ', function () {
       services = fs.readFileSync(E_F_STOCK_SERVICE, 'utf8'),
       readme = fs.readFileSync(E_F_STOCK_README, 'utf8'),
       rootNode = {
-        fileName: 'stockquoteservice.wsdl',
+        path: 'stockquoteservice.wsdl',
         content: services
       },
       inputData = [
         {
-          fileName: 'stockquote.xsd',
+          path: 'stockquote.xsd',
           content: types
         },
         {
-          fileName: 'stockquote.wsdl',
+          path: 'stockquote.wsdl',
           content: otherWsdl
         },
         {
-          fileName: 'README.xml',
+          path: 'README.xml',
           content: readme
         }
       ],
