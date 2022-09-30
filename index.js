@@ -32,9 +32,9 @@ module.exports = {
     return SchemaPack.getOptions(mode, criteria);
   },
 
-  detectRootFiles: async function(input) {
-    var schema = new SchemaPack(input);
-    return schema.detectRootFiles();
+  detectRelatedFiles: async function(input) {
+    const schema = new SchemaPack(input);
+    return schema.detectRelatedFiles();
   },
 
   SchemaPack

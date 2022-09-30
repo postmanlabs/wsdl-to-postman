@@ -28,64 +28,6 @@ const expect = require('chai').expect,
   ],
   getOptions = require('../../lib/utils/options').getOptions;
 
-describe('SchemaPack detectRelatedFiles', async function () {
-  it('should return related files', async function () {
-    const M_I_SERVICE_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryService.wsdl'),
-      M_I_DATA_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryData.xsd'),
-      M_I_SERVICE = fs.readFileSync(M_I_SERVICE_PATH, 'utf8'),
-      M_I_DATA = fs.readFileSync(M_I_DATA_PATH, 'utf8'),
-      input = {
-        type: 'multiFile',
-        specificationVersion: '1.1',
-        rootFiles: [
-          {
-            path: '/CountingCategoryService.wsdl'
-          }
-        ],
-        data: [
-          {
-            path: '/CountingCategoryService.wsdl',
-            content: M_I_SERVICE
-          },
-          {
-            path: '/CountingCategoryData.xsd',
-            content: M_I_DATA
-          }
-        ]
-      },
-      schemaPack = new SchemaPack(input, {}),
-      result = await schemaPack.detectRelatedFiles();
-    expect(result).to.deep.equal({
-      result: true,
-      output: {
-        type: 'relatedFiles',
-        specification: {
-          type: 'WSDL',
-          version: '1.1'
-        },
-        data: [
-          {
-            rootFile: {
-              path: '/CountingCategoryService.wsdl'
-            },
-            relatedFiles: [
-              {
-                path: '/CountingCategoryData.xsd'
-              }
-            ],
-            missingRelatedFiles: [
-              {
-                path: '/CommonData.xsd'
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
-});
-
-
 describe('SchemaPack convert unit test WSDL 1.1', function () {
   var validWSDLsFolder = fs.readdirSync(validWSDLs);
   async.each(validWSDLsFolder, function (file) {
@@ -946,4 +888,61 @@ describe('merge and validate', function () {
     });
   });
 
+});
+
+describe('SchemaPack detectRelatedFiles', async function () {
+  it('should return related files', async function () {
+    const M_I_SERVICE_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryService.wsdl'),
+      M_I_DATA_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryData.xsd'),
+      M_I_SERVICE = fs.readFileSync(M_I_SERVICE_PATH, 'utf8'),
+      M_I_DATA = fs.readFileSync(M_I_DATA_PATH, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: M_I_SERVICE
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: M_I_DATA
+          }
+        ]
+      },
+      schemaPack = new SchemaPack(input, {}),
+      result = await schemaPack.detectRelatedFiles();
+    expect(result).to.deep.equal({
+      result: true,
+      output: {
+        type: 'relatedFiles',
+        specification: {
+          type: 'WSDL',
+          version: '1.1'
+        },
+        data: [
+          {
+            rootFile: {
+              path: '/CountingCategoryService.wsdl'
+            },
+            relatedFiles: [
+              {
+                path: '/CountingCategoryData.xsd'
+              }
+            ],
+            missingRelatedFiles: [
+              {
+                path: '/CommonData.xsd'
+              }
+            ]
+          }
+        ]
+      }
+    });
+  });
 });
