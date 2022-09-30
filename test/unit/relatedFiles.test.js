@@ -179,7 +179,7 @@ describe('getRelatedFiles function ', function () {
     expect(missingRelatedFiles.length).to.equal(0);
   });
 
-  it('should return adjacent and missing nodes', function () {
+  it('should return related files 1.1 version', function () {
     const cCService = fs.readFileSync(M_I_SERVICE, 'utf8'),
       cCData = fs.readFileSync(M_I_DATA, 'utf8'),
       rootNode = {
@@ -197,7 +197,7 @@ describe('getRelatedFiles function ', function () {
     expect(missingRelatedFiles[0].path).to.equal('/CommonData.xsd');
   });
 
-  it('should return adjacent and missing nodes with schema location property', function () {
+  it('should return related files with schema location property', function () {
     const cCService = fs.readFileSync(C_C_SERVICE, 'utf8'),
       cCData = fs.readFileSync(C_C_DATA, 'utf8'),
       rootNode = {
@@ -262,6 +262,23 @@ describe('getRelatedFiles function ', function () {
     expect(relatedFiles.length).to.equal(1);
     expect(relatedFiles[0].path).to.equal('Types.xsd');
     expect(missingRelatedFiles.length).to.equal(0);
+  });
+
+  it('should not fail when a related file is not an XML', function () {
+    const cCService = fs.readFileSync(C_C_SERVICE, 'utf8'),
+      rootNode = {
+        path: '/CountingCategoryService.wsdl',
+        content: cCService
+      },
+      inputData = [{
+        path: '/CountingCategoryData.xsd',
+        content: 'not xml'
+      }],
+      { relatedFiles, missingRelatedFiles } = getRelatedFiles(rootNode, inputData, xmlParser);
+    expect(relatedFiles.length).to.equal(1);
+    expect(relatedFiles[0].path).to.equal('/CountingCategoryData.xsd');
+    expect(missingRelatedFiles.length).to.equal(1);
+    expect(missingRelatedFiles[0].schemaLocation).to.equal('../../../common/v1/CommonData.xsd');
   });
 });
 
@@ -511,6 +528,46 @@ describe('getRelatedFilesFromInput function ', function () {
         ]
       }
     });
+  });
+
+  it('should throw an error when input is null', function () {
+    try {
+      getRelatedFilesFromInput(null, xmlParser);
+      expect.fail(null, null, 'We expected to throw an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Input should not be undefined nor null');
+    }
+  });
+
+  it('should throw an error when input is undefined', function () {
+    try {
+      getRelatedFilesFromInput(undefined, xmlParser);
+      expect.fail(null, null, 'We expected to throw an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Input should not be undefined nor null');
+    }
+  });
+
+  it('should throw an error when xml parser is null', function () {
+    try {
+      getRelatedFilesFromInput({}, null);
+      expect.fail(null, null, 'We expected to throw an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('XML parser should not be undefined nor null');
+    }
+  });
+
+  it('should throw an error when xml parser is undefined', function () {
+    try {
+      getRelatedFilesFromInput({});
+      expect.fail(null, null, 'We expected to throw an error');
+    }
+    catch (error) {
+      expect(error.message).to.equal('XML parser should not be undefined nor null');
+    }
   });
 
 });
