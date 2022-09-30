@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
-  <xs:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefsServiceFinderQuery/xsd2.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
-  <xs:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefsServiceFinderQuery/xsd3.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" schemaLocation="xsd2.xsd"/>
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" schemaLocation="xsd3.xsd"/>
   <xs:element name="GetServicesforPincode">
     <xs:complexType>
       <xs:sequence>

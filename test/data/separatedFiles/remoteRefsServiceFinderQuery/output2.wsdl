@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="ServiceFinderQuery" targetNamespace="http://tempuri.org/" 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+  xmlns:tns="http://tempuri.org/" 
+  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" 
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+  xmlns:wsa10="http://www.w3.org/2005/08/addressing" 
+  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+  <wsp:Policy wsu:Id="WSHttpBinding_IServiceFinderQuery_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+      <xs:element name="GetServicesforPincode">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pinCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="profile" nillable="true" type="q1:UserProfile" xmlns:q1="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetServicesforPincodeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetServicesforPincodeResult" nillable="true" type="q2:ServiceCenterDetailsReference" xmlns:q2="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetServicesforProduct">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pinCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pProductCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pSubProductCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="profile" nillable="true" type="q3:UserProfile" xmlns:q3="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetServicesforProductResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetServicesforProductResult" nillable="true" type="q4:PinCodeServiceDetailsReference" xmlns:q4="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetServicesforPincodeAndProduct">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pinCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ProductCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="SubProductCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PackType" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="Feature" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="profile" nillable="true" type="q5:UserProfile" xmlns:q5="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetServicesforPincodeAndProductResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetServicesforPincodeAndProductResult" nillable="true" type="q6:PinCodeServiceLocationDetailsReference" xmlns:q6="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetDomesticTransitTimeForPinCodeandProduct">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pPinCodeFrom" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pPinCodeTo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pProductCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pSubProductCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pPudate" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="pPickupTime" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="profile" nillable="true" type="q7:UserProfile" xmlns:q7="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetDomesticTransitTimeForPinCodeandProductResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetDomesticTransitTimeForPinCodeandProductResult" nillable="true" type="q8:DomesticTranistTimeReference" xmlns:q8="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin">
+      <xs:complexType name="UserProfile">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Api_type" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Area" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Customercode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsAdmin" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LicenceKey" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LoginID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="UserProfile" nillable="true" type="tns:UserProfile" />
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder">
+      <xs:complexType name="ServiceCenterDetailsReference">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AirValueLimit" type="xs:double" />
+          <xs:element minOccurs="0" name="AirValueLimiteTailPrePaid" type="xs:double" />
+          <xs:element minOccurs="0" name="ApexEDLAddDays" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexEDLDist" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexETailTDD10Inbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexETailTDD10Outbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexETailTDD12Inbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexETailTDD12Outbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexEconomyInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexEconomyOutbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexEtailRVP" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexOutbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApexTDD" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AreaCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BlueDartHolidays" nillable="true" type="tns:ArrayOfHoliday" />
+          <xs:element minOccurs="0" name="DPDutsValueLimit" type="xs:double" />
+          <xs:element minOccurs="0" name="DPTDD10Inbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DPTDD10Outbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DPTDD12Inbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DPTDD12Outbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DartPlusRVP" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DomesticPriorityInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DomesticPriorityOutbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DomesticPriorityTDD" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EDLAddDays" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EDLDist" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EDLProduct" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Embargo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroundEDLAddDays" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroundEDLDist" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroundInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroundOutbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroundRVP" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroundValueLimit" type="xs:double" />
+          <xs:element minOccurs="0" name="GroundValueLimiteTailPrePaid" type="xs:double" />
+          <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+          <xs:element minOccurs="0" name="PinCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PincodeDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RVPEmbargo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ServiceCenterCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailCODAirInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailCODAirOutbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailCODGroundInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailCODGroundOutbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailExpressCODAirInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailExpressCODAirOutbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailExpressPrePaidAirInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailExpressPrePaidAirOutound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailPrePaidAirInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailPrePaidAirOutound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailPrePaidGroundInbound" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="eTailPrePaidGroundOutbound" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ServiceCenterDetailsReference" nillable="true" type="tns:ServiceCenterDetailsReference" />
+      <xs:complexType name="ArrayOfHoliday">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Holiday" nillable="true" type="tns:Holiday" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfHoliday" nillable="true" type="tns:ArrayOfHoliday" />
+      <xs:complexType name="Holiday">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="HolidayDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Holiday" nillable="true" type="tns:Holiday" />
+      <xs:complexType name="PinCodeServiceDetailsReference">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AreaCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BlueDartHolidays" nillable="true" type="tns:ArrayOfHoliday" />
+          <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+          <xs:element minOccurs="0" name="PinCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PinDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Product" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Service" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ServiceCenterCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SubProduct" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="PinCodeServiceDetailsReference" nillable="true" type="tns:PinCodeServiceDetailsReference" />
+      <xs:complexType name="PinCodeServiceLocationDetailsReference">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DeliveryAreaCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DeliveryService" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DeliveryServiceCenterCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Feature" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+          <xs:element minOccurs="0" name="PackType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PickupAreaCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PickupService" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PickupServiceCenterCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PinCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PinDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PincodeAreaCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PincodeServiceCenterCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Product" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SubProduct" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="PinCodeServiceLocationDetailsReference" nillable="true" type="tns:PinCodeServiceLocationDetailsReference" />
+      <xs:complexType name="DomesticTranistTimeReference">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AdditionalDays" type="xs:int" />
+          <xs:element minOccurs="0" name="ApexAdditionalDays" type="xs:int" />
+          <xs:element minOccurs="0" name="Area" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CityDesc_Destination" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CityDesc_Origin" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EDLMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ExpectedDateDelivery" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ExpectedDatePOD" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroundAdditionalDays" type="xs:int" />
+          <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ServiceCenter" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DomesticTranistTimeReference" nillable="true" type="tns:DomesticTranistTimeReference" />
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforPincode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforPincode" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforPincode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforPincodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforProduct" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforPincodeAndProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforPincodeAndProduct" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforPincodeAndProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforPincodeAndProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetDomesticTransitTimeForPinCodeandProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomesticTransitTimeForPinCodeandProduct" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetDomesticTransitTimeForPinCodeandProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomesticTransitTimeForPinCodeandProductResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IServiceFinderQuery">
+    <wsdl:operation name="GetServicesforPincode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforPincode" message="tns:IServiceFinderQuery_GetServicesforPincode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforPincodeResponse" message="tns:IServiceFinderQuery_GetServicesforPincode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServicesforProduct">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforProduct" message="tns:IServiceFinderQuery_GetServicesforProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforProductResponse" message="tns:IServiceFinderQuery_GetServicesforProduct_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServicesforPincodeAndProduct">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforPincodeAndProduct" message="tns:IServiceFinderQuery_GetServicesforPincodeAndProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforPincodeAndProductResponse" message="tns:IServiceFinderQuery_GetServicesforPincodeAndProduct_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDomesticTransitTimeForPinCodeandProduct">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetDomesticTransitTimeForPinCodeandProduct" message="tns:IServiceFinderQuery_GetDomesticTransitTimeForPinCodeandProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetDomesticTransitTimeForPinCodeandProductResponse" message="tns:IServiceFinderQuery_GetDomesticTransitTimeForPinCodeandProduct_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IServiceFinderQuery" type="tns:IServiceFinderQuery">
+    <wsp:PolicyReference URI="#WSHttpBinding_IServiceFinderQuery_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetServicesforPincode">
+      <soap12:operation soapAction="http://tempuri.org/IServiceFinderQuery/GetServicesforPincode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServicesforProduct">
+      <soap12:operation soapAction="http://tempuri.org/IServiceFinderQuery/GetServicesforProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServicesforPincodeAndProduct">
+      <soap12:operation soapAction="http://tempuri.org/IServiceFinderQuery/GetServicesforPincodeAndProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDomesticTransitTimeForPinCodeandProduct">
+      <soap12:operation soapAction="http://tempuri.org/IServiceFinderQuery/GetDomesticTransitTimeForPinCodeandProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceFinderQuery">
+    <wsdl:port name="WSHttpBinding_IServiceFinderQuery" binding="tns:WSHttpBinding_IServiceFinderQuery">
+      <soap12:address location="https://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Finder/ServiceFinderQuery.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>https://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Finder/ServiceFinderQuery.svc</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

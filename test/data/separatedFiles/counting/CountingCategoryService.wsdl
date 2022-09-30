@@ -9,7 +9,6 @@
     <wsdl:types>
         <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1">
             <xsd:import namespace="http://www.example.com/interfaces/parking/operatorServices/v1/data" schemaLocation="CountingCategoryData.xsd"/>
-            <xsd:import schemaLocation="../../../common/v1/CommonData.xsd" namespace="http://www.example.com/interfaces/common/v1/data"/>
         </xsd:schema>
     </wsdl:types>
 

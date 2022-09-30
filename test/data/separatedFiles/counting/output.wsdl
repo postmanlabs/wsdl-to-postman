@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <wsdl:definitions name="CountingCategoryService" targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1"
   xmlns:tns="http://www.example.com/interfaces/parking/operatorServices/v1"
   xmlns:countingCategoryData="http://www.example.com/interfaces/parking/operatorServices/v1/data"
@@ -6,10 +7,6 @@
   xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
-    <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1">
-      <xsd:import namespace="http://www.example.com/interfaces/parking/operatorServices/v1/data" schemaLocation="CountingCategoryData.xsd" />
-      <xsd:import schemaLocation="../../../common/v1/CommonData.xsd" namespace="http://www.example.com/interfaces/common/v1/data" />
-    </xsd:schema>
     <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.com/interfaces/parking/operatorServices/v1/data"
       xmlns:tns="http://www.example.com/interfaces/parking/operatorServices/v1/data" elementFormDefault="qualified">
       <element name="SetCountingCategoryMode">
@@ -29,6 +26,9 @@
           </sequence>
         </complexType>
       </element>
+      <complexType name="SetCountingCategoryModeResponse">
+        <sequence />
+      </complexType>
       <element name="SetCountingCategoryLevel">
         <complexType>
           <sequence>
@@ -46,6 +46,9 @@
           </sequence>
         </complexType>
       </element>
+      <complexType name="SetCountingCategoryLevelResponse">
+        <sequence />
+      </complexType>
       <element name="SetExternalCountingMode">
         <complexType>
           <sequence>
@@ -60,12 +63,6 @@
           </sequence>
         </complexType>
       </element>
-      <complexType name="SetCountingCategoryModeResponse">
-        <sequence />
-      </complexType>
-      <complexType name="SetCountingCategoryLevelResponse">
-        <sequence />
-      </complexType>
       <complexType name="SetExternalCountingModeResponse">
         <sequence />
       </complexType>
