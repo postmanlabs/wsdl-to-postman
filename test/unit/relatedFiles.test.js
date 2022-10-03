@@ -3,7 +3,8 @@ const { getAdjacentAndMissing,
     calculatePath,
     calculatePathMissing,
     getRelatedFiles,
-    getRelatedFilesFromInput
+    getRelatedFilesFromInput,
+    filterRootFilesByVersion
   } = require('./../../lib/relatedFiles'),
   expect = require('chai').expect,
   fs = require('fs'),
@@ -570,4 +571,26 @@ describe('getRelatedFilesFromInput function ', function () {
     }
   });
 
+});
+
+describe('filter root files by version method', function () {
+  it('should exclude files that are not the selected version 1.1', function () {
+    const cCService = fs.readFileSync(C_C_SERVICE, 'utf8'),
+      services20 = fs.readFileSync(WIKI_2_0_SERVICE, 'utf8'),
+      rootNodes = [{
+        path: '/CountingCategoryService.wsdl',
+        content: cCService
+      },
+      {
+        path: '/Service20.wsdl',
+        content: services20
+      },
+      {
+        path: '/notXML.wsdl',
+        content: 'not xml'
+      }],
+      result = filterRootFilesByVersion('1.1', rootNodes);
+    expect(result.length).to.equal(1);
+    expect(result[0].path).to.equal('/CountingCategoryService.wsdl');
+  });
 });
