@@ -531,6 +531,67 @@ describe('getRelatedFilesFromInput function ', function () {
     });
   });
 
+  it('should return only version 1.1 when 2.0 and 1.1 are present and default is selected', function () {
+    const cCService = fs.readFileSync(M_I_SERVICE, 'utf8'),
+      cCData = fs.readFileSync(M_I_DATA, 'utf8'),
+      services20 = fs.readFileSync(WIKI_2_0_SERVICE, 'utf8'),
+      input = {
+        type: 'multiFile',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: cCService
+          },
+          {
+            path: '/wikipedia.wsdl',
+            content: services20
+          }
+        ],
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: cCService
+          },
+          {
+            path: '/wikipedia.wsdl',
+            content: services20
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: cCData
+          }
+        ]
+      },
+      result = getRelatedFilesFromInput(input, xmlParser);
+    expect(result).to.deep.equal({
+      result: true,
+      output: {
+        type: 'relatedFiles',
+        specification: {
+          type: 'WSDL',
+          version: '1.1'
+        },
+        data: [
+          {
+            rootFile: {
+              path: '/CountingCategoryService.wsdl'
+            },
+            relatedFiles: [
+              {
+                path: '/CountingCategoryData.xsd'
+              }
+            ],
+            missingRelatedFiles: [
+              {
+                path: '/CommonData.xsd'
+              }
+            ]
+          }
+        ]
+      }
+    });
+  });
+
   it('should throw an error when input is null', function () {
     try {
       getRelatedFilesFromInput(null, xmlParser);
