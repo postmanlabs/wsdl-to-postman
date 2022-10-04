@@ -75,7 +75,8 @@ describe('detectRoot method', function() {
     expect(result.output.type).to.be.equal('rootFiles');
   });
 
-  it('should return no root when specific version is not present', async function() {
+  it('should return no root when specified version is 2.0 and no root of ' +
+    'that version is present', async function() {
     const service = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
