@@ -92,9 +92,9 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
     });
   });
 
-  it('Should propagates errors', function (done) {
+  it('Should propagate errors', function (done) {
     resolveRemoteRefs('', new XMLParser(), optionFromOptions, (resolvedFile) => {
-      expect(resolvedFile.err.message).to.equal('Empty input was proportionated');
+      expect(resolvedFile.err.message).to.equal('Cannot get prefix from undefined or null object');
       done();
     });
   });
