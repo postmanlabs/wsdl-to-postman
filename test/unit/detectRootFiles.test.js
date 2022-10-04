@@ -376,7 +376,7 @@ describe('detectRoot method', function() {
     expect(result.output.type).to.be.equal('rootFiles');
   });
 
-  it.skip('should return error when "type" parameter is not sent', async function () {
+  it('should return error when "type" parameter is not sent', async function () {
     const service = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
@@ -410,7 +410,7 @@ describe('detectRoot method', function() {
     }
   });
 
-  it.skip('should return error when input is an empty object', async function () {
+  it('should return error when input is an empty object', async function () {
     try {
       await Converter.detectRootFiles({});
     }
