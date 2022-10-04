@@ -4,7 +4,8 @@ const expect = require('chai').expect,
     getMetaData,
     convert,
     validate,
-    mergeAndValidate
+    mergeAndValidate,
+    detectRelatedFiles
   } = require('../../index'),
   validWSDLs = 'test/data/validWSDLs11',
   invalidWSDLs = 'test/data/invalidWSDLs11',
@@ -35,7 +36,6 @@ describe('getMetaData', function () {
 
   });
 });
-
 
 describe('convert', function () {
   it('Should convert the valid input file', function () {
@@ -123,5 +123,62 @@ describe('merge and validate', function () {
       expect(result.result).to.equal(true);
     });
 
+  });
+});
+
+describe('detectRelatedFiles', async function () {
+  it('should return related files', async function () {
+    const folderPath = path.join(__dirname, '../data/separatedFiles/missingImport'),
+      M_I_SERVICE_PATH = path.join(folderPath + '/CountingCategoryService.wsdl'),
+      M_I_DATA_PATH = path.join(folderPath + '/CountingCategoryData.xsd'),
+      M_I_SERVICE = fs.readFileSync(M_I_SERVICE_PATH, 'utf8'),
+      M_I_DATA = fs.readFileSync(M_I_DATA_PATH, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: M_I_SERVICE
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: M_I_DATA
+          }
+        ]
+      },
+      result = await detectRelatedFiles(input);
+    expect(result).to.deep.equal({
+      result: true,
+      output: {
+        type: 'relatedFiles',
+        specification: {
+          type: 'WSDL',
+          version: '1.1'
+        },
+        data: [
+          {
+            rootFile: {
+              path: '/CountingCategoryService.wsdl'
+            },
+            relatedFiles: [
+              {
+                path: '/CountingCategoryData.xsd'
+              }
+            ],
+            missingRelatedFiles: [
+              {
+                path: '/CommonData.xsd'
+              }
+            ]
+          }
+        ]
+      }
+    });
   });
 });

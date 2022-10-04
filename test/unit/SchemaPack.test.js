@@ -889,3 +889,225 @@ describe('merge and validate', function () {
   });
 
 });
+
+describe('SchemaPack detectRelatedFiles', async function () {
+  it('should return related files', async function () {
+    const M_I_SERVICE_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryService.wsdl'),
+      M_I_DATA_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryData.xsd'),
+      M_I_SERVICE = fs.readFileSync(M_I_SERVICE_PATH, 'utf8'),
+      M_I_DATA = fs.readFileSync(M_I_DATA_PATH, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: M_I_SERVICE
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: M_I_DATA
+          }
+        ]
+      },
+      schemaPack = new SchemaPack(input, {}),
+      result = await schemaPack.detectRelatedFiles();
+    expect(result).to.deep.equal({
+      result: true,
+      output: {
+        type: 'relatedFiles',
+        specification: {
+          type: 'WSDL',
+          version: '1.1'
+        },
+        data: [
+          {
+            rootFile: {
+              path: '/CountingCategoryService.wsdl'
+            },
+            relatedFiles: [
+              {
+                path: '/CountingCategoryData.xsd'
+              }
+            ],
+            missingRelatedFiles: [
+              {
+                path: '/CommonData.xsd'
+              }
+            ]
+          }
+        ]
+      }
+    });
+  });
+
+  it('Should throw error when root is not present in data array', async function () {
+    const M_I_DATA_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryData.xsd'),
+      M_I_DATA = fs.readFileSync(M_I_DATA_PATH, 'utf8'),
+      input = {
+        type: 'multiFile',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: '/CountingCategoryData.yaml',
+            content: M_I_DATA
+          }]
+      };
+    try {
+      let schemaPack = new SchemaPack(input, {});
+      await schemaPack.detectRelatedFiles();
+    }
+    catch (error) {
+      expect(error.message).to.equal('Root file content not found in data array');
+    }
+  });
+
+  it('Should take the root file from data array root file prop empty array', async function () {
+    const M_I_SERVICE_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryService.wsdl'),
+      M_I_SERVICE = fs.readFileSync(M_I_SERVICE_PATH, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+        ],
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: M_I_SERVICE
+          }
+        ]
+      },
+      schemaPack = new SchemaPack(input, {}),
+      res = await schemaPack.detectRelatedFiles();
+    expect(res).to.not.be.empty;
+    expect(res.result).to.be.true;
+    expect(res.output.data[0].rootFile.path).to.equal('/CountingCategoryService.wsdl');
+    expect(res.output.data.length).to.equal(1);
+  });
+
+  it('Should take the root file from data array root file prop undefined', async function () {
+    const M_I_SERVICE_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryService.wsdl'),
+      M_I_SERVICE = fs.readFileSync(M_I_SERVICE_PATH, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: M_I_SERVICE
+          }
+        ]
+      },
+      schemaPack = new SchemaPack(input, {}),
+      res = await schemaPack.detectRelatedFiles();
+    expect(res).to.not.be.empty;
+    expect(res.result).to.be.true;
+    expect(res.output.data[0].rootFile.path).to.equal('/CountingCategoryService.wsdl');
+    expect(res.output.data.length).to.equal(1);
+  });
+
+  it('should return error when there is no root in the entry', async function () {
+    let M_I_DATA_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryData.xsd'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+        ],
+        data: [
+          {
+            path: '/CountingCategoryData.xsd',
+            content: M_I_DATA_PATH
+          }
+        ]
+      };
+    try {
+      const schemaPack = new SchemaPack(input, {});
+      await schemaPack.detectRelatedFiles();
+    }
+    catch (error) {
+      expect(error.message).to.equal('Input should have at least one root file');
+    }
+  });
+
+  it('should throw error when root files is undefined', async function () {
+    let M_I_DATA_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryData.xsd'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        data: [
+          {
+            path: '/CountingCategoryData.xsd',
+            content: M_I_DATA_PATH
+          }
+        ]
+      };
+    try {
+      const schemaPack = new SchemaPack(input, {});
+      await schemaPack.detectRelatedFiles();
+    }
+    catch (error) {
+      expect(error.message).to.equal('Input should have at least one root file');
+    }
+  });
+
+  it('should return error when "type" parameter is not sent', async function () {
+    const M_I_SERVICE_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryService.wsdl'),
+      M_I_DATA_PATH = path.join(__dirname, SEPARATED_FILES + '/missingImport/CountingCategoryData.xsd'),
+      M_I_SERVICE = fs.readFileSync(M_I_SERVICE_PATH, 'utf8'),
+      M_I_DATA = fs.readFileSync(M_I_DATA_PATH, 'utf8'),
+      input = {
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.yaml',
+            content: M_I_SERVICE
+          }
+        ],
+        data: [
+          {
+            path: '/CountingCategoryData.yaml',
+            content: M_I_DATA
+          }
+        ]
+      };
+
+    try {
+      const schemaPack = new SchemaPack(input, {});
+      await schemaPack.detectRelatedFiles();
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('"Type" parameter should be provided');
+    }
+  });
+
+  it('should return error when input is an empty object', async function () {
+    try {
+      const schemaPack = new SchemaPack({}, {});
+      await schemaPack.detectRelatedFiles();
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('Input object must have "type" and "data" information');
+    }
+  });
+
+  it('should return error when input data is an empty array', async function () {
+    try {
+      const schemaPack = new SchemaPack({ type: 'multiFile', data: [] }, {});
+      await schemaPack.detectRelatedFiles();
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('"Data" parameter should be provided');
+    }
+  });
+});
