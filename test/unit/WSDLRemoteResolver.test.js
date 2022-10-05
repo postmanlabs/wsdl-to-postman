@@ -2,7 +2,9 @@ const expect = require('chai').expect,
   {
     resolveRemoteRefs,
     calculateDownloadPathAndParentBaseURL,
-    resolveRemoteRefsNoMerge
+    resolveRemoteRefsNoMerge,
+    getRemoteReferencesArray,
+    resolveRemoteRefsMultiFile
   } = require('../../lib/utils/WSDLRemoteResolver'),
   remoteRefs11 = 'test/data/separatedFiles/remoteRefs',
   remoteRefsIncludeTag = 'test/data/separatedFiles/includeTag',
@@ -19,15 +21,24 @@ const expect = require('chai').expect,
   } = require('../../lib/utils/textUtils'),
   path = require('path'),
   customFetchOK = (url) => {
-    const url1 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/' +
-      'development/test/data/separatedFiles/remoteRefs/remoteStockquote.wsdl',
-      url2 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/' +
-      'development/test/data/separatedFiles/remoteRefs/remoteStockquote.xsd',
-      path1 = path.join(__dirname, '../../' + remoteRefs11 + '/remoteStockquote.wsdl'),
-      path2 = path.join(__dirname, '../../' + remoteRefs11 + '/remoteStockquote.xsd'),
+    const url1 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data' +
+      '/separatedFiles/remoteRefsServiceFinderQuery/xsd0.xsd',
+      url2 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/' +
+    'separatedFiles/remoteRefsServiceFinderQuery/xsd1.xsd',
+      url3 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/' +
+        'separatedFiles/remoteRefsServiceFinderQuery/xsd2.xsd',
+      url4 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/' +
+      'separatedFiles/remoteRefsServiceFinderQuery/xsd3.xsd',
+
+      path1 = path.join(__dirname, '../../' + remoteRefsServiceFinderQuery + '/xsd0.xsd'),
+      path2 = path.join(__dirname, '../../' + remoteRefsServiceFinderQuery + '/xsd1.xsd'),
+      path3 = path.join(__dirname, '../../' + remoteRefsServiceFinderQuery + '/xsd2.xsd'),
+      path4 = path.join(__dirname, '../../' + remoteRefsServiceFinderQuery + '/xsd3.xsd'),
       urlMap = {};
     urlMap[url1] = fs.readFileSync(path1, 'utf8');
     urlMap[url2] = fs.readFileSync(path2, 'utf8');
+    urlMap[url3] = fs.readFileSync(path3, 'utf8');
+    urlMap[url4] = fs.readFileSync(path4, 'utf8');
     let status = 200,
       content = urlMap[url];
     if (content === undefined) {
@@ -138,7 +149,7 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
     let data = fs.readFileSync(remoteSameTargetNamespace + '/Services.wsdl', 'utf8'),
       expectedOutput = fs.readFileSync(remoteSameTargetNamespace + '/output.wsdl', 'utf8');
     optionFromOptions[`${sourceUrl.id}`] = 'https://raw.githubusercontent.com/postmanlabs/' +
-    'wsdl-to-postman/development/test/data/separatedFiles/sameTargetnamespace/';
+      'wsdl-to-postman/development/test/data/separatedFiles/sameTargetnamespace/';
 
     resolveRemoteRefs({ data }, new XMLParser(), optionFromOptions, (resolvedFile) => {
       expect(resolvedFile.err).to.be.undefined;
@@ -182,7 +193,7 @@ describe('WSDLRemoteResolver calculateDownloadPathAndParentBaseURL', function ()
   });
 
   it('Should return same path when is a valid xsd absolute path and parent' +
-  ' should be the base of the url even with processURL', function () {
+    ' should be the base of the url even with processURL', function () {
     const { parentBaseURL, downloadPath } = calculateDownloadPathAndParentBaseURL(
       'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd', '',
       'https://raw.githubusercontent.com/otherBasePath'
@@ -211,7 +222,7 @@ describe('WSDLRemoteResolver calculateDownloadPathAndParentBaseURL', function ()
 
 });
 
-describe('getHost method', async function () {
+describe('resolveRemoteRefsNoMerge method', async function () {
   it('Should return the resolved references example 2', async function () {
     const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8');
     let res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(), { resolveRemoteRefs: true });
@@ -231,5 +242,41 @@ describe('getHost method', async function () {
     expect(res[1].path).to.equal('xsd1.xsd');
     expect(res[2].path).to.equal('xsd2.xsd');
     expect(res[3].path).to.equal('xsd3.xsd');
+  });
+});
+
+describe('getRemoteReferencesArray function', function () {
+  it('should return references from multiple inputs', async function () {
+    const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8'),
+      res = await getRemoteReferencesArray([{ data }, { data }], new XMLParser(),
+        { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK });
+    expect(res).to.not.be.undefined;
+    expect(res[0][0].path).to.equal('xsd0.xsd');
+    expect(res[0][1].path).to.equal('xsd1.xsd');
+    expect(res[0][2].path).to.equal('xsd2.xsd');
+    expect(res[0][3].path).to.equal('xsd3.xsd');
+    expect(res[1][0].path).to.equal('xsd0.xsd');
+    expect(res[1][1].path).to.equal('xsd1.xsd');
+    expect(res[1][2].path).to.equal('xsd2.xsd');
+    expect(res[1][3].path).to.equal('xsd3.xsd');
+
+  });
+});
+
+describe('resolveRemoteRefsMultiFile function', function () {
+  it('should return references from multiple inputs', async function () {
+    const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8'),
+      res = await resolveRemoteRefsMultiFile({ rootFiles: [{ data }, { data }] }, new XMLParser(),
+        { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK });
+    expect(res).to.not.be.undefined;
+    expect(res[0].path).to.equal('xsd0.xsd');
+    expect(res[1].path).to.equal('xsd1.xsd');
+    expect(res[2].path).to.equal('xsd2.xsd');
+    expect(res[3].path).to.equal('xsd3.xsd');
+    expect(res[4].path).to.equal('xsd0.xsd');
+    expect(res[5].path).to.equal('xsd1.xsd');
+    expect(res[6].path).to.equal('xsd2.xsd');
+    expect(res[7].path).to.equal('xsd3.xsd');
+
   });
 });
