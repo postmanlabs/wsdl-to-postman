@@ -16,7 +16,28 @@ const expect = require('chai').expect,
   } = require('../../lib/XMLParser'),
   {
     removeLineBreakTabsSpaces
-  } = require('../../lib/utils/textUtils');
+  } = require('../../lib/utils/textUtils'),
+  path = require('path'),
+  customFetchOK = (url) => {
+    const url1 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/' +
+      'development/test/data/separatedFiles/remoteRefs/remoteStockquote.wsdl',
+      url2 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/' +
+      'development/test/data/separatedFiles/remoteRefs/remoteStockquote.xsd',
+      path1 = path.join(__dirname, '../../' + remoteRefs11 + '/remoteStockquote.wsdl'),
+      path2 = path.join(__dirname, '../../' + remoteRefs11 + '/remoteStockquote.xsd'),
+      urlMap = {};
+    urlMap[url1] = fs.readFileSync(path1, 'utf8');
+    urlMap[url2] = fs.readFileSync(path2, 'utf8');
+    let status = 200,
+      content = urlMap[url];
+    if (content === undefined) {
+      status = 404;
+    }
+    return Promise.resolve({
+      text: () => { return Promise.resolve(content); },
+      status: status
+    });
+  };
 
 describe('WSDLRemoteResolver resolveRemoteRefs', function () {
   const options = getOptions({ usage: ['CONVERSION'] }),
@@ -195,5 +216,20 @@ describe('getHost method', async function () {
     const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8');
     let res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(), { resolveRemoteRefs: true });
     expect(res).to.not.be.undefined;
+    expect(res[0].path).to.equal('xsd0.xsd');
+    expect(res[1].path).to.equal('xsd1.xsd');
+    expect(res[2].path).to.equal('xsd2.xsd');
+    expect(res[3].path).to.equal('xsd3.xsd');
+  });
+
+  it('Should return the resolved references example 2 using custom fetch', async function () {
+    const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8');
+    let res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(),
+      { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK });
+    expect(res).to.not.be.undefined;
+    expect(res[0].path).to.equal('xsd0.xsd');
+    expect(res[1].path).to.equal('xsd1.xsd');
+    expect(res[2].path).to.equal('xsd2.xsd');
+    expect(res[3].path).to.equal('xsd3.xsd');
   });
 });
