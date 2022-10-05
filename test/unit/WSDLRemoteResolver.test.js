@@ -1,7 +1,8 @@
 const expect = require('chai').expect,
   {
     resolveRemoteRefs,
-    calculateDowloadPathAndParentBaseURL
+    calculateDownloadPathAndParentBaseURL,
+    resolveRemoteRefsNoMerge
   } = require('../../lib/utils/WSDLRemoteResolver'),
   remoteRefs11 = 'test/data/separatedFiles/remoteRefs',
   remoteRefsIncludeTag = 'test/data/separatedFiles/includeTag',
@@ -140,10 +141,10 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
 });
 
 
-describe('WSDLRemoteResolver calculateDowloadPathAndParentBaseURL', function () {
+describe('WSDLRemoteResolver calculateDownloadPathAndParentBaseURL', function () {
 
   it('Should return same path when is a valid xsd absolute path and parent should be the base of the url', function () {
-    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+    const { parentBaseURL, downloadPath } = calculateDownloadPathAndParentBaseURL(
       'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd', '', ''
     );
     expect(parentBaseURL).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/');
@@ -151,7 +152,7 @@ describe('WSDLRemoteResolver calculateDowloadPathAndParentBaseURL', function () 
   });
 
   it('Should return same path when is a valid xsd absolute path parent and process are set', function () {
-    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+    const { parentBaseURL, downloadPath } = calculateDownloadPathAndParentBaseURL(
       'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd',
       'https://raw.com/', 'https://raw.war.com/'
     );
@@ -161,7 +162,7 @@ describe('WSDLRemoteResolver calculateDowloadPathAndParentBaseURL', function () 
 
   it('Should return same path when is a valid xsd absolute path and parent' +
   ' should be the base of the url even with processURL', function () {
-    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+    const { parentBaseURL, downloadPath } = calculateDownloadPathAndParentBaseURL(
       'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd', '',
       'https://raw.githubusercontent.com/otherBasePath'
     );
@@ -170,7 +171,7 @@ describe('WSDLRemoteResolver calculateDowloadPathAndParentBaseURL', function () 
   });
 
   it('Should return resolved absolute path when send parent path and relative in the file', function () {
-    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+    const { parentBaseURL, downloadPath } = calculateDownloadPathAndParentBaseURL(
       'xsd0.xsd', 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/',
       'https://raw.githubusercontent.com/otherBasePath'
     );
@@ -179,7 +180,7 @@ describe('WSDLRemoteResolver calculateDowloadPathAndParentBaseURL', function () 
   });
 
   it('Should return absolute path when there is no parent path and relative in the file take processURL', function () {
-    const { parentBaseURL, downloadPath } = calculateDowloadPathAndParentBaseURL(
+    const { parentBaseURL, downloadPath } = calculateDownloadPathAndParentBaseURL(
       'xsd0.xsd', '',
       'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/'
     );
@@ -187,4 +188,12 @@ describe('WSDLRemoteResolver calculateDowloadPathAndParentBaseURL', function () 
     expect(downloadPath).to.equal('https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/xsd0.xsd');
   });
 
+});
+
+describe('getHost method', async function () {
+  it('Should return the resolved references example 2', async function () {
+    const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8');
+    let res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(), { resolveRemoteRefs: true });
+    expect(res).to.not.be.undefined;
+  });
 });

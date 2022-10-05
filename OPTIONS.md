@@ -10,3 +10,5 @@ ignoreUnresolvedVariables|boolean|-|false|Whether to ignore mismatches resulting
 detailedBlobValidation|boolean|-|false|If it is true, all the mismatches will contain detailed info about the error generated if false, the mismatch will return a general description for the error|VALIDATION
 showMissingInSchemaErrors|boolean|-|true|If true (as default), it will report mismatches generated from errors with elements that are not in the schema but are in the request body, if false it will not report those errors|VALIDATION
 suggestAvailableFixes|boolean|-|false|If is true, all the mismatches in the body will contain the current and wrong value in your request an a suggestion with a value valid in schema|VALIDATION
+resolveRemoteRefs|boolean|-|false|Select whether to resolve remote references or not|CONVERSION, VALIDATION, BUNDLING
+remoteRefsResolver|function|-|undefined|Function that can resolve the given URL and provides content present at the reference|CONVERSION, VALIDATION, BUNDLING
