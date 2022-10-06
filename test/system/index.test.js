@@ -264,10 +264,10 @@ describe('detectRelatedFiles', async function () {
 describe('detectRootFiles', async function () {
   it('should return one root 1.1 correctly', async function () {
     const service = path.join(
-      __dirname,
-      COUNTING_SEPARATED_FOLDER,
-      '/CountingCategoryService.wsdl'
-    ),
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
       types = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
@@ -298,10 +298,10 @@ describe('detectRootFiles', async function () {
 
   it('should return one root 2.0 correctly', async function () {
     const service = path.join(
-      __dirname,
-      WIKI_20_FOLDER,
-      '/wikipedia.wsdl'
-    ),
+        __dirname,
+        WIKI_20_FOLDER,
+        '/wikipedia.wsdl'
+      ),
       types = path.join(
         __dirname,
         WIKI_20_FOLDER,
