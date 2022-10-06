@@ -8,7 +8,27 @@ const expect = require('chai').expect,
 
 describe('detectRoot method', function() {
 
-  it('should return one root 1.1 correctly no specific version', async function() {
+  it('should return error when input is an empty object', async function () {
+    try {
+      await Converter.detectRootFiles({});
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('Input object must have "type" and "data" information');
+    }
+  });
+
+  it('should return error when input data is an empty array', async function () {
+    try {
+      await Converter.detectRootFiles({ type: 'multiFile', data: [] });
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('"Data" parameter should be provided');
+    }
+  });
+
+  it('should return one root 1.1 correctly without specificationVersion provided', async function() {
     const service = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
@@ -75,8 +95,8 @@ describe('detectRoot method', function() {
     expect(result.output.type).to.be.equal('rootFiles');
   });
 
-  it('should return no root when specified version is 2.0 and no root of ' +
-    'that version is present', async function() {
+  it('should return no root when specificationVersion is 2.0 and no root ' +
+    'file with that version is present', async function() {
     const service = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
@@ -145,9 +165,8 @@ describe('detectRoot method', function() {
     expect(result.output.type).to.be.equal('rootFiles');
   });
 
-
   it('should return one root using version by default (1.1) when multiple ' +
-    'versions are present (Not specified version)', async function() {
+    'versions are present (Not specificationVersion)', async function() {
     const service = path.join(
         __dirname,
         WIKI_20_FOLDER,
@@ -411,23 +430,4 @@ describe('detectRoot method', function() {
     }
   });
 
-  it('should return error when input is an empty object', async function () {
-    try {
-      await Converter.detectRootFiles({});
-    }
-    catch (error) {
-      expect(error).to.not.be.undefined;
-      expect(error.message).to.equal('Input object must have "type" and "data" information');
-    }
-  });
-
-  it('should return error when input data is an empty array', async function () {
-    try {
-      await Converter.detectRootFiles({ type: 'multiFile', data: [] });
-    }
-    catch (error) {
-      expect(error).to.not.be.undefined;
-      expect(error.message).to.equal('"Data" parameter should be provided');
-    }
-  });
 });
