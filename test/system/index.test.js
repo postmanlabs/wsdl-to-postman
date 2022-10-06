@@ -5,7 +5,8 @@ const expect = require('chai').expect,
     convert,
     validate,
     mergeAndValidate,
-    detectRelatedFiles
+    detectRelatedFiles,
+    detectRootFiles
   } = require('../../index'),
   invalidWSDLs = 'test/data/invalidWSDLs11',
   validWSDLs11 = 'test/data/validWSDLs11',
@@ -13,6 +14,8 @@ const expect = require('chai').expect,
   empty_Path = 'test/data/validation/empty.wsdl',
   dummy_Path = 'test/data/validation/dummy.wsdl',
   wrong_Path = 'path/does/not/exist.wsdl',
+  COUNTING_SEPARATED_FOLDER = '../data/separatedFiles/counting',
+  WIKI_20_FOLDER = '../data/separatedFiles/wiki20',
   fs = require('fs'),
   path = require('path'),
   async = require('async');
@@ -255,5 +258,76 @@ describe('detectRelatedFiles', async function () {
         ]
       }
     });
+  });
+});
+
+describe('detectRootFiles', async function () {
+  it('should return one root 1.1 correctly', async function () {
+    const service = path.join(
+      __dirname,
+      COUNTING_SEPARATED_FOLDER,
+      '/CountingCategoryService.wsdl'
+    ),
+      types = path.join(
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          }
+        ]
+      },
+      result = await detectRootFiles(input);
+    expect(result.result).to.be.true;
+    expect(result.output.data[0].path).to.equal('/CountingCategoryService.wsdl');
+    expect(result.output.specification.version).to.equal('1.1');
+    expect(result.output.type).to.be.equal('rootFiles');
+  });
+
+  it('should return one root 2.0 correctly', async function () {
+    const service = path.join(
+      __dirname,
+      WIKI_20_FOLDER,
+      '/wikipedia.wsdl'
+    ),
+      types = path.join(
+        __dirname,
+        WIKI_20_FOLDER,
+        '/Types.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '2.0',
+        data: [
+          {
+            path: '/wikipedia.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/Types.xsd',
+            content: typesContent
+          }
+        ]
+      },
+      result = await detectRootFiles(input);
+    expect(result.result).to.be.true;
+    expect(result.output.data.length).to.equal(1);
+    expect(result.output.data[0].path).to.equal('/wikipedia.wsdl');
+    expect(result.output.specification.version).to.equal('2.0');
+    expect(result.output.type).to.be.equal('rootFiles');
   });
 });
