@@ -127,7 +127,7 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
 
   it('Should propagate errors', function (done) {
     resolveRemoteRefs('', new XMLParser(), optionFromOptions, (resolvedFile) => {
-      expect(resolvedFile.err.message).to.equal('Cannot get prefix from undefined or null object');
+      expect(resolvedFile.err.message).to.equal('There was not WSDL file in folder.');
       done();
     });
   });
@@ -242,6 +242,24 @@ describe('resolveRemoteRefsNoMerge method', async function () {
     expect(res[1].path).to.equal('xsd1.xsd');
     expect(res[2].path).to.equal('xsd2.xsd');
     expect(res[3].path).to.equal('xsd3.xsd');
+  });
+
+  it('Should not fail when downloaded file is an invalid content', async function () {
+    const data = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8'),
+      customFetch = () => {
+        let content = 'invalid content';
+        return Promise.resolve({
+          text: () => { return Promise.resolve(content); },
+          status: 200
+        });
+      },
+      res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(),
+        { resolveRemoteRefs: true, remoteRefsResolver: customFetch });
+    expect(res).to.not.be.undefined;
+    expect(res[0]).to.deep.equal({
+      content: 'invalid content',
+      path: 'remoteStockquote.wsdl'
+    });
   });
 });
 
