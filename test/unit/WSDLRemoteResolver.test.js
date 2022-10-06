@@ -4,7 +4,8 @@ const expect = require('chai').expect,
     calculateDownloadPathAndParentBaseURL,
     resolveRemoteRefsNoMerge,
     getRemoteReferencesArray,
-    resolveRemoteRefsMultiFile
+    resolveRemoteRefsMultiFile,
+    MISSING_REMOTE_FILE_IDENTIFIER
   } = require('../../lib/utils/WSDLRemoteResolver'),
   remoteRefs11 = 'test/data/separatedFiles/remoteRefs',
   remoteRefsIncludeTag = 'test/data/separatedFiles/includeTag',
@@ -258,6 +259,24 @@ describe('resolveRemoteRefsNoMerge method', async function () {
     expect(res).to.not.be.undefined;
     expect(res[0]).to.deep.equal({
       content: 'invalid content',
+      path: 'remoteStockquote.wsdl'
+    });
+  });
+
+  it('Should not fail when file is missing in the url', async function () {
+    const data = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8'),
+      customFetch = () => {
+        return Promise.resolve({
+          text: () => { return Promise.resolve(''); },
+          status: 404
+        });
+      },
+      res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(),
+        { resolveRemoteRefs: true, remoteRefsResolver: customFetch });
+    expect(res).to.not.be.undefined;
+    expect(res[0]).to.deep.equal({
+      content: MISSING_REMOTE_FILE_IDENTIFIER + 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/' +
+      'development/test/data/separatedFiles/remoteRefs/remoteStockquote.wsdl',
       path: 'remoteStockquote.wsdl'
     });
   });
