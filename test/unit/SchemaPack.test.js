@@ -27,7 +27,9 @@ const expect = require('chai').expect,
     'suggestAvailableFixes',
     'resolveRemoteRefs',
     'sourceUrl',
-    'indentCharacter'
+    'indentCharacter',
+    'resolveRemoteRefs',
+    'remoteRefsResolver'
   ],
   getOptions = require('../../lib/utils/options').getOptions;
 
@@ -279,7 +281,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode = document', function () {
     const options = SchemaPack.getOptions('document');
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(10);
+    expect(options.length).to.eq(11);
   });
 
   it('Should return external options when called with mode = use', function () {
@@ -321,13 +323,13 @@ describe('SchemaPack getOptions', function () {
       usage: ['CONVERSION']
     });
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(4);
+    expect(options.length).to.eq(5);
   });
 
   it('Should return external options when called with mode document and usage not an object', function () {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(10);
+    expect(options.length).to.eq(11);
   });
 
   it('Should return default empty array in validationPropertiesToIgnore', function () {
@@ -356,7 +358,7 @@ describe('validateTransaction method', function () {
     });
   });
 
-  it('Should return no missmatches when entry is valid', function () {
+  it('Should return no mismatches when entry is valid', function () {
     const
       VALID_WSDL_PATH = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8'),
       schemaPack = new SchemaPack({
@@ -379,6 +381,53 @@ describe('validateTransaction method', function () {
       schemaPack.validateTransaction(historyRequests, (error, result) => {
         expect(error).to.be.null;
         expect(result).to.be.an('object');
+      });
+    });
+  });
+
+  it('Should get a collection and validate when send a file with remote refs and option is set to true', function () {
+    const options = getOptions({ usage: ['CONVERSION'] }),
+      resolveRemoteRefsOption = options.find((option) => { return option.id === 'resolveRemoteRefs'; }),
+      remoteRefsCollectionItems =
+        require('./../data/transactionsValidation/remoteStockquoteserviceCollectionItems.json');
+
+    let optionFromOptions = {},
+      schemaPack;
+    fileContent = fs.readFileSync(REMOTE_REFS + '/remoteStockquoteservice.wsdl', 'utf8');
+    optionFromOptions[`${resolveRemoteRefsOption.id}`] = true;
+
+    schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, optionFromOptions);
+
+    schemaPack.validateTransaction(remoteRefsCollectionItems, (error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.deep.equal({
+        matched: true,
+        requests: {
+          '06a2536d-f3fd-4e6a-86c8-9b002d87a71c': {
+            requestId: '06a2536d-f3fd-4e6a-86c8-9b002d87a71c',
+            endpoints: [
+              {
+                matched: true,
+                endpointMatchScore: 1,
+                endpoint: 'POST soap GetLastTradePrice',
+                mismatches: [
+                ],
+                responses: {
+                  'cbdfb1a5-0ae0-4c1b-a1c2-3b1ee3442e77': {
+                    id: 'cbdfb1a5-0ae0-4c1b-a1c2-3b1ee3442e77',
+                    matched: true,
+                    mismatches: [
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        missingEndpoints: []
       });
     });
   });
