@@ -1620,4 +1620,36 @@ describe('bundle remote refs', function () {
     expect(result.output.data[0].rootFile.bundledContent).to.not.be.empty;
 
   });
+
+  it('Should bundle a file with remote refs and local', async function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/remoteWithLocal'),
+      contentFile = fs.readFileSync(folderPath + '/remoteStockquoteservice.wsdl', 'utf8'),
+      contentFileXSD = fs.readFileSync(folderPath + '/remoteStockquote.xsd', 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: folderPath + '/remoteStockquoteservice.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: folderPath + '/remoteStockquoteservice.wsdl',
+            content: contentFile
+          },
+          {
+            path: folderPath + '/remoteStockquote.xsd',
+            content: contentFileXSD
+          }
+        ]
+      };
+
+    const schemaPack = new SchemaPack(input, { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK }),
+      result = await schemaPack.bundle();
+    expect(result).to.not.be.undefined;
+    expect(result.result).to.be.true;
+    expect(result.output.data[0].rootFile.bundledContent).to.not.be.empty;
+
+  });
 });
