@@ -42,5 +42,10 @@ module.exports = {
     return schema.detectRelatedFiles();
   },
 
+  bundle: async function(input) {
+    const schema = new SchemaPack(input);
+    return schema.bundle(input);
+  },
+
   SchemaPack
 };
