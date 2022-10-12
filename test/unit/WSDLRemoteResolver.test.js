@@ -225,8 +225,8 @@ describe('WSDLRemoteResolver calculateDownloadPathAndParentBaseURL', function ()
 
 describe('resolveRemoteRefsNoMerge method', async function () {
   it('Should return the resolved references example 2', async function () {
-    const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8');
-    let res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(), { resolveRemoteRefs: true });
+    const content = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8');
+    let res = await resolveRemoteRefsNoMerge({ content }, new XMLParser(), { resolveRemoteRefs: true });
     expect(res).to.not.be.undefined;
     expect(res[0].path).to.equal('xsd0.xsd');
     expect(res[1].path).to.equal('xsd1.xsd');
@@ -235,8 +235,8 @@ describe('resolveRemoteRefsNoMerge method', async function () {
   });
 
   it('Should return the resolved references example 2 using custom fetch', async function () {
-    const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8');
-    let res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(),
+    const content = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8');
+    let res = await resolveRemoteRefsNoMerge({ content }, new XMLParser(),
       { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK });
     expect(res).to.not.be.undefined;
     expect(res[0].path).to.equal('xsd0.xsd');
@@ -246,7 +246,7 @@ describe('resolveRemoteRefsNoMerge method', async function () {
   });
 
   it('Should not fail when downloaded file is an invalid content', async function () {
-    const data = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8'),
+    const content = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8'),
       customFetch = () => {
         let content = 'invalid content';
         return Promise.resolve({
@@ -254,7 +254,7 @@ describe('resolveRemoteRefsNoMerge method', async function () {
           status: 200
         });
       },
-      res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(),
+      res = await resolveRemoteRefsNoMerge({ content }, new XMLParser(),
         { resolveRemoteRefs: true, remoteRefsResolver: customFetch });
     expect(res).to.not.be.undefined;
     expect(res[0]).to.deep.equal({
@@ -264,14 +264,14 @@ describe('resolveRemoteRefsNoMerge method', async function () {
   });
 
   it('Should not fail when file is missing in the url', async function () {
-    const data = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8'),
+    const content = fs.readFileSync(remoteRefs11 + '/remoteStockquoteservice.wsdl', 'utf8'),
       customFetch = () => {
         return Promise.resolve({
           text: () => { return Promise.resolve(''); },
           status: 404
         });
       },
-      res = await resolveRemoteRefsNoMerge({ data }, new XMLParser(),
+      res = await resolveRemoteRefsNoMerge({ content }, new XMLParser(),
         { resolveRemoteRefs: true, remoteRefsResolver: customFetch });
     expect(res).to.not.be.undefined;
     expect(res[0]).to.deep.equal({
@@ -284,8 +284,13 @@ describe('resolveRemoteRefsNoMerge method', async function () {
 
 describe('getRemoteReferencesArray function', function () {
   it('should return references from multiple inputs', async function () {
-    const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8'),
-      res = await getRemoteReferencesArray([{ data }, { data }], new XMLParser(),
+    const content = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8'),
+      path = '/remoteStockquote.wsdl',
+      input = [
+        { content, path },
+        { content, path }
+      ],
+      res = await getRemoteReferencesArray(input, new XMLParser(),
         { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK });
     expect(res).to.not.be.undefined;
     expect(res[0][0].path).to.equal('xsd0.xsd');
@@ -302,8 +307,18 @@ describe('getRemoteReferencesArray function', function () {
 
 describe('resolveRemoteRefsMultiFile function', function () {
   it('should return references from multiple inputs', async function () {
-    const data = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8'),
-      res = await resolveRemoteRefsMultiFile({ rootFiles: [{ data }, { data }] }, new XMLParser(),
+    const content = fs.readFileSync(remoteRefsServiceFinderQuery + '/ServiceFinderQuery.wsdl', 'utf8'),
+      input = {
+        rootFiles: [
+          { path },
+          { path }
+        ],
+        data: [
+          { content, path },
+          { content, path }
+        ]
+      },
+      res = await resolveRemoteRefsMultiFile(input, new XMLParser(),
         { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK });
     expect(res).to.not.be.undefined;
     expect(res[0].path).to.equal('xsd0.xsd');
