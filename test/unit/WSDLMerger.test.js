@@ -1255,11 +1255,11 @@ describe('WSDLMerger merge', function() {
                location="http://example.com/stockquote"/>
        </port></service></definitions>"`
       ],
-      expectedOutput = `<definitionsname="StockQuote"targetNamespace="http://example.com/stockquote/service"
+      expectedOutput = `<?xmlversion="1.0"?>
+      <definitionsname="StockQuote"targetNamespace="http://example.com/stockquote/service"
       xmlns:tns="http://example.com/stockquote/service"xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
       xmlns:defs="http://example.com/stockquote/definitions"xmlns="http://schemas.xmlsoap.org/wsdl/"xmlns:xsd1
-      ="http://example.com/stockquote/schemas"><importnamespace="http://example.com/stockquote/definitions"
-      location="http://example.com/stockquote/stockquote.wsdl"/><types><node/><schematargetNamespace="http:
+      ="http://example.com/stockquote/schemas"><types><node/><schematargetNamespace="http:
       //example.com/stockquote/schemas"xmlns="http://www.w3.org/2001/XMLSchema"><elementname="TradePriceRequest">
       <complexType><all><elementname="tickerSymbol"type="string"/></all>
       </complexType></element><elementname="TradePrice">
@@ -1298,5 +1298,125 @@ describe('WSDLMerger merge', function() {
         expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
       });
   });
+});
 
+describe('setReferenceMapSchemas method', function () {
+  it('should add to the reference map when types has one schema', function () {
+    const merger = new WSDLMerger(),
+      schema = {
+        '@_targetNamespace': 'http://example.com/stockquote/schemas',
+        '@_xmlns': 'http://www.w3.org/2001/XMLSchema',
+        element: [
+          {
+            '@_name': 'TradePriceRequest',
+            complexType: {
+              all: {
+                element: {
+                  '@_name': 'tickerSymbol',
+                  '@_type': 'string'
+                }
+              }
+            }
+          },
+          {
+            '@_name': 'TradePrice',
+            complexType: {
+              all: {
+                element: {
+                  '@_name': 'price',
+                  '@_type': 'float'
+                }
+              }
+            }
+          }
+        ]
+      },
+      wsdlRoot = {
+        definitions: {
+          types: [{ schema }]
+        }
+      },
+      resolvedSchemas = [
+        {
+          found: { schema },
+          schemaPrefix: '',
+          type: 'schema',
+          fileName: '/data/separatedFiles/W3Example/stockquote.xsd'
+        }],
+      result = merger.setReferenceMapSchemas(wsdlRoot, '', 'definitions', resolvedSchemas);
+    expect(result).to.deep.equal({
+      '//definitions//types//schema[0]': {
+        path: '/data/separatedFiles/W3Example/stockquote.xsd',
+        type: 'inline'
+      }
+    });
+  });
+
+  it('should add to the reference map when types has many schemas', function () {
+    const merger = new WSDLMerger(),
+      schema = {
+        '@_targetNamespace': 'http://example.com/stockquote/schemas',
+        '@_xmlns': 'http://www.w3.org/2001/XMLSchema',
+        element: [
+          {
+            '@_name': 'TradePriceRequest',
+            complexType: {
+              all: {
+                element: {
+                  '@_name': 'tickerSymbol',
+                  '@_type': 'string'
+                }
+              }
+            }
+          }
+        ]
+      },
+      schema2 = {
+        '@_targetNamespace': 'http://example.com/stockquote/schemas',
+        '@_xmlns': 'http://www.w3.org/2001/XMLSchema',
+        element: [
+          {
+            '@_name': 'TradePrice',
+            complexType: {
+              all: {
+                element: {
+                  '@_name': 'price',
+                  '@_type': 'float'
+                }
+              }
+            }
+          }
+        ]
+      },
+      wsdlRoot = {
+        definitions: {
+          types: [{ schema: [schema, schema2] }]
+        }
+      },
+      resolvedSchemas = [
+        {
+          found: { schema },
+          schemaPrefix: '',
+          type: 'schema',
+          fileName: '/data/separatedFiles/W3Example/stockquote.xsd'
+        },
+        {
+          found: { schema: schema2 },
+          schemaPrefix: '',
+          type: 'schema',
+          fileName: '/data/separatedFiles/W3Example/stockquote2.xsd'
+        }
+      ],
+      result = merger.setReferenceMapSchemas(wsdlRoot, '', 'definitions', resolvedSchemas);
+    expect(result).to.deep.equal({
+      '//definitions//types//schema[0]': {
+        path: '/data/separatedFiles/W3Example/stockquote.xsd',
+        type: 'inline'
+      },
+      '//definitions//types//schema[1]': {
+        path: '/data/separatedFiles/W3Example/stockquote2.xsd',
+        type: 'inline'
+      }
+    });
+  });
 });
