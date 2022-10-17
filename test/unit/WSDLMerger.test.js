@@ -388,6 +388,8 @@ describe('WSDLMerger merge', function() {
     merger.merge({ data: files, xmlFiles: processedInput }, new XMLParser())
       .then((merged) => {
         expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      }).catch(() => {
+        expect.fail('Should not fail');
       });
   });
 
