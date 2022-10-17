@@ -1419,4 +1419,196 @@ describe('setReferenceMapSchemas method', function () {
       }
     });
   });
+
+  it('should add to the reference map when objects from schema where merged', function () {
+    const merger = new WSDLMerger(),
+      schema = {
+        '@_xmlns:wsse': 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
+        '@_xmlns': 'http://namespace/2008',
+        '@_attributeFormDefault': 'unqualified',
+        '@_elementFormDefault': 'qualified',
+        '@_targetNamespace': 'http://namespace/2008',
+        '@_version': '2021.0.05.1',
+        '@_xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
+        'xsd:element': {
+          '@_name': 'ElementType',
+          '@_type': 'xsd:string'
+        }
+      },
+      wsdlRoot = {
+        definitions: {
+          types: [{ schema }]
+        }
+      },
+      resolvedSchemas = [
+        {
+          found: { schema },
+          schemaPrefix: '',
+          type: 'schema',
+          fileName: '/data/separatedFiles/W3Example/stockquote.xsd',
+          resolvedElements: [
+            {
+              tagName: 'element',
+              elements: [
+                {
+                  '@_name': 'ElementType',
+                  '@_type': 'xsd:string'
+                },
+                {
+                  '@_name': 'ElementType2',
+                  '@_type': 'xsd:string'
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      result = merger.setReferenceMapSchemas(wsdlRoot, '', 'definitions', resolvedSchemas,
+        '@_');
+    expect(result).to.deep.equal({
+      '//definitions//types//schema[0]//element[@name=\"ElementType\"]': {
+        path: '/data/separatedFiles/W3Example/stockquote.xsd',
+        type: 'inline'
+      },
+      '//definitions//types//schema[0]//element[@name=\"ElementType2\"]': {
+        path: '/data/separatedFiles/W3Example/stockquote.xsd',
+        type: 'inline'
+      }
+    });
+  });
+
 });
+
+describe('pushResolvedSchemaElType method', function () {
+  it('should add an schema and its elements into the resolved schemas array', function () {
+    const merger = new WSDLMerger(),
+      importedElement = {
+        '@_name': 'ElementType',
+        '@_type': 'xsd:string'
+      },
+      schema = {
+        found: {
+          'xsd:schema': {
+            '@_xmlns:wsse': 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
+            '@_xmlns': 'http://namespace/2008'
+          }
+        },
+        schemaPrefix: 'xsd:',
+        type: 'schema',
+        fileName: '/separatedFiles/sameTargetnamespace/Types.xsd'
+      },
+      result = merger.pushResolvedSchemaElType([], schema, importedElement, 'element');
+
+    expect(result[0].resolvedElements).to.deep.equal([
+      {
+        tagName: 'element',
+        elements: [
+          {
+            '@_name': 'ElementType',
+            '@_type': 'xsd:string'
+          }
+        ]
+      }
+    ]);
+  });
+  it('should concat schema elements into the existing schema in the resolved schemas array', function () {
+    const merger = new WSDLMerger(),
+      importedElement = {
+        '@_name': 'ElementType2',
+        '@_type': 'xsd:string'
+      },
+      schema = {
+        found: {
+          'xsd:schema': {
+            '@_xmlns:wsse': 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
+            '@_xmlns': 'http://namespace/2008'
+          }
+        },
+        schemaPrefix: 'xsd:',
+        type: 'schema',
+        fileName: '/separatedFiles/sameTargetnamespace/Types.xsd',
+        resolvedElements: [
+          {
+            tagName: 'element',
+            elements: [
+              {
+                '@_name': 'ElementType',
+                '@_type': 'xsd:string'
+              }
+            ]
+          }
+        ]
+      },
+      result = merger.pushResolvedSchemaElType([schema], schema, importedElement, 'element');
+
+    expect(result[0].resolvedElements).to.deep.equal([
+      {
+        tagName: 'element',
+        elements: [
+          {
+            '@_name': 'ElementType',
+            '@_type': 'xsd:string'
+          },
+          {
+            '@_name': 'ElementType2',
+            '@_type': 'xsd:string'
+          }
+        ]
+      }
+    ]);
+  });
+
+  it('should create array of elements into the existing schema in the resolved schemas array with existent' +
+   ' elements of other type', function () {
+    const merger = new WSDLMerger(),
+      importedElement = {
+        '@_name': 'ElementType',
+        '@_type': 'xsd:string'
+      },
+      schema = {
+        found: {
+          'xsd:schema': {
+            '@_xmlns:wsse': 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
+            '@_xmlns': 'http://namespace/2008'
+          }
+        },
+        schemaPrefix: 'xsd:',
+        type: 'schema',
+        fileName: '/separatedFiles/sameTargetnamespace/Types.xsd',
+        resolvedElements: [
+          {
+            tagName: 'complexType',
+            elements: [
+              {
+                '@_name': 'complexType',
+                '@_type': 'xsd:string'
+              }
+            ]
+          }
+        ]
+      },
+      result = merger.pushResolvedSchemaElType([schema], schema, importedElement, 'element');
+
+    expect(result[0].resolvedElements).to.deep.equal([
+      {
+        tagName: 'complexType',
+        elements: [
+          {
+            '@_name': 'complexType',
+            '@_type': 'xsd:string'
+          }
+        ]
+      },
+      {
+        tagName: 'element',
+        elements: [
+          {
+            '@_name': 'ElementType',
+            '@_type': 'xsd:string'
+          }
+        ]
+      }
+    ]);
+  });
+});
+
