@@ -559,7 +559,7 @@ describe('merge and validate', function () {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
       files = [],
       array = [
-        { fileName: folderPath + '/output.wsdl' }
+        { fileName: folderPath + '/outputWithImports.wsdl' }
       ];
 
     array.forEach((item) => {
@@ -598,7 +598,7 @@ describe('merge and validate', function () {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
       files = [],
       array = [
-        { fileName: folderPath + '/outputNoImports.wsdl' }
+        { fileName: folderPath + '/outputWithImports.wsdl' }
       ];
     array.forEach((item) => {
       files.push({
