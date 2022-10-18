@@ -12,7 +12,8 @@ const expect = require('chai').expect,
   path = require('path'),
   {
     MULTIPLE_ROOT_FILES,
-    MISSING_ROOT_FILE
+    MISSING_ROOT_FILE,
+    ELEMENT_NOT_FOUND
   } = require('../../lib/constants/messageConstants'),
   optionIds = [
     'folderStrategy',
@@ -144,6 +145,32 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       expect(result.output).to.be.an('array');
       expect(result.output[0].data).to.be.an('object');
       expect(result.output[0].type).to.equal('collection');
+    });
+  });
+
+  it('[Github #11296] - Should convert and generate schema when there is a namespace' +
+    'with the same url than tns namespace ', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/2namespaceSameURL.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].data.item).to.be.an('array');
+
+      result.output[0].data.item.forEach((item) => {
+        expect(item.request.body.raw.includes(ELEMENT_NOT_FOUND)).to.equal(false);
+        result.output[0].data.item[0].response.forEach((response) => {
+          expect(response.body.includes(ELEMENT_NOT_FOUND)).to.equal(false);
+        });
+      });
     });
   });
 });
