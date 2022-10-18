@@ -1477,6 +1477,81 @@ describe('setReferenceMapSchemas method', function () {
     });
   });
 
+  it('should add to the reference map when objects from schema where merged and' +
+    ' schemas from type is an array', function () {
+    const merger = new WSDLMerger(),
+      schema = {
+        '@_xmlns:wsse': 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
+        '@_xmlns': 'http://namespace/2008',
+        '@_attributeFormDefault': 'unqualified',
+        '@_elementFormDefault': 'qualified',
+        '@_targetNamespace': 'http://namespace/2008',
+        '@_version': '2021.0.05.1',
+        '@_xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
+        'xsd:element': {
+          '@_name': 'ElementType',
+          '@_type': 'xsd:string'
+        }
+      },
+      schema2 = {
+        '@_targetNamespace': 'http://example.com/stockquote/schemas',
+        '@_xmlns': 'http://www.w3.org/2001/XMLSchema',
+        element: [
+          {
+            '@_name': 'TradePrice',
+            complexType: {
+              all: {
+                element: {
+                  '@_name': 'price',
+                  '@_type': 'float'
+                }
+              }
+            }
+          }
+        ]
+      },
+      wsdlRoot = {
+        definitions: {
+          types: [{ schema: [schema, schema2] }]
+        }
+      },
+      resolvedSchemas = [
+        {
+          found: { schema },
+          schemaPrefix: '',
+          type: 'schema',
+          fileName: '/data/separatedFiles/W3Example/stockquote.xsd',
+          resolvedElements: [
+            {
+              tagName: 'element',
+              elements: [
+                {
+                  '@_name': 'ElementType',
+                  '@_type': 'xsd:string'
+                },
+                {
+                  '@_name': 'ElementType2',
+                  '@_type': 'xsd:string'
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      result = merger.setReferenceMapSchemas(wsdlRoot, '', 'definitions', resolvedSchemas,
+        '@_');
+    expect(result).to.deep.equal({
+      '//definitions//types//schema[0]//element[@name=\"ElementType\"]': {
+        path: '/data/separatedFiles/W3Example/stockquote.xsd',
+        type: 'inline'
+      },
+      '//definitions//types//schema[0]//element[@name=\"ElementType2\"]': {
+        path: '/data/separatedFiles/W3Example/stockquote.xsd',
+        type: 'inline'
+      }
+    });
+  });
+
 });
 
 describe('pushResolvedSchemaElType method', function () {
