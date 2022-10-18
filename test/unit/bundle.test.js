@@ -5,7 +5,11 @@ const expect = require('chai').expect,
   path = require('path-browserify'),
   COUNTING_FOLDER = '../data/separatedFiles/counting',
   INCLUDE_TAG = '../data/separatedFiles/includeTag',
-  fs = require('fs');
+  fs = require('fs'),
+  _ = require('lodash'),
+  xpathTool = require('xpath'),
+  xmldom = require('xmldom').DOMParser;
+
 
 describe('Bundle api, bundle method', function() {
   it('Should return the bundle api output correctly', async function() {
@@ -87,5 +91,63 @@ describe('Bundle api, bundle method', function() {
     expect(
       removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
     ).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+  });
+
+
+  it('Should return the bundle api output correctly with reference map', async function() {
+    const serviceContent = fs.readFileSync(
+        path.join(__dirname, COUNTING_FOLDER, '/CountingCategoryService.wsdl'),
+        'utf-8'
+      ),
+      typesContent = fs.readFileSync(
+        path.join(__dirname, COUNTING_FOLDER, '/CountingCategoryData.xsd'),
+        'utf-8'
+      ),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
+        options: { includeReferenceMap: true },
+        data: [
+          {
+            path: '/CountingCategoryData.wsdl',
+            content: typesContent
+          },
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          }
+        ]
+      },
+      result = await Converter.bundle(input);
+    expect(result.result).to.be.true;
+    expect(result.output).to.be.an('object')
+      .with.keys(['data', 'type', 'specification']);
+    expect(result.output.specification).to.be.an('object')
+      .with.keys(['type', 'version']);
+    expect(result.output.data)
+      .to.have.length(1);
+    expect(result.output.data[0].rootFile.path)
+      .to.be.equal('/CountingCategoryService.wsdl');
+    expect(result.output.data[0].rootFile.referenceMap['//wsdl:definitions//wsdl:types/schema[1]'])
+      .to.deep.equal({
+        path: '/CountingCategoryData.wsdl',
+        type: 'inline'
+      });
+    _.keys(result.output.data[0].rootFile.referenceMap).forEach((xpath) => {
+      let doc = new xmldom().parseFromString(result.output.data[0].rootFile.bundledContent
+          .replace('<?xml version="1.0"?>', '')
+          .replace('xmlns="http://www.w3.org/2001/XMLSchema"', '')),
+        select = xpathTool.useNamespaces({
+          'wsdl': 'http://schemas.xmlsoap.org/wsdl/',
+          'xsd': 'http://www.w3.org/2001/XMLSchema'
+        }),
+        nodes = select(xpath, doc);
+      expect(nodes).to.not.be.undefined;
+    });
   });
 });
