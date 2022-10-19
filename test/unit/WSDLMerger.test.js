@@ -1372,7 +1372,7 @@ describe('setReferenceMapSchemas method', function () {
         ]
       },
       schema2 = {
-        '@_targetNamespace': 'http://example.com/stockquote/schemas',
+        '@_targetNamespace': 'http://example.com/stockquote/schemas2',
         '@_xmlns': 'http://www.w3.org/2001/XMLSchema',
         element: [
           {
@@ -1466,11 +1466,11 @@ describe('setReferenceMapSchemas method', function () {
       result = merger.setReferenceMapSchemas(wsdlRoot, '', 'definitions', resolvedSchemas,
         '@_');
     expect(result).to.deep.equal({
-      '//definitions//types//schema[0]//element[@name=\"ElementType\"]': {
+      '//definitions//types//schema[1]//element[@name=\"ElementType\"]': {
         path: '/data/separatedFiles/W3Example/stockquote.xsd',
         type: 'inline'
       },
-      '//definitions//types//schema[0]//element[@name=\"ElementType2\"]': {
+      '//definitions//types//schema[1]//element[@name=\"ElementType2\"]': {
         path: '/data/separatedFiles/W3Example/stockquote.xsd',
         type: 'inline'
       }
@@ -1541,11 +1541,11 @@ describe('setReferenceMapSchemas method', function () {
       result = merger.setReferenceMapSchemas(wsdlRoot, '', 'definitions', resolvedSchemas,
         '@_');
     expect(result).to.deep.equal({
-      '//definitions//types//schema[0]//element[@name=\"ElementType\"]': {
+      '//definitions//types//schema[1]//element[@name=\"ElementType\"]': {
         path: '/data/separatedFiles/W3Example/stockquote.xsd',
         type: 'inline'
       },
-      '//definitions//types//schema[0]//element[@name=\"ElementType2\"]': {
+      '//definitions//types//schema[1]//element[@name=\"ElementType2\"]': {
         path: '/data/separatedFiles/W3Example/stockquote.xsd',
         type: 'inline'
       }
