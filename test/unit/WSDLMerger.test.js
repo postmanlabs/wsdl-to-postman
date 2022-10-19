@@ -1345,7 +1345,7 @@ describe('setReferenceMapSchemas method', function () {
         }],
       result = merger.setReferenceMapSchemas(wsdlRoot, '', 'definitions', resolvedSchemas);
     expect(result).to.deep.equal({
-      '//definitions//types//schema[0]': {
+      '//definitions//types/schema[1]': {
         path: '/data/separatedFiles/W3Example/stockquote.xsd',
         type: 'inline'
       }
@@ -1409,11 +1409,11 @@ describe('setReferenceMapSchemas method', function () {
       ],
       result = merger.setReferenceMapSchemas(wsdlRoot, '', 'definitions', resolvedSchemas);
     expect(result).to.deep.equal({
-      '//definitions//types//schema[0]': {
+      '//definitions//types/schema[1]': {
         path: '/data/separatedFiles/W3Example/stockquote.xsd',
         type: 'inline'
       },
-      '//definitions//types//schema[1]': {
+      '//definitions//types/schema[2]': {
         path: '/data/separatedFiles/W3Example/stockquote2.xsd',
         type: 'inline'
       }
