@@ -10,7 +10,7 @@ const expect = require('chai').expect,
   NO_ROOT = '../data/separatedFiles/noRootFile',
   REMOTE_NOT_FOUND = '../data/separatedFiles/remoteNotFound',
   REMOTE_REFS = '../data/separatedFiles/remoteRefs',
-  SAME_TARGET_NAMESPACE = '../data/separatedFiles/sameTargetNamespace',
+  SAME_TARGET_NAMESPACE = '../data/separatedFiles/sameTargetnamespace',
   fs = require('fs');
 
 describe('Bundle api, bundle method', function() {
