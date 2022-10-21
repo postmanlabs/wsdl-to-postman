@@ -150,7 +150,7 @@ describe('Missing in request cases', function() {
       });
     });
 
-    it('Should return an MISSING_IN_REQUEST in NOT_EXPECTED_BEFORE__MULTIPLE case ' +
+    it('Should return a MISSING_IN_REQUEST in NOT_EXPECTED_BEFORE__MULTIPLE case ' +
     'detailedBlobValidation = true, suggestAvailableFixes = true', function() {
       const options = {
           detailedBlobValidation: true,
@@ -211,7 +211,7 @@ describe('Missing in request cases', function() {
       });
     });
 
-    it('Should return an MISSING_IN_REQUEST mismatch in NOT_EXPECTED_BEFORE__SINGLE case ' +
+    it('Should return a MISSING_IN_REQUEST mismatch in NOT_EXPECTED_BEFORE__SINGLE case ' +
     'detailedBlobValidation = true, suggestAvailableFixes = true', function() {
       const error = {
           message: 'Element \'intB\': This element is not expected\. Expected is \( intA \)',
@@ -278,7 +278,7 @@ describe('Missing in request cases', function() {
       });
     });
 
-    it('Should return an MISSING_IN_REQUEST mismatch in SWAPPED_ELEMENT__MULTIPLE case ' +
+    it('Should return a MISSING_IN_REQUEST mismatch in SWAPPED_ELEMENT__MULTIPLE case ' +
     'detailedBlobValidation = true, suggestAvailableFixes = true', function() {
       const error = {
           message: 'Element \'intB\': This element is not expected\. Expected is \( intA \)',
@@ -334,7 +334,7 @@ describe('Missing in request cases', function() {
       });
     });
 
-    it('Should return an MISSING_IN_REQUEST mismatch in SWAPPED_ELEMENT__SINGLE case ' +
+    it('Should return a MISSING_IN_REQUEST mismatch in SWAPPED_ELEMENT__SINGLE case ' +
     'detailedBlobValidation = true, suggestAvailableFixes = true', function() {
       const error = {
           message: 'Element \'intB\': This element is not expected\. Expected is \( intA \)',
@@ -502,7 +502,7 @@ describe('Missing in request cases', function() {
       });
     });
 
-    it('Should return an MISSING_IN_REQUEST mismatch in NOT_PROVIDE_PREVIOUS_ELEMENT__MULTIPLE case ' +
+    it('Should return a MISSING_IN_REQUEST mismatch in NOT_PROVIDE_PREVIOUS_ELEMENT__MULTIPLE case ' +
     'detailedBlobValidation = true, suggestAvailableFixes = true', function() {
       const error = {
           message: 'Element \'intB\': This element is not expected\. Expected is \( intA \)',
@@ -558,7 +558,7 @@ describe('Missing in request cases', function() {
       });
     });
 
-    it('Should return an MISSING_IN_REQUEST mismatch in NOT_PROVIDE_PREVIOUS_ELEMENT__SINGLE case ' +
+    it('Should return a MISSING_IN_REQUEST mismatch in NOT_PROVIDE_PREVIOUS_ELEMENT__SINGLE case ' +
     'detailedBlobValidation = true, suggestAvailableFixes = true', function() {
       const error = {
           message: 'Element \'intB\': This element is not expected\. Expected is \( intA \)',
@@ -614,7 +614,7 @@ describe('Missing in request cases', function() {
         }
       };
 
-    it('Should return a INVALID_BODY mismatch in MISSING_ELEMENT__MULTIPLE case ' +
+    it('Should return an INVALID_BODY mismatch in MISSING_ELEMENT__MULTIPLE case ' +
       'detailedBlobValidation = false, suggestAvailableFixes = true', function() {
       const options = {
           detailedBlobValidation: false,
@@ -666,7 +666,7 @@ describe('Missing in request cases', function() {
       });
     });
 
-    it('Should return a INVALID_BODY mismatch in MISSING_ELEMENT__SINGLE case ' +
+    it('Should return an INVALID_BODY mismatch in MISSING_ELEMENT__SINGLE case ' +
       'detailedBlobValidation = false, suggestAvailableFixes = true', function() {
       const options = {
           detailedBlobValidation: false,
