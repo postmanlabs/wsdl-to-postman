@@ -416,4 +416,134 @@ describe('Bundle api, bundle method', function() {
       removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
     ).to.equal(removeLineBreakTabsSpaces(expectedOutput));
   });
+
+  it('should return error when "type" parameter is not sent', async function () {
+    const service = path.join(
+        __dirname,
+        COUNTING_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
+      types = path.join(
+        __dirname,
+        COUNTING_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
+      input = {
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          }
+        ]
+      };
+    try {
+      await Converter.bundle(input);
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('"Type" parameter should be provided');
+    }
+  });
+
+  it('should propagate one error correctly', async function () {
+    const service = path.join(
+      __dirname,
+      COUNTING_FOLDER,
+      '/CountingCategoryService.wsdl'
+    );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: '',
+            content: serviceContent
+          }
+        ]
+      };
+    try {
+      await Converter.bundle(input);
+    }
+    catch (ex) {
+      expect(ex.message).to.equal('"Path" of the data element should be provided');
+    }
+  });
+
+  it('should return 2 bundled files 1.1 correctly', async function () {
+    const service = path.join(
+        __dirname,
+        MULTIPLE_ROOT,
+        '/CountingCategoryService.wsdl'
+      ),
+      service2 = path.join(
+        __dirname,
+        MULTIPLE_ROOT,
+        '/CountingCategoryServiceCopy.wsdl'
+      ),
+      types = path.join(
+        __dirname,
+        MULTIPLE_ROOT,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      serviceContent2 = fs.readFileSync(service2, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
+      input = {
+        type: 'multiFile',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          },
+          {
+            path: '/CountingCategoryServiceCopy.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          },
+          {
+            path: '/CountingCategoryServiceCopy.wsdl',
+            content: serviceContent2
+          }
+        ]
+      },
+      result = await Converter.bundle(input);
+    expect(result.result).to.be.true;
+    expect(result.output.data.length).to.equal(2);
+    expect(result.output.specification.version).to.equal('1.1');
+    expect(result.output.type).to.be.equal('bundledContent');
+  });
+
+  it('should return error when input is an empty object', async function () {
+    try {
+      await Converter.bundle({});
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('Input object must have "type" and "data" information');
+    }
+  });
 });
