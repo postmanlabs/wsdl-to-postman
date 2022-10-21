@@ -1658,3 +1658,120 @@ describe('SchemaPack bundle', function () {
     expect(result.output.type).to.be.equal('bundledContent');
   });
 });
+
+describe('bundle remote refs', function () {
+  const customFetchOK = (url) => {
+      const url1 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/' +
+      'development/test/data/separatedFiles/remoteRefs/remoteStockquote.wsdl',
+        url2 = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/' +
+        'development/test/data/separatedFiles/remoteRefs/remoteStockquote.xsd',
+        folderPath = path.join(__dirname, SEPARATED_FILES, '/remoteRefs'),
+
+        path1 = path.join(folderPath + '/remoteStockquote.wsdl'),
+        path2 = path.join(folderPath + '/remoteStockquote.xsd'),
+        urlMap = {};
+      urlMap[url1] = fs.readFileSync(path1, 'utf8');
+      urlMap[url2] = fs.readFileSync(path2, 'utf8');
+      let status = 200,
+        content = urlMap[url];
+      if (content === undefined) {
+        status = 404;
+      }
+      return Promise.resolve({
+        text: () => { return Promise.resolve(content); },
+        status: status
+      });
+    },
+    customFetchNotOK = () => {
+      return Promise.resolve({
+        text: () => { return Promise.resolve(content); },
+        status: 404
+      });
+    };
+
+  it('Should bundle a file with remote refs', async function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/remoteRefs'),
+      contentFile = fs.readFileSync(folderPath + '/remoteStockquoteservice.wsdl', 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: folderPath + '/remoteStockquoteservice.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: folderPath + '/remoteStockquoteservice.wsdl',
+            content: contentFile
+          }
+        ]
+      };
+
+    const schemaPack = new SchemaPack(input, { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK }),
+      result = await schemaPack.bundle();
+    expect(result).to.not.be.undefined;
+    expect(result.result).to.be.true;
+    expect(result.output.data[0].rootFile.bundledContent).to.not.be.empty;
+
+  });
+
+  it('Should handle bundle a file with remote refs missing ref', async function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/remoteRefs'),
+      contentFile = fs.readFileSync(folderPath + '/remoteStockquoteservice.wsdl', 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: folderPath + '/remoteStockquoteservice.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: folderPath + '/remoteStockquoteservice.wsdl',
+            content: contentFile
+          }
+        ]
+      };
+
+    const schemaPack = new SchemaPack(input, { resolveRemoteRefs: true, remoteRefsResolver: customFetchNotOK }),
+      result = await schemaPack.bundle();
+    expect(result).to.not.be.undefined;
+    expect(result.result).to.be.true;
+    expect(result.output.data[0].rootFile.bundledContent).to.not.be.empty;
+
+  });
+
+  it('Should bundle a file with remote refs and local', async function () {
+    let folderPath = path.join(__dirname, SEPARATED_FILES, '/remoteWithLocal'),
+      contentFile = fs.readFileSync(folderPath + '/remoteStockquoteservice.wsdl', 'utf8'),
+      contentFileXSD = fs.readFileSync(folderPath + '/remoteStockquote.xsd', 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: folderPath + '/remoteStockquoteservice.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: folderPath + '/remoteStockquoteservice.wsdl',
+            content: contentFile
+          },
+          {
+            path: folderPath + '/remoteStockquote.xsd',
+            content: contentFileXSD
+          }
+        ]
+      };
+
+    const schemaPack = new SchemaPack(input, { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK }),
+      result = await schemaPack.bundle();
+    expect(result).to.not.be.undefined;
+    expect(result.result).to.be.true;
+    expect(result.output.data[0].rootFile.bundledContent).to.not.be.empty;
+
+  });
+});

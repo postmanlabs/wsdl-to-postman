@@ -310,7 +310,7 @@ describe('Bundle api, bundle method', function() {
     ).to.equal(removeLineBreakTabsSpaces(expectedOutput));
   });
 
-  it.skip('Should bundle from remote references', async function() {
+  it('Should bundle from remote references', async function() {
     const serviceContent = fs.readFileSync(
         path.join(__dirname, REMOTE_REFS, '/remoteStockquoteservice.wsdl'),
         'utf-8'
@@ -327,7 +327,7 @@ describe('Bundle api, bundle method', function() {
             path: '/remoteStockquoteservice.wsdl'
           }
         ],
-        options: {},
+        options: { resolveRemoteRefs: true },
         data: [
           {
             path: '/remoteStockquoteservice.wsdl',
@@ -707,5 +707,39 @@ describe('Bundle api, bundle method', function() {
       expect(nodes).to.not.be.undefined;
       expect(nodes.length).to.equal(1);
     });
+  });
+
+  it('Should not fail when file is missing in the url and return same content', async function () {
+    const serviceContent = fs.readFileSync(
+        path.join(__dirname, REMOTE_REFS, '/remoteStockquoteservice.wsdl'),
+        'utf-8'
+      ),
+      customFetch = () => {
+        return Promise.resolve({
+          text: () => { return Promise.resolve(''); },
+          status: 404
+        });
+      },
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/remoteStockquoteservice.wsdl'
+          }
+        ],
+        options: { resolveRemoteRefs: true, remoteRefsResolver: customFetch },
+        data: [
+          {
+            path: '/remoteStockquoteservice.wsdl',
+            content: serviceContent
+          }
+        ]
+      },
+      result = await Converter.bundle(input);
+    expect(result.result).to.be.true;
+    expect(
+      removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
+    ).to.equal(removeLineBreakTabsSpaces(serviceContent));
   });
 });
