@@ -28,7 +28,8 @@ const expect = require('chai').expect,
     'sourceUrl',
     'indentCharacter',
     'resolveRemoteRefs',
-    'remoteRefsResolver'
+    'remoteRefsResolver',
+    'includeReferenceMap'
   ],
   getOptions = require('../../lib/utils/options').getOptions;
 
@@ -280,7 +281,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode = document', function () {
     const options = SchemaPack.getOptions('document');
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(11);
+    expect(options.length).to.eq(12);
   });
 
   it('Should return external options when called with mode = use', function () {
@@ -328,7 +329,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode document and usage not an object', function () {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(11);
+    expect(options.length).to.eq(12);
   });
 
   it('Should return default empty array in validationPropertiesToIgnore', function () {
