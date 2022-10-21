@@ -351,7 +351,7 @@ describe('Bundle api, bundle method', function() {
     ).to.equal(removeLineBreakTabsSpaces(expectedOutput));
   });
 
-  it.skip('Should bundle from remote references', async function() {
+  it('Should bundle from remote references', async function() {
     const serviceContent = fs.readFileSync(
         path.join(__dirname, REMOTE_REFS, '/remoteStockquoteservice.wsdl'),
         'utf-8'
@@ -368,7 +368,7 @@ describe('Bundle api, bundle method', function() {
             path: '/remoteStockquoteservice.wsdl'
           }
         ],
-        options: {},
+        options: { resolveRemoteRefs: true },
         data: [
           {
             path: '/remoteStockquoteservice.wsdl',
