@@ -90,7 +90,7 @@ describe('detectRoot method', function () {
       ),
       types = path.join(
         __dirname,
-        COUNTING_SEPARATED_FOLDER,
+        MULTIPLE_ROOT,
         '/CountingCategoryData.xsd'
       );
     let serviceContent = fs.readFileSync(service, 'utf8'),

@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <wsdl:definitions name="ServiceFinderQuery" targetNamespace="http://tempuri.org/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -41,17 +42,9 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsdl:types>
-    <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefsServiceFinderQuery/xsd0.xsd" namespace="http://tempuri.org/"/>
-      <xsd:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefsServiceFinderQuery/xsd1.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
-      <xsd:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefsServiceFinderQuery/xsd2.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin"/>
-      <xsd:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefsServiceFinderQuery/xsd3.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder"/>
-    </xsd:schema>
     <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/"
       xmlns:xs="http://www.w3.org/2001/XMLSchema"
       xmlns:tns="http://tempuri.org/">
-      <xs:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefsServiceFinderQuery/xsd2.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin"/>
-      <xs:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteRefsServiceFinderQuery/xsd3.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder"/>
       <xs:element name="GetServicesforPincode">
         <xs:complexType>
           <xs:sequence>
