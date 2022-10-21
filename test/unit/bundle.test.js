@@ -4,7 +4,6 @@ const expect = require('chai').expect,
   COUNTING_FOLDER = '../data/separatedFiles/counting',
   INCLUDE_TAG = '../data/separatedFiles/includeTag',
   ALL_IMPORT_PRESENT = '../data/separatedFiles/allImportPresent',
-  MISSING_IMPORT = '../data/separatedFiles/missingImport',
   MULTIPLE_ROOT = '../data/separatedFiles/multipleRoot',
   NESTED_FOLDERS = '../data/separatedFiles/nestedFolders',
   NO_ROOT = '../data/separatedFiles/noRootFile',
@@ -135,46 +134,6 @@ describe('Bundle api, bundle method', function() {
           },
           {
             path: '/Services.wsdl',
-            content: serviceContent
-          }
-        ]
-      },
-      result = await Converter.bundle(input);
-    expect(result.result).to.be.true;
-    expect(
-      removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
-    ).to.equal(removeLineBreakTabsSpaces(expectedOutput));
-  });
-
-  it('Should bundle and not remove missing imports', async function() {
-    const serviceContent = fs.readFileSync(
-        path.join(__dirname, MISSING_IMPORT, '/CountingCategoryService.wsdl'),
-        'utf-8'
-      ),
-      typesContent = fs.readFileSync(
-        path.join(__dirname, MISSING_IMPORT, '/CountingCategoryData.xsd'),
-        'utf-8'
-      ),
-      expectedOutput = fs.readFileSync(
-        path.join(__dirname, MISSING_IMPORT, '/bundleOutput.wsdl'),
-        'utf-8'
-      ),
-      input = {
-        type: 'multiFile',
-        specificationVersion: '1.1',
-        rootFiles: [
-          {
-            path: '/CountingCategoryService.wsdl'
-          }
-        ],
-        options: {},
-        data: [
-          {
-            path: '/CountingCategoryData.xsd',
-            content: typesContent
-          },
-          {
-            path: '/CountingCategoryService.wsdl',
             content: serviceContent
           }
         ]
