@@ -8,7 +8,6 @@ const expect = require('chai').expect,
   REMOTE_REFS = 'test/data/separatedFiles/remoteRefs',
   COUNTING_SEPARATED_FOLDER = '../data/separatedFiles/counting',
   WIKI_20_FOLDER = '../data/separatedFiles/wiki20',
-  MULTIPLE_ROOT = '../data/separatedFiles/multipleRoot',
   fs = require('fs'),
   getAllTransactionsFromCollection = require('../../lib/utils/getAllTransactions').getAllTransactionsFromCollection,
   async = require('async'),
@@ -1167,32 +1166,6 @@ describe('SchemaPack detectRelatedFiles', async function () {
 
 describe('SchemaPack detectRootFiles', function () {
 
-  it('should return error when input is an empty object', async function () {
-    try {
-      const schemaPack = new SchemaPack({}, {});
-      await schemaPack.detectRootFiles();
-    }
-    catch (error) {
-      expect(error).to.not.be.undefined;
-      expect(error.message).to.equal('Input object must have "type" and "data" information');
-    }
-  });
-
-  it('should return error when input data is an empty array', async function () {
-    try {
-      const
-        schemaPack = new SchemaPack({
-          type: 'multiFile',
-          data: ''
-        }, {});
-      await schemaPack.detectRootFiles();
-    }
-    catch (error) {
-      expect(error).to.not.be.undefined;
-      expect(error.message).to.equal('"Data" parameter should be provided');
-    }
-  });
-
   it('should return one root 1.1 correctly without specificationVersion provided', async function () {
     const service = path.join(
         __dirname,
@@ -1931,5 +1904,4 @@ describe('SchemaPack bundle', function () {
       expect(error.message).to.equal('"Type" parameter should be provided');
     }
   });
-
 });
