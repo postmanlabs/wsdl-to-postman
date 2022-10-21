@@ -1,10 +1,10 @@
+<?xmlversion="1.0"?>
 <definitions name="StockQuote" targetNamespace="http://example.com/stockquote/service"
     xmlns:tns="http://example.com/stockquote/service"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:defs="http://example.com/stockquote/definitions"
     xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xsd1="http://example.com/stockquote/schemas">
-    <import namespace="http://example.com/stockquote/definitions" location="http://example.com/stockquote/stockquote.wsdl" />
     <binding name="StockQuoteSoapBinding" type="defs:StockQuotePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
         <operation name="GetLastTradePrice">

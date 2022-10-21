@@ -1,8 +1,9 @@
 'use strict';
 
 const {
-  SchemaPack
-} = require('./lib/SchemaPack.js');
+    SchemaPack
+  } = require('./lib/SchemaPack.js'),
+  _ = require('lodash');
 
 module.exports = {
   convert: function (input, options, cb) {
@@ -43,7 +44,7 @@ module.exports = {
   },
 
   bundle: async function(input) {
-    const schema = new SchemaPack(input);
+    const schema = new SchemaPack(input, _.has(input, 'options') ? input.options : {});
     return schema.bundle(input);
   },
 

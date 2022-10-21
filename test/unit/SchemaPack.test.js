@@ -8,7 +8,6 @@ const expect = require('chai').expect,
   REMOTE_REFS = 'test/data/separatedFiles/remoteRefs',
   COUNTING_SEPARATED_FOLDER = '../data/separatedFiles/counting',
   WIKI_20_FOLDER = '../data/separatedFiles/wiki20',
-  MULTIPLE_ROOT = '../data/separatedFiles/multipleRoot',
   fs = require('fs'),
   getAllTransactionsFromCollection = require('../../lib/utils/getAllTransactions').getAllTransactionsFromCollection,
   async = require('async'),
@@ -29,7 +28,8 @@ const expect = require('chai').expect,
     'sourceUrl',
     'indentCharacter',
     'resolveRemoteRefs',
-    'remoteRefsResolver'
+    'remoteRefsResolver',
+    'includeReferenceMap'
   ],
   getOptions = require('../../lib/utils/options').getOptions;
 
@@ -281,7 +281,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode = document', function () {
     const options = SchemaPack.getOptions('document');
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(11);
+    expect(options.length).to.eq(12);
   });
 
   it('Should return external options when called with mode = use', function () {
@@ -329,7 +329,7 @@ describe('SchemaPack getOptions', function () {
   it('Should return external options when called with mode document and usage not an object', function () {
     const options = SchemaPack.getOptions('document', 2);
     expect(options).to.be.an('array');
-    expect(options.length).to.eq(11);
+    expect(options.length).to.eq(12);
   });
 
   it('Should return default empty array in validationPropertiesToIgnore', function () {
@@ -559,7 +559,7 @@ describe('merge and validate', function () {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
       files = [],
       array = [
-        { fileName: folderPath + '/output.wsdl' }
+        { fileName: folderPath + '/outputWithImports.wsdl' }
       ];
 
     array.forEach((item) => {
@@ -598,7 +598,7 @@ describe('merge and validate', function () {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
       files = [],
       array = [
-        { fileName: folderPath + '/outputNoImports.wsdl' }
+        { fileName: folderPath + '/outputWithImports.wsdl' }
       ];
     array.forEach((item) => {
       files.push({
@@ -1167,32 +1167,6 @@ describe('SchemaPack detectRelatedFiles', async function () {
 
 describe('SchemaPack detectRootFiles', function () {
 
-  it('should return error when input is an empty object', async function () {
-    try {
-      const schemaPack = new SchemaPack({}, {});
-      await schemaPack.detectRootFiles();
-    }
-    catch (error) {
-      expect(error).to.not.be.undefined;
-      expect(error.message).to.equal('Input object must have "type" and "data" information');
-    }
-  });
-
-  it('should return error when input data is an empty array', async function () {
-    try {
-      const
-        schemaPack = new SchemaPack({
-          type: 'multiFile',
-          data: ''
-        }, {});
-      await schemaPack.detectRootFiles();
-    }
-    catch (error) {
-      expect(error).to.not.be.undefined;
-      expect(error.message).to.equal('"Data" parameter should be provided');
-    }
-  });
-
   it('should return one root 1.1 correctly without specificationVersion provided', async function () {
     const service = path.join(
         __dirname,
@@ -1409,17 +1383,41 @@ describe('SchemaPack detectRootFiles', function () {
     expect(result.output.specification.version).to.equal('1.1');
     expect(result.output.type).to.be.equal('rootFiles');
   });
+});
 
-  it('should return 2 root 1.1 correctly', async function () {
+describe('SchemaPack bundle', function () {
+
+  it('should return error when input is an empty object', async function () {
+    try {
+      const schemaPack = new SchemaPack({}, {});
+      await schemaPack.bundle({});
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('Input object must have "type" and "data" information');
+    }
+  });
+
+  it('should return error when input data is an empty array', async function () {
+    try {
+      const
+        schemaPack = new SchemaPack({
+          type: 'multiFile',
+          data: ''
+        }, {});
+      await schemaPack.bundle();
+    }
+    catch (error) {
+      expect(error).to.not.be.undefined;
+      expect(error.message).to.equal('"Data" parameter should be provided');
+    }
+  });
+
+  it('should return one bundled 1.1 correctly without specificationVersion provided', async function () {
     const service = path.join(
         __dirname,
-        MULTIPLE_ROOT,
+        COUNTING_SEPARATED_FOLDER,
         '/CountingCategoryService.wsdl'
-      ),
-      service2 = path.join(
-        __dirname,
-        MULTIPLE_ROOT,
-        '/CountingCategoryServiceCopy.wsdl'
       ),
       types = path.join(
         __dirname,
@@ -1427,10 +1425,14 @@ describe('SchemaPack detectRootFiles', function () {
         '/CountingCategoryData.xsd'
       );
     let serviceContent = fs.readFileSync(service, 'utf8'),
-      serviceContent2 = fs.readFileSync(service2, 'utf8'),
       typesContent = fs.readFileSync(types, 'utf8'),
       input = {
         type: 'multiFile',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
         data: [
           {
             path: '/CountingCategoryService.wsdl',
@@ -1439,102 +1441,222 @@ describe('SchemaPack detectRootFiles', function () {
           {
             path: '/CountingCategoryData.xsd',
             content: typesContent
-          },
-          {
-            path: '/CountingCategoryServiceCopy.wsdl',
-            content: serviceContent2
           }
         ]
       },
       schemaPack = new SchemaPack(input, {}),
-      result = await schemaPack.detectRootFiles();
+      result = await schemaPack.bundle();
     expect(result.result).to.be.true;
-    expect(result.output.data.length).to.equal(2);
+    expect(result.output.data[0].rootFile.path).to.equal('/CountingCategoryService.wsdl');
     expect(result.output.specification.version).to.equal('1.1');
-    expect(result.output.type).to.be.equal('rootFiles');
+    expect(result.output.type).to.be.equal('bundledContent');
   });
 
-  it('should propagate one error correctly', async function () {
+  it('should return zero bundled when specificationVersion is 2.0 and no root ' +
+    'file with that version is present', async function () {
     const service = path.join(
-      __dirname,
-      COUNTING_SEPARATED_FOLDER,
-      '/CountingCategoryService.wsdl'
-    );
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
+      types = path.join(
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
     let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
       input = {
         type: 'multiFile',
-        specificationVersion: '1.1',
+        specificationVersion: '2.0',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
         data: [
           {
-            path: '',
+            path: '/CountingCategoryService.wsdl',
             content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
           }
         ]
-      };
-    try {
-      const schemaPack = new SchemaPack(input, {});
-      await schemaPack.detectRootFiles();
-    }
-    catch (ex) {
-      expect(ex.message).to.equal('"Path" of the data element should be provided');
-    }
+      },
+      schemaPack = new SchemaPack(input, {}),
+      result = await schemaPack.bundle();
+    expect(result.result).to.be.true;
+    expect(result.output.data.length).to.equal(0);
+    expect(result.output.specification.version).to.equal('2.0');
+    expect(result.output.type).to.be.equal('bundledContent');
   });
 
-  it('should not read content from FS when is not present', async function () {
-    let input = {
+  it('should return one bundled 1.1 using version by default (1.1) when multiple ' +
+    'versions are present (Not specificationVersion)', async function () {
+    const service = path.join(
+        __dirname,
+        WIKI_20_FOLDER,
+        '/wikipedia.wsdl'
+      ),
+      types = path.join(
+        __dirname,
+        WIKI_20_FOLDER,
+        '/Types.xsd'
+      ),
+      service2 = path.join(
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
+      types2 = path.join(
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
+      serviceContent2 = fs.readFileSync(service2, 'utf8'),
+      typesContent2 = fs.readFileSync(types2, 'utf8'),
+      input = {
         type: 'multiFile',
-        data: [
+        rootFiles: [
           {
             path: '/CountingCategoryService.wsdl'
           },
           {
-            path: '/CountingCategoryData.xsd'
+            path: '/wikipedia.wsdl'
+          }
+        ],
+        data: [
+          {
+            path: '/wikipedia.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/Types.xsd',
+            content: typesContent
+          },
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent2
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent2
           }
         ]
       },
       schemaPack = new SchemaPack(input, {}),
-      result = await schemaPack.detectRootFiles();
+      result = await schemaPack.bundle();
     expect(result.result).to.be.true;
-    expect(result.output.data.length).to.equal(0);
+    expect(result.output.data.length).to.equal(1);
+    expect(result.output.data[0].rootFile.path).to.equal('/CountingCategoryService.wsdl');
     expect(result.output.specification.version).to.equal('1.1');
-    expect(result.output.type).to.be.equal('rootFiles');
+    expect(result.output.type).to.be.equal('bundledContent');
   });
 
-  it('should return error when "type" parameter is not sent', async function () {
+  it('should return one bundled 2.0 when multiple versions are present correctly 2.0', async function () {
     const service = path.join(
+        __dirname,
+        WIKI_20_FOLDER,
+        '/wikipedia.wsdl'
+      ),
+      types = path.join(
+        __dirname,
+        WIKI_20_FOLDER,
+        '/Types.xsd'
+      ),
+      service2 = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
         '/CountingCategoryService.wsdl'
       ),
-      types = path.join(
+      types2 = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
         '/CountingCategoryData.xsd'
       );
     let serviceContent = fs.readFileSync(service, 'utf8'),
       typesContent = fs.readFileSync(types, 'utf8'),
+      serviceContent2 = fs.readFileSync(service2, 'utf8'),
+      typesContent2 = fs.readFileSync(types2, 'utf8'),
       input = {
+        type: 'multiFile',
+        specificationVersion: '2.0',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          },
+          {
+            path: '/wikipedia.wsdl'
+          }
+        ],
         data: [
           {
-            path: '/CountingCategoryService.wsdl',
+            path: '/wikipedia.wsdl',
             content: serviceContent
           },
           {
-            path: '/CountingCategoryData.xsd',
+            path: '/Types.xsd',
             content: typesContent
+          },
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent2
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent2
           }
         ]
-      };
-    try {
-      const schemaPack = new SchemaPack(input, {});
-      await schemaPack.detectRootFiles();
-    }
-    catch (error) {
-      expect(error).to.not.be.undefined;
-      expect(error.message).to.equal('"Type" parameter should be provided');
-    }
+      },
+      schemaPack = new SchemaPack(input, {}),
+      result = await schemaPack.bundle();
+    expect(result.result).to.be.true;
+    expect(result.output.data.length).to.equal(1);
+    expect(result.output.data[0].rootFile.path).to.equal('/wikipedia.wsdl');
+    expect(result.output.specification.version).to.equal('2.0');
+    expect(result.output.type).to.be.equal('bundledContent');
   });
 
+  it('should return zero bundled file when there is not a root file present', async function () {
+    const types = path.join(
+        __dirname,
+        WIKI_20_FOLDER,
+        '/Types.xsd'
+      ),
+      types2 = path.join(
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let typesContent = fs.readFileSync(types, 'utf8'),
+      typesContent2 = fs.readFileSync(types2, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+        ],
+        data: [
+          {
+            path: '/Types.xsd',
+            content: typesContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent2
+          }
+        ]
+      },
+      schemaPack = new SchemaPack(input, {}),
+      result = await schemaPack.bundle();
+    expect(result.result).to.be.true;
+    expect(result.output.data.length).to.equal(0);
+    expect(result.output.specification.version).to.equal('1.1');
+    expect(result.output.type).to.be.equal('bundledContent');
+  });
 });
 
 describe('bundle remote refs', function () {
