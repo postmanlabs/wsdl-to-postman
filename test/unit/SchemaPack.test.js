@@ -1512,12 +1512,13 @@ describe('SchemaPack bundle', function () {
           }
         ]
       },
-      schemaPack = new SchemaPack(input, {}),
+      schemaPack = new SchemaPack(input, {});
+    try {
       result = await schemaPack.bundle();
-    expect(result.result).to.be.true;
-    expect(result.output.data.length).to.equal(0);
-    expect(result.output.specification.version).to.equal('2.0');
-    expect(result.output.type).to.be.equal('bundledContent');
+    }
+    catch (error) {
+      expect(error.message).to.equal('Input should have at least one root file');
+    }
   });
 
   it('should return one bundled 1.1 using version by default (1.1) when multiple ' +
@@ -1647,43 +1648,6 @@ describe('SchemaPack bundle', function () {
     expect(result.output.specification.version).to.equal('2.0');
     expect(result.output.type).to.be.equal('bundledContent');
   });
-
-  it('should return zero bundled file when there is not a root file present', async function () {
-    const types = path.join(
-        __dirname,
-        WIKI_20_FOLDER,
-        '/Types.xsd'
-      ),
-      types2 = path.join(
-        __dirname,
-        COUNTING_SEPARATED_FOLDER,
-        '/CountingCategoryData.xsd'
-      );
-    let typesContent = fs.readFileSync(types, 'utf8'),
-      typesContent2 = fs.readFileSync(types2, 'utf8'),
-      input = {
-        type: 'multiFile',
-        specificationVersion: '1.1',
-        rootFiles: [
-        ],
-        data: [
-          {
-            path: '/Types.xsd',
-            content: typesContent
-          },
-          {
-            path: '/CountingCategoryData.xsd',
-            content: typesContent2
-          }
-        ]
-      },
-      schemaPack = new SchemaPack(input, {}),
-      result = await schemaPack.bundle();
-    expect(result.result).to.be.true;
-    expect(result.output.data.length).to.equal(0);
-    expect(result.output.specification.version).to.equal('1.1');
-    expect(result.output.type).to.be.equal('bundledContent');
-  });
 });
 
 describe('bundle remote refs', function () {
@@ -1716,7 +1680,40 @@ describe('bundle remote refs', function () {
       });
     };
 
-  it('Should bundle a file with remote refs', async function () {
+  it('Should bundle from remote references', async function () {
+    const serviceContent = fs.readFileSync(
+        path.join(__dirname, SEPARATED_FILES, '/remoteRefs/remoteStockquoteservice.wsdl'),
+        'utf-8'
+      ),
+      expectedOutput = fs.readFileSync(
+        path.join(__dirname, SEPARATED_FILES, '/remoteRefs/output.wsdl'),
+        'utf-8'
+      ),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/remoteStockquoteservice.wsdl'
+          }
+        ],
+        options: { resolveRemoteRefs: true },
+        data: [
+          {
+            path: '/remoteStockquoteservice.wsdl',
+            content: serviceContent
+          }
+        ]
+      },
+      schemaPack = new SchemaPack(input, { resolveRemoteRefs: true }),
+      result = await schemaPack.bundle();
+    expect(result.result).to.be.true;
+    expect(
+      removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
+    ).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+  });
+
+  it('Should bundle a file with remote refs using custom fetch', async function () {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/remoteRefs'),
       contentFile = fs.readFileSync(folderPath + '/remoteStockquoteservice.wsdl', 'utf8'),
       input = {
