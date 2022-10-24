@@ -1,5 +1,4 @@
 const expect = require('chai').expect,
-  Converter = require('../../index.js'),
   path = require('path-browserify'),
   COUNTING_FOLDER = '../data/separatedFiles/counting',
   W3_FOLDER = '../data/separatedFiles/W3Example',
@@ -15,10 +14,20 @@ const expect = require('chai').expect,
   fs = require('fs'),
   _ = require('lodash'),
   xpathTool = require('xpath'),
-  xmldom = require('xmldom').DOMParser;
+  xmldom = require('xmldom').DOMParser,
+  { getBundledFiles } = require('../../lib/bundleFiles'),
+  {
+    WSDLParserFactory
+  } = require('../../lib/WSDLParserFactory'),
+  {
+    XMLParser
+  } = require('../../lib/XMLParser');
 
 
 describe('Bundle api, bundle method', function() {
+  const wsdlParser = new WSDLParserFactory().getParserByVersion('1.1'),
+    xmlParser = new XMLParser();
+
   it('Should bundle remove the resolved imports and parent if empty after', async function() {
     const serviceContent = fs.readFileSync(
         path.join(__dirname, ALL_IMPORT_PRESENT, '/CountingCategoryService.wsdl'),
@@ -52,7 +61,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(result.output).to.be.an('object')
       .with.keys(['data', 'type', 'specification']);
@@ -98,7 +107,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(result.output).to.be.an('object')
       .with.keys(['data', 'type', 'specification']);
@@ -144,7 +153,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(
       removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
@@ -195,7 +204,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(
       removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
@@ -238,14 +247,116 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(
       removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
     ).to.equal(removeLineBreakTabsSpaces(expectedOutput));
   });
 
-  it('Should not return any bundledFile if no root in folder', async function() {
+  it('should locate the root from data array and bundle, rootFiles is empty array', async function () {
+    const service = path.join(
+        __dirname,
+        COUNTING_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
+      types = path.join(
+        __dirname,
+        COUNTING_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
+      input = {
+        type: 'multiFile',
+        rootFiles: [
+        ],
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          }
+        ]
+      },
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
+    expect(result.result).to.be.true;
+    expect(result.output.data[0].rootFile.path).to.equal('/CountingCategoryService.wsdl');
+    expect(result.output.specification.version).to.equal('1.1');
+    expect(result.output.type).to.be.equal('bundledContent');
+  });
+
+  it('should locate the root from data array and bundle, rootFiles is not present in input', async function () {
+    const service = path.join(
+        __dirname,
+        COUNTING_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
+      types = path.join(
+        __dirname,
+        COUNTING_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
+      input = {
+        type: 'multiFile',
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          }
+        ]
+      },
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
+    expect(result.result).to.be.true;
+    expect(result.output.data[0].rootFile.path).to.equal('/CountingCategoryService.wsdl');
+    expect(result.output.specification.version).to.equal('1.1');
+    expect(result.output.type).to.be.equal('bundledContent');
+  });
+
+  it('should locate the root from data array and bundle, rootFiles is undefined', async function () {
+    const service = path.join(
+        __dirname,
+        COUNTING_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
+      types = path.join(
+        __dirname,
+        COUNTING_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(types, 'utf8'),
+      input = {
+        type: 'multiFile',
+        rootFiles: undefined,
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          }
+        ]
+      },
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
+    expect(result.result).to.be.true;
+    expect(result.output.data[0].rootFile.path).to.equal('/CountingCategoryService.wsdl');
+    expect(result.output.specification.version).to.equal('1.1');
+    expect(result.output.type).to.be.equal('bundledContent');
+  });
+
+  it('should throw error when rootFile is not present in data array', async function() {
     const serviceContent = fs.readFileSync(
         path.join(__dirname, NO_ROOT, '/Services.wsdl'),
         'utf-8'
@@ -272,10 +383,13 @@ describe('Bundle api, bundle method', function() {
             content: serviceContent
           }
         ]
-      },
-      result = await Converter.bundle(input);
-    expect(result.result).to.be.true;
-    expect(result.output.data).to.have.length(0);
+      };
+    try {
+      await getBundledFiles(input, wsdlParser, xmlParser, input.options);
+    }
+    catch (error) {
+      expect(error.message).to.equal('Input should have at least one root file');
+    }
   });
 
   it('Should bundle and don\'t remove the include when remote content is not found', async function() {
@@ -303,39 +417,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
-    expect(result.result).to.be.true;
-    expect(
-      removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
-    ).to.equal(removeLineBreakTabsSpaces(expectedOutput));
-  });
-
-  it('Should bundle from remote references', async function() {
-    const serviceContent = fs.readFileSync(
-        path.join(__dirname, REMOTE_REFS, '/remoteStockquoteservice.wsdl'),
-        'utf-8'
-      ),
-      expectedOutput = fs.readFileSync(
-        path.join(__dirname, REMOTE_REFS, '/output.wsdl'),
-        'utf-8'
-      ),
-      input = {
-        type: 'multiFile',
-        specificationVersion: '1.1',
-        rootFiles: [
-          {
-            path: '/remoteStockquoteservice.wsdl'
-          }
-        ],
-        options: { resolveRemoteRefs: true },
-        data: [
-          {
-            path: '/remoteStockquoteservice.wsdl',
-            content: serviceContent
-          }
-        ]
-      },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(
       removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
@@ -375,7 +457,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(
       removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
@@ -413,7 +495,7 @@ describe('Bundle api, bundle method', function() {
         ]
       };
     try {
-      await Converter.bundle(input);
+      await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     }
     catch (error) {
       expect(error).to.not.be.undefined;
@@ -444,10 +526,10 @@ describe('Bundle api, bundle method', function() {
         ]
       };
     try {
-      await Converter.bundle(input);
+      await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     }
     catch (ex) {
-      expect(ex.message).to.equal('"Path" of the data element should be provided');
+      expect(ex.message).to.equal('Input should have at least one root file');
     }
   });
 
@@ -495,21 +577,55 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
+
     expect(result.result).to.be.true;
     expect(result.output.data.length).to.equal(2);
     expect(result.output.specification.version).to.equal('1.1');
     expect(result.output.type).to.be.equal('bundledContent');
   });
 
-  it('should return error when input is an empty object', async function () {
-    try {
-      await Converter.bundle({});
-    }
-    catch (error) {
-      expect(error).to.not.be.undefined;
-      expect(error.message).to.equal('Input object must have "type" and "data" information');
-    }
+  it('Should bundle only the selected root even with multiple Roots in data array', async function() {
+    const serviceContent = fs.readFileSync(
+        path.join(__dirname, MULTIPLE_ROOT, '/CountingCategoryService.wsdl'),
+        'utf-8'
+      ),
+      serviceContent2 = fs.readFileSync(
+        path.join(__dirname, MULTIPLE_ROOT, '/CountingCategoryServiceCopy.wsdl'),
+        'utf-8'
+      ),
+      typesContent = fs.readFileSync(
+        path.join(__dirname, MULTIPLE_ROOT, '/CountingCategoryData.xsd'),
+        'utf-8'
+      ),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/CountingCategoryServiceCopy.wsdl'
+          }
+        ],
+        options: {},
+        data: [
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          },
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryServiceCopy.wsdl',
+            content: serviceContent2
+          }
+        ]
+      },
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
+    expect(result.result).to.be.true;
+    expect(result.output.data.length).to.equal(1);
+    expect(result.output.data[0].rootFile.path).to.equal('/CountingCategoryServiceCopy.wsdl');
   });
 
   it('Should return the bundle api output correctly with reference map', async function() {
@@ -541,7 +657,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(result.output).to.be.an('object')
       .with.keys(['data', 'type', 'specification']);
@@ -608,7 +724,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(result.output).to.be.an('object')
       .with.keys(['data', 'type', 'specification']);
@@ -680,7 +796,7 @@ describe('Bundle api, bundle method', function() {
         ]
       },
 
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(result.output).to.be.an('object')
       .with.keys(['data', 'type', 'specification']);
@@ -736,7 +852,7 @@ describe('Bundle api, bundle method', function() {
           }
         ]
       },
-      result = await Converter.bundle(input);
+      result = await getBundledFiles(input, wsdlParser, xmlParser, input.options);
     expect(result.result).to.be.true;
     expect(
       removeLineBreakTabsSpaces(result.output.data[0].rootFile.bundledContent)
