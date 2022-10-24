@@ -6,7 +6,7 @@
     xmlns="http://schemas.xmlsoap.org/wsdl/">
 
     <import namespace="http://example.com/stockquote/definitions"
-        location="remoteStockquote.wsdl"/>
+        location="Stockquote.wsdl"/>
 
     <binding name="StockQuoteSoapBinding" type="defs:StockQuotePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>

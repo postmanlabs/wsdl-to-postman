@@ -17,7 +17,8 @@ const expect = require('chai').expect,
   wrong_Path = 'path/does/not/exist.wsdl',
   COUNTING_SEPARATED_FOLDER = '../data/separatedFiles/counting',
   WIKI_20_FOLDER = '../data/separatedFiles/wiki20',
-  CIRCULAR_REFS = '../data/separatedFiles/circularRef',
+  CIRCULAR_REFS_FOLDER = '../data/separatedFiles/circularRef',
+  DEEP_CIRCULAR_REF_FOLDER = '../data/separatedFiles/deepCircularRef',
   fs = require('fs'),
   path = require('path'),
   async = require('async');
@@ -372,5 +373,135 @@ describe('bundle', function () {
     expect(result.result).to.be.true;
   });
 
-  // it should bundle a file when rootFiles is empty, and rootFile is present in data array
+  it('Should bundle a file when rootFiles is empty, and rootFile is present in data array', async function () {
+    const service = path.join(
+      __dirname,
+      COUNTING_SEPARATED_FOLDER,
+      '/CountingCategoryService.wsdl'
+    ),
+      elements = path.join(
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(elements, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+        ],
+        options: {},
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          }
+        ]
+      },
+      result = await bundle(input);
+    expect(result.result).to.be.true;
+  });
+
+  it('Should bundle a file that has a circular refence A - B - A', async function () {
+    const service = path.join(
+      __dirname,
+      CIRCULAR_REFS_FOLDER,
+      '/Stockquoteservice.wsdl'
+    ),
+      elements = path.join(
+        __dirname,
+        CIRCULAR_REFS_FOLDER,
+        '/Stockquote.wsdl'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(elements, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+        ],
+        options: {},
+        data: [
+          {
+            path: '/Stockquoteservice.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/Stockquote.wsdl',
+            content: typesContent
+          }
+        ]
+      },
+      result = await bundle(input);
+    expect(result.result).to.be.true;
+  });
+
+  it('Should bundle a file that has a deep circular reference A - B - C - D - B', async function () {
+    const service = path.join(
+      __dirname,
+      DEEP_CIRCULAR_REF_FOLDER,
+      '/ServiceFinderQuery.wsdl'
+    ),
+      xsd0 = path.join(
+        __dirname,
+        DEEP_CIRCULAR_REF_FOLDER,
+        '/xsd0.xsd'
+      ),
+      xsd1 = path.join(
+        __dirname,
+        DEEP_CIRCULAR_REF_FOLDER,
+        '/xsd1.xsd'
+      ),
+      xsd2 = path.join(
+        __dirname,
+        DEEP_CIRCULAR_REF_FOLDER,
+        '/xsd2.xsd'
+      ),
+      xsd3 = path.join(
+        __dirname,
+        DEEP_CIRCULAR_REF_FOLDER,
+        '/xsd3.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      xsd0Content = fs.readFileSync(xsd0, 'utf8'),
+      xsd1Content = fs.readFileSync(xsd1, 'utf8'),
+      xsd2Content = fs.readFileSync(xsd2, 'utf8'),
+      xsd3Content = fs.readFileSync(xsd3, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        rootFiles: [
+        ],
+        options: {},
+        data: [
+          {
+            path: '/ServiceFinderQuery.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/xsd0.xsd',
+            content: xsd0Content
+          },
+          {
+            path: '/xsd1.xsd',
+            content: xsd1Content
+          },
+          {
+            path: '/xsd2.xsd',
+            content: xsd2Content
+          },
+          {
+            path: '/xsd3.xsd',
+            content: xsd3Content
+          }
+        ]
+      },
+      result = await bundle(input);
+    expect(result.result).to.be.true;
+  });
 });

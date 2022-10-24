@@ -6,7 +6,7 @@
     xmlns="http://schemas.xmlsoap.org/wsdl/">
 
     <import namespace="http://example.com/stockquote/definitions" 
-    location="remoteStockquoteservice.xsd"/>
+    location="Stockquoteservice.wsdl"/>
 
     <message name="GetLastTradePriceInput">
         <part name="body" element="xsd1:TradePriceRequest"/>
