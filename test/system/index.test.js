@@ -7,7 +7,7 @@ const expect = require('chai').expect,
     mergeAndValidate,
     detectRelatedFiles,
     detectRootFiles,
-    bundle,
+    bundle
   } = require('../../index'),
   invalidWSDLs = 'test/data/invalidWSDLs11',
   validWSDLs11 = 'test/data/validWSDLs11',
@@ -335,12 +335,12 @@ describe('detectRootFiles', async function () {
 });
 
 describe('bundle', function () {
-  it('Should bundle a file that comes with remote refs and a circular ref', async function () {
+  it('Should bundle a file when input is complete', async function () {
     const service = path.join(
-      __dirname,
-      COUNTING_SEPARATED_FOLDER,
-      '/CountingCategoryService.wsdl'
-    ),
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
       elements = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
@@ -351,6 +351,12 @@ describe('bundle', function () {
       input = {
         type: 'multiFile',
         specificationVersion: '1.1',
+        rootFiles: [
+          {
+            path: '/CountingCategoryService.wsdl'
+          }
+        ],
+        options: { },
         data: [
           {
             path: '/CountingCategoryService.wsdl',
@@ -365,4 +371,6 @@ describe('bundle', function () {
       result = await bundle(input);
     expect(result.result).to.be.true;
   });
+
+  // it should bundle a file when rootFiles is empty, and rootFile is present in data array
 });
