@@ -6,7 +6,8 @@ const expect = require('chai').expect,
     validate,
     mergeAndValidate,
     detectRelatedFiles,
-    detectRootFiles
+    detectRootFiles,
+    bundle,
   } = require('../../index'),
   invalidWSDLs = 'test/data/invalidWSDLs11',
   validWSDLs11 = 'test/data/validWSDLs11',
@@ -16,6 +17,7 @@ const expect = require('chai').expect,
   wrong_Path = 'path/does/not/exist.wsdl',
   COUNTING_SEPARATED_FOLDER = '../data/separatedFiles/counting',
   WIKI_20_FOLDER = '../data/separatedFiles/wiki20',
+  CIRCULAR_REFS = '../data/separatedFiles/circularRef',
   fs = require('fs'),
   path = require('path'),
   async = require('async');
@@ -329,5 +331,38 @@ describe('detectRootFiles', async function () {
     expect(result.output.data[0].path).to.equal('/wikipedia.wsdl');
     expect(result.output.specification.version).to.equal('2.0');
     expect(result.output.type).to.be.equal('rootFiles');
+  });
+});
+
+describe('bundle', function () {
+  it('Should bundle a file that comes with remote refs and a circular ref', async function () {
+    const service = path.join(
+      __dirname,
+      COUNTING_SEPARATED_FOLDER,
+      '/CountingCategoryService.wsdl'
+    ),
+      elements = path.join(
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryData.xsd'
+      );
+    let serviceContent = fs.readFileSync(service, 'utf8'),
+      typesContent = fs.readFileSync(elements, 'utf8'),
+      input = {
+        type: 'multiFile',
+        specificationVersion: '1.1',
+        data: [
+          {
+            path: '/CountingCategoryService.wsdl',
+            content: serviceContent
+          },
+          {
+            path: '/CountingCategoryData.xsd',
+            content: typesContent
+          }
+        ]
+      },
+      result = await bundle(input);
+    expect(result.result).to.be.true;
   });
 });
