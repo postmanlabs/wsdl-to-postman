@@ -375,10 +375,10 @@ describe('bundle', function () {
 
   it('Should bundle a file when rootFiles is empty, and rootFile is present in data array', async function () {
     const service = path.join(
-      __dirname,
-      COUNTING_SEPARATED_FOLDER,
-      '/CountingCategoryService.wsdl'
-    ),
+        __dirname,
+        COUNTING_SEPARATED_FOLDER,
+        '/CountingCategoryService.wsdl'
+      ),
       elements = path.join(
         __dirname,
         COUNTING_SEPARATED_FOLDER,
@@ -409,10 +409,10 @@ describe('bundle', function () {
 
   it('Should bundle a file that has a circular refence A - B - A', async function () {
     const service = path.join(
-      __dirname,
-      CIRCULAR_REFS_FOLDER,
-      '/Stockquoteservice.wsdl'
-    ),
+        __dirname,
+        CIRCULAR_REFS_FOLDER,
+        '/Stockquoteservice.wsdl'
+      ),
       elements = path.join(
         __dirname,
         CIRCULAR_REFS_FOLDER,
@@ -443,10 +443,10 @@ describe('bundle', function () {
 
   it('Should bundle a file that has a deep circular reference A - B - C - D - B', async function () {
     const service = path.join(
-      __dirname,
-      DEEP_CIRCULAR_REF_FOLDER,
-      '/ServiceFinderQuery.wsdl'
-    ),
+        __dirname,
+        DEEP_CIRCULAR_REF_FOLDER,
+        '/ServiceFinderQuery.wsdl'
+      ),
       xsd0 = path.join(
         __dirname,
         DEEP_CIRCULAR_REF_FOLDER,
