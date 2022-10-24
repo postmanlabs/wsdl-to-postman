@@ -1,42 +1,69 @@
 #!/bin/bash
+# ----------------------------------------------------------------------------------------------------------------------
+# This script is intended to automate release process.
+# Explanation: This script will pull all latest changes from main and development and checkout release branch from development
+#   with specified version and then bump up package version and add CHANGELOGS (input required) and commit them. After
+#   that merge release branch into main and development with appropriate tags.
+#
+# Example: "npm run release 1.2.3" 
+# ----------------------------------------------------------------------------------------------------------------------
 
-# current Git branch
-branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+# Stop on first error
+set -e;
 
-# v1.0.0, v1.5.2, etc.
-versionLabel=v$1
+# Ensure that the provided version is in valid semver format
+if [[ ! $1 =~ ^v?[0-9]+(\.[0-9]+){2}(-[a-z]+\.\d+)?$ ]]; then
+  echo "A valid version must be provided as the first argument.";
+  exit 1;
+fi
 
-# establish branch and tag name variables
-devBranch=development
-mainBranch=main
-releaseBranch=release-$versionLabel
- 
-# create the release branch from the -develop branch
-git checkout -b $releaseBranch $devBranch
- 
-# file in which to update version number
-versionFile="version.txt"
- 
-# find version number assignment ("= v1.5.5" for example)
-# and replace it with newly specified version number
-sed -i.backup -E "s/\= v[0-9.]+/\= $versionLabel/" $versionFile $versionFile
- 
-# remove backup file created by sed command
-rm $versionFile.backup
- 
-# commit version number increment
-git commit -am "Incrementing version number to $versionLabel"
- 
-# merge release branch with the new version number into master
-git checkout $mainBranch
-git merge --no-ff $releaseBranch
- 
-# create tag for new version from -master
-git tag $versionLabel
- 
-# merge release branch with the new version number back into develop
-git checkout $devBranch
-git merge --no-ff $releaseBranch
- 
-# remove release branch
-git branch -d $releaseBranch
+ver=${1/v/}; # Strip the leading v from the version (if it exists)
+msg=$2;
+
+[[ -z $msg ]] && msg="Released v${ver}";
+
+# Update the main branch to the latest
+git checkout main;
+git pull origin main;
+
+# Update development to the latest, and create a release brach off of it.
+git checkout development;
+git pull origin development;
+git checkout -b release/$ver;
+
+# Bump version in package.json, but do not create a git tag
+npm version $ver --no-git-tag-version;
+
+# Inject the current release version and date into the CHANGELOG file
+sed -i "" "3i\\
+#### v${ver} (`date '+%B %d, %Y'`)\\
+\\
+" Changelog.md;
+
+# Find all commits between the HEAD on development and the latest tag on main, and pipe their messages into the clipboard
+git log $(git describe --tags main --abbrev=0)..HEAD --merges --pretty=format:'* %s' | pbcopy;
+
+# Provision manual intervention for Changelog.md
+vi Changelog.md
+
+# Create the release
+git add Changelog.md package.json;
+[[ -f package-lock.json ]] && git add package-lock.json;
+git commit -am "$msg";
+
+# Merge the release branch into development and push
+git checkout development;
+git merge --no-ff release/$ver;
+git push origin development;
+
+# Merge the release branch into main, create a tag and push
+git checkout main;
+git merge --no-ff release/$ver;
+git tag -a "$ver" -m "$msg";
+git push origin main --follow-tags;
+
+# Move back to development
+git checkout development;
+git branch -d release/$ver;
+
+unset msg ver;
