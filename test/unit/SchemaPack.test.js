@@ -1734,7 +1734,6 @@ describe('bundle remote refs', function () {
 
     const schemaPack = new SchemaPack(input, { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK }),
       result = await schemaPack.bundle();
-    expect(result).to.not.be.undefined;
     expect(result.result).to.be.true;
     expect(result.output.data[0].rootFile.bundledContent).to.not.be.empty;
 
@@ -1761,7 +1760,6 @@ describe('bundle remote refs', function () {
 
     const schemaPack = new SchemaPack(input, { resolveRemoteRefs: true, remoteRefsResolver: customFetchNotOK }),
       result = await schemaPack.bundle();
-    expect(result).to.not.be.undefined;
     expect(result.result).to.be.true;
     expect(result.output.data[0].rootFile.bundledContent).to.not.be.empty;
 
@@ -1793,7 +1791,6 @@ describe('bundle remote refs', function () {
 
     const schemaPack = new SchemaPack(input, { resolveRemoteRefs: true, remoteRefsResolver: customFetchOK }),
       result = await schemaPack.bundle();
-    expect(result).to.not.be.undefined;
     expect(result.result).to.be.true;
     expect(result.output.data[0].rootFile.bundledContent).to.not.be.empty;
 

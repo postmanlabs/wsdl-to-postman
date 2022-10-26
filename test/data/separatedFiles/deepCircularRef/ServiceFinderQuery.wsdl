@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="ServiceFinderQuery" targetNamespace="http://tempuri.org/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+  xmlns:tns="http://tempuri.org/"
+  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:wsa10="http://www.w3.org/2005/08/addressing"
+  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+  <wsp:Policy wsu:Id="WSHttpBinding_IServiceFinderQuery_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="xsd0.xsd" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="xsd1.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="xsd2.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+      <xsd:import schemaLocation="xsd3.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforPincode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforPincode" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforPincode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforPincodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforProduct" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforPincodeAndProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforPincodeAndProduct" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetServicesforPincodeAndProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesforPincodeAndProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetDomesticTransitTimeForPinCodeandProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomesticTransitTimeForPinCodeandProduct" />
+  </wsdl:message>
+  <wsdl:message name="IServiceFinderQuery_GetDomesticTransitTimeForPinCodeandProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomesticTransitTimeForPinCodeandProductResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IServiceFinderQuery">
+    <wsdl:operation name="GetServicesforPincode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforPincode" message="tns:IServiceFinderQuery_GetServicesforPincode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforPincodeResponse" message="tns:IServiceFinderQuery_GetServicesforPincode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServicesforProduct">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforProduct" message="tns:IServiceFinderQuery_GetServicesforProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforProductResponse" message="tns:IServiceFinderQuery_GetServicesforProduct_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServicesforPincodeAndProduct">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforPincodeAndProduct" message="tns:IServiceFinderQuery_GetServicesforPincodeAndProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetServicesforPincodeAndProductResponse" message="tns:IServiceFinderQuery_GetServicesforPincodeAndProduct_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDomesticTransitTimeForPinCodeandProduct">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetDomesticTransitTimeForPinCodeandProduct" message="tns:IServiceFinderQuery_GetDomesticTransitTimeForPinCodeandProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceFinderQuery/GetDomesticTransitTimeForPinCodeandProductResponse" message="tns:IServiceFinderQuery_GetDomesticTransitTimeForPinCodeandProduct_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IServiceFinderQuery" type="tns:IServiceFinderQuery">
+    <wsp:PolicyReference URI="#WSHttpBinding_IServiceFinderQuery_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetServicesforPincode">
+      <soap12:operation soapAction="http://tempuri.org/IServiceFinderQuery/GetServicesforPincode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServicesforProduct">
+      <soap12:operation soapAction="http://tempuri.org/IServiceFinderQuery/GetServicesforProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServicesforPincodeAndProduct">
+      <soap12:operation soapAction="http://tempuri.org/IServiceFinderQuery/GetServicesforPincodeAndProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDomesticTransitTimeForPinCodeandProduct">
+      <soap12:operation soapAction="http://tempuri.org/IServiceFinderQuery/GetDomesticTransitTimeForPinCodeandProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceFinderQuery">
+    <wsdl:port name="WSHttpBinding_IServiceFinderQuery" binding="tns:WSHttpBinding_IServiceFinderQuery">
+      <soap12:address location="https://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Finder/ServiceFinderQuery.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>https://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Finder/ServiceFinderQuery.svc</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
