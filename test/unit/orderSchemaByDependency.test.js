@@ -131,13 +131,13 @@ describe('orderSchemasAccordingToDependencies method', function () {
     expect(ordered[11].foundSchemaTag['@_targetNamespace']).to.equal('http://{{url}}/xi/SAPGlobal20/Global');
   });
 
-  it('should return 2 schemas when infinit loop found', function () {
+  it('should return 2 schemas when infinite loop found', function () {
     const
       fileContent = fs.readFileSync(validSchemaFolder + '/importLoop.wsdl', 'utf8'),
       parser = new XMLParser(),
       schemaNamespace = {
-        key: 'xs',
-        prefixFilter: 'xs:',
+        key: 'xsd',
+        prefixFilter: 'xsd:',
         url: 'http://queue.amazonaws.com/doc/2009-02-01/',
         isDefault: false
       };
@@ -161,7 +161,42 @@ describe('orderSchemasAccordingToDependencies method', function () {
     expect(ordered).to.be.a('Array');
     expect(ordered.length).to.equal(2);
 
-    expect(ordered[0].foundSchemaTag['@_targetNamespace']).to.equal('http://www.xsd2jsonschema.org/example2');
+    expect(ordered[0].foundSchemaTag['@_targetNamespace']).to.equal('http://www.xsd2jsonschema.org/example');
+    expect(ordered[1].foundSchemaTag['@_targetNamespace']).to.equal('http://www.xsd2jsonschema.org/example2');
+  });
+
+  it('should return 2 schemas when infinite deep loop found', function () {
+    const
+      fileContent = fs.readFileSync(validSchemaFolder + '/importDeepLoop.wsdl', 'utf8'),
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 'xsd',
+        prefixFilter: 'xsd:',
+        url: 'http://queue.amazonaws.com/doc/2009-02-01/',
+        isDefault: false
+      };
+    let parsedXml,
+      schemasFromType,
+      mapped,
+      ordered;
+    parsedXml = parser.parseToObject(fileContent);
+    typeElement = parsedXml['wsdl:definitions']['wsdl:types'];
+    schemasFromType = getArrayFrom(typeElement[schemaNamespace.prefixFilter + 'schema']);
+    mapped = schemasFromType.map((schema) => {
+      return {
+        foundSchemaTag: schema,
+        foundLocalSchemaNamespace: schemaNamespace,
+        targetNamespace: schema['@_targetNamespace']
+      };
+    });
+
+    ordered = orderSchemasAccordingToDependencies(mapped, parser.attributePlaceHolder);
+
+    expect(ordered).to.be.a('Array');
+    expect(ordered.length).to.equal(3);
+
+    expect(ordered[0].foundSchemaTag['@_targetNamespace']).to.equal('http://www.xsd2jsonschema.org/example3');
     expect(ordered[1].foundSchemaTag['@_targetNamespace']).to.equal('http://www.xsd2jsonschema.org/example');
+    expect(ordered[2].foundSchemaTag['@_targetNamespace']).to.equal('http://www.xsd2jsonschema.org/example2');
   });
 });
