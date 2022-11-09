@@ -10,9 +10,15 @@
     <wsdl:types>
         <xsd:schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.xsd2jsonschema.org/example">
             <xsd:import namespace="http://www.xsd2jsonschema.org/example2"/>
+            <xsd:import namespace="http://www.xsd2jsonschema.org/example3"/>
         </xsd:schema>
         <xsd:schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.xsd2jsonschema.org/example2">
-        <xsd:import namespace="http://www.xsd2jsonschema.org/example"/>
-    </xsd:schema>
+            <xsd:import namespace="http://www.xsd2jsonschema.org/example"/>
+            <xsd:import namespace="http://www.xsd2jsonschema.org/example3"/>
+        </xsd:schema>
+        <xsd:schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.xsd2jsonschema.org/example3">
+            <xsd:import namespace="http://www.xsd2jsonschema.org/example"/>
+            <xsd:import namespace="http://www.xsd2jsonschema.org/example2"/>
+        </xsd:schema>
     </wsdl:types>
 </wsdl:definitions>

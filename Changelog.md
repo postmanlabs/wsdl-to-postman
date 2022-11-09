@@ -1,5 +1,8 @@
 # WSDL to Postman Changelog
 
+#### v1.4.0 (November 09, 2022)
+* Fixed issue where for certain definitions "Maximum stack limit reached" error was thrown.
+
 #### v1.3.0 (October 19, 2022)
 * Fixed issue where for namespace defined twice corresponding bodies were not resolved correctly. postmanlabs/postman-app-support#11296
 * Updated release scripts.
