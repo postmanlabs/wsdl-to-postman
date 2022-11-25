@@ -1197,20 +1197,20 @@ describe('WSDLMerger merge', function() {
 
   it('Should test a deep circular Ref', function () {
     let folderPath = path.join(__dirname, deepCircularRef),
-      folderPathService = path.join(folderPath + '/ServiceFinderQuery.wsdl'),
-      folderPathXsd0 = path.join(folderPath + '/xsd0.xsd'),
-      folderPathXsd1 = path.join(folderPath + '/xsd1.xsd'),
-      folderPathXsd2 = path.join(folderPath + '/xsd2.xsd'),
-      folderPathXsd3 = path.join(folderPath + '/xsd3.xsd'),
+      filePathService = path.join(folderPath + '/ServiceFinderQuery.wsdl'),
+      filePathXsd0 = path.join(folderPath + '/xsd0.xsd'),
+      filePathXsd1 = path.join(folderPath + '/xsd1.xsd'),
+      filePathXsd2 = path.join(folderPath + '/xsd2.xsd'),
+      filePathXsd3 = path.join(folderPath + '/xsd3.xsd'),
       fileOutput = path.join(folderPath + '/outputMerger.wsdl'),
       processedInput = {},
       files = [],
       array = [
-        { fileName: folderPathService },
-        { fileName: folderPathXsd0 },
-        { fileName: folderPathXsd1 },
-        { fileName: folderPathXsd2 },
-        { fileName: folderPathXsd3 }
+        { fileName: filePathService },
+        { fileName: filePathXsd0 },
+        { fileName: filePathXsd1 },
+        { fileName: filePathXsd2 },
+        { fileName: filePathXsd3 }
       ];
 
     array.forEach((item) => {
@@ -1223,11 +1223,11 @@ describe('WSDLMerger merge', function() {
     const merger = new WSDLMerger(),
       expectedOutput = fs.readFileSync(fileOutput, 'utf8');
 
-    processedInput[folderPathService] = files[0].content;
-    processedInput[folderPathXsd0] = files[1].content;
-    processedInput[folderPathXsd1] = files[2].content;
-    processedInput[folderPathXsd2] = files[3].content;
-    processedInput[folderPathXsd3] = files[4].content;
+    processedInput[filePathService] = files[0].content;
+    processedInput[filePathXsd0] = files[1].content;
+    processedInput[filePathXsd1] = files[2].content;
+    processedInput[filePathXsd2] = files[3].content;
+    processedInput[filePathXsd3] = files[4].content;
 
     merger.merge({ data: files, xmlFiles: processedInput }, new XMLParser())
       .then((merged) => {
