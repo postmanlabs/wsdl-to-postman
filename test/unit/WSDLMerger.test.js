@@ -2,6 +2,7 @@ const expect = require('chai').expect,
   SEPARATED_FILES_W3_Example = '../data/separatedFiles/W3Example',
   SEPARATED_FILES_COUNTING = '../data/separatedFiles/counting',
   SEPARATED_FILES_MULTIPLE_ROOT = '../data/separatedFiles/multipleRoot',
+  deepCircularRef = '../data/separatedFiles/deepCircularRefs',
   {
     WSDLMerger
   } = require('../../lib/utils/WSDLMerger'),
@@ -1194,4 +1195,43 @@ describe('WSDLMerger merge', function() {
       });
   });
 
+  it('Should test a deep circular Ref', function () {
+    let folderPath = path.join(__dirname, deepCircularRef),
+      folderPathService = path.join(folderPath + '/ServiceFinderQuery.wsdl'),
+      folderPathXsd0 = path.join(folderPath + '/xsd0.xsd'),
+      folderPathXsd1 = path.join(folderPath + '/xsd1.xsd'),
+      folderPathXsd2 = path.join(folderPath + '/xsd2.xsd'),
+      folderPathXsd3 = path.join(folderPath + '/xsd3.xsd'),
+      fileOutput = path.join(folderPath + '/outputMerger.wsdl'),
+      processedInput = {},
+      files = [],
+      array = [
+        { fileName: folderPathService },
+        { fileName: folderPathXsd0 },
+        { fileName: folderPathXsd1 },
+        { fileName: folderPathXsd2 },
+        { fileName: folderPathXsd3 }
+      ];
+
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+
+    const merger = new WSDLMerger(),
+      expectedOutput = fs.readFileSync(fileOutput, 'utf8');
+
+    processedInput[folderPathService] = files[0].content;
+    processedInput[folderPathXsd0] = files[1].content;
+    processedInput[folderPathXsd1] = files[2].content;
+    processedInput[folderPathXsd2] = files[3].content;
+    processedInput[folderPathXsd3] = files[4].content;
+
+    merger.merge({ data: files, xmlFiles: processedInput }, new XMLParser())
+      .then((merged) => {
+        expect(removeLineBreakTabsSpaces(merged)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      });
+  });
 });
