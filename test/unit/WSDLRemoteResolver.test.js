@@ -8,6 +8,7 @@ const expect = require('chai').expect,
   remoteSameTargetNamespace = 'test/data/separatedFiles/sameTargetnamespace',
   remoteNotFound = 'test/data/separatedFiles/remoteNotFound',
   remoteRefsServiceFinderQuery = 'test/data/separatedFiles/remoteRefsServiceFinderQuery',
+  remoteDeepCircularRef = 'test/data/separatedFiles/remoteDeepCircularRef',
   fs = require('fs'),
   getOptions = require('../../lib/utils/options').getOptions,
   {
@@ -129,6 +130,18 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
     let data = fs.readFileSync(remoteNotFound + '/Services.wsdl', 'utf8'),
       expectedOutput = fs.readFileSync(remoteNotFound + '/output.wsdl', 'utf8');
     optionFromOptions[`${sourceUrl.id}`] = 'https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman';
+
+    resolveRemoteRefs({ data }, new XMLParser(), optionFromOptions, (resolvedFile) => {
+      expect(resolvedFile.err).to.be.undefined;
+      expect(removeLineBreakTabsSpaces(resolvedFile.mergedFile)).to.equal(removeLineBreakTabsSpaces(expectedOutput));
+      done();
+    });
+  });
+
+  it('Should test remote deep circular refs A - B - C - D - B', function (done) {
+    let data = fs.readFileSync(remoteDeepCircularRef + '/ServiceFinderQuery.wsdl', 'utf8');
+    expectedOutput = fs.readFileSync(remoteDeepCircularRef + '/output.wsdl', 'utf8');
+    optionFromOptions[`${resolveRemoteRefsOption.id}`] = true;
 
     resolveRemoteRefs({ data }, new XMLParser(), optionFromOptions, (resolvedFile) => {
       expect(resolvedFile.err).to.be.undefined;
