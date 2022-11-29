@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://tempuri.org/">
+    <xs:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteDeepCircularRef/xsd2.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+    <xs:import schemaLocation="https://raw.githubusercontent.com/postmanlabs/wsdl-to-postman/development/test/data/separatedFiles/remoteDeepCircularRef/xsd3.xsd" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+    <xs:element name="GetServicesforPincode">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="pinCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="profile" nillable="true" type="q1:UserProfile"
+                    xmlns:q1="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetServicesforPincodeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="GetServicesforPincodeResult" nillable="true" type="q2:ServiceCenterDetailsReference"
+                    xmlns:q2="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetServicesforProduct">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="pinCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="pProductCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="pSubProductCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="profile" nillable="true" type="q3:UserProfile"
+                    xmlns:q3="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetServicesforProductResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="GetServicesforProductResult" nillable="true" type="q4:PinCodeServiceDetailsReference"
+                    xmlns:q4="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetServicesforPincodeAndProduct">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="pinCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="ProductCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="SubProductCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="PackType" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="Feature" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="profile" nillable="true" type="q5:UserProfile"
+                    xmlns:q5="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetServicesforPincodeAndProductResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="GetServicesforPincodeAndProductResult" nillable="true" type="q6:PinCodeServiceLocationDetailsReference"
+                    xmlns:q6="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetDomesticTransitTimeForPinCodeandProduct">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="pPinCodeFrom" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="pPinCodeTo" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="pProductCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="pSubProductCode" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="pPudate" type="xs:dateTime" />
+                <xs:element minOccurs="0" name="pPickupTime" nillable="true" type="xs:string" />
+                <xs:element minOccurs="0" name="profile" nillable="true" type="q7:UserProfile"
+                    xmlns:q7="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetDomesticTransitTimeForPinCodeandProductResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="GetDomesticTransitTimeForPinCodeandProductResult" nillable="true" type="q8:DomesticTranistTimeReference"
+                    xmlns:q8="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
