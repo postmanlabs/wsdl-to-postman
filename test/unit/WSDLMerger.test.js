@@ -1195,7 +1195,7 @@ describe('WSDLMerger merge', function() {
       });
   });
 
-  it('Should test a deep circular Ref', function () {
+  it('Should test a deep circular Ref A - B - C - D - B', function () {
     let folderPath = path.join(__dirname, deepCircularRef),
       filePathService = path.join(folderPath + '/ServiceFinderQuery.wsdl'),
       filePathXsd0 = path.join(folderPath + '/xsd0.xsd'),

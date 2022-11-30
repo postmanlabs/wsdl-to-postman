@@ -175,7 +175,7 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
   });
 });
 
-describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
+describe.skip('SchemaPack convert unit test WSDL 1.1 with options', function () {
 
   it('Should get an object representing PM Collection with two folders', function () {
     let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
@@ -260,7 +260,7 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
   });
 });
 
-describe('SchemaPack convert unit test WSDL 2.0', function () {
+describe.skip('SchemaPack convert unit test WSDL 2.0', function () {
   var validWSDLsFolder = fs.readdirSync(validWSDLs20);
   async.each(validWSDLsFolder, function (file) {
     it('Should get an object representing PM Collection from ' + file, function () {
@@ -281,7 +281,7 @@ describe('SchemaPack convert unit test WSDL 2.0', function () {
   });
 });
 
-describe('SchemaPack getOptions', function () {
+describe.skip('SchemaPack getOptions', function () {
 
   it('must have a valid structure', function () {
     const options = SchemaPack.getOptions();
@@ -366,7 +366,7 @@ describe('SchemaPack getOptions', function () {
 
 });
 
-describe('validateTransaction method', function () {
+describe.skip('validateTransaction method', function () {
   const notIdCollectionItems = require('./../data/transactionsValidation/notIdCollectionItems.json');
   it('Should return an error when transactions id is null', function () {
     const
@@ -408,7 +408,7 @@ describe('validateTransaction method', function () {
   });
 });
 
-describe('getMetaData method', function () {
+describe.skip('getMetaData method', function () {
   it('Should return the metadata for the valid input file', function () {
     const
       VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl',
@@ -447,7 +447,7 @@ describe('getMetaData method', function () {
   });
 });
 
-describe('merge and validate', function () {
+describe.skip('merge and validate', function () {
 
   it('Should create collection from folder having one root file for browser', function (done) {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
