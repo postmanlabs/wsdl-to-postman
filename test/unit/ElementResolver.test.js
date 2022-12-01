@@ -1847,4 +1847,161 @@ describe('SoapBodyCopy create function test', function() {
       .to.equal('Use_For_Reference');
     expect(newElements[0].children[0].children[0].children[1].children[0].children[2].name).to.equal('Comments');
   });
+
+  it('Should resolve loop in elements A - B - A', function() {
+    const elements = [
+        {
+          children: [
+            {
+              children: [
+              ],
+              minOccurs: '1',
+              maxOccurs: '1',
+              name: 'user_id',
+              type: 'string',
+              isComplex: false,
+              namespace: 'http://tempuri.org/',
+              maximum: undefined,
+              minimum: undefined,
+              maxLength: undefined,
+              minLength: undefined,
+              pattern: undefined,
+              enum: undefined,
+              contentEncoding: undefined
+            }
+          ],
+          minOccurs: '1',
+          maxOccurs: '1',
+          name: 'returnLiveDeedsSearchHttpGetIn',
+          type: 'complex',
+          isComplex: true,
+          namespace: 'http://tempuri.org/',
+          maximum: undefined,
+          minimum: undefined,
+          maxLength: undefined,
+          minLength: undefined,
+          pattern: undefined,
+          enum: undefined,
+          isElement: true,
+          contentEncoding: undefined
+        },
+        {
+          children: [
+            {
+              children: [
+              ],
+              minOccurs: '',
+              maxOccurs: '',
+              name: 'returnLiveDeedsSearchResult',
+              type: 'error',
+              isComplex: false,
+              namespace: '',
+              maximum: '',
+              minimum: '',
+              maxLength: '',
+              minLength: '',
+              pattern: '',
+              enum: '',
+              originalType: 'DeedsResult'
+            }
+          ],
+          minOccurs: '1',
+          maxOccurs: '1',
+          name: 'returnLiveDeedsSearchResponse',
+          type: 'complex',
+          isComplex: true,
+          namespace: 'http://tempuri.org/',
+          maximum: undefined,
+          minimum: undefined,
+          maxLength: undefined,
+          minLength: undefined,
+          pattern: undefined,
+          enum: undefined,
+          isElement: true,
+          contentEncoding: undefined
+        },
+        {
+          children: [
+            {
+              children: [
+              ],
+              minOccurs: '1',
+              maxOccurs: '1',
+              name: 'ReportId',
+              type: 'string',
+              isComplex: false,
+              namespace: 'http://tempuri.org/',
+              maximum: undefined,
+              minimum: undefined,
+              maxLength: undefined,
+              minLength: undefined,
+              pattern: undefined,
+              enum: undefined,
+              contentEncoding: undefined
+            },
+            {
+              children: [
+                {
+                  children: [
+                  ],
+                  minOccurs: '',
+                  maxOccurs: '',
+                  name: 'returnLiveDeedsSearchResult',
+                  type: 'error',
+                  isComplex: false,
+                  namespace: '',
+                  maximum: '',
+                  minimum: '',
+                  maxLength: '',
+                  minLength: '',
+                  pattern: '',
+                  enum: '',
+                  originalType: 'DeedsResult'
+                }
+              ],
+              minOccurs: '0',
+              maxOccurs: '1',
+              name: 'Persons',
+              type: 'returnLiveDeedsSearchResponse',
+              isComplex: true,
+              namespace: 'http://tempuri.org/',
+              maximum: '',
+              minimum: '',
+              maxLength: '',
+              minLength: '',
+              pattern: '',
+              enum: '',
+              isElement: true
+            }
+          ],
+          minOccurs: '0',
+          maxOccurs: '1',
+          name: 'DeedsResult',
+          type: 'complex',
+          isComplex: true,
+          namespace: 'http://tempuri.org/',
+          maximum: undefined,
+          minimum: undefined,
+          maxLength: undefined,
+          minLength: undefined,
+          pattern: undefined,
+          enum: undefined,
+          isElement: true,
+          contentEncoding: undefined
+        }
+      ],
+      allElements = {
+        simpleTypeElements: [],
+        complexTypeElements: [],
+        elements
+      },
+      resolver = new ElementResolver(allElements);
+    resolver.resolveAll();
+    let newElements = allElements.elements;
+    expect(newElements).to.be.an('array');
+    expect(newElements[0].name).to.equal('returnLiveDeedsSearchHttpGetIn');
+    expect(newElements[1].name).to.equal('returnLiveDeedsSearchResponse');
+    expect(newElements[2].name).to.equal('DeedsResult');
+
+  });
 });
