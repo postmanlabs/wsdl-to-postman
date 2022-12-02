@@ -931,6 +931,8 @@
       <xsd:group name="PurchaseOrderByIDResponseItemGloExtension">
         <xsd:sequence>
           <xsd:element name="HSNCodeIndiaCode" minOccurs="0" form="qualified" type="xi20:ProductTaxStandardClassificationCode"/>
+          <xsd:group ref="PurchaseOrderByIDResponseItemGloExtension"/>
+
         </xsd:sequence>
       </xsd:group>
       <xsd:attributeGroup name="PurchaseOrderByIDResponseItemGloExtension"/>
