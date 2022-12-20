@@ -1,0 +1,80 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:s1="http://microsoft.com/wsdl/types/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+            <s:group name="A">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="idGroupA" type="s:string"/>
+                    <s:group ref="B"/>
+                </s:sequence>
+            </s:group>
+            <s:attributeGroup name="A"/>
+            <s:group name="B">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="idGroupB" type="s:string"/>
+                    <s:group ref="C"/>
+                </s:sequence>
+            </s:group>
+            <s:attributeGroup name="B"/>
+            <s:group name="C">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="idGroupC" type="s:string"/>
+                    <s:group ref="A"/>
+                </s:sequence>
+            </s:group>
+            <s:attributeGroup name="C"/>
+            <s:element name="returnLiveDeedsSearchHttpGetIn">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="user_id_loop" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="returnLiveDeedsSearchHttpGetOut">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="propElement" type="s:string"/>
+                        <s:group ref="A"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="returnLiveDeedsSearchHttpGetIn">
+        <wsdl:part name="Body" element="tns:returnLiveDeedsSearchHttpGetIn"/>
+    </wsdl:message>
+    <wsdl:message name="returnLiveDeedsSearchHttpGetOut">
+        <wsdl:part name="Body" element="tns:returnLiveDeedsSearchHttpGetOut"/>
+    </wsdl:message>
+    <wsdl:portType name="PropertiesSoap">
+        <wsdl:operation name="returnLiveDeedsSearch">
+            <wsdl:input message="tns:returnLiveDeedsSearchHttpGetIn"/>
+            <wsdl:output message="tns:returnLiveDeedsSearchHttpGetOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PropertiesSoap" type="tns:PropertiesSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="returnLiveDeedsSearch">
+            <soap:operation soapAction="http://tempuri.org/returnLiveDeedsSearch" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Properties">
+        <wsdl:port name="PropertiesSoap" binding="tns:PropertiesSoap">
+            <soap:address location="https://server/avm/webservices/properties.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
