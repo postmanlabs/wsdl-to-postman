@@ -173,6 +173,27 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       });
     });
   });
+
+  it('Should convert circular ref and add circular ref element as empty object', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/loopRefGroupA-B-C-A.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, {}),
+      expectedOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n  <soap:Body>\n' +
+      '    <returnLiveDeedsSearchHttpGetOut xmlns="http://tempuri.org/">\n      <propElement>string</propElement>\n' +
+      '      <A>\n        <idGroupA>string</idGroupA>\n        <B>\n          <idGroupB>string</idGroupB>\n        ' +
+      '  <C>\n            <idGroupC>string</idGroupC>\n            <A/>\n          </C>\n        </B>\n      </A>\n ' +
+      '   </returnLiveDeedsSearchHttpGetOut>\n  </soap:Body>\n</soap:Envelope>\n';
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(removeLineBreakTabsSpaces(result.output[0].data.item[0].response[0].body))
+        .to.equal(removeLineBreakTabsSpaces(expectedOutput));
+    });
+  });
 });
 
 describe.skip('SchemaPack convert unit test WSDL 1.1 with options', function () {
