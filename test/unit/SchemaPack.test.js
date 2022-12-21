@@ -173,9 +173,30 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       });
     });
   });
+
+  it('Should convert circular ref and add circular ref element as empty object', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/loopRefGroupA-B-C-A.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, {}),
+      expectedOutput = '<?xml version="1.0" encoding="utf-8"?>' +
+      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n  <soap:Body>\n' +
+      '    <returnLiveDeedsSearchHttpGetOut xmlns="http://tempuri.org/">\n      <propElement>string</propElement>\n' +
+      '      <A>\n        <idGroupA>string</idGroupA>\n        <B>\n          <idGroupB>string</idGroupB>\n        ' +
+      '  <C>\n            <idGroupC>string</idGroupC>\n            <A/>\n          </C>\n        </B>\n      </A>\n ' +
+      '   </returnLiveDeedsSearchHttpGetOut>\n  </soap:Body>\n</soap:Envelope>\n';
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(removeLineBreakTabsSpaces(result.output[0].data.item[0].response[0].body))
+        .to.equal(removeLineBreakTabsSpaces(expectedOutput));
+    });
+  });
 });
 
-describe.skip('SchemaPack convert unit test WSDL 1.1 with options', function () {
+describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
 
   it('Should get an object representing PM Collection with two folders', function () {
     let fileContent = fs.readFileSync(validWSDLs + '/calculator-soap11and12.wsdl', 'utf8');
@@ -260,7 +281,7 @@ describe.skip('SchemaPack convert unit test WSDL 1.1 with options', function () 
   });
 });
 
-describe.skip('SchemaPack convert unit test WSDL 2.0', function () {
+describe('SchemaPack convert unit test WSDL 2.0', function () {
   var validWSDLsFolder = fs.readdirSync(validWSDLs20);
   async.each(validWSDLsFolder, function (file) {
     it('Should get an object representing PM Collection from ' + file, function () {
@@ -281,7 +302,7 @@ describe.skip('SchemaPack convert unit test WSDL 2.0', function () {
   });
 });
 
-describe.skip('SchemaPack getOptions', function () {
+describe('SchemaPack getOptions', function () {
 
   it('must have a valid structure', function () {
     const options = SchemaPack.getOptions();
@@ -366,7 +387,7 @@ describe.skip('SchemaPack getOptions', function () {
 
 });
 
-describe.skip('validateTransaction method', function () {
+describe('validateTransaction method', function () {
   const notIdCollectionItems = require('./../data/transactionsValidation/notIdCollectionItems.json');
   it('Should return an error when transactions id is null', function () {
     const
@@ -408,7 +429,7 @@ describe.skip('validateTransaction method', function () {
   });
 });
 
-describe.skip('getMetaData method', function () {
+describe('getMetaData method', function () {
   it('Should return the metadata for the valid input file', function () {
     const
       VALID_WSDL_PATH = validWSDLs + '/calculator-soap11and12.wsdl',
@@ -447,7 +468,7 @@ describe.skip('getMetaData method', function () {
   });
 });
 
-describe.skip('merge and validate', function () {
+describe('merge and validate', function () {
 
   it('Should create collection from folder having one root file for browser', function (done) {
     let folderPath = path.join(__dirname, SEPARATED_FILES, '/W3Example'),
