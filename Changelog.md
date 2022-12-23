@@ -1,5 +1,8 @@
 # WSDL to Postman Changelog
 
+#### v1.5.0 (December 23, 2022)
+* Fixed issue [#11329](https://github.com/postmanlabs/postman-app-support/issues/11329) - Imported WSDL collection contains incorrect separator & URL is not decoded completely.
+
 #### v1.4.0 (November 09, 2022)
 * Fixed issue where for certain definitions "Maximum stack limit reached" error was thrown.
 

@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { getProtocolAndHost, getAllButProtocolAndHost } = require('../../lib/utils/urlUtils');
+const { getProtocolAndHost, getAllButProtocolAndHost, decodeFromXML } = require('../../lib/utils/urlUtils');
 
 describe('getProtocolAndHost method', function() {
   it('should return the correct host and protocol from a url', function() {
@@ -57,5 +57,30 @@ describe('getAllButProtocolAndHost method', function() {
       urlToCheck = getAllButProtocolAndHost(url);
     expect(urlToCheck).to.be.equal('Services/Geocode/WebService/GeocoderService_V04_01.asmx/' +
     'GeocodeAddressParsed');
+  });
+});
+
+
+describe('decodeFromXML method', function () {
+  it('should return http://localhost:3000/projects?param=value&param1=&param2=TIBCO\'">< for entry ' +
+    'http://localhost:3000/projects?param=value&amp;param1=&amp;param2=TIBCO&apos;&quot;&gt;&lt;', function () {
+    const result = decodeFromXML('http://localhost:3000/projects?' +
+    'param=value&amp;param1=&amp;param2=TIBCO&apos;&quot;&gt;&lt;');
+    expect(result).to.equal('http://localhost:3000/projects?param=value&param1=&param2=TIBCO\'"><');
+  });
+
+  it('should return empty string when input is undefined', function () {
+    const result = decodeFromXML();
+    expect(result).to.equal('');
+  });
+
+  it('should return empty string when input is null', function () {
+    const result = decodeFromXML(null);
+    expect(result).to.equal('');
+  });
+
+  it('should return empty string when input is empty string', function () {
+    const result = decodeFromXML('');
+    expect(result).to.equal('');
   });
 });
