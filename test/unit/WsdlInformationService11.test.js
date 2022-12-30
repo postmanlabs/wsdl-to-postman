@@ -1689,14 +1689,15 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
     }
   });
 
-  it('should not throw an error when parsedxml is an empty object', function () {
+  it('should throw an error when parsedxml is an empty object', function () {
     try {
       const informationService = new WsdlInformationService11();
       informationService.getAbstractOperationByName('NumberConversionSoapType',
         'NumberToWords', {}, '');
+      assert.fail('we expected an error');
     }
     catch (error) {
-      assert.fail('we expected this to succeed');
+      expect(error.message).to.equal('Cannot get port type from WSDL');
     }
   });
 
