@@ -1,5 +1,8 @@
 # WSDL to Postman Changelog
 
+### v1.6.0
+* Fixed issue [#11267](https://github.com/postmanlabs/postman-app-support/issues/11267) - WSDL Definition without a portType defined fails to import correctly in Postman
+
 #### v1.5.0 (December 23, 2022)
 * Fixed issue [#11329](https://github.com/postmanlabs/postman-app-support/issues/11329) - Imported WSDL collection contains incorrect separator & URL is not decoded completely.
 
