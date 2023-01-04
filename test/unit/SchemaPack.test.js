@@ -174,6 +174,30 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
     });
   });
 
+  it('[Github #11329] - Should convert and decoded an html encoded uri', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/addressURIEspecialChars.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].data.item).to.be.an('array');
+      expect(result.output[0].data.item[0].item[0].request.url.query[0].key).to.equal('senderParty');
+      expect(result.output[0].data.item[0].item[0].request.url.query[1].key).to.equal('senderService');
+      expect(result.output[0].data.item[0].item[0].request.url.query[2].key).to.equal('receiverParty');
+      expect(result.output[0].data.item[0].item[0].request.url.query[3].key).to.equal('receiverService');
+      expect(result.output[0].data.item[0].item[0].request.url.query[4].key).to.equal('interface');
+      expect(result.output[0].data.item[0].item[0].request.url.query[5].key).to.equal('interfaceNamespace');
+    });
+  });
+  
   it('Should convert circular ref and add circular ref element as empty object', function() {
     let fileContent = fs.readFileSync(validWSDLs + '/loopRefGroupA-B-C-A.wsdl', 'utf8');
     const schemaPack = new SchemaPack({
@@ -298,6 +322,29 @@ describe('SchemaPack convert unit test WSDL 2.0', function () {
         expect(result.output[0].data).to.be.an('object');
         expect(result.output[0].type).to.equal('collection');
       });
+    });
+  });
+  it('[Github #11329] - Should convert and decoded an html encoded uri', function() {
+    let fileContent = fs.readFileSync(validWSDLs20 + '/addressURIEspecialChars.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].data.item).to.be.an('array');
+      expect(result.output[0].data.item[0].request.url.query[0].key).to.equal('senderParty');
+      expect(result.output[0].data.item[0].request.url.query[1].key).to.equal('senderService');
+      expect(result.output[0].data.item[0].request.url.query[2].key).to.equal('receiverParty');
+      expect(result.output[0].data.item[0].request.url.query[3].key).to.equal('receiverService');
+      expect(result.output[0].data.item[0].request.url.query[4].key).to.equal('interface');
+      expect(result.output[0].data.item[0].request.url.query[5].key).to.equal('interfaceNamespace');
     });
   });
 });

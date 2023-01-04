@@ -294,4 +294,23 @@ describe('SchemaPack convert special cases WSDL 2.0', function() {
     });
   });
 
+  it('Should get an object representing PM Collection from wsdl without services porttypes', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/NoServicesPortType.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+      data: fileContent,
+      type: 'string'
+    }, {});
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output).to.be.an('array');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].type).to.equal('collection');
+      expect(result.output[0].data).to.be.an('object');
+      expect(result.output[0].data.item).to.be.an('array');
+      expect(result.output[0].data.item.length).to.equal(2);
+    });
+  });
+
 });
