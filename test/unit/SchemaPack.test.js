@@ -197,7 +197,7 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       expect(result.output[0].data.item[0].item[0].request.url.query[5].key).to.equal('interfaceNamespace');
     });
   });
-  
+
   it('Should convert circular ref and add circular ref element as empty object', function() {
     let fileContent = fs.readFileSync(validWSDLs + '/loopRefGroupA-B-C-A.wsdl', 'utf8');
     const schemaPack = new SchemaPack({
