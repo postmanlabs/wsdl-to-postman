@@ -1,4 +1,6 @@
 # WSDL to Postman Changelog
+### v1.7.0
+* Upgrade libxmljs2 to support node 18
 
 ### v1.6.0
 * Fixed issue [#11267](https://github.com/postmanlabs/postman-app-support/issues/11267) - WSDL Definition without a portType defined fails to import correctly in Postman
