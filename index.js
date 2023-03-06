@@ -1,8 +1,9 @@
 'use strict';
 
 const {
-  SchemaPack
-} = require('./lib/SchemaPack.js');
+    SchemaPack
+  } = require('./lib/SchemaPack.js'),
+  _ = require('lodash');
 
 module.exports = {
   convert: function (input, options, cb) {
@@ -30,6 +31,21 @@ module.exports = {
 
   getOptions: function (mode, criteria) {
     return SchemaPack.getOptions(mode, criteria);
+  },
+
+  detectRootFiles: async function (input) {
+    const schema = new SchemaPack(input);
+    return schema.detectRootFiles(input);
+  },
+
+  detectRelatedFiles: async function(input) {
+    const schema = new SchemaPack(input);
+    return schema.detectRelatedFiles();
+  },
+
+  bundle: async function(input) {
+    const schema = new SchemaPack(input, _.has(input, 'options') ? input.options : {});
+    return schema.bundle(input);
   },
 
   SchemaPack

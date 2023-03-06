@@ -397,7 +397,7 @@ describe('Test validate Transactions method in SchemaPack', function () {
     });
   });
 
-  it('Should return no missmatches if entry is valid', function () {
+  it('Should return no mismatches if entry is valid', function () {
     schemaPack.convert((error, result) => {
       expect(error).to.be.null;
       expect(result).to.be.an('object');
@@ -408,5 +408,4 @@ describe('Test validate Transactions method in SchemaPack', function () {
       });
     });
   });
-
 });

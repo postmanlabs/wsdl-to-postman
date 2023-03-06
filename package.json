@@ -13,7 +13,7 @@
     "convert-validation-tests": "./node_modules/mocha/bin/mocha test/convert-validation/**.test.js --timeout 10000",
     "system-tests": "./node_modules/mocha/bin/mocha test/system/**.test.js --timeout 5000",
     "lint": "eslint ./lib/** ./test/**/*.js",
-    "coverage": "nyc --reporter=text npm run unit-tests"
+    "coverage": "nyc --reporter=text npm run test"
   },
   "com_postman_plugin": {
     "plugin_type": "importer",

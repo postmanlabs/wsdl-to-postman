@@ -1,0 +1,80 @@
+[
+  {
+    "id": "06a2536d-f3fd-4e6a-86c8-9b002d87a71c",
+    "name": "GetLastTradePrice",
+    "request": {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "url": {
+        "query": [],
+        "variable": []
+      },
+      "header": [
+        {
+          "key": "Content-Type",
+          "value": "text/xml; charset=utf-8"
+        },
+        {
+          "key": "SOAPAction",
+          "value": "http://example.com/GetLastTradePrice"
+        }
+      ],
+      "method": "POST",
+      "body": {
+        "mode": "raw",
+        "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <TradePriceRequest xmlns=\"http://example.com/stockquote/schemas\">\n      <tickerSymbol>string</tickerSymbol>\n    </TradePriceRequest>\n  </soap:Body>\n</soap:Envelope>\n",
+        "options": {
+          "raw": {
+            "language": "xml"
+          }
+        }
+      }
+    },
+    "response": [
+      {
+        "id": "cbdfb1a5-0ae0-4c1b-a1c2-3b1ee3442e77",
+        "name": "GetLastTradePrice response",
+        "originalRequest": {
+          "url": {
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/xml; charset=utf-8"
+            },
+            {
+              "key": "SOAPAction",
+              "value": "http://example.com/GetLastTradePrice"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <TradePriceRequest xmlns=\"http://example.com/stockquote/schemas\">\n      <tickerSymbol>string</tickerSymbol>\n    </TradePriceRequest>\n  </soap:Body>\n</soap:Envelope>\n",
+            "options": {
+              "raw": {
+                "language": "xml"
+              }
+            }
+          }
+        },
+        "status": "OK",
+        "code": 200,
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/xml; charset=utf-8"
+          }
+        ],
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <TradePrice xmlns=\"http://example.com/stockquote/schemas\">\n      <price>23</price>\n    </TradePrice>\n  </soap:Body>\n</soap:Envelope>\n",
+        "cookie": [],
+        "_postman_previewlanguage": "xml"
+      }
+    ],
+    "event": []
+  }
+]
