@@ -1,6 +1,12 @@
 # WSDL to Postman Changelog
 
-### v1.6.0
+#### v1.7.1 (March 02, 2023)
+* Improve performance by removing unnecessary deep copying of objects
+
+#### v1.7.0 (January 10, 2023)
+* Upgrade libxmljs2 to support node 18
+
+#### v1.6.0 (January 03, 2023)
 * Fixed issue [#11267](https://github.com/postmanlabs/postman-app-support/issues/11267) - WSDL Definition without a portType defined fails to import correctly in Postman
 
 #### v1.5.0 (December 23, 2022)
