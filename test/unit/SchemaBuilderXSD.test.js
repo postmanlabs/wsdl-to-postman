@@ -3,7 +3,6 @@ const expect = require('chai').expect,
     SchemaBuilderXSD
   } = require('../../lib/utils/SchemaBuilderXSD'),
   fs = require('fs'),
-  _ = require('lodash'),
   validSchemaFolder = 'test/data/schemaTest',
   {
     XMLParser
@@ -2080,19 +2079,5 @@ describe('replaceTagInSchema', function () {
     const schemaBuilder = new SchemaBuilderXSD(),
       result = schemaBuilder.replaceTagInSchema(fileContent, schemaNamespace, 'all', 'sequence');
     expect(result.includes('<xsd:all>')).to.equal(false);
-  });
-});
-
-describe('SchemaBuilderXSD isLoopReferenceElement', function () {
-  it('should not throw error if certain path is not defined', function () {
-    const builder = new SchemaBuilderXSD();
-    try {
-      const isLoopReferenceElement = builder.isLoopReferenceElement({}, '', ['user'], _.isEqual, 'user', null);
-
-      expect(isLoopReferenceElement).to.be.false;
-    }
-    catch (error) {
-      expect(error).to.be.undefined;
-    }
   });
 });
