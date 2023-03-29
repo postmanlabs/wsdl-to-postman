@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://schemas.datacontract.org/2004/07/SAPI.Entities.Finder">
+    <xs:import schemaLocation="xsd0.xsd" namespace="http://www.w3.org/2001/XMLSchema" />
+    <xs:complexType name="ServiceCenterDetailsReference">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="AirValueLimit" type="xs:double" />
+            <xs:element minOccurs="0" name="AirValueLimiteTailPrePaid" type="xs:double" />
+            <xs:element minOccurs="0" name="ApexEDLAddDays" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexEDLDist" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexETailTDD10Inbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexETailTDD10Outbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexETailTDD12Inbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexETailTDD12Outbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexEconomyInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexEconomyOutbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexEtailRVP" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexOutbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ApexTDD" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="AreaCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="BlueDartHolidays" nillable="true" type="tns:ArrayOfHoliday" />
+            <xs:element minOccurs="0" name="DPDutsValueLimit" type="xs:double" />
+            <xs:element minOccurs="0" name="DPTDD10Inbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DPTDD10Outbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DPTDD12Inbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DPTDD12Outbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DartPlusRVP" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DomesticPriorityInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DomesticPriorityOutbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DomesticPriorityTDD" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="EDLAddDays" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="EDLDist" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="EDLProduct" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="Embargo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="GroundEDLAddDays" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="GroundEDLDist" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="GroundInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="GroundOutbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="GroundRVP" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="GroundValueLimit" type="xs:double" />
+            <xs:element minOccurs="0" name="GroundValueLimiteTailPrePaid" type="xs:double" />
+            <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+            <xs:element minOccurs="0" name="PinCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PincodeDescription" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="RVPEmbargo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ServiceCenterCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailCODAirInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailCODAirOutbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailCODGroundInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailCODGroundOutbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailExpressCODAirInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailExpressCODAirOutbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailExpressPrePaidAirInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailExpressPrePaidAirOutound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailPrePaidAirInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailPrePaidAirOutound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailPrePaidGroundInbound" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="eTailPrePaidGroundOutbound" nillable="true" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ServiceCenterDetailsReference" nillable="true" type="tns:ServiceCenterDetailsReference" />
+    <xs:complexType name="ArrayOfHoliday">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Holiday" nillable="true" type="tns:Holiday" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ArrayOfHoliday" nillable="true" type="tns:ArrayOfHoliday" />
+    <xs:complexType name="Holiday">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="HolidayDate" type="xs:dateTime" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Holiday" nillable="true" type="tns:Holiday" />
+    <xs:complexType name="PinCodeServiceDetailsReference">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="AreaCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="BlueDartHolidays" nillable="true" type="tns:ArrayOfHoliday" />
+            <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+            <xs:element minOccurs="0" name="PinCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PinDescription" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="Product" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="Service" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ServiceCenterCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="SubProduct" nillable="true" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PinCodeServiceDetailsReference" nillable="true" type="tns:PinCodeServiceDetailsReference" />
+    <xs:complexType name="PinCodeServiceLocationDetailsReference">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="DeliveryAreaCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DeliveryService" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="DeliveryServiceCenterCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="Feature" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+            <xs:element minOccurs="0" name="PackType" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PickupAreaCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PickupService" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PickupServiceCenterCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PinCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PinDescription" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PincodeAreaCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="PincodeServiceCenterCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="Product" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="SubProduct" nillable="true" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PinCodeServiceLocationDetailsReference" nillable="true" type="tns:PinCodeServiceLocationDetailsReference" />
+    <xs:complexType name="DomesticTranistTimeReference">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="AdditionalDays" type="xs:int" />
+            <xs:element minOccurs="0" name="ApexAdditionalDays" type="xs:int" />
+            <xs:element minOccurs="0" name="Area" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="CityDesc_Destination" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="CityDesc_Origin" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="EDLMessage" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ExpectedDateDelivery" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="ExpectedDatePOD" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="GroundAdditionalDays" type="xs:int" />
+            <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+            <xs:element minOccurs="0" name="ServiceCenter" nillable="true" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="DomesticTranistTimeReference" nillable="true" type="tns:DomesticTranistTimeReference" />
+</xs:schema>

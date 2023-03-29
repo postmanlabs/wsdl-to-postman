@@ -8,6 +8,7 @@ const expect = require('chai').expect,
   } = require('../../index'),
   validWSDLs = 'test/data/validWSDLs11',
   invalidWSDLs = 'test/data/invalidWSDLs11',
+  deepCircularRef = '../data/separatedFiles/deepCircularRefs',
   fs = require('fs'),
   path = require('path');
 
@@ -108,6 +109,32 @@ describe('merge and validate', function () {
         { fileName: folderPath + '/stockquote.xsd' },
         { fileName: folderPath + '/stockquote.wsdl' },
         { fileName: folderPath + '/stockquoteservice.wsdl' }
+      ];
+
+    array.forEach((item) => {
+      files.push({
+        content: fs.readFileSync(item.fileName, 'utf8'),
+        fileName: item.fileName
+      });
+    });
+
+    mergeAndValidate({ type: 'folder', data: files }, (error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.result).to.equal(true);
+    });
+
+  });
+
+  it('Should test a deep circular Ref', function () {
+    let folderPath = path.join(__dirname, deepCircularRef),
+      files = [],
+      array = [
+        { fileName: folderPath + '/ServiceFinderQuery.wsdl' },
+        { fileName: folderPath + '/xsd0.xsd' },
+        { fileName: folderPath + '/xsd1.xsd' },
+        { fileName: folderPath + '/xsd2.xsd' },
+        { fileName: folderPath + '/xsd3.xsd' }
       ];
 
     array.forEach((item) => {
