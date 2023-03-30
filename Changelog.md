@@ -1,5 +1,9 @@
 # WSDL to Postman Changelog
 
+#### v1.8.0 (March 30, 2023)
+* Fixed issue where conversion failed with RangeError: Maximum stack size reached when recursive elements were present.
+* Fixed issue where conversion failed with typeeror with path.includes is not a function.
+
 #### v1.7.1 (March 02, 2023)
 * Improve performance by removing unnecessary deep copying of objects
 
