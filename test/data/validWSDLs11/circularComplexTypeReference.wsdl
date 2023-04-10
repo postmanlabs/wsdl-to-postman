@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://www.cleverbuilder.com/BookService/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  name="BookService"
+                  targetNamespace="http://www.cleverbuilder.com/BookService/">
+  <wsdl:documentation>Definition for a web service called BookService,
+    which can be used to add or retrieve books from a collection.
+  </wsdl:documentation>
+
+  <!--
+      The `types` element defines the data types (XML elements)
+      that are used by the web service.
+   -->
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.cleverbuilder.com/BookService/">
+      <xsd:complexType name="setFilterConditionList">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="tns:setFilterCondition" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>   
+      </xsd:complexType>
+      <xsd:group name="setFilterCondition">
+          <xsd:choice>
+              <xsd:element ref="setFilterAnd">
+                  <xsd:annotation>
+                      <xsd:documentation source="rn_added_7.0"/>
+                  </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="setFilterOr">
+                  <xsd:annotation>
+                      <xsd:documentation source="rn_added_7.0"/>
+                  </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="setFilterNot">
+                  <xsd:annotation>
+                      <xsd:documentation source="rn_added_7.0"/>
+                  </xsd:annotation>
+              </xsd:element>
+          </xsd:choice>
+      </xsd:group>
+      <xsd:element name="setFilterAnd" type="setFilterConditionList"/>
+      <xsd:element name="setFilterOr" type="setFilterConditionList"/>
+      <xsd:element name="setFilterNot">
+          <xsd:complexType>
+              <xsd:group ref="setFilterCondition"/>
+          </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Book">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ID" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="Title" type="xsd:string"/>
+            <xsd:element name="Author" type="xsd:string"/>
+            <xsd:element ref="tns:Book" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Books">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="tns:Book" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetBook">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ID" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetBookResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="tns:setFilterAnd" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+
+
+  <!--
+      A wsdl `message` element is used to define a message
+      exchanged between a web service, consisting of zero
+      or more `part`s.
+   -->
+
+  <wsdl:message name="GetBookRequest">
+    <wsdl:part element="tns:GetBook" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetBookResponse">
+    <wsdl:part element="tns:GetBookResponse" name="parameters"/>
+  </wsdl:message>
+
+  <!--
+      A WSDL `portType` is used to combine multiple `message`s
+      (e.g. input, output) into a single operation.
+
+      Here we define three synchronous (input/output) operations
+      and the `message`s that must be used for each.
+   -->
+  <wsdl:portType name="BookService">
+    <wsdl:operation name="GetBook">
+      <wsdl:input message="tns:GetBookRequest"/>
+      <wsdl:output message="tns:GetBookResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <!--
+      The `binding` element defines exactly how each
+      `operation` will take place over the network.
+      In this case, we are using SOAP.
+   -->
+  <wsdl:binding name="BookServiceSOAP" type="tns:BookService">
+    <soap:binding style="document"
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetBook">
+      <soap:operation
+              soapAction="http://www.cleverbuilder.com/BookService/GetBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <!--
+      The `service` element finally says where the service
+      can be accessed from - in other words, its endpoint.
+   -->
+  <wsdl:service name="BookService">
+    <wsdl:port binding="tns:BookServiceSOAP" name="BookServiceSOAP">
+      <soap:address location="http://www.example.org/BookService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
