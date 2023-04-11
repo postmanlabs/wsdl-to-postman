@@ -218,6 +218,36 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
         .to.equal(removeLineBreakTabsSpaces(expectedOutput));
     });
   });
+
+  it('Should convert circular ref and add circular ref element as empty object when' +
+    ' parent node does not contain name', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/circularComplexTypeReference.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, {}),
+      expectedOutput = `<?xml version="1.0" encoding="utf-8"?>
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+          <GetBookResponse xmlns="http://www.cleverbuilder.com/BookService/">
+            <tns:setFilterAnd>
+              <tns:setFilterCondition>
+                <setFilterAnd/>
+              </tns:setFilterCondition>
+            </tns:setFilterAnd>
+          </GetBookResponse>
+        </soap:Body>
+      </soap:Envelope>`;
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output[0].data.item).to.have.lengthOf(1);
+      expect(result.output[0].data.item[0].response).to.have.lengthOf(1);
+      expect(removeLineBreakTabsSpaces(result.output[0].data.item[0].response[0].body))
+        .to.equal(removeLineBreakTabsSpaces(expectedOutput));
+    });
+  });
 });
 
 describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
