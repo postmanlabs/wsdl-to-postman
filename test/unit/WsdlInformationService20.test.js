@@ -169,6 +169,30 @@ describe('WSDL 2.0 getElementFromInterfaceOperationInOut', function () {
       element = informationService.getElementFromInterfaceOperationInOut({}, null, 'notfound', '');
     expect(element).to.have.length(0);
   });
+
+  it('should get correct elements when no elements are present', function () {
+    const informationService = new WsdlInformationService20(),
+      elements = informationService.getElementFromInterfaceOperationInOut(
+        { elePrefix: { '@_element': 'UserError' } }, null, 'elePrefix', '');
+    expect(elements).to.have.length(1);
+    expect(elements[0].name).to.equal('UserError');
+  });
+});
+
+describe('WSDL 2.0 getAbstractDefinitionName', function () {
+  it('should correctly provide definition name even if attribute is not found', function () {
+    const informationService = new WsdlInformationService20(),
+      abstractDefinitionName = informationService.getAbstractDefinitionName({}, { key: 'tns' });
+    expect(abstractDefinitionName).to.equal('');
+  });
+});
+
+describe('WSDL 2.0 getServiceURL', function () {
+  it('should correctly provide service URL even if serviceEndpoint is not object', function () {
+    const informationService = new WsdlInformationService20(),
+      serviceUrl = informationService.getServiceURL(null);
+    expect(serviceUrl).to.equal('');
+  });
 });
 
 describe('WSDL 2.0 parser getAbstractOperationByName', function () {
