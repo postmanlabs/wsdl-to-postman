@@ -3,6 +3,7 @@ const { WsdlInformationService11 } = require('../../lib/WsdlInformationService11
   expect = require('chai').expect,
   assert = require('chai').assert,
   WsdlObject = require('../../lib/WSDLObject').WsdlObject,
+  validWSDLs10 = 'test/data/validWSDLs11',
   validWSDLs20 = 'test/data/validWSDLs20',
   specialCasesWSDLs_2_0 = 'test/data/specialCases/wsdl2',
   {
@@ -1252,6 +1253,34 @@ provides functions that convert numbers into words or dollar amounts.</documenta
           serviceName: ''
         });
     });
+
+  it('should assign operations to wsdl object without any error if definition does not have wsdl namespace defined' +
+    ' with WsdlInformationService11', function () {
+    const parser = new WsdlParser(new WsdlInformationService11()),
+      fileContent = fs.readFileSync(validWSDLs10 + '/noWSDLNamespace.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      xmlParser = new XMLParser(),
+      parsed = xmlParser.parseToObject(fileContent);
+
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(3);
+  });
+
+  it('should assign operations to wsdl object without any error if definition does not have wsdl namespace defined' +
+    ' with WsdlInformationService20', function () {
+    const parser = new WsdlParser(new WsdlInformationService20()),
+      fileContent = fs.readFileSync(validWSDLs20 + '/noWSDLNamespace.wsdl', 'utf8');
+    let wsdlObject = new WsdlObject(),
+      xmlParser = new XMLParser(),
+      parsed = xmlParser.parseToObject(fileContent);
+
+    wsdlObject = parser.assignNamespaces(wsdlObject, parsed);
+    wsdlObject = parser.assignOperations(wsdlObject, parsed);
+    expect(wsdlObject.operationsArray).to.be.an('array');
+    expect(wsdlObject.operationsArray.length).to.equal(1);
+  });
 });
 
 describe('WSDL 1.1 parser getWsdlObject', function () {

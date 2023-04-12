@@ -1774,3 +1774,19 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
   });
 
 });
+
+describe('WSDL 1.1 parser getAbstractDefinitionName', function () {
+  it('should correctly provide definition name even if attribute is not found', function () {
+    const informationService = new WsdlInformationService11(),
+      abstractDefinitionName = informationService.getAbstractDefinitionName({}, { key: 'tns' });
+    expect(abstractDefinitionName).to.equal('');
+  });
+});
+
+describe('WSDL 1.1 parser getServiceURL', function () {
+  it('should correctly provide service URL even if address is not defined', function () {
+    const informationService = new WsdlInformationService11(),
+      serviceUrl = informationService.getServiceURL({}, {}, {}, (a) => { return a; });
+    expect(serviceUrl).to.be.ok;
+  });
+});
