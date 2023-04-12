@@ -658,6 +658,90 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
     }
   });
 
+  it('should correctly get info from binding when multiple namespaces with same binding URL are defined', function () {
+    const simpleInput = `<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" 
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" 
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
+    <wsdl:portType name="ISampleService">
+        <wsdl:operation name="Test">
+            <wsdl:input message="tns:ISampleService_Test_InputMessage" />
+            <wsdl:output message="tns:ISampleService_Test_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <wsdl:input message="tns:ISampleService_XmlMethod_InputMessage" />
+            <wsdl:output message="tns:ISampleService_XmlMethod_OutputMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <wsdl:input message="tns:ISampleService_TestCustomModel_InputMessage" />
+            <wsdl:output message="tns:ISampleService_TestCustomModel_OutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding" type="tns:ISampleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Test">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/Test" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="XmlMethod">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/XmlMethod" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestCustomModel">
+            <soap:operation soapAction="http://tempuri.org/ISampleService/TestCustomModel" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ISampleService">
+        <wsdl:port name="BasicHttpBinding" binding="tns:BasicHttpBinding">
+            <soap:address location="https://localhost:5001/Service.asmx" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+`,
+      informationService = new WsdlInformationService11(),
+      xmlParser = new XMLParser(),
+      soap12Namespace = {
+        key: 'soap12',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap12/',
+        isDefault: 'false'
+      },
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        informationService.RootTagName
+      )[0],
+      bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace, soap12Namespace);
+    expect(bindingInfo.protocol).to.equal(SOAP_PROTOCOL);
+    expect(bindingInfo.verb).to.equal(POST_METHOD);
+
+  });
+
   it('should throw an error when Cannot get protocol', function () {
     const simpleInput = `<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
     xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
