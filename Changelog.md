@@ -1,9 +1,31 @@
 # WSDL to Postman Changelog
 
-#### v1.8.0 (March 30, 2023)
-* Fixed issue where conversion failed with RangeError: Maximum stack size reached when recursive elements were present.
-* Fixed issue where conversion failed with typeeror with path.includes is not a function.
+## [Unreleased]
 
+### Added
+
+-   GitHub Actions for Release management.
+
+### Changed
+
+-   Bumped up minimum Node version to 12.
+-   Unit tests now run on Node versions 12, 16 and 18.
+
+### Fixed
+
+-   Fixed an issue where conversion failed with typeeror while resolving non defined variables.
+-   Fixed an issue where circular references were not correctly identified while resolving elements.
+-   Fixed an issue where for multiple binding namespaces conversion was failing.
+
+## [1.8.0] - 2023-03-30
+
+### Fixed
+
+-   Fixed issue where conversion failed with RangeError: Maximum stack size reached when recursive elements were present.
+-   Fixed issue where conversion failed with typeeror with path.includes is not a function.
+
+## Previous Releases
+Newer releases follow the [Keep a Changelog](https://keepachangelog.com) format.
 #### v1.7.1 (March 02, 2023)
 * Improve performance by removing unnecessary deep copying of objects
 
@@ -31,3 +53,7 @@
 #### v1.1.0 (April 18, 2022)
 * Stable release
 * Removed libxmljs from package.json
+
+[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/1.8.0...HEAD
+
+[1.8.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.7.1...1.8.0
