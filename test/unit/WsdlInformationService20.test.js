@@ -169,6 +169,30 @@ describe('WSDL 2.0 getElementFromInterfaceOperationInOut', function () {
       element = informationService.getElementFromInterfaceOperationInOut({}, null, 'notfound', '');
     expect(element).to.have.length(0);
   });
+
+  it('should get correct elements when no elements are present', function () {
+    const informationService = new WsdlInformationService20(),
+      elements = informationService.getElementFromInterfaceOperationInOut(
+        { elePrefix: { '@_element': 'UserError' } }, null, 'elePrefix', '');
+    expect(elements).to.have.length(1);
+    expect(elements[0].name).to.equal('UserError');
+  });
+});
+
+describe('WSDL 2.0 getAbstractDefinitionName', function () {
+  it('should correctly provide definition name even if attribute is not found', function () {
+    const informationService = new WsdlInformationService20(),
+      abstractDefinitionName = informationService.getAbstractDefinitionName({}, { key: 'tns' });
+    expect(abstractDefinitionName).to.equal('');
+  });
+});
+
+describe('WSDL 2.0 getServiceURL', function () {
+  it('should correctly provide service URL even if serviceEndpoint is not object', function () {
+    const informationService = new WsdlInformationService20(),
+      serviceUrl = informationService.getServiceURL(null);
+    expect(serviceUrl).to.equal('');
+  });
 });
 
 describe('WSDL 2.0 parser getAbstractOperationByName', function () {
@@ -354,6 +378,117 @@ describe('WSDL 2.0 parser  getBindingInfoFromBindingTag', function () {
     catch (error) {
       expect(error.message).to.equal('Cannot find protocol in those namespaces');
     }
+  });
+
+  it('should correctly get info from binding when multiple namespaces with same binding URL are defined', function () {
+    const simpleInput = `<wsdl2:description xmlns="http://www.w3.org/ns/wsdl/soap"
+    xmlns:wsdl2="http://www.w3.org/ns/wsdl"
+    xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+    xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+    xmlns:ns="http://axis2.org"
+    xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+    xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions"
+    xmlns:tns="http://axis2.org"
+    xmlns:wrpc="http://www.w3.org/ns/wsdl/rpc"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
+    <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
+    <wsdl2:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://axis2.org">
+            <xs:element name="hi">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="hiResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl2:types>
+    <wsdl2:interface name="ServiceInterface">
+        <wsdl2:operation
+            name="hi"
+            style="http://www.w3.org/ns/wsdl/style/rpc http://www.w3.org/ns/wsdl/style/multipart"
+            wrpc:signature="return #return "
+            pattern="http://www.w3.org/ns/wsdl/in-out"
+        >
+            <wsdl2:input element="ns:hi" wsaw:Action="urn:hi" />
+            <wsdl2:output element="ns:hiResponse" wsaw:Action="urn:hiResponse" />
+        </wsdl2:operation>
+    </wsdl2:interface>
+    <wsdl2:binding
+        name="SayHelloSoap11Binding"
+        interface="tns:ServiceInterface"
+        type="http://www.w3.org/ns/wsdl/soap"
+        wsoap:version="1.1"
+    >
+        <wsdl2:operation ref="tns:hi" wsoap:action="urn:hi">
+            <wsdl2:input />
+            <wsdl2:output />
+        </wsdl2:operation>
+    </wsdl2:binding>
+    <wsdl2:binding
+        name="SayHelloSoap12Binding"
+        interface="tns:ServiceInterface"
+        type="http://www.w3.org/ns/wsdl/soap"
+        wsoap:version="1.2"
+    >
+        <wsdl2:operation ref="tns:hi" wsoap:action="urn:hi">
+            <wsdl2:input />
+            <wsdl2:output />
+        </wsdl2:operation>
+    </wsdl2:binding>
+    <wsdl2:binding
+        name="SayHelloHttpBinding"
+        interface="tns:ServiceInterface"
+        whttp:methodDefault="POST"
+        type="http://www.w3.org/ns/wsdl/http"
+    >
+        <wsdl2:operation ref="tns:hi" whttp:location="hi">
+            <wsdl2:input />
+            <wsdl2:output />
+        </wsdl2:operation>
+    </wsdl2:binding>
+    <wsdl2:service name="SayHello" interface="tns:ServiceInterface">
+        <wsdl2:endpoint
+            name="SayHelloHttpEndpoint"
+            binding="tns:SayHelloHttpBinding"
+            address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpEndpoint/"
+        />
+        <wsdl2:endpoint
+            name="SayHelloHttpSoap11Endpoint"
+            binding="tns:SayHelloSoap11Binding"
+            address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap11Endpoint/"
+        />
+        <wsdl2:endpoint
+            name="SayHelloHttpSoap12Endpoint"
+            binding="tns:SayHelloSoap12Binding"
+            address="http://192.168.100.75:8080/Axis2-bottom/services/SayHello.SayHelloHttpSoap12Endpoint/"
+        />
+    </wsdl2:service>
+</wsdl2:description>
+`,
+      informationService = new WsdlInformationService20(),
+      xmlParser = new XMLParser(),
+      soapNamespace = {
+        key: 'soap',
+        url: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        isDefault: 'false'
+      };
+    let parsed = xmlParser.parseToObject(simpleInput),
+      binding = getBindings(
+        parsed,
+        informationService.RootTagName
+      )[0],
+      bindingInfo = informationService.getBindingInfoFromBindingTag(binding, soapNamespace);
+
+    expect(bindingInfo.protocol).to.equal('soap');
+    expect(bindingInfo.verb).to.equal('POST');
+    expect(bindingInfo.bindingName).to.equal('SayHelloSoap11Binding');
   });
 });
 

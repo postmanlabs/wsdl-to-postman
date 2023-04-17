@@ -266,4 +266,16 @@ describe('SOAPBody assignPropertyValue', function () {
     expect(obj).to.be.a('object');
     expect(obj.parent.property).to.equal('value');
   });
+
+  it('should not assign the property "property" with "value" to object when non-object data is provided',
+    function () {
+      const bodyCreator = new SOAPBody(new XMLParser());
+      let obj = {
+        parent: '456'
+      };
+
+      bodyCreator.assignPropertyValue(obj.parent, 'property', 'value');
+      expect(obj).to.be.a('object');
+      expect(obj.parent).to.equal('456');
+    });
 });

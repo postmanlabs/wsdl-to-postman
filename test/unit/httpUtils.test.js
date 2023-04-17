@@ -25,4 +25,9 @@ describe('Http Utils getHttpVerb', function() {
     const method = getHttpVerb('pOsT');
     expect(method).to.equal(POST_METHOD);
   });
+
+  it('should get corect verb when called with non-string value', function() {
+    const method = getHttpVerb(null);
+    expect(method).to.equal(POST_METHOD);
+  });
 });
