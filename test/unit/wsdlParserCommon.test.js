@@ -13,7 +13,9 @@ const expect = require('chai').expect,
     getWSDLDocumentation,
     wsdlHasImports,
     getWSDLImports,
-    getWSDLIncludes
+    getWSDLIncludes,
+    getTnsNamespace,
+    getSchemaNamespace
   } = require('../../lib/WsdlParserCommon'),
   {
     WsdlInformationService11
@@ -2061,5 +2063,27 @@ describe('WSDL parser common getWSDLIncludes', function () {
       result = getWSDLIncludes(parsed, '', informationService.RootTagName);
     expect(result).to.be.an('array');
     expect(result.length).to.equal(1);
+  });
+});
+
+describe('WSDL parser common getTnsNamespace', function () {
+  it('should not throw error when tnsNamespace is not present in definition', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_1_1),
+      result = getTnsNamespace(parsed, 'hello', {}, [], informationService.RootTagName);
+
+    expect(result).to.be.undefined;
+  });
+});
+
+describe('WSDL parser common getSchemaNamespace', function () {
+  it('should not throw error when tnsNamespace is not an object', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_1_1),
+      result = getSchemaNamespace(parsed, informationService.RootTagName, null);
+
+    expect(result).to.be.ok;
   });
 });
