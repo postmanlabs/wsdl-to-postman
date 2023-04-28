@@ -72,7 +72,7 @@ describe('XMLparser parseToObject', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -82,7 +82,7 @@ describe('XMLparser parseToObject', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -92,7 +92,7 @@ describe('XMLparser parseToObject', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -102,7 +102,7 @@ describe('XMLparser parseToObject', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -112,7 +112,7 @@ describe('XMLparser parseToObject', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Not xml file found in your document');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 });

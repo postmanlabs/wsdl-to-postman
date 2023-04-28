@@ -29,13 +29,13 @@ describe('Test validate Transactions method in SchemaPack', function () {
 
   it('Should return an error when there is not Id Collection', function () {
     schemaPack.validateTransaction(notIdCollectionItems, (error) => {
-      expect(error.message).to.equal('Required field is null, empty or undefined');
+      expect(error.message).to.equal('Provided requestList is invalid.');
     });
   });
 
   it('Should return an error when the Requests are empty in the Collection', function () {
     schemaPack.validateTransaction(emptyRequestCollectionItems, (error) => {
-      expect(error.message).to.equal('Required field is null, empty or undefined');
+      expect(error.message).to.equal('Provided requestList is invalid.');
     });
   });
 

@@ -150,7 +150,7 @@ describe('Transaction Validator validateTransaction function', function() {
       assert.fail('Expected error');
     }
     catch (error) {
-      expect(error.message).to.equal('Required field is null, empty or undefined');
+      expect(error.message).to.equal('Provided requestList is invalid.');
     }
   });
 
@@ -172,7 +172,7 @@ describe('Transaction Validator validateTransaction function', function() {
       assert.fail('Expected error');
     }
     catch (error) {
-      expect(error.message).to.equal('Required field is null, empty or undefined');
+      expect(error.message).to.equal('Provided requestList is invalid.');
     }
   });
 
@@ -196,7 +196,7 @@ describe('TransactionValidator validateRequiredFields function', function() {
       assert.fail('Error expected');
     }
     catch (error) {
-      expect(error.message).to.equal('Required field is null, empty or undefined');
+      expect(error.message).to.equal('Provided requestList is invalid.');
     }
   });
 
@@ -207,7 +207,7 @@ describe('TransactionValidator validateRequiredFields function', function() {
       assert.fail('Error expected');
     }
     catch (error) {
-      expect(error.message).to.equal('Required field is null, empty or undefined');
+      expect(error.message).to.equal('Provided requestList is invalid.');
     }
   });
 });

@@ -75,7 +75,7 @@ describe('wsdl2postman ', function () {
   it('should show appropriate messages for invalid input', function (done) {
     exec('./bin/wsdl2postman.js -s test/data/invalidWSDLs11/calculator-invalid.wsdl', function (err, stdout) {
       expect(err).to.be.null;
-      expect(stdout).to.include('Provided document is not a valid WSDL specification');
+      expect(stdout).to.include('Provided WSDL definition is invalid.');
       done();
     });
   });
