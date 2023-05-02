@@ -144,7 +144,7 @@ describe('Parser Factory getWsdlVersion', function () {
       factory.getWsdlVersion('');
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -154,7 +154,7 @@ describe('Parser Factory getWsdlVersion', function () {
       factory.getWsdlVersion();
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -164,7 +164,7 @@ describe('Parser Factory getWsdlVersion', function () {
       factory.getWsdlVersion(null);
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -174,7 +174,7 @@ describe('Parser Factory getWsdlVersion', function () {
       factory.getWsdlVersion(undefined);
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -189,7 +189,7 @@ describe('Parser Factory getWsdlVersion', function () {
   </user>`);
     }
     catch (error) {
-      expect(error.message).to.equal('Provided document is not a valid WSDL specification');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -306,7 +306,7 @@ describe('Parser Factory getParser', function () {
       factory.getParser('');
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -316,7 +316,7 @@ describe('Parser Factory getParser', function () {
       factory.getParser();
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -327,7 +327,7 @@ describe('Parser Factory getParser', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -338,7 +338,7 @@ describe('Parser Factory getParser', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Empty input was proportionated');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -354,7 +354,7 @@ describe('Parser Factory getParser', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Provided document is not a valid WSDL specification');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 

@@ -311,7 +311,7 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get portypes from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -324,7 +324,7 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get portypes from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -608,7 +608,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       );
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get binding info from undefined or null object');
+      expect(error.message).to.equal('Definition contains invalid binding.');
     }
   });
 
@@ -631,7 +631,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       );
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get binding info from undefined or null object');
+      expect(error.message).to.equal('Definition contains invalid binding.');
     }
   });
 
@@ -654,7 +654,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get binding from WSDL');
+      expect(error.message).to.equal('Definition contains a binding for which namespace could not be found.');
     }
   });
 
@@ -814,7 +814,7 @@ describe('WSDL 1.1 parser getBindingInfoFromBindingTag', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot find protocol in those namespaces');
+      expect(error.message).to.equal('Definition contains a binding for which protocol could not be determined.');
     }
   });
 
@@ -1278,7 +1278,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get style info from binding operation undefined or null object');
+      expect(error.message).to.equal('Definition contains invalid binding operation.');
     }
   });
 
@@ -1385,7 +1385,7 @@ describe('WSDL 1.1 parser getStyleFromBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get style info from binding operation undefined or null object');
+      expect(error.message).to.equal('Definition contains invalid binding operation.');
     }
   });
 
@@ -1579,7 +1579,7 @@ describe('WSDL 1.1 parser getServiceAndExpossedInfoByBindingName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('BindingName must have a value');
+      expect(error.message).to.equal('Definition contains binding without required property "name".');
     }
   });
   it('should throw an error when binding name is undefined', function () {
@@ -1589,7 +1589,7 @@ describe('WSDL 1.1 parser getServiceAndExpossedInfoByBindingName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('BindingName must have a value');
+      expect(error.message).to.equal('Definition contains binding without required property "name".');
     }
   });
   it('should throw an error when binding name is an empty string', function () {
@@ -1599,7 +1599,7 @@ describe('WSDL 1.1 parser getServiceAndExpossedInfoByBindingName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('BindingName must have a value');
+      expect(error.message).to.equal('Definition contains binding without required property "name".');
     }
   });
 
@@ -1610,7 +1610,7 @@ describe('WSDL 1.1 parser getServiceAndExpossedInfoByBindingName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('PrincipalPrefix must have a value');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
   it('should throw an error when PrincipalPrefix is null', function () {
@@ -1620,7 +1620,7 @@ describe('WSDL 1.1 parser getServiceAndExpossedInfoByBindingName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('PrincipalPrefix must have a value');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
 
@@ -1757,7 +1757,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1769,7 +1769,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get porttype from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1793,7 +1793,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Definition contains portType without required property "name".');
     }
   });
 
@@ -1805,7 +1805,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Definition contains portType without required property "name".');
     }
   });
 
@@ -1817,7 +1817,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter name');
+      expect(error.message).to.equal('Definition contains portType without required property "name".');
     }
   });
 
@@ -1829,7 +1829,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Definition contains operation without required property "name".');
     }
   });
 
@@ -1841,7 +1841,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Definition contains operation without required property "name".');
     }
   });
 
@@ -1853,7 +1853,7 @@ describe('WSDL 1.1 parser getAbstractOperationByName', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get port type with no filter operationName');
+      expect(error.message).to.equal('Definition contains operation without required property "name".');
     }
   });
 

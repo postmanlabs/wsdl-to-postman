@@ -77,7 +77,7 @@ describe('SOAPMessageHelper parseObjectToXML', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot convert undefined or null to object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
@@ -88,7 +88,7 @@ describe('SOAPMessageHelper parseObjectToXML', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot convert undefined or null to object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 
