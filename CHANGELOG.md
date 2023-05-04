@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [v1.9.0] - 2023-05-04
+
+### Added
+
+-   Assigned user errors for various handled errors and updated error messaging to be more actionable. 
+
+### Fixed
+
+-   Fixed issue where conversion was failing with TypeError in case tns namespace is not defined correctly. 
+
 ## [v1.8.1] - 2023-04-17
 
 ### Added
@@ -66,7 +76,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com) format.
 -   Stable release
 -   Removed libxmljs from package.json
 
-[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.8.1...HEAD
+[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.9.0...HEAD
+
+[v1.9.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.8.1...v1.9.0
 
 [v1.8.1]: https://github.com/postmanlabs/wsdl-to-postman/compare/1.8.0...v1.8.1
 

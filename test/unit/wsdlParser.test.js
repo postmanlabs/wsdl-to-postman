@@ -1397,7 +1397,7 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('xmlDocumentContent must have a value');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1408,7 +1408,7 @@ describe('WSDL 1.1 parser getWsdlObject', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('xmlDocumentContent must have a value');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 });

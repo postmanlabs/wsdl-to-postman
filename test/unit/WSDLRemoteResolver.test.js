@@ -95,7 +95,7 @@ describe('WSDLRemoteResolver resolveRemoteRefs', function () {
 
   it('Should propagates errors', function (done) {
     resolveRemoteRefs('', new XMLParser(), optionFromOptions, (resolvedFile) => {
-      expect(resolvedFile.err.message).to.equal('Empty input was proportionated');
+      expect(resolvedFile.err.message).to.equal('Provided WSDL definition is invalid.');
       done();
     });
   });

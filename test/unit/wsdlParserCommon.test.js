@@ -13,7 +13,9 @@ const expect = require('chai').expect,
     getWSDLDocumentation,
     wsdlHasImports,
     getWSDLImports,
-    getWSDLIncludes
+    getWSDLIncludes,
+    getTnsNamespace,
+    getSchemaNamespace
   } = require('../../lib/WsdlParserCommon'),
   {
     WsdlInformationService11
@@ -451,7 +453,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('key must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace key is not defined.');
     }
   });
 
@@ -476,7 +478,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('key must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace key is not defined.');
     }
   });
 
@@ -501,7 +503,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('key must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace key is not defined.');
     }
   });
 
@@ -516,7 +518,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespace from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -586,7 +588,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('key must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace key is not defined.');
     }
   });
 
@@ -615,7 +617,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('key must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace key is not defined.');
     }
   });
 
@@ -644,7 +646,7 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('key must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace key is not defined.');
     }
   });
 });
@@ -804,7 +806,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get services from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -816,7 +818,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get services from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -864,7 +866,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get services from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -877,7 +879,7 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get services from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 });
@@ -1032,7 +1034,7 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get bindings from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1044,7 +1046,7 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get bindings from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1093,7 +1095,7 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get bindings from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1387,7 +1389,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('URL must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace URL is not defined.');
     }
   });
 
@@ -1411,7 +1413,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('URL must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace URL is not defined.');
     }
   });
 
@@ -1435,7 +1437,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('URL must not be empty');
+      expect(error.message).to.equal('Definition contains element for which namespace URL is not defined.');
     }
   });
 
@@ -1449,7 +1451,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespace from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1463,7 +1465,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespace from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1477,7 +1479,7 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespace from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1619,7 +1621,7 @@ describe('WSDL parser common getAllNamespaces', function () {
       expect(wsdlnamespace.length).to.equal(6);
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespaces from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1633,7 +1635,7 @@ describe('WSDL parser common getAllNamespaces', function () {
       expect(wsdlnamespace.length).to.equal(6);
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespaces from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1761,7 +1763,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get prefix from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1775,7 +1777,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
 
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get prefix from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1785,7 +1787,7 @@ describe('WSDL parser common getPrincipalPrefix', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get prefix from object');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
 
@@ -1840,7 +1842,7 @@ describe('WSDL parser common getBindingOperation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get operations from undefined or null object');
+      expect(error.message).to.equal('Definition contains invalid binding.');
     }
   });
 
@@ -1965,7 +1967,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get documentation from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -1977,7 +1979,7 @@ describe('WSDL parser common getWSDLDocumentation', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get documentation from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -2061,5 +2063,27 @@ describe('WSDL parser common getWSDLIncludes', function () {
       result = getWSDLIncludes(parsed, '', informationService.RootTagName);
     expect(result).to.be.an('array');
     expect(result.length).to.equal(1);
+  });
+});
+
+describe('WSDL parser common getTnsNamespace', function () {
+  it('should not throw error when tnsNamespace is not present in definition', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_1_1),
+      result = getTnsNamespace(parsed, 'hello', {}, [], informationService.RootTagName);
+
+    expect(result).to.be.undefined;
+  });
+});
+
+describe('WSDL parser common getSchemaNamespace', function () {
+  it('should not throw error when tnsNamespace is not an object', function () {
+    const parser = new XMLParser(),
+      informationService = new WsdlInformationService11();
+    let parsed = parser.parseToObject(WSDL_1_1),
+      result = getSchemaNamespace(parsed, informationService.RootTagName, null);
+
+    expect(result).to.be.ok;
   });
 });

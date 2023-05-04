@@ -555,7 +555,7 @@ describe('SchemaBuilderXSD getElements', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get elements from undefined or null wsdl');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -582,7 +582,7 @@ describe('SchemaBuilderXSD getElements', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get elements from undefined or null wsdl');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
@@ -2019,7 +2019,7 @@ describe('SchemaBuilderXSD parseObjectToXML', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot convert undefined or null to xml');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
   it('should get an error when the object sent is null', function () {
@@ -2029,7 +2029,7 @@ describe('SchemaBuilderXSD parseObjectToXML', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot convert undefined or null to xml');
+      expect(error.message).to.equal('Provided WSDL definition is invalid.');
     }
   });
 });
@@ -2050,7 +2050,7 @@ describe('SchemaBuilderXSD getTypes', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get types from undefined or null object');
+      expect(error.message).to.equal('Provided WSDL definition is invalid XML.');
     }
   });
 
