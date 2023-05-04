@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+
+-   Assigned user errors for various handled errors and updated error messaging to be more actionable. 
+
+### Fixed
+
+-   Fixed issue where conversion was failing with TypeError in case tns namespace is not defined correctly. 
+
 ## [v1.8.1] - 2023-04-17
 
 ### Added
