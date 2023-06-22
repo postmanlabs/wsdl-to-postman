@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import
+				schemaLocation="Hello-request.xsd" />
+			<xsd:import
+				schemaLocation="Hello-response.xsd" />
+		</xsd:schema>
+
+	</wsdl:types>
+
+	<wsdl:message name="HelloQuoteRequest">
+		<wsdl:part name="request" element="HelloQuoteRequest" />
+	</wsdl:message>
+
+	<wsdl:message name="HelloQuoteResponse">
+		<wsdl:part name="response" element="HelloQuoteResponse" />
+	</wsdl:message>
+
+	<wsdl:portType name="HelloPayoutService">
+		<wsdl:operation name="submitHelloQuote">
+			<wsdl:input message="HelloQuoteRequest"
+				name="HelloQuoteRequest" />
+			<wsdl:output message="HelloQuoteResponse"
+				name="HelloQuoteResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="HelloPayoutServiceSoapBinding"
+		type="HelloPayoutService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="submitHelloQuote">
+			<soap:operation soapAction="" />
+			<wsdl:input name="HelloQuoteRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="HelloQuoteResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="PayoutHelloQuoteService">
+		<wsdl:port binding="HelloPayoutServiceSoapBinding"
+			name="HelloPayout">
+			<soap:address location="https://hello-pay.com/payout" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
