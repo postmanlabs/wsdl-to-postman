@@ -108,10 +108,10 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
       expectedBodyRaw = '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n' +
         '<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n' +
         '  <soap:Body>\n' +
-        '    <tns:Add xmlns=\"http://tempuri.org/\" version=\"v36.2\">\n' +
-        '      <tns:intA>100</tns:intA>\n' +
-        '      <tns:intB>100</tns:intB>\n' +
-        '    </tns:Add>\n' +
+        '    <Add xmlns=\"http://tempuri.org/\" version=\"v36.2\">\n' +
+        '      <intA>100</intA>\n' +
+        '      <intB>100</intB>\n' +
+        '    </Add>\n' +
         '  </soap:Body>\n' +
         '</soap:Envelope>\n';
 

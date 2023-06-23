@@ -19,7 +19,7 @@
       </sp:SupportingTokens>
     </wsp:Policy>
     <wsdl2:types>
-        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://axis2.org">
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://axis2.org">
             <xs:element name="hi">
                 <xs:complexType>
                     <xs:sequence />

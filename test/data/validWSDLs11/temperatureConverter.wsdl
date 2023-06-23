@@ -8,7 +8,7 @@
     xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="https://www.w3schools.com/xml/">
     <wsdl:types>
-        <s:schema elementFormDefault="qualified" targetNamespace="https://www.w3schools.com/xml/">
+        <s:schema elementFormDefault="unqualified" targetNamespace="https://www.w3schools.com/xml/">
             <s:element name="FahrenheitToCelsius">
                 <s:complexType>
                     <s:sequence>
