@@ -98,6 +98,101 @@ describe('SOAPBody create', function () {
       .to.equal('string');
   });
 
+  it('Should get a json object with proerties having namespace prefix if elementFormDefault is true', function () {
+    const bodyCreator = new SOAPBody(new XMLParser()),
+      grandChild1 = {
+        children: [],
+        name: 'id',
+        isComplex: false,
+        type: 'integer',
+        maximum: 2147483647,
+        minimum: -2147483648,
+        elementFormDefault: true,
+        attributeFormDefault: true,
+        nsPrefix: 'wssegc1'
+      },
+      grandChild2 = {
+        children: [],
+        name: 'name',
+        isComplex: false,
+        type: 'string',
+        elementFormDefault: false,
+        attributeFormDefault: true,
+        nsPrefix: 'wssegc2'
+      },
+      grandChild3 = {
+        children: [],
+        name: 'email',
+        isComplex: false,
+        type: 'string',
+        elementFormDefault: true,
+        attributeFormDefault: true,
+        nsPrefix: 'wssegc3'
+      },
+      grandChild4Attr = {
+        children: [],
+        name: '@admin',
+        isComplex: false,
+        type: 'string',
+        elementFormDefault: true,
+        attributeFormDefault: true,
+        nsPrefix: 'wd'
+      },
+      grandChild5Attr = {
+        children: [],
+        name: '@reserved',
+        isComplex: false,
+        type: 'string',
+        elementFormDefault: true,
+        attributeFormDefault: false,
+        nsPrefix: 'wd2'
+      },
+      child = {
+        children: [grandChild1, grandChild2, grandChild3, grandChild4Attr, grandChild5Attr],
+        name: 'inputModel',
+        isComplex: true,
+        type: 'MyCustomModel',
+        elementFormDefault: true,
+        attributeFormDefault: true,
+        nsPrefix: 'wssechild'
+      },
+      soapMessageParent = {
+        children: [child],
+        name: 'TestCustomModel',
+        isComplex: true,
+        type: 'complex',
+        namespace: 'http://www.dataaccess.com/webservicesserver/',
+        elementFormDefault: true,
+        attributeFormDefault: true,
+        nsPrefix: 'wsse'
+      },
+      jsonObjectMessage = bodyCreator.create(soapMessageParent);
+    expect(jsonObjectMessage).to.be.an('object');
+    expect(jsonObjectMessage).to.have.own.property('wsse:TestCustomModel');
+    expect(jsonObjectMessage['wsse:TestCustomModel'])
+      .to.have.own.property('wssechild:inputModel');
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel'])
+      .to.have.own.property('wssegc1:id');
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel'])
+      .to.have.own.property('name');
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel'])
+      .to.have.own.property('wssegc3:email');
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel'])
+      .to.have.own.property('@_wd:admin');
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel'])
+      .to.have.own.property('@_reserved');
+    assert.isAtLeast(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel']['wssegc1:id'], -2147483648);
+    assert.isAtMost(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel']['wssegc1:id'], 2147483647);
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel'].name)
+      .to.equal('string');
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel']['wssegc3:email'])
+      .to.equal('string');
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel']['@_wd:admin'])
+      .to.equal('string');
+    expect(jsonObjectMessage['wsse:TestCustomModel']['wssechild:inputModel']['@_reserved'])
+      .to.equal('string');
+  });
+
   it('Should get an empty json object when null is sent', function () {
     const bodyCreator = new SOAPBody(new XMLParser()),
       jsonObjectMessage = bodyCreator.create(null);

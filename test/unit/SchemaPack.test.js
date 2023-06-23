@@ -333,6 +333,47 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
 
     });
   });
+
+  it('[Github #11768] - Should convert definition with elementFormDefault and attributeFormDefault ' +
+    'defined with prefix correctly', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/elementFormDefaultQualified.wsdl', 'utf8');
+    const schemaPack = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, {}),
+      expectedOutput = `<?xml version="1.0" encoding="utf-8"?>
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+          <wd:Put_Disability_Request xmlns:wd="urn:com.workday/bsvc" wd:Add_Only="true" wd:version="v39.0">
+            <wd:Disability_Reference wd:Descriptor="string">
+              <wd:ID wd:type="string"/>
+            </wd:Disability_Reference>
+            <wd:Disability_Data>
+              <wd:ID>string</wd:ID>
+              <wd:Name>string</wd:Name>
+              <wd:Applicable_Subjects_Reference wd:Descriptor="string">
+                <wd:ID wd:type="string"/>
+              </wd:Applicable_Subjects_Reference>
+              <wd:Code>string</wd:Code>
+              <wd:Description>string</wd:Description>
+              <wd:Location_Reference wd:Descriptor="string">
+                <wd:ID wd:type="string" wd:parent_id="string" wd:parent_type="string"/>
+              </wd:Location_Reference>
+              <wd:Inactive>true</wd:Inactive>
+            </wd:Disability_Data>
+          </wd:Put_Disability_Request>
+        </soap:Body>
+      </soap:Envelope>`;
+
+    schemaPack.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output[0].data.item).to.have.lengthOf(1);
+      expect(result.output[0].data.item[0].name).to.eql('Put_Disability');
+      expect(removeLineBreakTabsSpaces(result.output[0].data.item[0].request.body.raw))
+        .to.equal(removeLineBreakTabsSpaces(expectedOutput));
+    });
+  });
 });
 
 describe('SchemaPack convert unit test WSDL 2.0', function () {
