@@ -13,7 +13,7 @@
     The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.
   </wsdl:documentation>
   <wsdl:types>
-    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
+    <xsd:schema elementFormDefault="unqualified" attributeFormDefault="qualified" targetNamespace="urn:com.workday/bsvc">
  
       <xsd:element name="Employee_Personal_Info_Get" type="wd:Employee_Personal_InfoType" /> 
       <xsd:element name="Employee_Personal_Info" type="wd:Employee_Personal_InfoType" />

@@ -9,7 +9,7 @@
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
     <wsdl:types>
-        <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+        <s:schema elementFormDefault="unqualified" targetNamespace="http://tempuri.org/">
             <s:group name="returnLiveDeedsSearchHttpGetInGroup">
                 <s:sequence>
                     <s:element minOccurs="0" maxOccurs="1" name="identifer" type="s:string"/>

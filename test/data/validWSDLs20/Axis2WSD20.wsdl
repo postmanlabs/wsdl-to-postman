@@ -10,7 +10,7 @@
     xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://axis2.org">
     <wsdl2:documentation> Please Type your service description here </wsdl2:documentation>
     <wsdl2:types>
-        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://axis2.org">
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://axis2.org">
             <xs:element name="hi">
                 <xs:complexType>
                     <xs:sequence />

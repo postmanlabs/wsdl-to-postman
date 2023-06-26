@@ -8,7 +8,7 @@
     xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="ISampleService">
     <wsdl:types>
-        <xsd:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+        <xsd:schema elementFormDefault="unqualified" targetNamespace="http://tempuri.org/">
             <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
             <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
             <xsd:element name="DoSomething">

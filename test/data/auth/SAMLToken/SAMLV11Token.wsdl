@@ -18,7 +18,7 @@
         </sp:SupportingTokens>
     </wsp:Policy>
     <types>
-        <xs:schema elementFormDefault="qualified" targetNamespace="http://www.dataaccess.com/webservicesserver/">
+        <xs:schema elementFormDefault="unqualified" targetNamespace="http://www.dataaccess.com/webservicesserver/">
             <xs:element name="NumberToWords">
                 <xs:complexType>
                     <xs:sequence>
