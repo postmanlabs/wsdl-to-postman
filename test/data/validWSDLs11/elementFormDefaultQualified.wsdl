@@ -1,0 +1,358 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wd-wsdl="urn:com.workday/bsvc/Human_Resources" xmlns:wd="urn:com.workday/bsvc"
+    xmlns:nyw="urn:com.netyourwork/aod" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:httpbind="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mimebind="http://schemas.xmlsoap.org/wsdl/mime/" name="Human_Resources"
+    targetNamespace="urn:com.workday/bsvc/Human_Resources">
+    <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday
+        Human Capital Management Business Services data, including Employee, Contingent Worker and
+        Organization information. This Web Service can be used for integration with enterprise
+        systems including corporate directories, data analysis tools, email or other provisioning
+        sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified"
+            targetNamespace="urn:com.workday/bsvc">
+            <xsd:element name="Workday_Common_Header" type="wd:Workday_Common_HeaderType" />
+            <xsd:element name="Put_Disability_Request" type="wd:Put_Disability_RequestType" />
+            <xsd:element name="Put_Disability_Response" type="wd:Put_Disability_ResponseType" />
+            <xsd:element name="Validation_Fault" type="wd:Validation_FaultType" />
+            <xsd:element name="Processing_Fault" type="wd:Processing_FaultType" />
+
+            <xsd:complexType name="Put_Disability_RequestType">
+                <xsd:annotation>
+                    <xsd:documentation>Request element for Put Disability</xsd:documentation>
+                    <xsd:appinfo><wd:Validation>
+                            <wd:Validation_Message>Disability, '[disability]', already exists.</wd:Validation_Message>
+                        </wd:Validation></xsd:appinfo>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="Disability_Reference" type="wd:DisabilityObjectType"
+                        minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>A unique identifier used to reference an Disability.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Disability_Data" type="wd:Disability_DataType">
+                        <xsd:annotation>
+                            <xsd:documentation>Encapsulating element containing all Disability data.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="Add_Only" type="xsd:boolean">
+                    <xsd:annotation>
+                        <xsd:documentation>Add Only Flag. Indicates that the service is an add only,
+                            not an update.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute ref="wd:version" />
+            </xsd:complexType>
+            <xsd:complexType name="Put_Disability_ResponseType">
+                <xsd:annotation>
+                    <xsd:documentation>Response element for the Put Disability operation.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="Disability_Reference" type="wd:DisabilityObjectType"
+                        minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>A unique identifier used to reference an Disability.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute ref="wd:version" />
+            </xsd:complexType>
+            <xsd:complexType name="DisabilityObjectType">
+                <xsd:annotation wd:Is_Reference_ID="1" />
+                <xsd:sequence>
+                    <xsd:element name="ID" type="wd:DisabilityObjectIDType" minOccurs="0"
+                        maxOccurs="unbounded" />
+                </xsd:sequence>
+                <xsd:attribute name="Descriptor" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>Display information used to describe an instance of an
+                            object. This 'optional' information is for outbound descriptive purposes
+                            only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:complexType>
+            <xsd:complexType name="Disability_DataType">
+                <xsd:annotation>
+                    <xsd:documentation>Encapsulating element containing all Disability data.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="ID" type="xsd:string" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>The ID for the Disability (Disability_ID).</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Name" type="xsd:string" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>The name of the Disability.</xsd:documentation>
+                            <xsd:appinfo><wd:Validation>
+                                    <wd:Validation_Message>Name is required.</wd:Validation_Message>
+                                </wd:Validation></xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Applicable_Subjects_Reference"
+                        type="wd:Unique_IdentifierObjectType" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation>Applicable Subjects for the Disability. Only Worker
+                                and Dependent are enabled.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Code" type="xsd:string" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>The code for the Disability.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Description" type="xsd:string" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>The description for the Disability.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Location_Reference" type="wd:Location_ContextObjectType"
+                        minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>The country the Disability is for.</xsd:documentation>
+                            <xsd:appinfo><wd:Validation>
+                                    <wd:Validation_Message>Location (Country or Country Region) is
+                                required.</wd:Validation_Message>
+                                </wd:Validation></xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Inactive" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>If true, the Disability field is inactive. If false,
+                                the Disability field is active.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="DisabilityObjectIDType">
+                <xsd:annotation>
+                    <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                        <xsd:attribute name="type" type="wd:DisabilityReferenceEnumeration"
+                            use="required">
+                            <xsd:annotation>
+                                <xsd:documentation>The unique identifier type. Each "ID" for an
+                                    instance of an object contains a type and a value. A single
+                                    instance of an object can have multiple "ID" but only a single
+                                    "ID" per "type". Some "types" require a reference to a parent
+                                    instance.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:attribute>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:simpleType name="DisabilityReferenceEnumeration">
+                <xsd:restriction base="xsd:string">
+                    <xsd:annotation>
+                        <xsd:appinfo><wd:enumeration value="WID" /><wd:enumeration
+                                value="Disability_ID" /></xsd:appinfo>
+                    </xsd:annotation>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="Unique_IdentifierObjectType">
+                <xsd:annotation wd:Is_Reference_ID="1" />
+                <xsd:sequence>
+                    <xsd:element name="ID" type="wd:Unique_IdentifierObjectIDType" minOccurs="0"
+                        maxOccurs="unbounded" />
+                </xsd:sequence>
+                <xsd:attribute name="Descriptor" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>Display information used to describe an instance of an
+                            object. This 'optional' information is for outbound descriptive purposes
+                            only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:complexType>
+            <xsd:complexType name="Unique_IdentifierObjectIDType">
+                <xsd:annotation>
+                    <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                        <xsd:attribute name="type" type="wd:Unique_IdentifierReferenceEnumeration"
+                            use="required">
+                            <xsd:annotation>
+                                <xsd:documentation>The unique identifier type. Each "ID" for an
+                                    instance of an object contains a type and a value. A single
+                                    instance of an object can have multiple "ID" but only a single
+                                    "ID" per "type". Some "types" require a reference to a parent
+                                    instance.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:attribute>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:simpleType name="Unique_IdentifierReferenceEnumeration">
+                <xsd:restriction base="xsd:string">
+                    <xsd:annotation>
+                        <xsd:appinfo><wd:enumeration value="IID" /><wd:enumeration value="WID" /></xsd:appinfo>
+                    </xsd:annotation>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="Location_ContextObjectType">
+                <xsd:annotation wd:Is_Reference_ID="1" />
+                <xsd:sequence>
+                    <xsd:element name="ID" type="wd:Location_ContextObjectIDType" minOccurs="0"
+                        maxOccurs="unbounded" />
+                </xsd:sequence>
+                <xsd:attribute name="Descriptor" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>Display information used to describe an instance of an
+                            object. This 'optional' information is for outbound descriptive purposes
+                            only and is not processed on inbound Workday Web Services requests.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:complexType>
+            <xsd:complexType name="Location_ContextObjectIDType">
+                <xsd:annotation>
+                    <xsd:documentation>Contains a unique identifier for an instance of an object.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                        <xsd:attribute name="type" type="wd:Location_ContextReferenceEnumeration"
+                            use="required">
+                            <xsd:annotation>
+                                <xsd:documentation>The unique identifier type. Each "ID" for an
+                                    instance of an object contains a type and a value. A single
+                                    instance of an object can have multiple "ID" but only a single
+                                    "ID" per "type". Some "types" require a reference to a parent
+                                    instance.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:attribute>
+                        <xsd:attribute name="parent_id" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:documentation>For types that require a parent reference,
+                                    contains a unique identifier for an instance of a parent object.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:attribute>
+                        <xsd:attribute name="parent_type">
+                            <xsd:annotation>
+                                <xsd:documentation>For types that require a parent reference, the
+                                    unique identifier type of a parent object.</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:annotation>
+                                        <xsd:appinfo><wd:enumeration value="WID" /><wd:enumeration
+                                                value="ISO_3166-1_Alpha-2_Code" /><wd:enumeration
+                                                value="ISO_3166-1_Alpha-3_Code" /><wd:enumeration
+                                                value="ISO_3166-1_Numeric-3_Code" /></xsd:appinfo>
+                                    </xsd:annotation>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
+            <xsd:simpleType name="Location_ContextReferenceEnumeration">
+                <xsd:restriction base="xsd:string">
+                    <xsd:annotation>
+                        <xsd:appinfo><wd:enumeration value="WID" /><wd:enumeration
+                                value="Country_Region_ID" /><wd:enumeration
+                                value="Country_Subregion_Code_In_Country" /><wd:enumeration
+                                value="Country_Subregion_Internal_ID" /><wd:enumeration
+                                value="ISO_3166-1_Alpha-2_Code" /><wd:enumeration
+                                value="ISO_3166-1_Alpha-3_Code" /><wd:enumeration
+                                value="ISO_3166-1_Numeric-3_Code" /><wd:enumeration
+                                value="ISO_3166-2_Code" /><wd:enumeration
+                                value="ISO_3166-2_Country-Region_Code" /></xsd:appinfo>
+                    </xsd:annotation>
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <xsd:complexType name="Validation_FaultType">
+                <xsd:sequence>
+                    <xsd:element name="Validation_Error" type="wd:Validation_ErrorType"
+                        minOccurs="0" maxOccurs="unbounded" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Processing_FaultType">
+                <xsd:sequence>
+                    <xsd:element name="Detail_Message" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Validation_ErrorType">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                    <xsd:element name="Detail_Message" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                    <xsd:element name="Xpath" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:attribute name="version" type="xsd:string" wd:fixed="v39.0" />
+        </xsd:schema>
+    </wsdl:types>
+
+
+    <wsdl:message name="Put_Disability_RequestInputMsg">
+        <wsdl:part name="body" element="wd:Put_Disability_Request" />
+    </wsdl:message>
+    <wsdl:message name="Put_Disability_ResponseOutputMsg">
+        <wsdl:part name="body" element="wd:Put_Disability_Response" />
+    </wsdl:message>
+    <wsdl:message name="Validation_FaultMsg">
+        <wsdl:part name="body" element="wd:Validation_Fault" />
+    </wsdl:message>
+    <wsdl:message name="Processing_FaultMsg">
+        <wsdl:part name="body" element="wd:Processing_Fault" />
+    </wsdl:message>
+    <wsdl:message name="Dissolve_Organization_StructureOutputMsg" />
+    <wsdl:message name="Update_Employee_Personal_InfoOutputMsg" />
+    <wsdl:message name="Update_Contingent_Worker_Personal_InfoOutputMsg" />
+    <wsdl:message name="Inactivate_OrganizationOutputMsg" />
+    <wsdl:message name="Update_Employee_ImageOutputMsg" />
+    <wsdl:message name="Update_Workday_AccountOutputMsg" />
+    <wsdl:message name="Add_Workday_AccountOutputMsg" />
+    <wsdl:message name="Add_Update_Company_Tax_IDOutputMsg" />
+    <wsdl:message name="Workday_Common_HeaderMsg">
+        <wsdl:part name="header" element="wd:Workday_Common_Header" />
+    </wsdl:message>
+    <wsdl:portType name="Human_ResourcesPort">
+        <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday
+            Human Capital Management Business Services data, including Employee, Contingent Worker
+            and Organization information. This Web Service can be used for integration with
+            enterprise systems including corporate directories, data analysis tools, email or other
+            provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
+        <wsdl:operation name="Put_Disability">
+            <wsdl:documentation>This operation adds or updates a Disability.<wd:contextualSecurity>
+                Yes</wd:contextualSecurity></wsdl:documentation>
+            <wsdl:input name="Put_DisabilityInput" message="wd-wsdl:Put_Disability_RequestInputMsg" />
+            <wsdl:output name="Put_DisabilityOutput"
+                message="wd-wsdl:Put_Disability_ResponseOutputMsg" />
+            <wsdl:fault name="Validation_Fault" message="wd-wsdl:Validation_FaultMsg" />
+            <wsdl:fault name="Processing_Fault" message="wd-wsdl:Processing_FaultMsg" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Human_ResourcesBinding" type="wd-wsdl:Human_ResourcesPort">
+        <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="Put_Disability">
+            <soapbind:operation style="document" />
+            <wsdl:input name="Put_DisabilityInput">
+                <soapbind:body use="literal" />
+                <soapbind:header message="wd-wsdl:Workday_Common_HeaderMsg" part="header"
+                    use="literal" />
+            </wsdl:input>
+            <wsdl:output name="Put_DisabilityOutput">
+                <soapbind:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="Processing_Fault">
+                <soapbind:fault name="Processing_Fault" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="Validation_Fault">
+                <soapbind:fault name="Validation_Fault" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Human_ResourcesService">
+        <wsdl:port name="Human_Resources" binding="wd-wsdl:Human_ResourcesBinding">
+            <soapbind:address
+                location="https://wd3-impl-services1.workday.com/ccx/service/bmo/Human_Resources/v39.0" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

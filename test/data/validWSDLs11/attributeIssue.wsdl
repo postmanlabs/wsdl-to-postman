@@ -8,7 +8,7 @@
     xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
     <wsdl:types>
-        <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+        <s:schema elementFormDefault="unqualified" targetNamespace="http://tempuri.org/">
             <s:attribute name="version" type="s:string" tns:fixed="v36.2" />
             <s:element name="Add" type="tns:AddEle" />
             <s:element name="AddResponse">

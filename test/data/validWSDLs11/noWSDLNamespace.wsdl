@@ -11,7 +11,7 @@
   targetNamespace="some/url/Human_Resources">
   <wsdl:documentation>The Human Resources Web Service contains operations that expose Workday Human Capital Management Business Services data, including Employee, Contingent Worker and Organization information. This Web Service can be used for integration with enterprise systems including corporate directories, data analysis tools, email or other provisioning sub-systems, or any other systems needing Worker and/or Organization data.</wsdl:documentation>
   <wsdl:types>
-    <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="some/url">
+    <xsd:schema elementFormDefault="unqualified" attributeFormDefault="qualified" targetNamespace="some/url">
       <xsd:element name="Business_Site_Find" type="wd:Business_Site_FindType"/>
       <xsd:element name="Validation_Fault" type="wd:Validation_FaultType"/>
       <xsd:element name="Processing_Fault" type="wd:Processing_FaultType"/>

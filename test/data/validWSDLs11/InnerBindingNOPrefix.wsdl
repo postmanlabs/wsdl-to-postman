@@ -2,7 +2,7 @@
     xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:tns="urn:microsoft-dynamics-schemas/page/service">
     <types>
-        <xsd:schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/page/service"
+        <xsd:schema elementFormDefault="unqualified" targetNamespace="urn:microsoft-dynamics-schemas/page/service"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:simpleType name="EnumerationValue">
                 <xsd:restriction base="xsd:string">

@@ -199,4 +199,41 @@ describe('orderSchemasAccordingToDependencies method', function () {
     expect(ordered[1].foundSchemaTag['@_targetNamespace']).to.equal('http://www.xsd2jsonschema.org/example');
     expect(ordered[2].foundSchemaTag['@_targetNamespace']).to.equal('http://www.xsd2jsonschema.org/example2');
   });
+
+  it('should correctly order schema dependencies where schema imports are without namespace', function () {
+    const
+      fileContent = fs.readFileSync(validSchemaFolder + '/noNamespaceImports.wsdl', 'utf8'),
+      parser = new XMLParser(),
+      schemaNamespace = {
+        key: 'xsd',
+        prefixFilter: 'xsd:',
+        url: 'http://queue.amazonaws.com/doc/2009-02-01/',
+        isDefault: false
+      };
+    let parsedXml,
+      schemasFromType,
+      mapped,
+      ordered;
+    parsedXml = parser.parseToObject(fileContent);
+    typeElement = parsedXml['wsdl:definitions']['wsdl:types'];
+    schemasFromType = getArrayFrom(typeElement[schemaNamespace.prefixFilter + 'schema']);
+    mapped = schemasFromType.map((schema) => {
+      return {
+        foundSchemaTag: schema,
+        foundLocalSchemaNamespace: schemaNamespace,
+        targetNamespace: schema['@_targetNamespace']
+      };
+    });
+
+    ordered = orderSchemasAccordingToDependencies(mapped, parser.attributePlaceHolder);
+
+    expect(ordered).to.be.a('Array');
+    expect(ordered.length).to.equal(1);
+
+    expect(ordered[0].foundSchemaTag['@_xmlns:xsd']).to.equal('http://www.w3.org/2001/XMLSchema');
+    expect(ordered[0].foundSchemaTag['xsd:import']).to.be.a('Array');
+    expect(ordered[0].foundSchemaTag['xsd:import'].length).to.equal(2);
+    expect(ordered[0].foundSchemaTag['xsd:import'][0]['@_schemaLocation']).to.equal('Hello-request.xsd');
+    expect(ordered[0].foundSchemaTag['xsd:import'][1]['@_schemaLocation']).to.equal('Hello-response.xsd');
+  });
 });
