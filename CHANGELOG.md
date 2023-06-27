@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+
+-   [#11768](https://github.com/postmanlabs/postman-app-support/issues/11768) Added support for element and attribute prefixes for qualified schema types and elements.
+
+### Fixed
+
+-   Fixed issue where max stack size was reached while generating collection from certain WSDL definition.
+
 ## [v1.9.0] - 2023-05-04
 
 ### Added
