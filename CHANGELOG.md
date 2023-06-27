@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v1.10.0] - 2023-06-27
+
 ### Added
 
 -   [#11768](https://github.com/postmanlabs/postman-app-support/issues/11768) Added support for element and attribute prefixes for qualified schema types and elements.
@@ -84,7 +86,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com) format.
 -   Stable release
 -   Removed libxmljs from package.json
 
-[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.9.0...HEAD
+[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.10.0...HEAD
+
+[v1.10.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.9.0...v1.10.0
 
 [v1.9.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.8.1...v1.9.0
 
