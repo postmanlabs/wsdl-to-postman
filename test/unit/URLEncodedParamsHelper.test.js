@@ -34,4 +34,18 @@ describe('URLEncodedParamsHelper convertInputToURLEncoded', function () {
     expect(jsonObjectMessage[0].value).to.be.a('string');
   });
 
+  it('Should get an empty array for null parameter', function () {
+    const helper = new URLEncodedParamsHelper(),
+      jsonObjectMessage = helper.convertInputToURLEncoded(null);
+    expect(jsonObjectMessage).to.be.an('Array');
+    expect(jsonObjectMessage.length).to.equal(0);
+  });
+
+  it('Should get an empty array for undefined parameter', function () {
+    const helper = new URLEncodedParamsHelper(),
+      jsonObjectMessage = helper.convertInputToURLEncoded(undefined);
+    expect(jsonObjectMessage).to.be.an('Array');
+    expect(jsonObjectMessage.length).to.equal(0);
+  });
+
 });
