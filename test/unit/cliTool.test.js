@@ -28,7 +28,7 @@ describe('wsdl2postman ', function () {
     });
   });
 
-  it('should print to the console testing conversion when test onption is sent', function (done) {
+  it('should print to the console testing conversion when test option is sent', function (done) {
     exec('./bin/wsdl2postman.js -t', function (err, stdout) {
       expect(err).to.be.null;
       expect(stdout).to.include('testing conversion...');

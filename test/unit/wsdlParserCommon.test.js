@@ -281,7 +281,8 @@ whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
               xmlns:xsd="http://www.w3.org/2001/XMLSchema">
               <xsd:include schemaLocation="Types.xsd"/>
           </xsd:schema>
-      </types>`,
+      </types>
+  </definitions>`,
   WSDL_IMPORTS = `<?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
         xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
@@ -299,7 +300,8 @@ whttp:methodDefault="POST" type="http://www.w3.org/ns/wsdl/http">
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
                 <xsd:import namespace="http://namespace/2008" schemaLocation="Types.xsd"/>
             </xsd:schema>
-        </types>`,
+        </types>
+    </definitions>`,
   WSDL_IMPORTS_MULTIPLE = `<?xml version="1.0" encoding="utf-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
