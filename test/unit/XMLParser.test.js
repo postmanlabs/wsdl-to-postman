@@ -60,8 +60,8 @@ describe('XMLparser parseToObject', function () {
 
   });
 
-  it('should ignore extra data before xml tag', function () {
-    let parsed = xmlParser.parseToObject(UNCLEAN_INPUT_XML);
+  it('should ignore extra data before xml tag if validateXML is false', function () {
+    let parsed = xmlParser.parseToObject(UNCLEAN_INPUT_XML, false);
     expect(parsed).to.be.an('object');
     expect(parsed).to.have.own.property('definitions');
   });
