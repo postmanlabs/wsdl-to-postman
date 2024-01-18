@@ -29,8 +29,7 @@ const { WsdlInformationService11 } = require('../../lib/WsdlInformationService11
   fs = require('fs'),
   specialCasesWSDLs = 'test/data/specialCases',
   numberConvertionSecurity = 'test/data/auth/usernameToken/NoSecurityBinding.wsdl',
-  NUMBERCONVERSION_INPUT = `
-  <?xml version="1.0" encoding="UTF-8"?>
+  NUMBERCONVERSION_INPUT = `<?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
 xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -621,8 +620,7 @@ describe('WSDL 1.1 parser assignOperations', function () {
   });
 
   it('should assign operations to wsdl object with fault messages', function () {
-    const inputFile = `
-  <?xml version="1.0" encoding="UTF-8"?>
+    const inputFile = `<?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
 xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 

@@ -7,7 +7,7 @@ const expect = require('chai').expect,
   } = require('../../lib/XMLParser'),
   USERNAME_TOKEN = `<wsp:Policy><sp:SupportingTokens><wsp:Policy>
     <sp:UsernameToken 
-      sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"
+      sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"/>
     </wsp:Policy>
     </sp:SupportingTokens>
     </wsp:Policy>`,
@@ -66,7 +66,7 @@ const expect = require('chai').expect,
        <wsp:Policy>
         <sp:HttpsToken>
          <wsp:Policy>
-          <sp:RequireClientCertificate>
+          <sp:RequireClientCertificate/>
           </wsp:Policy>
            </sp:HttpsToken>
             </wsp:Policy>
@@ -87,7 +87,7 @@ const expect = require('chai').expect,
                <sp:SignedSupportingTokens>
                 <wsp:Policy>
           <sp:SamlToken 
-            sp:IncludeToken=”http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient”>
+            sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
             <wsp:Policy>
               <sp:WssSamlV11Token10/>
               </wsp:Policy>

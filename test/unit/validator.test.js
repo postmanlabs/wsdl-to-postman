@@ -121,7 +121,7 @@ string`, function () {
 
   it('Should return a successful validationResult if input.data is a "string" and contains wsdl "definitions>" tag',
     function () {
-      const definitionsInput = mockInput('<definitions ...> ... </ definitions>', 'string'),
+      const definitionsInput = mockInput('<definitions> ... </definitions>', 'string'),
         validator = new Validator();
       expect(validator.validate(definitionsInput, new XMLParser()).valResult).to.be.an('object')
         .and.to.include({
@@ -130,7 +130,7 @@ string`, function () {
         });
     });
 
-  it('Should return  ',
+  it('Should return a false as validationResult if definitions starting tag is not present',
     function () {
       const definitionsInput = mockInput('</dsefinitions> </ definitions>', 'string'),
         validator = new Validator();
@@ -143,7 +143,7 @@ string`, function () {
 
   it('Should return a successful validationResult if input.data is a "string" and contains wsdl "description>" tag',
     function () {
-      const descriptionInput = mockInput('<description ...> ... </ description>', 'string'),
+      const descriptionInput = mockInput('<description> ... </description>', 'string'),
         validator = new Validator();
       expect(validator.validate(descriptionInput, new XMLParser()).valResult).to.be.an('object')
         .and.to.include({

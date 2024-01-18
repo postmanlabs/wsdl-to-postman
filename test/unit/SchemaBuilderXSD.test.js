@@ -1645,7 +1645,7 @@ describe('SchemaBuilderXSD getElements', function () {
   it('should not exceed size calls when complex type has self reference', function () {
     const simpleInput = `<wsdl:definitions targetNamespace="http://Global"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <wsdl:types>
     <xs:schema elementFormDefault="qualified"
      targetNamespace="http://www.org.org/xml/standard-V0000" 
@@ -1658,7 +1658,7 @@ describe('SchemaBuilderXSD getElements', function () {
           <xs:element minOccurs="0" maxOccurs="1" name="HierarchyScope" type="tns:HierarchyScopeType"/>
         </xs:sequence>
       </xs:complexType>
-      </xsd:schema>
+      </xs:schema>
     </wsdl:types>
     <wsdl:message name="OutboundDeliveryExecutionConfirmation">
       <wsdl:part name="OutboundDeliveryExecutionConfirmation" element="n2:OutboundDeliveryExecutionConfirmation"/>

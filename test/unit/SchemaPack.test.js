@@ -89,7 +89,7 @@ describe('SchemaPack convert unit test WSDL 1.1', function () {
     const
       schemaPack = new SchemaPack({
         type: 'string',
-        data: '<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"</wsdl:definitions>'
+        data: '<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"></wsdl:definitions>'
       }, {});
 
     schemaPack.convert((error, result) => {
@@ -565,7 +565,7 @@ describe('getMetaData method', function () {
     const
       schemaPack = new SchemaPack({
         type: 'string',
-        data: '<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"</wsdl:definitions>'
+        data: '<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"></wsdl:definitions>'
       }, {});
     schemaPack.getMetaData(function (x, y) {
       expect(x).to.eq(null);
