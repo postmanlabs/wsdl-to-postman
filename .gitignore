@@ -20,6 +20,7 @@ Thumbs.db
 # All temporary stuff from one folder
 .temp
 test/data/.temp
+test/convert-validation/output
 
 # PROJECT
 # =======

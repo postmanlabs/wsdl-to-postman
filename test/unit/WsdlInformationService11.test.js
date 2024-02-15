@@ -335,7 +335,8 @@ describe('WSDL 1.1 parser getPortTypeOperations', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get portypes from WSDL');
+      expect(error.name).to.equal('UserError');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
 });
