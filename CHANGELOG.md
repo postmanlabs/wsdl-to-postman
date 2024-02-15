@@ -4,6 +4,10 @@
 
 ## [v1.12.1] - 2024-02-15
 
+### Fixed
+
+-   Downgraded libxmljs2 since latest version requires minimum node v18 and current package supports v16.
+
 ## [v1.12.0] - 2024-02-15
 
 ### Fixed
