@@ -534,7 +534,8 @@ describe('WSDL parser common getNamespaceByKey', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespace from object');
+      expect(error.name).to.equal('UserError');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
 
@@ -830,7 +831,8 @@ describe('WSDL parser common getServices', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get services from object');
+      expect(error.name).to.equal('UserError');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
   it('should get an array object representing services using default namespace WSDL 2.0', function () {
@@ -1058,7 +1060,8 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get bindings from object');
+      expect(error.name).to.equal('UserError');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
 
@@ -1107,7 +1110,8 @@ describe('WSDL parser common getBindings', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get bindings from object');
+      expect(error.name).to.equal('UserError');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
 });
@@ -1494,7 +1498,8 @@ describe('WSDL parser common getNamespaceByURL', function () {
       assert.fail('we expected an error');
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespace from object');
+      expect(error.name).to.equal('UserError');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
 
@@ -1653,7 +1658,8 @@ describe('WSDL parser common getAllNamespaces', function () {
       });
     }
     catch (error) {
-      expect(error.message).to.equal('Cannot get namespaces from object');
+      expect(error.name).to.equal('UserError');
+      expect(error.message).to.equal('Definition doesn\'t contain any principal prefix.');
     }
   });
 
