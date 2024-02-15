@@ -4,6 +4,10 @@
 
 ## [v1.12.0] - 2024-02-15
 
+### Fixed
+
+-   Fixed issue where UserErrors were reported as conversion errors.
+
 ## [v1.11.0] - 2024-01-18
 
 ## [v1.10.0] - 2023-06-27
