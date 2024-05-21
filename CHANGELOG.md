@@ -4,6 +4,10 @@
 
 ## [v1.12.2] - 2024-05-21
 
+### Fixed
+
+-   Upgraded libxmljs2 to v0.32.0 to support the arm64 binaries.
+
 ## [v1.12.1] - 2024-02-15
 
 ### Fixed
