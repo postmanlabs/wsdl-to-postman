@@ -4,6 +4,10 @@
 
 ## [v1.12.3] - 2024-06-20
 
+### Fixed
+
+-   Updated direct access to constructor prototype props to class props to make sure minification with keepClass attributes doesn't affect conversion.
+
 ## [v1.12.2] - 2024-05-21
 
 ### Fixed
