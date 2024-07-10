@@ -4,6 +4,10 @@
 
 ## [v1.13.0] - 2024-07-10
 
+### Chore
+
+-   Updated postman-collection to v4.4.0.
+
 ## [v1.12.3] - 2024-06-20
 
 ### Fixed
