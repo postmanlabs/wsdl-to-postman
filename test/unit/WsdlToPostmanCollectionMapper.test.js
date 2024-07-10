@@ -1,9 +1,7 @@
 const {
     assert
   } = require('chai'),
-  {
-    Collection
-  } = require('postman-collection'),
+  { Collection } = require('postman-collection/lib/collection/collection'),
   { XMLParser } = require('../../lib/XMLParser'),
   {
     WsdlToPostmanCollectionMapper,

@@ -62,7 +62,7 @@
     "libxmljs2": "0.32.0",
     "node-fetch": "2.6.5",
     "path-browserify": "1.0.1",
-    "postman-collection": "3.6.9",
+    "postman-collection": "^4.4.0",
     "randexp": "0.5.3",
     "traverse": "0.6.6",
     "xmldom": "0.6.0",
