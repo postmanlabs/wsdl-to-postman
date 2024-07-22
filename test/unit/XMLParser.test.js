@@ -204,3 +204,40 @@ describe('XMLparser parseObjectToXML', function () {
   });
 
 });
+
+describe('XMLParser safeParseToObject', function () {
+  const xmlParser = new XMLParser({});
+
+  it('should return an empty string when input is an empty file', function () {
+    let parsed = xmlParser.safeParseToObject('');
+    expect(parsed).to.equal('');
+  });
+
+  it('should return an empty string when input is null', function () {
+    let parsed = xmlParser.safeParseToObject(null);
+    expect(parsed).to.equal('');
+  });
+
+  it('should return an empty string when input is undefined', function () {
+    let parsed = xmlParser.safeParseToObject(undefined);
+    expect(parsed).to.equal('');
+  });
+
+  it('should return an object when input is valid XML', function () {
+    const validXML = `<note>
+                        <to>User</to>
+                        <from>Library</from>
+                        <heading>Reminder</heading>
+                        <body>Hello</body>
+                      </note>`;
+    let parsed = xmlParser.safeParseToObject(validXML);
+    expect(parsed).to.be.an('object');
+    expect(parsed).to.have.own.property('note');
+  });
+
+  it('should return an empty string when fast-zml-parser fails to parse data', function () {
+    const invalidXML = '€¯!¢s1≤TO¿˛•LH¥Ò‘⁄∞E»ËòÅ¶Tìæv◊';
+    let parsed = xmlParser.safeParseToObject(invalidXML);
+    expect(parsed).to.equal('');
+  });
+});
