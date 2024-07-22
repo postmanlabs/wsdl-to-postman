@@ -4,6 +4,10 @@
 
 ## [v1.13.1] - 2024-07-22
 
+### Fixed
+
+-   Fixed TypeError occurring for files with non UTF-8 encoding while parsing.
+
 ## [v1.13.0] - 2024-07-10
 
 ### Chore
