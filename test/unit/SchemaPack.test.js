@@ -343,6 +343,11 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
       }, {}),
       expectedOutput = `<?xml version="1.0" encoding="utf-8"?>
       <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Header>
+          <wd:Workday_Common_Headerxmlns:wd="urn:com.workday/bsvc">
+            <wd:Include_Reference_Descriptors_In_Response>true</wd:Include_Reference_Descriptors_In_Response>
+          </wd:Workday_Common_Header>
+        </soap:Header>
         <soap:Body>
           <wd:Put_Disability_Request xmlns:wd="urn:com.workday/bsvc" wd:Add_Only="true" wd:version="v39.0">
             <wd:Disability_Reference wd:Descriptor="string">

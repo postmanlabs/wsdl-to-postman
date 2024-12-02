@@ -285,6 +285,11 @@
                     <xsd:element name="Xpath" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 </xsd:sequence>
             </xsd:complexType>
+            <xsd:complexType name="Workday_Common_HeaderType">
+                <xsd:sequence>
+                <xsd:element name="Include_Reference_Descriptors_In_Response" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:complexType>
             <xsd:attribute name="version" type="xsd:string" wd:fixed="v39.0" />
         </xsd:schema>
     </wsdl:types>
