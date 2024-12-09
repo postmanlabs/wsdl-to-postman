@@ -1,83 +1,83 @@
 <wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://localhost/App.asmx" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsse="http://schemas.xmlsoap.org/ws/2004/09/policy" targetNamespace="http://localhost/App.asmx">
-<wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Webservices for App.</wsdl:documentation>
-<wsdl:types>
-<s:schema elementFormDefault="qualified" targetNamespace="http://localhost/App.asmx">
-<s:element name="ChangePassword">
-<s:complexType>
-<s:sequence>
-<s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
-<s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
-<s:element minOccurs="0" maxOccurs="1" name="oldPassword" type="s:string"/>
-</s:sequence>
-</s:complexType>
-</s:element>
-<s:element name="ChangePasswordResponse">
-<s:complexType>
-<s:sequence>
-<s:element minOccurs="1" maxOccurs="1" name="ChangePasswordResult" type="s:boolean"/>
-</s:sequence>
-</s:complexType>
-</s:element>
-<s:element name="AuthHeader" type="tns:AuthHeader"/>
-<s:complexType name="AuthHeader">
-<s:sequence>
-<s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
-<s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
-</s:sequence>
-<s:attribute name="CultureName" type="s:string"/>
-<s:anyAttribute/>
-</s:complexType>
-</s:schema>
-</wsdl:types>
-<wsdl:message name="ChangePasswordSoapIn">
-<wsdl:part name="parameters" element="tns:ChangePassword"/>
-</wsdl:message>
-<wsdl:message name="ChangePasswordSoapOut">
-<wsdl:part name="parameters" element="tns:ChangePasswordResponse"/>
-</wsdl:message>
-<wsdl:message name="ChangePasswordAuthHeader">
-<wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
-</wsdl:message>
-<wsdl:portType name="AppServicesSoap">
-<wsdl:operation name="ChangePassword">
-<wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change Password</wsdl:documentation>
-<wsdl:input message="tns:ChangePasswordSoapIn"/>
-<wsdl:output message="tns:ChangePasswordSoapOut"/>
-</wsdl:operation>
-</wsdl:portType>
-<wsdl:binding name="AppServicesSoap" type="tns:AppServicesSoap">
-<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-<wsdl:operation name="ChangePassword">
-<soap:operation soapAction="http://localhost/App.asmx/ChangePassword" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-<soap:header message="tns:ChangePasswordAuthHeader" part="AuthHeader" use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-</wsdl:binding>
-<wsdl:binding name="AppServicesSoap12" type="tns:AppServicesSoap">
-<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-<wsdl:operation name="ChangePassword">
-<soap12:operation soapAction="http://localhost/App.asmx/ChangePassword" style="document"/>
-<wsdl:input>
-<soap12:body use="literal"/>
-<soap12:header message="tns:ChangePasswordAuthHeader" part="AuthHeader" use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap12:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-</wsdl:binding>
-<wsdl:service name="AppServices">
-<wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Webservices for App.</wsdl:documentation>
-<wsdl:port name="AppServicesSoap" binding="tns:AppServicesSoap">
-<soap:address location="http://localhost:59859/app.asmx"/>
-</wsdl:port>
-<wsdl:port name="AppServicesSoap12" binding="tns:AppServicesSoap12">
-<soap12:address location="http://localhost:59859/app.asmx"/>
-</wsdl:port>
-</wsdl:service>
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Webservices for App.</wsdl:documentation>
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://localhost/App.asmx">
+            <s:element name="ChangePassword">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="oldPassword" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ChangePasswordResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="ChangePasswordResult" type="s:boolean"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AuthHeader" type="tns:AuthHeader"/>
+            <s:complexType name="AuthHeader">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                </s:sequence>
+                <s:attribute name="CultureName" type="s:string"/>
+                <s:anyAttribute/>
+            </s:complexType>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="ChangePasswordSoapIn">
+        <wsdl:part name="parameters" element="tns:ChangePassword"/>
+    </wsdl:message>
+    <wsdl:message name="ChangePasswordSoapOut">
+        <wsdl:part name="parameters" element="tns:ChangePasswordResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ChangePasswordAuthHeader">
+        <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+    </wsdl:message>
+    <wsdl:portType name="AppServicesSoap">
+        <wsdl:operation name="ChangePassword">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change Password</wsdl:documentation>
+            <wsdl:input message="tns:ChangePasswordSoapIn"/>
+            <wsdl:output message="tns:ChangePasswordSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AppServicesSoap" type="tns:AppServicesSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ChangePassword">
+            <soap:operation soapAction="http://localhost/App.asmx/ChangePassword" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:ChangePasswordAuthHeader" part="AuthHeader" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="AppServicesSoap12" type="tns:AppServicesSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ChangePassword">
+            <soap12:operation soapAction="http://localhost/App.asmx/ChangePassword" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+                <soap12:header message="tns:ChangePasswordAuthHeader" part="AuthHeader" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AppServices">
+        <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Webservices for App.</wsdl:documentation>
+        <wsdl:port name="AppServicesSoap" binding="tns:AppServicesSoap">
+            <soap:address location="http://localhost:59859/app.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="AppServicesSoap12" binding="tns:AppServicesSoap12">
+            <soap12:address location="http://localhost:59859/app.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
 </wsdl:definitions>
