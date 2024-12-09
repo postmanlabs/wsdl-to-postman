@@ -2,9 +2,11 @@
 
 ## [Unreleased]
 
+## [v1.14.0] - 2024-12-09
+
 ### Added
 
-- [#10466](https://github.com/postmanlabs/postman-app-support/issues/10466) Added support for soap headers in request body
+-   [#10466](https://github.com/postmanlabs/postman-app-support/issues/10466) Added support for soap headers in request body
 
 ## [v1.13.1] - 2024-07-22
 
@@ -128,7 +130,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com) format.
 -   Stable release
 -   Removed libxmljs from package.json
 
-[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.13.1...HEAD
+[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.14.0...HEAD
+
+[v1.14.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.13.1...v1.14.0
 
 [v1.13.1]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.13.0...v1.13.1
 
