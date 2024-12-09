@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- [#10466](https://github.com/postmanlabs/postman-app-support/issues/10466) Added support for soap headers in request body
+
 ## [v1.13.1] - 2024-07-22
 
 ### Fixed
