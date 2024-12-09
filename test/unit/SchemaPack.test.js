@@ -343,6 +343,11 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
       }, {}),
       expectedOutput = `<?xml version="1.0" encoding="utf-8"?>
       <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Header>
+          <wd:Workday_Common_Headerxmlns:wd="urn:com.workday/bsvc">
+            <wd:Include_Reference_Descriptors_In_Response>true</wd:Include_Reference_Descriptors_In_Response>
+          </wd:Workday_Common_Header>
+        </soap:Header>
         <soap:Body>
           <wd:Put_Disability_Request xmlns:wd="urn:com.workday/bsvc" wd:Add_Only="true" wd:version="v39.0">
             <wd:Disability_Reference wd:Descriptor="string">
@@ -371,6 +376,39 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
       expect(result.output[0].data.item).to.have.lengthOf(1);
       expect(result.output[0].data.item[0].name).to.eql('Put_Disability');
       expect(removeLineBreakTabsSpaces(result.output[0].data.item[0].request.body.raw))
+        .to.equal(removeLineBreakTabsSpaces(expectedOutput));
+    });
+  });
+
+  it('[Github #10466] - Should convert SOAP headers present in operation input to request body', function () {
+    let fileContent = fs.readFileSync(validWSDLs + '/soapBodyAuthHeaders.wsdl', 'utf8');
+    const schema = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, {}),
+      expectedOutput = `<?xml version=\"1.0\" encoding=\"utf-8\"?>
+      <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">
+        <soap:Header>
+          <tns:AuthHeader xmlns=\"http://localhost/App.asmx\" CultureName=\"string\">
+            <tns:UserName>string</tns:UserName>
+            <tns:Password>string</tns:Password>
+          </tns:AuthHeader>
+        </soap:Header>
+        <soap:Body>
+          <tns:ChangePassword xmlns=\"http://localhost/App.asmx\">
+            <tns:userName>string</tns:userName>
+            <tns:password>string</tns:password>
+            <tns:oldPassword>string</tns:oldPassword>
+          </tns:ChangePassword>
+        </soap:Body>
+      </soap:Envelope>`;
+    schema.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output[0].data.item).to.have.lengthOf(2);
+      expect(result.output[0].data.item[0].name).to.eql('AppServicesSoap');
+      expect(result.output[0].data.item[0].item[0].name).to.eql('ChangePassword');
+      expect(removeLineBreakTabsSpaces(result.output[0].data.item[0].item[0].request.body.raw))
         .to.equal(removeLineBreakTabsSpaces(expectedOutput));
     });
   });
