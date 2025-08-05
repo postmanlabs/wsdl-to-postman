@@ -389,13 +389,13 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
       expectedOutput = `<?xml version=\"1.0\" encoding=\"utf-8\"?>
       <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">
         <soap:Header>
-          <tns:AuthHeader xmlns=\"http://localhost/App.asmx\" CultureName=\"string\">
+          <tns:AuthHeader xmlns:tns=\"http://localhost/App.asmx\" CultureName=\"string\">
             <tns:UserName>string</tns:UserName>
             <tns:Password>string</tns:Password>
           </tns:AuthHeader>
         </soap:Header>
         <soap:Body>
-          <tns:ChangePassword xmlns=\"http://localhost/App.asmx\">
+          <tns:ChangePassword xmlns:tns=\"http://localhost/App.asmx\">
             <tns:userName>string</tns:userName>
             <tns:password>string</tns:password>
             <tns:oldPassword>string</tns:oldPassword>
