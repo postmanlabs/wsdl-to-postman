@@ -389,13 +389,13 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
       expectedOutput = `<?xml version=\"1.0\" encoding=\"utf-8\"?>
       <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">
         <soap:Header>
-          <tns:AuthHeader xmlns=\"http://localhost/App.asmx\" CultureName=\"string\">
+          <tns:AuthHeader xmlns:tns=\"http://localhost/App.asmx\" CultureName=\"string\">
             <tns:UserName>string</tns:UserName>
             <tns:Password>string</tns:Password>
           </tns:AuthHeader>
         </soap:Header>
         <soap:Body>
-          <tns:ChangePassword xmlns=\"http://localhost/App.asmx\">
+          <tns:ChangePassword xmlns:tns=\"http://localhost/App.asmx\">
             <tns:userName>string</tns:userName>
             <tns:password>string</tns:password>
             <tns:oldPassword>string</tns:oldPassword>
@@ -409,6 +409,33 @@ describe('SchemaPack convert unit test WSDL 1.1 with options', function () {
       expect(result.output[0].data.item[0].name).to.eql('AppServicesSoap');
       expect(result.output[0].data.item[0].item[0].name).to.eql('ChangePassword');
       expect(removeLineBreakTabsSpaces(result.output[0].data.item[0].item[0].request.body.raw))
+        .to.equal(removeLineBreakTabsSpaces(expectedOutput));
+    });
+  });
+
+  it('[Github #13300] - Should add proper namespace prefix to body element in request', function() {
+    let fileContent = fs.readFileSync(validWSDLs + '/targetNamespacePrefix.wsdl', 'utf8');
+
+    const schema = new SchemaPack({
+        data: fileContent,
+        type: 'string'
+      }, {}),
+      expectedOutput = `<?xml version="1.0" encoding="utf-8"?>
+      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+          <tns:TitleCaseWordsWithToken xmlns:tns="http://www.dataaccess.com/webservicesserver/">
+            <tns:sText>string</tns:sText>
+            <tns:sToken>string</tns:sToken>
+          </tns:TitleCaseWordsWithToken>
+        </soap:Body>
+      </soap:Envelope>`;
+
+    schema.convert((error, result) => {
+      expect(error).to.be.null;
+      expect(result).to.be.an('object');
+      expect(result.output[0].data.item).to.have.lengthOf(1);
+      expect(result.output[0].data.item[0].name).to.eql('TitleCaseWordsWithToken');
+      expect(removeLineBreakTabsSpaces(result.output[0].data.item[0].request.body.raw))
         .to.equal(removeLineBreakTabsSpaces(expectedOutput));
     });
   });
