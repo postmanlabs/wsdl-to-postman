@@ -2,11 +2,13 @@
 
 ## [Unreleased]
 
+## [v2.1.0] - 2025-08-06
+
 ## [v2.0.0] - 2025-03-07
 
 ### Breaking Changes
 
-- Drop support for node < v18.
+-   Drop support for node &lt; v18.
 
 ## [v1.14.0] - 2024-12-09
 
@@ -136,7 +138,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com) format.
 -   Stable release
 -   Removed libxmljs from package.json
 
-[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.1.0...HEAD
+
+[v2.1.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.0.0...v2.1.0
 
 [v2.0.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v1.14.0...v2.0.0
 
