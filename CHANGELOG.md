@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [v2.2.0] - 2025-09-24
+
+-   Unlock dependency versions in package.json.
+
 ## [v2.1.0] - 2025-08-06
 
 ## [v2.0.0] - 2025-03-07
@@ -138,7 +142,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com) format.
 -   Stable release
 -   Removed libxmljs from package.json
 
-[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.2.0...HEAD
+
+[v2.2.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.1.0...v2.2.0
 
 [v2.1.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.0.0...v2.1.0
 
