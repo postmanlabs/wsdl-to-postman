@@ -4,6 +4,10 @@
 
 ## [v2.2.2] - 2026-08-19
 
+### Chore
+
+-   Add npm publish GH action.
+
 ## [v2.2.1] - 2026-08-19
 
 ### Chore
