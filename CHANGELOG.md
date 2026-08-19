@@ -4,6 +4,10 @@
 
 ## [v2.2.1] - 2026-08-19
 
+### Chore
+
+-   Updated xmldom to @xmldom/xmldom.
+
 ## [v2.2.0] - 2025-09-24
 
 -   Unlock dependency versions in package.json.
