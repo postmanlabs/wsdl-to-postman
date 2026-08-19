@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v2.2.2] - 2026-08-19
+
 ## [v2.2.1] - 2026-08-19
 
 ### Chore
@@ -148,7 +150,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com) format.
 -   Stable release
 -   Removed libxmljs from package.json
 
-[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.2.2...HEAD
+
+[v2.2.2]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.2.1...v2.2.2
 
 [v2.2.1]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.2.0...v2.2.1
 
