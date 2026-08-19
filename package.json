@@ -1,6 +1,6 @@
 {
   "name": "@postman/wsdl-to-postman",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Convert a given WSDL specification (1.1) to Postman Collection",
   "main": "index.js",
   "bin": {
@@ -65,8 +65,11 @@
     "postman-collection": "^5.0.0",
     "randexp": "^0.5.3",
     "traverse": "^0.6.6",
-    "xmldom": "^0.6.0",
+    "@xmldom/xmldom": "^0.9.11",
     "xmllint": "^0.1.1",
     "xpath": "^0.0.32"
+  },
+  "allowScripts": {
+    "libxmljs2": true
   }
 }
