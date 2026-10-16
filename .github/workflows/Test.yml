@@ -7,10 +7,11 @@ on:
 
 jobs:
   Unit-Tests:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+        node-version: [22.x, 24.x]
     steps:
       - name: Get Code
         uses: actions/checkout@v3
