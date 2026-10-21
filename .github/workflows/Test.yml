@@ -10,9 +10,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, windows-11-arm]
         node-version: [22.x, 24.x]
     steps:
+      # keep LF endings so test.sh and the XML/WSDL fixtures match other platforms
+      - name: Disable CRLF conversion
+        if: runner.os == 'Windows'
+        run: git config --global core.autocrlf false
       - name: Get Code
         uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -20,4 +24,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+      # npm scripts call ./scripts/test.sh and ./node_modules/... which cmd.exe can't run
+      - name: Use bash for npm scripts
+        if: runner.os == 'Windows'
+        run: npm config set script-shell "C:\Program Files\Git\bin\bash.exe"
       - run: npm test
