@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Breaking Changes
+
+-   Drop support for node < v22.
+
+### Fixed
+
+-   Upgraded libxmljs2 to v0.37.0 to support Node 24 and linux-arm64 binaries.
+
 ## [v2.2.2] - 2026-08-19
 
 ### Chore

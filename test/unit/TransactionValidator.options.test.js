@@ -18,7 +18,7 @@ const numberToWordsWSDLObject = require('./../data/transactionsValidation/wsdlOb
   getPlayedMatchesCollectionItemsWrongType =
     require('./../data/transactionsValidation/getPlayedMatchesCollectionItemsWrongType.json'),
   calculatorCollectionItemsMissingCharacter =
-    require('./../data/transactionsValidation/calculatorCollectionItemsMissing>.json'),
+    require('./../data/transactionsValidation/calculatorCollectionItemsMissingCharacter.json'),
   calculatorCollectionItemsWrongOrder =
     require('./../data/transactionsValidation/calculatorCollectionItemsWrongOrder.json'),
   {
