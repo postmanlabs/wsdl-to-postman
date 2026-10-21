@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [v3.0.0] - 2026-10-21
+
+### Breaking Changes
+
+-   Drop support for node &lt; v22.
+
+### Fixed
+
+-   Upgraded libxmljs2 to v0.37.0 to support Node 24 and linux-arm64 binaries.
+
 ## [v2.2.2] - 2026-08-19
 
 ### Chore
@@ -154,7 +164,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com) format.
 -   Stable release
 -   Removed libxmljs from package.json
 
-[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.2.2...HEAD
+[Unreleased]: https://github.com/postmanlabs/wsdl-to-postman/compare/v3.0.0...HEAD
+
+[v3.0.0]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.2.2...v3.0.0
 
 [v2.2.2]: https://github.com/postmanlabs/wsdl-to-postman/compare/v2.2.1...v2.2.2
 
